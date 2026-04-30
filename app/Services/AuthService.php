@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
 class AuthService
@@ -84,29 +86,40 @@ class AuthService
             'status' => 200
         ];
     }
+    public function signOut(): array
+    {
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
 
-    // public function signOut(): array
-    // {
-    //     $user = Auth::user();
-    //
-    //     if (is_null($user)) {
-    //         return [
-    //             'message' => 'Invalid token.',
-    //             'status' => 401
-    //         ];
-    //     }
-    //
-    //     $token = $user->currentAccessToken();
-    //
-    //     if ($token) {
-    //         $token->delete();
-    //     }
-    //
-    //     return [
-    //         'message' => 'Sign out successful.',
-    //         'status' => 200
-    //     ];
-    // }
+        if (is_null($user)) {
+            return [
+                'message' => 'Invalid token.',
+                'status' => 401,
+                'user' => null,
+            ];
+        }
+
+        $loggedOutUser = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'internal_id' => $user->internal_id,
+            'role' => $user->getRoleNames()->values()->toArray(),
+        ];
+
+        /** @var \Laravel\Sanctum\PersonalAccessToken|null $token */
+        $token = $user->currentAccessToken();
+
+        if ($token) {
+            $token->delete();
+        }
+
+        return [
+            'message' => 'Sign out successful.',
+            'status' => 200,
+            'user' => $loggedOutUser,
+        ];
+    }
 
     public function appendRoleAndPermissions($user)
     {
@@ -131,5 +144,139 @@ class AuthService
         $user['permissions'] = $permissions;
 
         return $user;
+    }
+
+    public function createInternalUser($request): array
+    {
+        $request->validated();
+
+        $roleName = $request->role;
+
+        if (! in_array($roleName, ['project_manager', 'assistant', 'project_owner'])) {
+            throw new Exception('Invalid internal role.', 422);
+        }
+
+        $internalId = $this->generateInternalId($request->name, $roleName);
+
+        $user = User::query()->create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'internal_id' => $internalId,
+            'password' => Hash::make($request->password),
+            'email_verified_at' => now(),
+        ]);
+
+        $role = Role::query()
+            ->where('name', $roleName)
+            ->where('guard_name', 'api')
+            ->first();
+
+        if (! $role) {
+            throw new Exception('Role not found.', 404);
+        }
+
+        $user->assignRole($role);
+
+        $user = $this->appendRoleAndPermissions($user);
+
+        return [
+            'message' => 'Internal user created successfully.',
+            'user' => $user,
+            'status' => 201,
+        ];
+    }
+
+    private function generateInternalId(string $name, string $roleName): string
+    {
+        $prefix = match ($roleName) {
+            'project_manager' => 'pm',
+            'assistant' => 'asst',
+            'project_owner' => 'owner',
+            default => 'user',
+        };
+
+        $baseName = Str::of($name)
+            ->lower()
+            ->ascii()
+            ->replaceMatches('/[^a-z0-9\s]/', '')
+            ->trim()
+            ->replace(' ', '.')
+            ->toString();
+
+        if ($baseName === '') {
+            $baseName = 'user';
+        }
+
+        $baseInternalId = $prefix . '.' . $baseName . '@alfanar';
+        $internalId = $baseInternalId;
+        $counter = 2;
+
+        while (User::query()->where('internal_id', $internalId)->exists()) {
+            $internalId = $prefix . '.' . $baseName . $counter . '@alfanar';
+            $counter++;
+        }
+
+        return $internalId;
+    }
+
+
+
+    public function toggleUserStatus($userId): array
+    {
+        $user = User::query()->find($userId);
+
+        if (! $user) {
+            throw new \Exception('User not found.', 404);
+        }
+
+        if ($user->hasRole('company_admin')) {
+            throw new \Exception('You cannot change the status of company admin.', 403);
+        }
+
+        $user->status = $user->status === 'active' ? 'inactive' : 'active';
+        $user->save();
+
+        $message = $user->status === 'active'
+            ? 'User activated successfully.'
+            : 'User deactivated successfully.';
+
+        $user = $user->fresh();
+        $user = $this->appendRoleAndPermissions($user);
+
+        return [
+            'message' => $message,
+            'user' => $user,
+            'status' => 200,
+        ];
+    }
+
+
+    public function deleteInternalUser($userId): array
+    {
+        $user = User::query()->find($userId);
+
+        if (! $user) {
+            throw new \Exception('User not found.', 404);
+        }
+
+        if ($user->hasRole('company_admin')) {
+            throw new \Exception('You cannot delete company admin.', 403);
+        }
+
+        $userName = $user->name;
+        $userInternalId = $user->internal_id;
+        $userEmail = $user->email;
+
+        $user->delete();
+
+        return [
+            'message' => 'User deleted successfully.',
+            'user' => [
+                'name' => $userName,
+                'internal_id' => $userInternalId,
+                'email' => $userEmail,
+            ],
+            'status' => 200,
+        ];
     }
 }

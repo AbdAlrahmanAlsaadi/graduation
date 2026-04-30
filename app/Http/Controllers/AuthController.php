@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangeUserStatusRequest;
 use App\Http\Requests\CompanyLoginRequest;
+use App\Http\Requests\CreateInternalUserRequest;
 use App\Http\Requests\InternalLoginRequest;
 use App\Http\Responses\Response;
 use App\Services\Authentication\AuthService;
@@ -54,21 +56,44 @@ class AuthController extends Controller
         }
     }
 
-    // public function signOut()
-    // {
-    //     try {
-    //         $data = $this->authService->signOut();
-    //
-    //         return Response::success(
-    //             $data['message'],
-    //             [],
-    //             $data['status']
-    //         );
-    //     } catch (Throwable $throwable) {
-    //         return Response::error(
-    //             $throwable->getMessage(),
-    //             $throwable->getCode() ?: 500
-    //         );
-    //     }
-    // }
+    public function signOut()
+    {
+        try {
+            $data = $this->authService->signOut();
+            return Response::success($data['message'], $data['user'], $data['status']);
+        } catch (Throwable $throwable) {
+            return Response::error($throwable->getMessage(), $throwable->getCode() ?: 500);
+        }
+    }
+
+
+    public function createInternalUser(CreateInternalUserRequest $request)
+    {
+        try {
+            $data = $this->authService->createInternalUser($request);
+            return Response::success($data['message'], $data['user'], $data['status']);
+        } catch (Throwable $throwable) {
+            return Response::error($throwable->getMessage(), $throwable->getCode() ?: 500);
+        }
+    }
+
+    public function toggleUserStatus($userId)
+    {
+        try {
+            $data = $this->authService->toggleUserStatus($userId);
+            return Response::success($data['message'], $data['user'], $data['status']);
+        } catch (\Throwable $throwable) {
+            return Response::error($throwable->getMessage(), $throwable->getCode() ?: 500);
+        }
+    }
+
+    public function deleteInternalUser($userId)
+    {
+        try {
+            $data = $this->authService->deleteInternalUser($userId);
+            return Response::success($data['message'], $data['user'], $data['status']);
+        } catch (\Throwable $throwable) {
+            return Response::error($throwable->getMessage(), $throwable->getCode() ?: 500);
+        }
+    }
 }
