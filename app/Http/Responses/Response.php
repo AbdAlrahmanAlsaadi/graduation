@@ -24,12 +24,14 @@ class Response
         ], $code);
     }
 
-    public static function Validation($message, $code = 422): JsonResponse
+    public static function Validation($message, $errors = [], $code = 422): JsonResponse
     {
         return response()->json([
             'status' => $code,
             'message' => $message,
-            'data' => [],
+            'data' => [
+                'errors' => $errors,
+            ],
         ], $code);
     }
 }
