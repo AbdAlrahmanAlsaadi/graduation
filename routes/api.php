@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\SpaceController;
+use App\Http\Controllers\WorkItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +29,16 @@ Route::middleware(['auth:sanctum', 'role:company_admin'])->group(function () {
 
     Route::delete('deleteUser/{userId}', [AuthController::class, 'deleteInternalUser']);
 });
+
+Route::apiResource('projects', ProjectController::class)->only(['index', 'store', 'show', 'update']);
+Route::get('projects/{project}/summary', [ProjectController::class, 'summary']);
+
+Route::get('projects/{project}/spaces', [SpaceController::class, 'index']);
+Route::post('projects/{project}/spaces', [SpaceController::class, 'store']);
+Route::patch('spaces/{space}', [SpaceController::class, 'update']);
+Route::delete('spaces/{space}', [SpaceController::class, 'destroy']);
+
+Route::get('projects/{project}/work-items', [WorkItemController::class, 'index']);
+Route::post('projects/{project}/work-items', [WorkItemController::class, 'store']);
+Route::delete('work-items/{workItem}', [WorkItemController::class, 'destroy']);
+Route::put('projects/{project}/work-items/reorder', [WorkItemController::class, 'reorder']);
