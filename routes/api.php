@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\WorkItemController;
@@ -28,6 +29,18 @@ Route::middleware(['auth:sanctum', 'role:company_admin'])->group(function () {
         ->middleware('permission:users.activate_deactivate');
 
     Route::delete('deleteUser/{userId}', [AuthController::class, 'deleteInternalUser']);
+
+
+    Route::post('Addequipment', [EquipmentController::class, 'store']);
+
+    Route::post('equipment/maintenance', [EquipmentController::class, 'storeMaintenance']);
+
+    Route::delete('equipment/{equipmentId}', [EquipmentController::class, 'destroy']);
+
+    Route::get('equipment/by-status', [EquipmentController::class, 'getByStatus']);
+
+    Route::post('equipment/maintenance/{maintenanceId}/close', [EquipmentController::class, 'closeMaintenance']);
+
 });
 
 Route::apiResource('projects', ProjectController::class)->only(['index', 'store', 'show', 'update']);
