@@ -15,6 +15,8 @@ class StoreDocumentVersionRequest extends FormRequest
     {
         return [
             'file' => ['required', 'file', 'mimes:pdf,doc,docx,xlsx,xls,png,jpg,jpeg'],
+            'custom_name' => ['required', 'string', 'max:255'],
+
         ];
     }
 

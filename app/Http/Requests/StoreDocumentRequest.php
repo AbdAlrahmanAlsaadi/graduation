@@ -26,6 +26,8 @@ class StoreDocumentRequest extends FormRequest
             'project_id' => ['required', 'exists:projects,id'],
             'title' => ['required', 'string', 'max:255'],
             'category' => ['required', 'string', 'max:255'],
+            'custom_name' => ['required', 'string', 'max:255'],
+
             'file' => ['required', 'file', 'mimes:pdf,doc,docx,xlsx,xls,png,jpg,jpeg'],
         ];
     }

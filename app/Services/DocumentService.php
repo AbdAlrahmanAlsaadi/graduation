@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Document;
 use App\Models\DocumentVersion;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class DocumentService
 {
@@ -13,7 +15,26 @@ class DocumentService
         $request->validated();
 
         return DB::transaction(function () use ($request) {
-            $storedFilePath = $request->file('file')->store('documents', 'public');
+            $file = $request->file('file');
+            $extension = $file->getClientOriginalExtension();
+
+            $baseName = $request->custom_name
+                ? Str::slug($request->custom_name)
+                : Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+
+            if ($baseName === '') {
+                $baseName = 'document';
+            }
+
+            $fileName = $baseName . '.' . $extension;
+            $counter = 2;
+
+            while (Storage::disk('public')->exists('documents/' . $fileName)) {
+                $fileName = $baseName . '-' . $counter . '.' . $extension;
+                $counter++;
+            }
+
+            $storedFilePath = $file->storeAs('documents', $fileName, 'public');
 
             $document = Document::query()->create([
                 'project_id' => $request->project_id,
@@ -53,55 +74,75 @@ class DocumentService
             ];
         });
     }
+
     public function addVersion($documentId, $request): array
-    {
-        $request->validated();
+{
+    $request->validated();
 
-        $document = Document::query()->find($documentId);
+    $document = Document::query()->find($documentId);
 
-        if (! $document) {
-            throw new \Exception('Document not found.', 404);
-        }
-
-        $storedFilePath = $request->file('file')->store('documents', 'public');
-
-        $lastVersion = DocumentVersion::query()
-            ->where('document_id', $document->getKey())
-            ->max('version_no');
-
-        $newVersionNumber = $lastVersion ? $lastVersion + 1 : 1;
-
-        $version = DocumentVersion::query()->create([
-            'document_id' => $document->getKey(),
-            'version_no' => $newVersionNumber,
-            'file_path' => $storedFilePath,
-        ]);
-
-        $document->load('project', 'versions');
-
-        $documentData = $document->toArray();
-
-        if (!empty($documentData['versions'])) {
-            foreach ($documentData['versions'] as &$docVersion) {
-                $docVersion['file_url'] = asset('storage/' . $docVersion['file_path']);
-            }
-        }
-
-        return [
-            'message' => 'New document version uploaded successfully.',
-            'document' => $documentData,
-            'version' => [
-                'id' => $version->id,
-                'document_id' => $version->document_id,
-                'version_no' => $version->version_no,
-                'file_path' => $version->file_path,
-                'file_url' => asset('storage/' . $version->file_path),
-                'created_at' => $version->created_at,
-                'updated_at' => $version->updated_at,
-            ],
-            'status' => 201,
-        ];
+    if (! $document) {
+        throw new \Exception('Document not found.', 404);
     }
+
+    $file = $request->file('file');
+    $extension = $file->getClientOriginalExtension();
+
+    $baseName = $request->custom_name
+        ? Str::slug($request->custom_name)
+        : Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+
+    if ($baseName === '') {
+        $baseName = 'document-version';
+    }
+
+    $lastVersion = DocumentVersion::query()
+        ->where('document_id', $document->getKey())
+        ->max('version_no');
+
+    $newVersionNumber = $lastVersion ? $lastVersion + 1 : 1;
+
+    $fileName = $baseName . '-v' . $newVersionNumber . '.' . $extension;
+    $counter = 2;
+
+    while (Storage::disk('public')->exists('documents/' . $fileName)) {
+        $fileName = $baseName . '-v' . $newVersionNumber . '-' . $counter . '.' . $extension;
+        $counter++;
+    }
+
+    $storedFilePath = $file->storeAs('documents', $fileName, 'public');
+
+    $version = DocumentVersion::query()->create([
+        'document_id' => $document->getKey(),
+        'version_no' => $newVersionNumber,
+        'file_path' => $storedFilePath,
+    ]);
+
+    $document->load('project', 'versions');
+
+    $documentData = $document->toArray();
+
+    if (! empty($documentData['versions'])) {
+        foreach ($documentData['versions'] as &$docVersion) {
+            $docVersion['file_url'] = asset('storage/' . $docVersion['file_path']);
+        }
+    }
+
+    return [
+        'message' => 'New document version uploaded successfully.',
+        'document' => $documentData,
+        'version' => [
+            'id' => $version->id,
+            'document_id' => $version->document_id,
+            'version_no' => $version->version_no,
+            'file_path' => $version->file_path,
+            'file_url' => asset('storage/' . $version->file_path),
+            'created_at' => $version->created_at,
+            'updated_at' => $version->updated_at,
+        ],
+        'status' => 201,
+    ];
+}
     public function show($documentId): array
     {
         $document = Document::query()
