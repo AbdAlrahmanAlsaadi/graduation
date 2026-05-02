@@ -27,6 +27,8 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'internal_id' => fake()->unique()->bothify('INT-####'),
+            'status' => 'active',
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
@@ -40,5 +42,32 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function withRole(string $roleName): static
+    {
+        return $this->afterCreating(function ($user) use ($roleName) {
+            $user->assignRole($roleName);
+        });
+    }
+
+    public function companyAdmin(): static
+    {
+        return $this->withRole('company_admin');
+    }
+
+    public function projectManager(): static
+    {
+        return $this->withRole('project_manager');
+    }
+
+    public function assistantEngineer(): static
+    {
+        return $this->withRole('assistant');
+    }
+
+    public function owner(): static
+    {
+        return $this->withRole('project_owner');
     }
 }

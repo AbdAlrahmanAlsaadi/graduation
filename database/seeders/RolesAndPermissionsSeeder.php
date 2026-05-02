@@ -399,7 +399,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ]
         );
         $companyAdminUser->assignRole('company_admin');
-
+        $companyAdminUser->save();
         // Project Manager
         $projectManagerUser = User::firstOrCreate(
             ['internal_id' => 'pm.ahmad@alfanar'],
@@ -412,7 +412,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ]
         );
         $projectManagerUser->assignRole('project_manager');
-
+        $projectManagerUser->save();
         // Assistant
         $assistantUser = User::firstOrCreate(
             ['internal_id' => 'asst.sara@alfanar'],
@@ -425,7 +425,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ]
         );
         $assistantUser->assignRole('assistant');
-
+        $assistantUser->save();
         // Project Owner
         $projectOwnerUser = User::firstOrCreate(
             ['internal_id' => 'owner.khaled@alfanar'],
@@ -438,7 +438,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ]
         );
         $projectOwnerUser->assignRole('project_owner');
-
+        $projectOwnerUser->save();
         $this->command->info('Sample users created.');
         $this->command->info('Credentials:');
         $this->command->info('Company Admin: admin@alfanar.com / password');
