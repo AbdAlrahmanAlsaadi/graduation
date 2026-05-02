@@ -14,11 +14,10 @@ class UpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'owner_name' => ['required', 'string', 'max:255'],
-            'location' => ['required', 'string', 'max:255'],
-            'total_area' => ['required', 'numeric', 'min:1'],
-            'height' => ['required', 'numeric', 'min:1'],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'location' => ['sometimes', 'string', 'max:255'],
+            'total_area' => ['sometimes', 'numeric', 'min:1'],
+            'height' => ['sometimes', 'numeric', 'min:1'],
             'project_manager_id' => [
                 'sometimes',
                 'integer',
