@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SpaceController;
@@ -21,6 +22,13 @@ Route::post('auth/company/login', [AuthController::class, 'companySignIn']);
 Route::post('auth/internal/login', [AuthController::class, 'internalSignIn']);
 Route::middleware('auth:sanctum')->post('sign-out', [AuthController::class, 'signOut']);
 
+Route::middleware(['auth:sanctum'])->group(
+    function () {
+        Route::post('document', [DocumentController::class, 'store']);
+        Route::post('document/{documentId}/versions', [DocumentController::class, 'addVersion']);
+        Route::get('documents/{documentId}', [DocumentController::class, 'show']);
+        Route::get('documents/versions/{versionId}/download', [DocumentController::class, 'downloadVersion']);
+    });
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin')->group(function () {
         Route::post('/internal-users', [AuthController::class, 'createInternalUser'])
