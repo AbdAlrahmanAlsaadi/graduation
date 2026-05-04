@@ -16,6 +16,8 @@ class StoreProjectRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
+            'latitude' => ['required', 'string', 'max:255'],
+            'longitude' => ['required', 'string', 'max:255'],
             'total_area' => ['required', 'numeric', 'min:1'],
             'height' => ['required', 'numeric', 'min:1'],
             'project_manager_id' => [

@@ -32,8 +32,11 @@ class ProjectFactory extends Factory
             'assistant_engineer_id' => $assistantEngineer->id,
             'owner_id' => $owner?->id,
             'location' => fake()->city(),
+            'latitude' => (string) fake()->latitude(),
+            'longitude' => (string) fake()->longitude(),
             'total_area' => fake()->randomFloat(2, 500, 10000),
             'height' => fake()->randomFloat(2, 2.5, 15),
+            'status' => 'Planned'
         ];
     }
 

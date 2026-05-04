@@ -75,13 +75,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('projects/{project}/work-items/reorder', [WorkItemController::class, 'reorder']);
     });
 
-    Route::middleware('role:assistant_engineer')->group(function () {
+    Route::middleware('role:assistant')->group(function () {
         Route::apiResource('projects', ProjectController::class)->only(['index', 'show']);
         Route::get('projects/{project}/spaces', [SpaceController::class, 'index']);
         Route::get('projects/{project}/work-items', [WorkItemController::class, 'index']);
     });
 
-    Route::middleware('role:owner')->group(function () {
+    Route::middleware('role:project_owner')->group(function () {
         Route::apiResource('projects', ProjectController::class)->only(['index', 'show']);
         Route::get('projects/{project}/spaces', [SpaceController::class, 'index']);
         Route::get('projects/{project}/work-items', [WorkItemController::class, 'index']);
