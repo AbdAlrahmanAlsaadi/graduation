@@ -5,6 +5,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SpaceController;
+use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\WorkItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,7 @@ Route::middleware(['auth:sanctum'])->group(
         Route::post('document/{documentId}/versions', [DocumentController::class, 'addVersion']);
         Route::get('documents/{documentId}', [DocumentController::class, 'show']);
         Route::get('documents/versions/{versionId}/download', [DocumentController::class, 'downloadVersion']);
+        Route::get('/projects/{projectId}/weather/today', [WeatherController::class, 'getTodayByProject']);
     });
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager|assistant|project_owner')->group(function () {
