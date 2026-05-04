@@ -14,6 +14,10 @@ class ProjectsSeeder extends Seeder
     public function run(): void
     {
         $projects = Project::factory()
+            ->state(fn () => [
+                'latitude' => (string) fake()->latitude(),
+                'longitude' => (string) fake()->longitude(),
+            ])
             ->count(fake()->numberBetween(5, 10))
             ->create();
 

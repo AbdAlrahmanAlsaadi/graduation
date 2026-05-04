@@ -19,8 +19,12 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('users');
             $table->string('location');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->decimal('total_area', 10, 2);
             $table->decimal('height', 10, 2);
+            $table->enum('status', ['Planned', 'Ongoing', 'Completed'])
+                ->default('Planned');
             $table->timestamps();
         });
     }

@@ -556,19 +556,32 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{base_url}}/auth/internal-users",
+                  "raw": "{{base_url}}/internal-users",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
-                    "auth",
                     "internal-users"
                   ],
                   "query": [
                     {
                       "key": "name",
-                      "value": null,
-                      "type": "text",
+                      "value": "abd",
+                      "disabled": true
+                    },
+                    {
+                      "key": "email",
+                      "value": "abd1@gmail.com",
+                      "disabled": true
+                    },
+                    {
+                      "key": "password",
+                      "value": "password",
+                      "disabled": true
+                    },
+                    {
+                      "key": "role",
+                      "value": "hel",
                       "disabled": true
                     }
                   ]
@@ -596,7 +609,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Thu, 30 Apr 2026 17:40:18 GMT"
+                  "value": "Sat, 02 May 2026 17:03:31 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -611,7 +624,7 @@
               "body": "{\n    \"message\": \"The name field is required. (and 3 more errors)\",\n    \"errors\": {\n        \"name\": [\n            \"The name field is required.\"\n        ],\n        \"email\": [\n            \"The email field is required.\"\n        ],\n        \"password\": [\n            \"The password field is required.\"\n        ],\n        \"role\": [\n            \"The role field is required.\"\n        ]\n    }\n}"
             },
             {
-              "name": "Success",
+              "name": "AvailableRoles",
               "originalRequest": {
                 "method": "POST",
                 "header": [
@@ -622,114 +635,29 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{base_url}}/auth/internal-users?name=abd&email=abd@gmail.com&password=password&role=assistant",
+                  "raw": "{{base_url}}/internal-users?name=abd&email=abd1@gmail.com&password=password&role=hel",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
-                    "auth",
                     "internal-users"
                   ],
                   "query": [
                     {
                       "key": "name",
-                      "value": "abd",
-                      "type": "text"
+                      "value": "abd"
                     },
                     {
                       "key": "email",
-                      "value": "abd@gmail.com",
-                      "type": "text"
+                      "value": "abd1@gmail.com"
                     },
                     {
                       "key": "password",
-                      "value": "password",
-                      "type": "text"
+                      "value": "password"
                     },
                     {
                       "key": "role",
-                      "value": "assistant",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Thu, 30 Apr 2026 17:42:12 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"status\": 201,\n    \"message\": \"Internal user created successfully.\",\n    \"data\": {\n        \"name\": \"abd\",\n        \"email\": \"abd@gmail.com\",\n        \"internal_id\": \"asst.abd@alfanar\",\n        \"updated_at\": \"2026-04-30T17:42:12.000000Z\",\n        \"created_at\": \"2026-04-30T17:42:12.000000Z\",\n        \"id\": 5,\n        \"role\": \"assistant\",\n        \"permissions\": []\n    }\n}"
-            },
-            {
-              "name": "AvalableRoles",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/auth/internal-users?name=abd&email=abd1@gmail.com&password=password&role=hel",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "internal-users"
-                  ],
-                  "query": [
-                    {
-                      "key": "name",
-                      "value": "abd",
-                      "type": "text"
-                    },
-                    {
-                      "key": "email",
-                      "value": "abd1@gmail.com",
-                      "type": "text"
-                    },
-                    {
-                      "key": "password",
-                      "value": "password",
-                      "type": "text"
-                    },
-                    {
-                      "key": "role",
-                      "value": "hel",
-                      "type": "text"
+                      "value": "hel"
                     }
                   ]
                 }
@@ -756,7 +684,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Thu, 30 Apr 2026 17:46:20 GMT"
+                  "value": "Sat, 02 May 2026 17:06:56 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -769,6 +697,81 @@
               ],
               "cookie": [],
               "body": "{\n    \"message\": \"Invalid role. Available roles are: project_manager, assistant, project_owner.\",\n    \"errors\": {\n        \"role\": [\n            \"Invalid role. Available roles are: project_manager, assistant, project_owner.\"\n        ]\n    }\n}"
+            },
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/internal-users?name=abd&email=abd1@gmail.com&password=password&role=project_manager",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "internal-users"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "abd"
+                    },
+                    {
+                      "key": "email",
+                      "value": "abd1@gmail.com"
+                    },
+                    {
+                      "key": "password",
+                      "value": "password"
+                    },
+                    {
+                      "key": "role",
+                      "value": "project_manager"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 02 May 2026 17:07:19 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 201,\n    \"message\": \"Internal user created successfully.\",\n    \"data\": {\n        \"name\": \"abd\",\n        \"email\": \"abd1@gmail.com\",\n        \"internal_id\": \"pm.abd@alfanar\",\n        \"updated_at\": \"2026-05-02T17:07:19.000000Z\",\n        \"created_at\": \"2026-05-02T17:07:19.000000Z\",\n        \"id\": 5,\n        \"role\": \"project_manager\",\n        \"permissions\": []\n    }\n}"
             }
           ]
         },
@@ -806,72 +809,6 @@
             }
           },
           "response": [
-            {
-              "name": "UserNotFound",
-              "originalRequest": {
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/internal-users/7/status?status=inactive",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "internal-users",
-                    "7",
-                    "status"
-                  ],
-                  "query": [
-                    {
-                      "key": "status",
-                      "value": "inactive",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Thu, 30 Apr 2026 17:58:45 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"status\": 404,\n    \"message\": \"User not found.\",\n    \"data\": []\n}"
-            },
             {
               "name": "Success",
               "originalRequest": {
@@ -917,7 +854,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Thu, 30 Apr 2026 18:03:19 GMT"
+                  "value": "Sat, 02 May 2026 17:08:52 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -929,7 +866,66 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"status\": 200,\n    \"message\": \"User deactivated successfully.\",\n    \"data\": {\n        \"id\": 5,\n        \"name\": \"abd\",\n        \"email\": \"abd@gmail.com\",\n        \"email_verified_at\": null,\n        \"internal_id\": \"asst.abd@alfanar\",\n        \"status\": \"inactive\",\n        \"created_at\": \"2026-04-30T17:42:12.000000Z\",\n        \"updated_at\": \"2026-04-30T18:03:19.000000Z\",\n        \"role\": \"assistant\",\n        \"permissions\": []\n    }\n}"
+              "body": "{\n    \"status\": 200,\n    \"message\": \"User deactivated successfully.\",\n    \"data\": {\n        \"id\": 5,\n        \"name\": \"abd\",\n        \"email\": \"abd1@gmail.com\",\n        \"email_verified_at\": null,\n        \"internal_id\": \"pm.abd@alfanar\",\n        \"status\": \"inactive\",\n        \"created_at\": \"2026-05-02T17:07:19.000000Z\",\n        \"updated_at\": \"2026-05-02T17:08:52.000000Z\",\n        \"role\": \"project_manager\",\n        \"permissions\": []\n    }\n}"
+            },
+            {
+              "name": "UserNotFound",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/internal-users/9/toggle-status",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "internal-users",
+                    "9",
+                    "toggle-status"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 02 May 2026 17:09:04 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 404,\n    \"message\": \"User not found.\",\n    \"data\": []\n}"
             }
           ]
         },
@@ -978,13 +974,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{base_url}}/deleteUser/9",
+                  "raw": "{{base_url}}/deleteUser/8",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "deleteUser",
-                    "9"
+                    "8"
                   ]
                 }
               },
@@ -1010,7 +1006,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Thu, 30 Apr 2026 18:10:03 GMT"
+                  "value": "Sat, 02 May 2026 17:10:27 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -1068,7 +1064,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Thu, 30 Apr 2026 18:10:25 GMT"
+                  "value": "Sat, 02 May 2026 17:10:41 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -1080,7 +1076,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"status\": 200,\n    \"message\": \"User deleted successfully.\",\n    \"data\": {\n        \"name\": \"abd\",\n        \"internal_id\": \"asst.abd@alfanar\",\n        \"email\": \"abd@gmail.com\"\n    }\n}"
+              "body": "{\n    \"status\": 200,\n    \"message\": \"User deleted successfully.\",\n    \"data\": {\n        \"name\": \"abd\",\n        \"internal_id\": \"pm.abd@alfanar\",\n        \"email\": \"abd1@gmail.com\"\n    }\n}"
             }
           ]
         },
@@ -1133,63 +1129,6 @@
             }
           },
           "response": [
-            {
-              "name": "Required",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/Addequipment",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "Addequipment"
-                  ]
-                }
-              },
-              "status": "Unprocessable Content",
-              "code": 422,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Fri, 01 May 2026 19:27:07 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"message\": \"The equipment name field is required. (and 1 more error)\",\n    \"errors\": {\n        \"name\": [\n            \"The equipment name field is required.\"\n        ],\n        \"type\": [\n            \"The equipment type field is required.\"\n        ]\n    }\n}"
-            },
             {
               "name": "Success",
               "originalRequest": {
@@ -1263,6 +1202,82 @@
               ],
               "cookie": [],
               "body": "{\n    \"status\": 201,\n    \"message\": \"Equipment created successfully.\",\n    \"data\": {\n        \"id\": 6,\n        \"name\": \"Excavator ZX200\",\n        \"type\": \"Excavator\",\n        \"identifier_no\": \"EQ-411117\",\n        \"status\": \"Available\",\n        \"updated_at\": \"2026-05-01T20:08:50.000000Z\",\n        \"created_at\": \"2026-05-01T20:08:50.000000Z\"\n    }\n}"
+            },
+            {
+              "name": "Required",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "name",
+                      "value": "Excavator ZX200",
+                      "type": "text",
+                      "uuid": "3d50355d-017e-4d2e-8727-181110f0ddb4",
+                      "disabled": true
+                    },
+                    {
+                      "key": "type",
+                      "value": "Excavator ",
+                      "type": "text",
+                      "uuid": "cba038cc-3e8f-4e6e-aa15-295075de31ed",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/Addequipment",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "Addequipment"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 02 May 2026 17:11:46 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"The equipment name field is required. (and 1 more error)\",\n    \"errors\": {\n        \"name\": [\n            \"The equipment name field is required.\"\n        ],\n        \"type\": [\n            \"The equipment type field is required.\"\n        ]\n    }\n}"
             }
           ]
         },
@@ -1477,16 +1492,30 @@
                   "formdata": [
                     {
                       "key": "equipment_id",
-                      "value": "5",
+                      "value": "1",
                       "type": "text",
                       "uuid": "bc526f4d-d022-4bf6-8005-837c22fd99a6",
                       "disabled": true
                     },
                     {
                       "key": "start_date",
-                      "value": "",
+                      "value": "2026-05-02",
                       "type": "text",
                       "uuid": "a229e0f7-e481-4591-9388-512d4a4edd02",
+                      "disabled": true
+                    },
+                    {
+                      "key": "description",
+                      "value": "description",
+                      "type": "text",
+                      "uuid": "2a1f47d5-b6ba-4b86-abe0-a8ad462f622c",
+                      "disabled": true
+                    },
+                    {
+                      "key": "type",
+                      "value": "Breakdown",
+                      "type": "text",
+                      "uuid": "b48949ce-4ee8-4f20-b259-c891be077b65",
                       "disabled": true
                     }
                   ]
@@ -1524,7 +1553,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Fri, 01 May 2026 20:21:35 GMT"
+                  "value": "Sat, 02 May 2026 17:14:16 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -1539,7 +1568,7 @@
               "body": "{\n    \"message\": \"The equipment_id field is required. (and 3 more errors)\",\n    \"errors\": {\n        \"equipment_id\": [\n            \"The equipment_id field is required.\"\n        ],\n        \"start_date\": [\n            \"The start_date field is required.\"\n        ],\n        \"type\": [\n            \"The type field is required.\"\n        ],\n        \"description\": [\n            \"The description field is required.\"\n        ]\n    }\n}"
             },
             {
-              "name": "AvailableStatus",
+              "name": "AvaliableType",
               "originalRequest": {
                 "method": "POST",
                 "header": [
@@ -1572,7 +1601,7 @@
                     },
                     {
                       "key": "type",
-                      "value": "Breakdown",
+                      "value": "gggg",
                       "type": "text",
                       "uuid": "b48949ce-4ee8-4f20-b259-c891be077b65"
                     }
@@ -1611,7 +1640,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Fri, 01 May 2026 20:34:58 GMT"
+                  "value": "Sat, 02 May 2026 17:14:44 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -1698,7 +1727,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Fri, 01 May 2026 20:38:47 GMT"
+                  "value": "Sat, 02 May 2026 17:15:01 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -1710,7 +1739,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"status\": 201,\n    \"message\": \"Equipment maintenance created successfully.\",\n    \"data\": {\n        \"equipment_id\": \"1\",\n        \"start_date\": \"2026-05-02\",\n        \"type\": \"Breakdown\",\n        \"description\": \"description\",\n        \"end_date\": null,\n        \"updated_at\": \"2026-05-01T20:38:47.000000Z\",\n        \"created_at\": \"2026-05-01T20:38:47.000000Z\",\n        \"id\": 1,\n        \"equipment\": {\n            \"id\": 1,\n            \"project_id\": null,\n            \"name\": \"Excavator ZX200\",\n            \"type\": \"Excavator\",\n            \"identifier_no\": \"EQ-001091\",\n            \"status\": \"Maintenance\",\n            \"created_at\": \"2026-05-01T20:38:25.000000Z\",\n            \"updated_at\": \"2026-05-01T20:38:47.000000Z\"\n        }\n    }\n}"
+              "body": "{\n    \"status\": 201,\n    \"message\": \"Equipment maintenance created successfully.\",\n    \"data\": {\n        \"equipment_id\": \"1\",\n        \"start_date\": \"2026-05-02\",\n        \"type\": \"Breakdown\",\n        \"description\": \"description\",\n        \"end_date\": null,\n        \"updated_at\": \"2026-05-02T17:15:01.000000Z\",\n        \"created_at\": \"2026-05-02T17:15:01.000000Z\",\n        \"id\": 2,\n        \"equipment\": {\n            \"id\": 1,\n            \"project_id\": null,\n            \"name\": \"Excavator ZX200\",\n            \"type\": \"Excavator\",\n            \"identifier_no\": \"EQ-001091\",\n            \"status\": \"Maintenance\",\n            \"created_at\": \"2026-05-01T20:38:25.000000Z\",\n            \"updated_at\": \"2026-05-02T17:15:01.000000Z\"\n        }\n    }\n}"
             }
           ]
         },
@@ -1787,7 +1816,7 @@
           },
           "response": [
             {
-              "name": "InvalidStatus",
+              "name": "AvailableType",
               "originalRequest": {
                 "method": "GET",
                 "header": [
@@ -1827,7 +1856,7 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{base_url}}/equipment/by-status?status=ss",
+                  "raw": "{{base_url}}/equipment/by-status?status=dd",
                   "host": [
                     "{{base_url}}"
                   ],
@@ -1838,8 +1867,7 @@
                   "query": [
                     {
                       "key": "status",
-                      "value": "ss",
-                      "type": "text"
+                      "value": "dd"
                     }
                   ]
                 }
@@ -1866,7 +1894,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Fri, 01 May 2026 20:43:02 GMT"
+                  "value": "Sat, 02 May 2026 17:16:36 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -1932,8 +1960,7 @@
                   "query": [
                     {
                       "key": "status",
-                      "value": "Available",
-                      "type": "text"
+                      "value": "Available"
                     }
                   ]
                 }
@@ -1960,7 +1987,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Fri, 01 May 2026 20:43:43 GMT"
+                  "value": "Sat, 02 May 2026 17:17:01 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -2044,7 +2071,7 @@
           },
           "response": [
             {
-              "name": "recordnotfound",
+              "name": "RecordNotFound",
               "originalRequest": {
                 "method": "POST",
                 "header": [
@@ -2087,14 +2114,14 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{base_url}}/equipment/maintenance/5/close",
+                  "raw": "{{base_url}}/equipment/maintenance/8/close",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "equipment",
                     "maintenance",
-                    "5",
+                    "8",
                     "close"
                   ]
                 }
@@ -2121,7 +2148,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Fri, 01 May 2026 20:48:50 GMT"
+                  "value": "Sat, 02 May 2026 17:18:13 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -2179,14 +2206,14 @@
                   ]
                 },
                 "url": {
-                  "raw": "{{base_url}}/equipment/maintenance/1/close",
+                  "raw": "{{base_url}}/equipment/maintenance/2/close",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "equipment",
                     "maintenance",
-                    "1",
+                    "2",
                     "close"
                   ]
                 }
@@ -2213,7 +2240,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Fri, 01 May 2026 20:49:10 GMT"
+                  "value": "Sat, 02 May 2026 17:21:48 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -2225,7 +2252,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"status\": 200,\n    \"message\": \"Equipment maintenance closed successfully.\",\n    \"data\": {\n        \"id\": 1,\n        \"equipment_id\": 1,\n        \"start_date\": \"2026-05-02\",\n        \"end_date\": \"2026-05-02\",\n        \"type\": \"Breakdown\",\n        \"description\": \"description\",\n        \"created_at\": \"2026-05-01T20:38:47.000000Z\",\n        \"updated_at\": \"2026-05-01T20:49:10.000000Z\",\n        \"equipment\": {\n            \"id\": 1,\n            \"project_id\": null,\n            \"name\": \"Excavator ZX200\",\n            \"type\": \"Excavator\",\n            \"identifier_no\": \"EQ-001091\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-01T20:38:25.000000Z\",\n            \"updated_at\": \"2026-05-01T20:49:10.000000Z\"\n        }\n    }\n}"
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Equipment maintenance closed successfully.\",\n    \"data\": {\n        \"id\": 2,\n        \"equipment_id\": 1,\n        \"start_date\": \"2026-05-02\",\n        \"end_date\": \"2026-05-02\",\n        \"type\": \"Breakdown\",\n        \"description\": \"description\",\n        \"created_at\": \"2026-05-02T17:15:01.000000Z\",\n        \"updated_at\": \"2026-05-02T17:21:48.000000Z\",\n        \"equipment\": {\n            \"id\": 1,\n            \"project_id\": null,\n            \"name\": \"Excavator ZX200\",\n            \"type\": \"Excavator\",\n            \"identifier_no\": \"EQ-001091\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-01T20:38:25.000000Z\",\n            \"updated_at\": \"2026-05-02T17:21:48.000000Z\"\n        }\n    }\n}"
             }
           ]
         }
@@ -2245,7 +2272,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "1|Mshqb0YG7xFGJWVThExPBG7if1e20WVwrVl6z1dtb87a29fc",
+                      "value": "4|LbYiwdIeNmnkizmm7WUeiuGq2Mm9LjcgJWVXYAxPd027e29e",
                       "type": "string"
                     }
                   ]
@@ -2265,7 +2292,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"Project Alpha\",\n  \"location\": \"Riyadh\",\n  \"total_area\": 250.5,\n  \"height\": 3.2,\n  \"project_manager_id\": 2,\n  \"assistant_engineer_id\": 3,\n  \"owner_id\": 4\n}",
+                  "raw": "{\n  \"name\": \"Project Alpha\",\n  \"location\": \"Riyadh\",\n  \"latitude\": \"1223.2134\",\n  \"longitude\": \"1223.2134\",\n  \"total_area\": 250.5,\n  \"height\": 3.2,\n  \"project_manager_id\": 2,\n  \"assistant_engineer_id\": 3,\n  \"owner_id\": 4\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2301,7 +2328,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n  \"name\": \"Project Alpha\",\n  \"location\": \"Riyadh\",\n  \"total_area\": 250.5,\n  \"height\": 3.2,\n  \"project_manager_id\": 2,\n  \"assistant_engineer_id\": 3,\n  \"owner_id\": 4\n}",
+                      "raw": "{\n  \"name\": \"Project Alpha\",\n  \"location\": \"Riyadh\",\n  \"latitude\": \"1223.2134\",\n  \"longitude\": \"1223.2134\",\n  \"total_area\": 250.5,\n  \"height\": 3.2,\n  \"project_manager_id\": 2,\n  \"assistant_engineer_id\": 3,\n  \"owner_id\": 4\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -2320,7 +2347,7 @@
                   },
                   "status": "Created",
                   "code": 201,
-                  "_postman_previewlanguage": "Text",
+                  "_postman_previewlanguage": null,
                   "header": [
                     {
                       "key": "Host",
@@ -2328,11 +2355,11 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:21:39 GMT"
+                      "value": "Mon, 04 May 2026 09:36:49 GMT"
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:21:39 GMT"
+                      "value": "Mon, 04 May 2026 09:36:49 GMT"
                     },
                     {
                       "key": "Connection",
@@ -2356,7 +2383,7 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n    \"status\": 201,\n    \"message\": \"Project created.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Project Alpha\",\n        \"owner_name\": null,\n        \"location\": \"Riyadh\",\n        \"total_area\": \"250.50\",\n        \"height\": \"3.20\",\n        \"project_manager_id\": 2,\n        \"assistant_engineer_id\": 3,\n        \"owner_id\": 4,\n        \"work_items\": [\n            {\n                \"id\": 1,\n                \"project_id\": 1,\n                \"name\": \"ملابن الأبواب\",\n                \"order\": 1,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 2,\n                \"project_id\": 1,\n                \"name\": \"تمديدات كهرباء\",\n                \"order\": 2,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 3,\n                \"project_id\": 1,\n                \"name\": \"تمديدات صحية\",\n                \"order\": 3,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 4,\n                \"project_id\": 1,\n                \"name\": \"طينة / لياسة\",\n                \"order\": 4,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 5,\n                \"project_id\": 1,\n                \"name\": \"بلاط أرضيات\",\n                \"order\": 5,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 6,\n                \"project_id\": 1,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"order\": 6,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 7,\n                \"project_id\": 1,\n                \"name\": \"جبس بورد\",\n                \"order\": 7,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 8,\n                \"project_id\": 1,\n                \"name\": \"دهان\",\n                \"order\": 8,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 9,\n                \"project_id\": 1,\n                \"name\": \"أبواب ونجارة\",\n                \"order\": 9,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 10,\n                \"project_id\": 1,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"order\": 10,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 11,\n                \"project_id\": 1,\n                \"name\": \"تشطيبات نهائية\",\n                \"order\": 11,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            }\n        ],\n        \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n        \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n    }\n}"
+                  "body": "{\n    \"status\": 201,\n    \"message\": \"Project created.\",\n    \"data\": {\n        \"id\": 13,\n        \"name\": \"Project Alpha\",\n        \"location\": \"Riyadh\",\n        \"latitude\": \"1223.2134\",\n        \"longitude\": \"1223.2134\",\n        \"total_area\": \"250.50\",\n        \"height\": \"3.20\",\n        \"status\": null,\n        \"project_manager_id\": 2,\n        \"assistant_engineer_id\": 3,\n        \"owner_id\": 4,\n        \"work_items\": [\n            {\n                \"id\": 23,\n                \"project_id\": 13,\n                \"name\": \"ملابن الأبواب\",\n                \"order\": 1,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 24,\n                \"project_id\": 13,\n                \"name\": \"تمديدات كهرباء\",\n                \"order\": 2,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 25,\n                \"project_id\": 13,\n                \"name\": \"تمديدات صحية\",\n                \"order\": 3,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 26,\n                \"project_id\": 13,\n                \"name\": \"طينة / لياسة\",\n                \"order\": 4,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 27,\n                \"project_id\": 13,\n                \"name\": \"بلاط أرضيات\",\n                \"order\": 5,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 28,\n                \"project_id\": 13,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"order\": 6,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 29,\n                \"project_id\": 13,\n                \"name\": \"جبس بورد\",\n                \"order\": 7,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 30,\n                \"project_id\": 13,\n                \"name\": \"دهان\",\n                \"order\": 8,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 31,\n                \"project_id\": 13,\n                \"name\": \"أبواب ونجارة\",\n                \"order\": 9,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 32,\n                \"project_id\": 13,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"order\": 10,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 33,\n                \"project_id\": 13,\n                \"name\": \"تشطيبات نهائية\",\n                \"order\": 11,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            }\n        ],\n        \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n        \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n    }\n}"
                 }
               ]
             },
@@ -3577,6 +3604,440 @@
       ]
     },
     {
+      "name": "Document",
+      "item": [
+        {
+          "name": "StoreDocument",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "required",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "project_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "f1701a66-7564-403d-9ff7-caa52eedc929",
+                      "disabled": true
+                    },
+                    {
+                      "key": "title",
+                      "value": "title",
+                      "type": "text",
+                      "uuid": "a7e7e6e2-f8a0-4952-9a6f-73d047696895",
+                      "disabled": true
+                    },
+                    {
+                      "key": "category",
+                      "value": "category",
+                      "type": "text",
+                      "uuid": "ef252f0a-60bf-40d0-978d-8e651f5d7209",
+                      "disabled": true
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "fdb25d1b-d5cc-464e-9021-c8fa99a17c43",
+                      "src": "/C:/Users/dell/Desktop/Ite_5th/امن/Exam_Questions-1.pdf",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/document",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "document"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 02 May 2026 18:39:45 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"The project_id field is required. (and 4 more errors)\",\n    \"errors\": {\n        \"project_id\": [\n            \"The project_id field is required.\"\n        ],\n        \"title\": [\n            \"The title field is required.\"\n        ],\n        \"category\": [\n            \"The category field is required.\"\n        ],\n        \"custom_name\": [\n            \"The custom name field is required.\"\n        ],\n        \"file\": [\n            \"The file field is required.\"\n        ]\n    }\n}"
+            },
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "project_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "f1701a66-7564-403d-9ff7-caa52eedc929"
+                    },
+                    {
+                      "key": "title",
+                      "value": "title",
+                      "type": "text",
+                      "uuid": "a7e7e6e2-f8a0-4952-9a6f-73d047696895"
+                    },
+                    {
+                      "key": "category",
+                      "value": "category",
+                      "type": "text",
+                      "uuid": "ef252f0a-60bf-40d0-978d-8e651f5d7209"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "fdb25d1b-d5cc-464e-9021-c8fa99a17c43",
+                      "src": "/C:/Users/dell/Desktop/Ite_5th/امن/Exam_Questions-1.pdf"
+                    },
+                    {
+                      "key": "custom_name",
+                      "value": "custom_name",
+                      "type": "text",
+                      "uuid": "10aaa0a9-4e50-4f0b-a7c5-123b1bb3f7ac"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/document",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "document"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 02 May 2026 18:40:19 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 201,\n    \"message\": \"Document uploaded successfully.\",\n    \"data\": {\n        \"document\": {\n            \"project_id\": \"1\",\n            \"title\": \"title\",\n            \"category\": \"category\",\n            \"updated_at\": \"2026-05-02T18:40:19.000000Z\",\n            \"created_at\": \"2026-05-02T18:40:19.000000Z\",\n            \"id\": 4,\n            \"project\": {\n                \"id\": 1,\n                \"name\": \"Project Alpha\",\n                \"project_manager_id\": 2,\n                \"assistant_engineer_id\": 3,\n                \"owner_id\": 4,\n                \"location\": \"Riyadh\",\n                \"total_area\": \"250.50\",\n                \"height\": \"3.20\",\n                \"created_at\": \"2026-05-02T16:51:19.000000Z\",\n                \"updated_at\": \"2026-05-02T16:51:19.000000Z\"\n            },\n            \"versions\": [\n                {\n                    \"id\": 4,\n                    \"document_id\": 4,\n                    \"version_no\": 1,\n                    \"file_path\": \"documents/custom-name.pdf\",\n                    \"created_at\": \"2026-05-02T18:40:19.000000Z\",\n                    \"updated_at\": \"2026-05-02T18:40:19.000000Z\",\n                    \"file_url\": \"http://127.0.0.1:8000/storage/documents/custom-name.pdf\"\n                }\n            ]\n        },\n        \"version\": {\n            \"id\": 4,\n            \"document_id\": 4,\n            \"version_no\": 1,\n            \"file_path\": \"documents/custom-name.pdf\",\n            \"file_url\": \"http://127.0.0.1:8000/storage/documents/custom-name.pdf\",\n            \"created_at\": \"2026-05-02T18:40:19.000000Z\",\n            \"updated_at\": \"2026-05-02T18:40:19.000000Z\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "DocumentVersion",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "2|UJfMHFLcF9eywLqOL8JGzuBKdfZ53kBjgs8jTToS52a4dbdf",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "9cddfc09-44e4-434f-83c7-c11f7cc2a1f2",
+                  "src": "/C:/Users/dell/Desktop/Ite_5th/امن/Exam_Questions-3.pdf"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/document/2/versions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "document",
+                "2",
+                "versions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "9cddfc09-44e4-434f-83c7-c11f7cc2a1f2",
+                      "src": "/C:/Users/dell/Desktop/Ite_5th/امن/Exam_Questions-3.pdf"
+                    },
+                    {
+                      "key": "custom_name",
+                      "value": "custom_name",
+                      "type": "text",
+                      "uuid": "2306045e-57a3-4d69-862f-7aff1b39e773"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/document/2/versions",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "document",
+                    "2",
+                    "versions"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 02 May 2026 18:43:48 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 201,\n    \"message\": \"New document version uploaded successfully.\",\n    \"data\": {\n        \"document\": {\n            \"id\": 2,\n            \"project_id\": 1,\n            \"title\": \"title\",\n            \"category\": \"category\",\n            \"created_at\": \"2026-05-02T17:46:25.000000Z\",\n            \"updated_at\": \"2026-05-02T17:46:25.000000Z\",\n            \"project\": {\n                \"id\": 1,\n                \"name\": \"Project Alpha\",\n                \"project_manager_id\": 2,\n                \"assistant_engineer_id\": 3,\n                \"owner_id\": 4,\n                \"location\": \"Riyadh\",\n                \"total_area\": \"250.50\",\n                \"height\": \"3.20\",\n                \"created_at\": \"2026-05-02T16:51:19.000000Z\",\n                \"updated_at\": \"2026-05-02T16:51:19.000000Z\"\n            },\n            \"versions\": [\n                {\n                    \"id\": 1,\n                    \"document_id\": 2,\n                    \"version_no\": 1,\n                    \"file_path\": \"documents/DYsfnZmgdNxpcYzMh4XJl57NFEEWcAoJwDEeyUJn.pdf\",\n                    \"created_at\": \"2026-05-02T17:46:25.000000Z\",\n                    \"updated_at\": \"2026-05-02T17:46:25.000000Z\",\n                    \"file_url\": \"http://127.0.0.1:8000/storage/documents/DYsfnZmgdNxpcYzMh4XJl57NFEEWcAoJwDEeyUJn.pdf\"\n                },\n                {\n                    \"id\": 3,\n                    \"document_id\": 2,\n                    \"version_no\": 2,\n                    \"file_path\": \"documents/OtRU2ihmESLkZK5j3oXCmCxRBRvqijq2lvB0fmdA.pdf\",\n                    \"created_at\": \"2026-05-02T18:00:04.000000Z\",\n                    \"updated_at\": \"2026-05-02T18:00:04.000000Z\",\n                    \"file_url\": \"http://127.0.0.1:8000/storage/documents/OtRU2ihmESLkZK5j3oXCmCxRBRvqijq2lvB0fmdA.pdf\"\n                },\n                {\n                    \"id\": 5,\n                    \"document_id\": 2,\n                    \"version_no\": 3,\n                    \"file_path\": \"documents/custom-name-v3.pdf\",\n                    \"created_at\": \"2026-05-02T18:43:17.000000Z\",\n                    \"updated_at\": \"2026-05-02T18:43:17.000000Z\",\n                    \"file_url\": \"http://127.0.0.1:8000/storage/documents/custom-name-v3.pdf\"\n                },\n                {\n                    \"id\": 6,\n                    \"document_id\": 2,\n                    \"version_no\": 4,\n                    \"file_path\": \"documents/custom-name-v4.pdf\",\n                    \"created_at\": \"2026-05-02T18:43:48.000000Z\",\n                    \"updated_at\": \"2026-05-02T18:43:48.000000Z\",\n                    \"file_url\": \"http://127.0.0.1:8000/storage/documents/custom-name-v4.pdf\"\n                }\n            ]\n        },\n        \"version\": {\n            \"id\": 6,\n            \"document_id\": 2,\n            \"version_no\": 4,\n            \"file_path\": \"documents/custom-name-v4.pdf\",\n            \"file_url\": \"http://127.0.0.1:8000/storage/documents/custom-name-v4.pdf\",\n            \"created_at\": \"2026-05-02T18:43:48.000000Z\",\n            \"updated_at\": \"2026-05-02T18:43:48.000000Z\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "ShowDocWithVersion",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "9cddfc09-44e4-434f-83c7-c11f7cc2a1f2",
+                      "src": "/C:/Users/dell/Desktop/Ite_5th/امن/Exam_Questions-3.pdf",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/documents/2",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "documents",
+                    "2"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 02 May 2026 18:08:03 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Document fetched successfully.\",\n    \"data\": {\n        \"id\": 2,\n        \"project_id\": 1,\n        \"title\": \"title\",\n        \"category\": \"category\",\n        \"created_at\": \"2026-05-02T17:46:25.000000Z\",\n        \"updated_at\": \"2026-05-02T17:46:25.000000Z\",\n        \"project\": {\n            \"id\": 1,\n            \"name\": \"Project Alpha\",\n            \"project_manager_id\": 2,\n            \"assistant_engineer_id\": 3,\n            \"owner_id\": 4,\n            \"location\": \"Riyadh\",\n            \"total_area\": \"250.50\",\n            \"height\": \"3.20\",\n            \"created_at\": \"2026-05-02T16:51:19.000000Z\",\n            \"updated_at\": \"2026-05-02T16:51:19.000000Z\"\n        },\n        \"versions\": [\n            {\n                \"id\": 1,\n                \"document_id\": 2,\n                \"version_no\": 1,\n                \"file_path\": \"documents/DYsfnZmgdNxpcYzMh4XJl57NFEEWcAoJwDEeyUJn.pdf\",\n                \"created_at\": \"2026-05-02T17:46:25.000000Z\",\n                \"updated_at\": \"2026-05-02T17:46:25.000000Z\",\n                \"file_url\": \"http://127.0.0.1:8000/storage/documents/DYsfnZmgdNxpcYzMh4XJl57NFEEWcAoJwDEeyUJn.pdf\",\n                \"download_url\": \"http://127.0.0.1:8000/api/documents/versions/1/download\"\n            },\n            {\n                \"id\": 3,\n                \"document_id\": 2,\n                \"version_no\": 2,\n                \"file_path\": \"documents/OtRU2ihmESLkZK5j3oXCmCxRBRvqijq2lvB0fmdA.pdf\",\n                \"created_at\": \"2026-05-02T18:00:04.000000Z\",\n                \"updated_at\": \"2026-05-02T18:00:04.000000Z\",\n                \"file_url\": \"http://127.0.0.1:8000/storage/documents/OtRU2ihmESLkZK5j3oXCmCxRBRvqijq2lvB0fmdA.pdf\",\n                \"download_url\": \"http://127.0.0.1:8000/api/documents/versions/3/download\"\n            }\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "DownloadVersion",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "2|UJfMHFLcF9eywLqOL8JGzuBKdfZ53kBjgs8jTToS52a4dbdf",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/documents/versions/2/download",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "documents",
+                "versions",
+                "2",
+                "download"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "SignOut",
       "request": {
         "auth": {
@@ -3666,6 +4127,14 @@
           "body": "{\n    \"status\": 200,\n    \"message\": \"Sign out successful.\",\n    \"data\": {\n        \"id\": 3,\n        \"name\": \"Sara Assistant\",\n        \"email\": \"sara.assistant@alfanar.com\",\n        \"internal_id\": \"asst.sara@alfanar\",\n        \"role\": [\n            \"assistant\"\n        ]\n    }\n}"
         }
       ]
+    },
+    {
+      "name": "ءمرك",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
     }
   ]
 }

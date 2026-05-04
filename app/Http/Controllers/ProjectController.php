@@ -60,32 +60,11 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project): JsonResponse
     {
         try {
-            $validated = $request->validated();
-            $user = Auth::user();
-
-            if (! $user) {
-                return Response::error('Unauthorized.', 401);
-            }
-
-            if (! $user->hasRole('company_admin')) {
-                $ownerId = array_key_exists('owner_id', $validated)
-                    ? $validated['owner_id']
-                    : $project->owner_id;
-
-                if (
-                    (int) $validated['project_manager_id'] !== (int) $project->project_manager_id
-                    || (int) $validated['assistant_engineer_id'] !== (int) $project->assistant_engineer_id
-                    || (int) ($ownerId ?? 0) !== (int) ($project->owner_id ?? 0)
-                ) {
-                    return Response::error('Only admin can modify project assignments.', 403);
-                }
-            }
-
-            $project->update($validated);
+            $project = $this->projectService->updateProject($project, $request->validated());
 
             return Response::success(
                 'Project updated.',
-                new ProjectResource($project->fresh())
+                new ProjectResource($project)
             );
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);

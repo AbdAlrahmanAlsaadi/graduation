@@ -16,11 +16,14 @@ class Project extends Model
         'name',
         'owner_name',
         'location',
+        'latitude',
+        'longitude',
         'total_area',
         'height',
         'project_manager_id',
         'assistant_engineer_id',
         'owner_id',
+        'status'
     ];
 
     protected function casts(): array

@@ -16,6 +16,8 @@ class UpdateProjectRequest extends FormRequest
         return [
             'name' => ['sometimes', 'string', 'max:255'],
             'location' => ['sometimes', 'string', 'max:255'],
+            'latitude' => ['sometimes', 'string', 'max:255'],
+            'longitude' => ['sometimes', 'string', 'max:255'],
             'total_area' => ['sometimes', 'numeric', 'min:1'],
             'height' => ['sometimes', 'numeric', 'min:1'],
             'project_manager_id' => [

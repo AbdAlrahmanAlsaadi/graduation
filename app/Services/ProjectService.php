@@ -4,7 +4,9 @@ namespace App\Services;
 
 use App\Models\Project;
 use App\Models\WorkItem;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use RuntimeException;
 
 class ProjectService
 {
@@ -48,5 +50,32 @@ class ProjectService
 
             return $project;
         });
+    }
+
+    public function updateProject(Project $project, array $data): Project
+    {
+        $user = Auth::user();
+
+        if (! $user) {
+            throw new RuntimeException('Unauthorized.', 401);
+        }
+
+        if (! $user->hasRole('company_admin')) {
+            $ownerId = array_key_exists('owner_id', $data)
+                ? $data['owner_id']
+                : $project->owner_id;
+
+            if (
+                (int) $data['project_manager_id'] !== (int) $project->project_manager_id
+                || (int) $data['assistant_engineer_id'] !== (int) $project->assistant_engineer_id
+                || (int) ($ownerId ?? 0) !== (int) ($project->owner_id ?? 0)
+            ) {
+                throw new RuntimeException('Only admin can modify project assignments.', 403);
+            }
+        }
+
+        $project->update($data);
+
+        return $project->fresh();
     }
 }

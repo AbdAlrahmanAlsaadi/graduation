@@ -15,10 +15,12 @@ class ProjectResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'owner_name' => $this->owner_name,
             'location' => $this->location,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
             'total_area' => $this->total_area,
             'height' => $this->height,
+            'status' => $this->status,
             'project_manager_id' => $this->project_manager_id,
             'assistant_engineer_id' => $this->assistant_engineer_id,
             'owner_id' => $this->owner_id,
