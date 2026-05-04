@@ -19,11 +19,20 @@ class RoleMiddleware
             ], 401);
         }
 
-        if (! $user->hasRole($role)) {
+        $roles = array_filter(array_map('trim', preg_split('/[|,]/', $role)));
+        $hasRequiredRole = false;
+        foreach ($roles as $requiredRole) {
+            if ($user->hasRole($requiredRole)) {
+                $hasRequiredRole = true;
+                break;
+            }
+        }
+
+        if (! $hasRequiredRole) {
             return response()->json([
                 'success' => false,
                 'message' => 'غير مصرح لك بالوصول',
-                'required_role' => $role,
+                'required_role' => $roles,
                 'your_role' => $user->getRoleNames()->values(),
             ], 403);
         }

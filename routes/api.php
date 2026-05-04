@@ -30,6 +30,12 @@ Route::middleware(['auth:sanctum'])->group(
         Route::get('documents/versions/{versionId}/download', [DocumentController::class, 'downloadVersion']);
     });
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware('role:company_admin|project_manager|assistant|project_owner')->group(function () {
+        Route::apiResource('projects', ProjectController::class)->only(['index', 'show']);
+        Route::get('projects/{project}/spaces', [SpaceController::class, 'index']);
+        Route::get('projects/{project}/work-items', [WorkItemController::class, 'index']);
+    });
+
     Route::middleware('role:company_admin')->group(function () {
         Route::post('/internal-users', [AuthController::class, 'createInternalUser'])
             ->middleware('permission:users.create');
@@ -46,45 +52,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('equipment/maintenance/{maintenanceId}/close', [EquipmentController::class, 'closeMaintenance']);
 
         Route::apiResource('projects', ProjectController::class)
-            ->only(['index', 'store', 'show', 'update']);
-        Route::get('projects/{project}/summary', [ProjectController::class, 'summary']);
+            ->only(['store', 'update']);
+    });
 
-        Route::get('projects/{project}/spaces', [SpaceController::class, 'index']);
+    Route::middleware('role:company_admin|project_manager')->group(function () {
+        Route::get('projects/{project}/summary', [ProjectController::class, 'summary']);
         Route::post('projects/{project}/spaces', [SpaceController::class, 'store']);
         Route::patch('spaces/{space}', [SpaceController::class, 'update']);
         Route::delete('spaces/{space}', [SpaceController::class, 'destroy']);
-
-        Route::get('projects/{project}/work-items', [WorkItemController::class, 'index']);
         Route::post('projects/{project}/work-items', [WorkItemController::class, 'store']);
         Route::delete('work-items/{workItem}', [WorkItemController::class, 'destroy']);
         Route::put('projects/{project}/work-items/reorder', [WorkItemController::class, 'reorder']);
-    });
-
-    Route::middleware('role:project_manager')->group(function () {
-        Route::apiResource('projects', ProjectController::class)->only(['index', 'show']);
-        Route::get('projects/{project}/summary', [ProjectController::class, 'summary']);
-
-        Route::get('projects/{project}/spaces', [SpaceController::class, 'index']);
-        Route::post('projects/{project}/spaces', [SpaceController::class, 'store']);
-        Route::patch('spaces/{space}', [SpaceController::class, 'update']);
-        Route::delete('spaces/{space}', [SpaceController::class, 'destroy']);
-
-        Route::get('projects/{project}/work-items', [WorkItemController::class, 'index']);
-        Route::post('projects/{project}/work-items', [WorkItemController::class, 'store']);
-        Route::delete('work-items/{workItem}', [WorkItemController::class, 'destroy']);
-        Route::put('projects/{project}/work-items/reorder', [WorkItemController::class, 'reorder']);
-    });
-
-    Route::middleware('role:assistant')->group(function () {
-        Route::apiResource('projects', ProjectController::class)->only(['index', 'show']);
-        Route::get('projects/{project}/spaces', [SpaceController::class, 'index']);
-        Route::get('projects/{project}/work-items', [WorkItemController::class, 'index']);
-    });
-
-    Route::middleware('role:project_owner')->group(function () {
-        Route::apiResource('projects', ProjectController::class)->only(['index', 'show']);
-        Route::get('projects/{project}/spaces', [SpaceController::class, 'index']);
-        Route::get('projects/{project}/work-items', [WorkItemController::class, 'index']);
     });
 });
 
