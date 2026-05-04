@@ -152,18 +152,14 @@ class AuthService
 
         $roleName = $request->role;
 
-        if (! in_array($roleName, ['project_manager', 'assistant', 'project_owner'])) {
-            throw new Exception('Invalid internal role.', 422);
-        }
-
         $internalId = $this->generateInternalId($request->name, $roleName);
 
         $user = User::query()->create([
             'name' => $request->name,
-            'email' => $request->email,
+            'email' => null,
             'internal_id' => $internalId,
             'password' => Hash::make($request->password),
-            'email_verified_at' => now(),
+            'email_verified_at' => null,
         ]);
 
         $role = Role::query()
@@ -172,12 +168,14 @@ class AuthService
             ->first();
 
         if (! $role) {
-            throw new Exception('Role not found.', 404);
+            throw new \Exception('Role not found.', 404);
         }
 
         $user->assignRole($role);
 
+        $user = $user->fresh();
         $user = $this->appendRoleAndPermissions($user);
+        $user->makeHidden(['email', 'email_verified_at']);
 
         return [
             'message' => 'Internal user created successfully.',
@@ -185,7 +183,6 @@ class AuthService
             'status' => 201,
         ];
     }
-
     private function generateInternalId(string $name, string $roleName): string
     {
         $prefix = match ($roleName) {
