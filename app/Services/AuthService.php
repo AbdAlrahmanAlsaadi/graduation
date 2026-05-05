@@ -276,4 +276,40 @@ class AuthService
             'status' => 200,
         ];
     }
+    public function getUsersByRole($request): array
+    {
+        $request->validated();
+
+        if ($request->role === 'all') {
+            $users = User::query()
+                ->with('roles')
+                ->get();
+
+            $users->each(function ($user) {
+                $this->appendRoleAndPermissions($user);
+                $user->makeHidden(['email', 'email_verified_at', 'password', 'remember_token']);
+            });
+
+            return [
+                'message' => 'Users fetched successfully.',
+                'users' => $users,
+                'status' => 200,
+            ];
+        }
+
+        $users = User::role($request->role, 'api')
+            ->with('roles')
+            ->get();
+
+        $users->each(function ($user) {
+            $this->appendRoleAndPermissions($user);
+            $user->makeHidden(['email', 'email_verified_at', 'password', 'remember_token']);
+        });
+
+        return [
+            'message' => 'Users fetched successfully.',
+            'users' => $users,
+            'status' => 200,
+        ];
+    }
 }

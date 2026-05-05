@@ -46,6 +46,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
             ->middleware('permission:users.activate_deactivate');
 
         Route::delete('deleteUser/{userId}', [AuthController::class, 'deleteInternalUser']);
+            Route::get('users/by-role', [AuthController::class, 'getUsersByRole']);
+
 
         Route::post('Addequipment', [EquipmentController::class, 'store']);
         Route::post('equipment/maintenance', [EquipmentController::class, 'storeMaintenance']);

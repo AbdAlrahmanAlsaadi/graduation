@@ -15,7 +15,7 @@ class FilterEquipmentByStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', Rule::in(['Available', 'Maintenance', 'Booked'])],
+            'status' => ['required', Rule::in(['all', 'Available', 'Maintenance', 'Booked'])],
         ];
     }
 
@@ -23,7 +23,7 @@ class FilterEquipmentByStatusRequest extends FormRequest
     {
         return [
             'status.required' => 'The status field is required.',
-            'status.in' => 'Invalid status. Available values are: Available, Maintenance, Booked.',
+            'status.in' => 'Invalid status. Available values are: all, Available, Maintenance, Booked.',
         ];
     }
 }
