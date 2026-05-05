@@ -106,9 +106,13 @@ class EquipmentService
     {
         $request->validated();
 
-        $equipment = Equipment::query()
-            ->where('status', $request->status)
-            ->get();
+        $query = Equipment::query();
+
+        if ($request->status !== 'all') {
+            $query->where('status', $request->status);
+        }
+
+        $equipment = $query->get();
 
         return [
             'message' => 'Equipment fetched successfully.',

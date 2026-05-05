@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ChangeUserStatusRequest;
 use App\Http\Requests\CompanyLoginRequest;
 use App\Http\Requests\CreateInternalUserRequest;
+use App\Http\Requests\FilterUsersByRoleRequest;
 use App\Http\Requests\InternalLoginRequest;
 use App\Http\Responses\Response;
 use App\Services\Authentication\AuthService;
@@ -94,6 +95,19 @@ class AuthController extends Controller
             return Response::success($data['message'], $data['user'], $data['status']);
         } catch (\Throwable $throwable) {
             return Response::error($throwable->getMessage(), $throwable->getCode() ?: 500);
+        }
+    }
+    public function getUsersByRole(FilterUsersByRoleRequest $request)
+    {
+        try {
+            $data = $this->authService->getUsersByRole($request);
+            return Response::success($data['message'], $data['users'], (int) $data['status']);
+        } catch (Throwable $throwable) {
+            $code = is_int($throwable->getCode()) && $throwable->getCode() > 0
+                ? $throwable->getCode()
+                : 500;
+
+            return Response::error($throwable->getMessage(), $code);
         }
     }
 }
