@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Project;
-use App\Models\Space;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class ProjectsSeeder extends Seeder
@@ -18,14 +18,28 @@ class ProjectsSeeder extends Seeder
                 'latitude' => (string) fake()->latitude(),
                 'longitude' => (string) fake()->longitude(),
             ])
-            ->count(fake()->numberBetween(5, 10))
+            ->count(5)
             ->create();
 
-        foreach ($projects as $project) {
-            Space::factory()
-                ->count(fake()->numberBetween(3, 5))
-                ->for($project)
-                ->create();
+        $project = $projects->first();
+        if ($project) {
+            $projectManager = User::role('project_manager')->first();
+            $assistant = User::role('assistant')->first();
+
+            if ($projectManager) {
+                $project->assignEngineer($projectManager, 'project_manager', now());
+            }
+
+            if ($assistant) {
+                $project->assignEngineer($assistant, 'assistant', now());
+            }
+        }
+
+        if ($projects->isNotEmpty()) {
+            $this->call([
+                SpacesSeeder::class,
+                WorkItemsSeeder::class,
+            ]);
         }
     }
 }

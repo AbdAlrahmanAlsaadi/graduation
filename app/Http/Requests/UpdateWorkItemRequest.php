@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\WorkItem;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreWorkItemRequest extends FormRequest
+class UpdateWorkItemRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,7 +14,7 @@ class StoreWorkItemRequest extends FormRequest
 
     public function rules(): array
     {
-        $rules = WorkItem::rules();
+        $rules = WorkItem::rules(true);
 
         $rules['details'] = ['nullable', 'array'];
         $rules['details.*.key'] = ['required_with:details', 'string'];

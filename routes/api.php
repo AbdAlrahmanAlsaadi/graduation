@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\ProjectEngineerController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\WeatherController;
@@ -35,7 +36,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager|assistant|project_owner')->group(function () {
         Route::apiResource('projects', ProjectController::class)->only(['index', 'show']);
         Route::get('projects/{project}/spaces', [SpaceController::class, 'index']);
-        Route::get('projects/{project}/work-items', [WorkItemController::class, 'index']);
+        //Route::get('spaces/{spaceId}', [SpaceController::class, 'show']);
+        Route::apiResource('projects.work-items', WorkItemController::class)->only(['index']);
     });
 
     Route::middleware('role:company_admin')->group(function () {
@@ -56,17 +58,24 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('equipment/maintenance/{maintenanceId}/close', [EquipmentController::class, 'closeMaintenance']);
 
         Route::apiResource('projects', ProjectController::class)
-            ->only(['store', 'update']);
+            ->only(['store', 'update', 'destroy']);
     });
 
     Route::middleware('role:company_admin|project_manager')->group(function () {
         Route::get('projects/{project}/summary', [ProjectController::class, 'summary']);
         Route::post('projects/{project}/spaces', [SpaceController::class, 'store']);
-        Route::patch('spaces/{space}', [SpaceController::class, 'update']);
+        Route::put('spaces/{space}', [SpaceController::class, 'update']);
         Route::delete('spaces/{space}', [SpaceController::class, 'destroy']);
-        Route::post('projects/{project}/work-items', [WorkItemController::class, 'store']);
-        Route::delete('work-items/{workItem}', [WorkItemController::class, 'destroy']);
+        Route::apiResource('projects.work-items', WorkItemController::class)
+            ->shallow()
+            ->only(['store', 'destroy']);
+        Route::put('projects/{project}/work-items/{workItem}', [WorkItemController::class, 'update']);
+        Route::put('projects/{project}/work-items/{workItem}/details', [WorkItemController::class, 'updateDetails']);
         Route::put('projects/{project}/work-items/reorder', [WorkItemController::class, 'reorder']);
+        // Engineers payload: { user_id, role, assigned_at? }
+        Route::get('projects/{project}/engineers', [ProjectEngineerController::class, 'index']);
+        Route::post('projects/{project}/engineers', [ProjectEngineerController::class, 'store']);
+        Route::delete('projects/{project}/engineers/{assignment}', [ProjectEngineerController::class, 'destroy']);
     });
 });
 
