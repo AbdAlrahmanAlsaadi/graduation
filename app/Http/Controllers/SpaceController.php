@@ -18,7 +18,6 @@ class SpaceController extends Controller
     {
         try {
             $spaces = $project->spaces()->get();
-
             return Response::success(
                 'Spaces fetched.',
                 SpaceResource::collection($spaces)
@@ -32,7 +31,9 @@ class SpaceController extends Controller
     {
         try {
             $data = $request->validated();
-            $data['has_ceiling_ceramic'] = $request->boolean('has_ceiling_ceramic');
+            if ($request->has('is_balcony_floor_tiled')) {
+                $data['is_balcony_floor_tiled'] = $request->boolean('is_balcony_floor_tiled');
+            }
 
             $space = $project->spaces()->create($data);
 
@@ -51,8 +52,8 @@ class SpaceController extends Controller
         try {
             $data = $request->validated();
 
-            if ($request->has('has_ceiling_ceramic')) {
-                $data['has_ceiling_ceramic'] = $request->boolean('has_ceiling_ceramic');
+            if ($request->has('is_balcony_floor_tiled')) {
+                $data['is_balcony_floor_tiled'] = $request->boolean('is_balcony_floor_tiled');
             }
 
             $space->update($data);

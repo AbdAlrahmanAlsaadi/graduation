@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ReorderWorkItemsRequest;
 use App\Http\Requests\StoreWorkItemRequest;
+use App\Http\Requests\UpdateWorkItemRequest;
 use App\Http\Resources\WorkItemResource;
 use App\Http\Responses\Response;
 use App\Models\Project;
 use App\Models\WorkItem;
 use App\Services\WorkItemService;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -22,7 +24,7 @@ class WorkItemController extends Controller
     public function index(Project $project): JsonResponse
     {
         try {
-            $items = $project->workItems()->orderBy('order')->get();
+            $items = $project->workItems()->with('details')->orderBy('sort_order')->get();
 
             return Response::success(
                 'Work items fetched.',
@@ -42,6 +44,46 @@ class WorkItemController extends Controller
                 'Work item created.',
                 new WorkItemResource($workItem),
                 201
+            );
+        } catch (Throwable $throwable) {
+            return $this->handleException($throwable);
+        }
+    }
+
+    public function update(Project $project, WorkItem $workItem, UpdateWorkItemRequest $request): JsonResponse
+    {
+        try {
+            $workItem = $this->workItemService->updateWorkItem($project, $workItem, $request->validated());
+
+            return Response::success(
+                'Work item updated.',
+                new WorkItemResource($workItem)
+            );
+        } catch (Throwable $throwable) {
+            return $this->handleException($throwable);
+        }
+    }
+
+    public function updateDetails(Project $project, WorkItem $workItem, Request $request): JsonResponse
+    {
+        try {
+            if ((int) $workItem->project_id !== (int) $project->id) {
+                return Response::error('Work item not found.', 404);
+            }
+
+            $data = $request->validate([
+                'details' => ['nullable', 'array'],
+                'details.*.key' => ['required_with:details', 'string'],
+                'details.*.value' => ['required_with:details'],
+                'details.*.unit' => ['nullable', 'string'],
+            ]);
+
+            $details = $data['details'] ?? [];
+            $workItem->syncDetails($details);
+
+            return Response::success(
+                'Work item details updated.',
+                new WorkItemResource($workItem->load('details'))
             );
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);

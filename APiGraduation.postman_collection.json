@@ -545,160 +545,6 @@
           },
           "response": [
             {
-              "name": "Required",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/internal-users",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "internal-users"
-                  ],
-                  "query": [
-                    {
-                      "key": "name",
-                      "value": "abd",
-                      "disabled": true
-                    },
-                    {
-                      "key": "email",
-                      "value": "abd1@gmail.com",
-                      "disabled": true
-                    },
-                    {
-                      "key": "password",
-                      "value": "password",
-                      "disabled": true
-                    },
-                    {
-                      "key": "role",
-                      "value": "hel",
-                      "disabled": true
-                    }
-                  ]
-                }
-              },
-              "status": "Unprocessable Content",
-              "code": 422,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Sat, 02 May 2026 17:03:31 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"message\": \"The name field is required. (and 3 more errors)\",\n    \"errors\": {\n        \"name\": [\n            \"The name field is required.\"\n        ],\n        \"email\": [\n            \"The email field is required.\"\n        ],\n        \"password\": [\n            \"The password field is required.\"\n        ],\n        \"role\": [\n            \"The role field is required.\"\n        ]\n    }\n}"
-            },
-            {
-              "name": "AvailableRoles",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/internal-users?name=abd&email=abd1@gmail.com&password=password&role=hel",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "internal-users"
-                  ],
-                  "query": [
-                    {
-                      "key": "name",
-                      "value": "abd"
-                    },
-                    {
-                      "key": "email",
-                      "value": "abd1@gmail.com"
-                    },
-                    {
-                      "key": "password",
-                      "value": "password"
-                    },
-                    {
-                      "key": "role",
-                      "value": "hel"
-                    }
-                  ]
-                }
-              },
-              "status": "Unprocessable Content",
-              "code": 422,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Sat, 02 May 2026 17:06:56 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"message\": \"Invalid role. Available roles are: project_manager, assistant, project_owner.\",\n    \"errors\": {\n        \"role\": [\n            \"Invalid role. Available roles are: project_manager, assistant, project_owner.\"\n        ]\n    }\n}"
-            },
-            {
               "name": "Success",
               "originalRequest": {
                 "method": "POST",
@@ -709,6 +555,10 @@
                     "type": "text"
                   }
                 ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                },
                 "url": {
                   "raw": "{{base_url}}/internal-users?name=abd&email=abd1@gmail.com&password=password&role=project_manager",
                   "host": [
@@ -759,7 +609,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Sat, 02 May 2026 17:07:19 GMT"
+                  "value": "Mon, 04 May 2026 19:05:40 GMT"
                 },
                 {
                   "key": "Content-Type",
@@ -771,7 +621,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"status\": 201,\n    \"message\": \"Internal user created successfully.\",\n    \"data\": {\n        \"name\": \"abd\",\n        \"email\": \"abd1@gmail.com\",\n        \"internal_id\": \"pm.abd@alfanar\",\n        \"updated_at\": \"2026-05-02T17:07:19.000000Z\",\n        \"created_at\": \"2026-05-02T17:07:19.000000Z\",\n        \"id\": 5,\n        \"role\": \"project_manager\",\n        \"permissions\": []\n    }\n}"
+              "body": "{\n    \"status\": 201,\n    \"message\": \"Internal user created successfully.\",\n    \"data\": {\n        \"id\": 6,\n        \"name\": \"abd\",\n        \"internal_id\": \"pm.abd2@alfanar\",\n        \"status\": \"active\",\n        \"created_at\": \"2026-05-04T19:05:40.000000Z\",\n        \"updated_at\": \"2026-05-04T19:05:40.000000Z\",\n        \"role\": \"project_manager\",\n        \"permissions\": []\n    }\n}"
             }
           ]
         },
@@ -1816,99 +1666,6 @@
           },
           "response": [
             {
-              "name": "AvailableType",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "key": "equipment_id",
-                      "value": "1",
-                      "type": "text",
-                      "uuid": "bc526f4d-d022-4bf6-8005-837c22fd99a6"
-                    },
-                    {
-                      "key": "start_date",
-                      "value": "2026-05-02",
-                      "type": "text",
-                      "uuid": "a229e0f7-e481-4591-9388-512d4a4edd02"
-                    },
-                    {
-                      "key": "description",
-                      "value": "description",
-                      "type": "text",
-                      "uuid": "2a1f47d5-b6ba-4b86-abe0-a8ad462f622c"
-                    },
-                    {
-                      "key": "type",
-                      "value": "Breakdown",
-                      "type": "text",
-                      "uuid": "b48949ce-4ee8-4f20-b259-c891be077b65"
-                    }
-                  ]
-                },
-                "url": {
-                  "raw": "{{base_url}}/equipment/by-status?status=dd",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "equipment",
-                    "by-status"
-                  ],
-                  "query": [
-                    {
-                      "key": "status",
-                      "value": "dd"
-                    }
-                  ]
-                }
-              },
-              "status": "Unprocessable Content",
-              "code": 422,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Sat, 02 May 2026 17:16:36 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"message\": \"Invalid status. Available values are: Available, Maintenance, Booked.\",\n    \"errors\": {\n        \"status\": [\n            \"Invalid status. Available values are: Available, Maintenance, Booked.\"\n        ]\n    }\n}"
-            },
-            {
               "name": "Success",
               "originalRequest": {
                 "method": "GET",
@@ -2000,6 +1757,192 @@
               ],
               "cookie": [],
               "body": "{\n    \"status\": 200,\n    \"message\": \"Equipment fetched successfully.\",\n    \"data\": [\n        {\n            \"id\": 2,\n            \"project_id\": null,\n            \"name\": \"Excavator ZX200\",\n            \"type\": \"Excavator\",\n            \"identifier_no\": \"EQ-676851\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-01T20:38:27.000000Z\",\n            \"updated_at\": \"2026-05-01T20:38:27.000000Z\"\n        },\n        {\n            \"id\": 3,\n            \"project_id\": null,\n            \"name\": \"Excavator ZX200\",\n            \"type\": \"Excavator\",\n            \"identifier_no\": \"EQ-167653\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-01T20:38:28.000000Z\",\n            \"updated_at\": \"2026-05-01T20:38:28.000000Z\"\n        },\n        {\n            \"id\": 4,\n            \"project_id\": null,\n            \"name\": \"Excavator ZX200\",\n            \"type\": \"Excavator\",\n            \"identifier_no\": \"EQ-653337\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-01T20:38:30.000000Z\",\n            \"updated_at\": \"2026-05-01T20:38:30.000000Z\"\n        },\n        {\n            \"id\": 5,\n            \"project_id\": null,\n            \"name\": \"Excavator ZX200\",\n            \"type\": \"Excavator\",\n            \"identifier_no\": \"EQ-286806\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-01T20:38:31.000000Z\",\n            \"updated_at\": \"2026-05-01T20:38:31.000000Z\"\n        },\n        {\n            \"id\": 6,\n            \"project_id\": null,\n            \"name\": \"Excavator ZX200\",\n            \"type\": \"Excavator\",\n            \"identifier_no\": \"EQ-870060\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-01T20:38:33.000000Z\",\n            \"updated_at\": \"2026-05-01T20:38:33.000000Z\"\n        }\n    ]\n}"
+            },
+            {
+              "name": "All",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "equipment_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "bc526f4d-d022-4bf6-8005-837c22fd99a6"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "2026-05-02",
+                      "type": "text",
+                      "uuid": "a229e0f7-e481-4591-9388-512d4a4edd02"
+                    },
+                    {
+                      "key": "description",
+                      "value": "description",
+                      "type": "text",
+                      "uuid": "2a1f47d5-b6ba-4b86-abe0-a8ad462f622c"
+                    },
+                    {
+                      "key": "type",
+                      "value": "Breakdown",
+                      "type": "text",
+                      "uuid": "b48949ce-4ee8-4f20-b259-c891be077b65"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/equipment/by-status?status=all",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "equipment",
+                    "by-status"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "all"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 05 May 2026 22:10:58 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Equipment fetched successfully.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"project_id\": null,\n            \"name\": \"Excavator 672\",\n            \"type\": \"Generator\",\n            \"identifier_no\": \"EQ-575479\",\n            \"status\": \"Maintenance\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        },\n        {\n            \"id\": 2,\n            \"project_id\": 3,\n            \"name\": \"Crane 974\",\n            \"type\": \"Compressor\",\n            \"identifier_no\": \"EQ-591425\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        },\n        {\n            \"id\": 3,\n            \"project_id\": null,\n            \"name\": \"Concrete Mixer 449\",\n            \"type\": \"Crane\",\n            \"identifier_no\": \"EQ-985947\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        },\n        {\n            \"id\": 4,\n            \"project_id\": 8,\n            \"name\": \"Generator 397\",\n            \"type\": \"Excavator\",\n            \"identifier_no\": \"EQ-525489\",\n            \"status\": \"Maintenance\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        },\n        {\n            \"id\": 5,\n            \"project_id\": 8,\n            \"name\": \"Generator 197\",\n            \"type\": \"Mixer\",\n            \"identifier_no\": \"EQ-496211\",\n            \"status\": \"Booked\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        },\n        {\n            \"id\": 6,\n            \"project_id\": null,\n            \"name\": \"Excavator 917\",\n            \"type\": \"Generator\",\n            \"identifier_no\": \"EQ-166887\",\n            \"status\": \"Booked\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        },\n        {\n            \"id\": 7,\n            \"project_id\": null,\n            \"name\": \"Concrete Mixer 131\",\n            \"type\": \"Mixer\",\n            \"identifier_no\": \"EQ-552635\",\n            \"status\": \"Booked\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        },\n        {\n            \"id\": 8,\n            \"project_id\": 1,\n            \"name\": \"Forklift 887\",\n            \"type\": \"Mixer\",\n            \"identifier_no\": \"EQ-683749\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        },\n        {\n            \"id\": 9,\n            \"project_id\": 2,\n            \"name\": \"Excavator 697\",\n            \"type\": \"Mixer\",\n            \"identifier_no\": \"EQ-215593\",\n            \"status\": \"Booked\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        },\n        {\n            \"id\": 10,\n            \"project_id\": 1,\n            \"name\": \"Forklift 278\",\n            \"type\": \"Generator\",\n            \"identifier_no\": \"EQ-920193\",\n            \"status\": \"Maintenance\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        },\n        {\n            \"id\": 11,\n            \"project_id\": 10,\n            \"name\": \"Crane 337\",\n            \"type\": \"Crane\",\n            \"identifier_no\": \"EQ-469724\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        },\n        {\n            \"id\": 12,\n            \"project_id\": 10,\n            \"name\": \"Excavator 407\",\n            \"type\": \"Forklift\",\n            \"identifier_no\": \"EQ-262901\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        },\n        {\n            \"id\": 13,\n            \"project_id\": 1,\n            \"name\": \"Concrete Mixer 733\",\n            \"type\": \"Compressor\",\n            \"identifier_no\": \"EQ-512896\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        },\n        {\n            \"id\": 14,\n            \"project_id\": 6,\n            \"name\": \"Generator 780\",\n            \"type\": \"Generator\",\n            \"identifier_no\": \"EQ-479470\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-05T22:10:45.000000Z\",\n            \"updated_at\": \"2026-05-05T22:10:45.000000Z\"\n        }\n    ]\n}"
+            },
+            {
+              "name": "AvailableType",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "equipment_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "bc526f4d-d022-4bf6-8005-837c22fd99a6"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "2026-05-02",
+                      "type": "text",
+                      "uuid": "a229e0f7-e481-4591-9388-512d4a4edd02"
+                    },
+                    {
+                      "key": "description",
+                      "value": "description",
+                      "type": "text",
+                      "uuid": "2a1f47d5-b6ba-4b86-abe0-a8ad462f622c"
+                    },
+                    {
+                      "key": "type",
+                      "value": "Breakdown",
+                      "type": "text",
+                      "uuid": "b48949ce-4ee8-4f20-b259-c891be077b65"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/equipment/by-status?status=sdsjdskw",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "equipment",
+                    "by-status"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "sdsjdskw"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 05 May 2026 22:12:52 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Invalid status. Available values are: all, Available, Maintenance, Booked.\",\n    \"errors\": {\n        \"status\": [\n            \"Invalid status. Available values are: all, Available, Maintenance, Booked.\"\n        ]\n    }\n}"
             }
           ]
         },
@@ -2255,6 +2198,218 @@
               "body": "{\n    \"status\": 200,\n    \"message\": \"Equipment maintenance closed successfully.\",\n    \"data\": {\n        \"id\": 2,\n        \"equipment_id\": 1,\n        \"start_date\": \"2026-05-02\",\n        \"end_date\": \"2026-05-02\",\n        \"type\": \"Breakdown\",\n        \"description\": \"description\",\n        \"created_at\": \"2026-05-02T17:15:01.000000Z\",\n        \"updated_at\": \"2026-05-02T17:21:48.000000Z\",\n        \"equipment\": {\n            \"id\": 1,\n            \"project_id\": null,\n            \"name\": \"Excavator ZX200\",\n            \"type\": \"Excavator\",\n            \"identifier_no\": \"EQ-001091\",\n            \"status\": \"Available\",\n            \"created_at\": \"2026-05-01T20:38:25.000000Z\",\n            \"updated_at\": \"2026-05-02T17:21:48.000000Z\"\n        }\n    }\n}"
             }
           ]
+        },
+        {
+          "name": "GetUsers",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "AvailableRoles",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/by-role?role=sdjkslds",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "by-role"
+                  ],
+                  "query": [
+                    {
+                      "key": "role",
+                      "value": "sdjkslds",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 05 May 2026 22:21:00 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Invalid role. Available values are: all, project_manager, assistant, project_owner.\",\n    \"errors\": {\n        \"role\": [\n            \"Invalid role. Available values are: all, project_manager, assistant, project_owner.\"\n        ]\n    }\n}"
+            },
+            {
+              "name": "All",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/by-role?role=all",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "by-role"
+                  ],
+                  "query": [
+                    {
+                      "key": "role",
+                      "value": "all",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 05 May 2026 22:22:00 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Users fetched successfully.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Company Admin\",\n            \"internal_id\": null,\n            \"status\": \"active\",\n            \"created_at\": \"2026-05-04T20:38:45.000000Z\",\n            \"updated_at\": \"2026-05-04T20:38:45.000000Z\",\n            \"role\": \"company_admin\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Ahmad Project Manager\",\n            \"internal_id\": \"pm.ahmad@alfanar\",\n            \"status\": \"active\",\n            \"created_at\": \"2026-05-04T20:38:45.000000Z\",\n            \"updated_at\": \"2026-05-04T20:38:45.000000Z\",\n            \"role\": \"project_manager\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Sara Assistant\",\n            \"internal_id\": \"asst.sara@alfanar\",\n            \"status\": \"active\",\n            \"created_at\": \"2026-05-04T20:38:45.000000Z\",\n            \"updated_at\": \"2026-05-04T20:38:45.000000Z\",\n            \"role\": \"assistant\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Khaled Project Owner\",\n            \"internal_id\": \"owner.khaled@alfanar\",\n            \"status\": \"active\",\n            \"created_at\": \"2026-05-04T20:38:46.000000Z\",\n            \"updated_at\": \"2026-05-04T20:38:46.000000Z\",\n            \"role\": \"project_owner\",\n            \"permissions\": []\n        }\n    ]\n}"
+            },
+            {
+              "name": "Succcess",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/by-role?role=project_manager",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "by-role"
+                  ],
+                  "query": [
+                    {
+                      "key": "role",
+                      "value": "project_manager",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 05 May 2026 22:22:30 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Users fetched successfully.\",\n    \"data\": [\n        {\n            \"id\": 2,\n            \"name\": \"Ahmad Project Manager\",\n            \"internal_id\": \"pm.ahmad@alfanar\",\n            \"status\": \"active\",\n            \"created_at\": \"2026-05-04T20:38:45.000000Z\",\n            \"updated_at\": \"2026-05-04T20:38:45.000000Z\",\n            \"role\": \"project_manager\",\n            \"permissions\": []\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
         }
       ]
     },
@@ -2264,6 +2419,101 @@
         {
           "name": "Projects",
           "item": [
+            {
+              "name": "List Projects",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/projects",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "List Projects",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sat, 09 May 2026 14:52:41 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sat, 09 May 2026 14:52:41 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Projects fetched.\",\n    \"data\": [\n        {\n            \"id\": 10,\n            \"name\": \"Project Alpha Updated\",\n            \"location\": \"Riyadh\",\n            \"latitude\": \"24.7137\",\n            \"longitude\": \"46.6754\",\n            \"apartment_area\": \"260.00\",\n            \"height\": \"3.30\",\n            \"status\": \"ongoing\",\n            \"project_manager_id\": null,\n            \"assistant_engineer_id\": null,\n            \"owner_id\": null,\n            \"created_by\": 7,\n            \"updated_by\": 7,\n            \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n            \"updated_at\": \"2026-05-09T14:03:36.000000Z\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Schowalter, Mraz and Torp Project\",\n            \"location\": \"Lionelland\",\n            \"latitude\": \"1.527405\",\n            \"longitude\": \"-142.162679\",\n            \"apartment_area\": \"6352.78\",\n            \"height\": \"8.97\",\n            \"status\": \"ongoing\",\n            \"project_manager_id\": 8,\n            \"assistant_engineer_id\": 9,\n            \"owner_id\": 10,\n            \"created_by\": 8,\n            \"updated_by\": 8,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Brown-Okuneva Project\",\n            \"location\": \"East Mathew\",\n            \"latitude\": \"25.365519\",\n            \"longitude\": \"-14.137954\",\n            \"apartment_area\": \"5002.92\",\n            \"height\": \"8.84\",\n            \"status\": \"ongoing\",\n            \"project_manager_id\": 8,\n            \"assistant_engineer_id\": 9,\n            \"owner_id\": 10,\n            \"created_by\": 8,\n            \"updated_by\": 8,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Abernathy-Gutkowski Project\",\n            \"location\": \"Jaylanbury\",\n            \"latitude\": \"10.859429\",\n            \"longitude\": \"-161.035437\",\n            \"apartment_area\": \"9969.05\",\n            \"height\": \"10.93\",\n            \"status\": \"ongoing\",\n            \"project_manager_id\": 8,\n            \"assistant_engineer_id\": 9,\n            \"owner_id\": 10,\n            \"created_by\": 8,\n            \"updated_by\": 8,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Swift PLC Project\",\n            \"location\": \"Schummstad\",\n            \"latitude\": \"81.720633\",\n            \"longitude\": \"115.920812\",\n            \"apartment_area\": \"2016.07\",\n            \"height\": \"8.01\",\n            \"status\": \"completed\",\n            \"project_manager_id\": 8,\n            \"assistant_engineer_id\": 9,\n            \"owner_id\": 10,\n            \"created_by\": 8,\n            \"updated_by\": 8,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Pfeffer-Balistreri Project\",\n            \"location\": \"Port Nicholetown\",\n            \"latitude\": \"12.159364\",\n            \"longitude\": \"-105.715356\",\n            \"apartment_area\": \"9118.95\",\n            \"height\": \"12.92\",\n            \"status\": \"completed\",\n            \"project_manager_id\": 8,\n            \"assistant_engineer_id\": 9,\n            \"owner_id\": 10,\n            \"created_by\": 8,\n            \"updated_by\": 8,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        }\n    ]\n}"
+                }
+              ]
+            },
             {
               "name": "Create Project",
               "request": {
@@ -2292,7 +2542,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"Project Alpha\",\n  \"location\": \"Riyadh\",\n  \"latitude\": \"1223.2134\",\n  \"longitude\": \"1223.2134\",\n  \"total_area\": 250.5,\n  \"height\": 3.2,\n  \"project_manager_id\": 2,\n  \"assistant_engineer_id\": 3,\n  \"owner_id\": 4\n}",
+                  "raw": "{\n  \"name\": \"Project Alpha\",\n  \"location\": \"Riyadh\",\n  \"apartment_area\": 250.5,\n  \"height\": 3.2,\n  \"latitude\": 24.7136,\n  \"longitude\": 46.6753,\n  \"status\": \"planned\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2328,7 +2578,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n  \"name\": \"Project Alpha\",\n  \"location\": \"Riyadh\",\n  \"latitude\": \"1223.2134\",\n  \"longitude\": \"1223.2134\",\n  \"total_area\": 250.5,\n  \"height\": 3.2,\n  \"project_manager_id\": 2,\n  \"assistant_engineer_id\": 3,\n  \"owner_id\": 4\n}",
+                      "raw": "{\n  \"name\": \"Project Alpha\",\n  \"location\": \"Riyadh\",\n  \"apartment_area\": 250.5,\n  \"height\": 3.2,\n  \"latitude\": 24.7136,\n  \"longitude\": 46.6753,\n  \"status\": \"planned\"\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -2355,11 +2605,11 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Mon, 04 May 2026 09:36:49 GMT"
+                      "value": "Sat, 09 May 2026 09:18:07 GMT"
                     },
                     {
                       "key": "Date",
-                      "value": "Mon, 04 May 2026 09:36:49 GMT"
+                      "value": "Sat, 09 May 2026 09:18:07 GMT"
                     },
                     {
                       "key": "Connection",
@@ -2383,7 +2633,7 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n    \"status\": 201,\n    \"message\": \"Project created.\",\n    \"data\": {\n        \"id\": 13,\n        \"name\": \"Project Alpha\",\n        \"location\": \"Riyadh\",\n        \"latitude\": \"1223.2134\",\n        \"longitude\": \"1223.2134\",\n        \"total_area\": \"250.50\",\n        \"height\": \"3.20\",\n        \"status\": null,\n        \"project_manager_id\": 2,\n        \"assistant_engineer_id\": 3,\n        \"owner_id\": 4,\n        \"work_items\": [\n            {\n                \"id\": 23,\n                \"project_id\": 13,\n                \"name\": \"ملابن الأبواب\",\n                \"order\": 1,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 24,\n                \"project_id\": 13,\n                \"name\": \"تمديدات كهرباء\",\n                \"order\": 2,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 25,\n                \"project_id\": 13,\n                \"name\": \"تمديدات صحية\",\n                \"order\": 3,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 26,\n                \"project_id\": 13,\n                \"name\": \"طينة / لياسة\",\n                \"order\": 4,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 27,\n                \"project_id\": 13,\n                \"name\": \"بلاط أرضيات\",\n                \"order\": 5,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 28,\n                \"project_id\": 13,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"order\": 6,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 29,\n                \"project_id\": 13,\n                \"name\": \"جبس بورد\",\n                \"order\": 7,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 30,\n                \"project_id\": 13,\n                \"name\": \"دهان\",\n                \"order\": 8,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 31,\n                \"project_id\": 13,\n                \"name\": \"أبواب ونجارة\",\n                \"order\": 9,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 32,\n                \"project_id\": 13,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"order\": 10,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            },\n            {\n                \"id\": 33,\n                \"project_id\": 13,\n                \"name\": \"تشطيبات نهائية\",\n                \"order\": 11,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n                \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n            }\n        ],\n        \"created_at\": \"2026-05-04T09:36:49.000000Z\",\n        \"updated_at\": \"2026-05-04T09:36:49.000000Z\"\n    }\n}"
+                  "body": "{\n    \"status\": 201,\n    \"message\": \"Project created.\",\n    \"data\": {\n        \"id\": 10,\n        \"name\": \"Project Alpha\",\n        \"location\": \"Riyadh\",\n        \"latitude\": 24.7136,\n        \"longitude\": 46.6753,\n        \"apartment_area\": \"250.50\",\n        \"height\": \"3.20\",\n        \"status\": \"planned\",\n        \"project_manager_id\": null,\n        \"assistant_engineer_id\": null,\n        \"owner_id\": null,\n        \"created_by\": 7,\n        \"updated_by\": 7,\n        \"work_items\": [\n            {\n                \"id\": 68,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"ملابن الأبواب\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 1,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 69,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"تمديدات كهرباء\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 2,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 70,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"تمديدات صحية\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 3,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 71,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"طينة / لياسة\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 4,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 72,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"بلاط أرضيات\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 5,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 73,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 6,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 74,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"جبس بورد\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 7,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 75,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"دهان\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 8,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 76,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"أبواب ونجارة\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 9,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 77,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 10,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 78,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"تشطيبات نهائية\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 11,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            }\n        ],\n        \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n        \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n    }\n}"
                 }
               ]
             },
@@ -2409,13 +2659,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{base_url}}/projects/{{project_id}}",
+                  "raw": "{{base_url}}/projects/{{projectId}}",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "projects",
-                    "{{project_id}}"
+                    "{{projectId}}"
                   ]
                 }
               },
@@ -2432,19 +2682,19 @@
                       }
                     ],
                     "url": {
-                      "raw": "{{base_url}}/projects/{{project_id}}",
+                      "raw": "{{base_url}}/projects/{{projectId}}",
                       "host": [
                         "{{base_url}}"
                       ],
                       "path": [
                         "projects",
-                        "{{project_id}}"
+                        "{{projectId}}"
                       ]
                     }
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": "Text",
+                  "_postman_previewlanguage": null,
                   "header": [
                     {
                       "key": "Host",
@@ -2452,11 +2702,11 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:24:14 GMT"
+                      "value": "Sat, 09 May 2026 09:21:53 GMT"
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:24:14 GMT"
+                      "value": "Sat, 09 May 2026 09:21:53 GMT"
                     },
                     {
                       "key": "Connection",
@@ -2480,7 +2730,7 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n    \"status\": 200,\n    \"message\": \"Project fetched.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Project Alpha\",\n        \"owner_name\": null,\n        \"location\": \"Riyadh\",\n        \"total_area\": \"250.50\",\n        \"height\": \"3.20\",\n        \"project_manager_id\": 2,\n        \"assistant_engineer_id\": 3,\n        \"owner_id\": 4,\n        \"spaces\": [],\n        \"work_items\": [\n            {\n                \"id\": 1,\n                \"project_id\": 1,\n                \"name\": \"ملابن الأبواب\",\n                \"order\": 1,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 2,\n                \"project_id\": 1,\n                \"name\": \"تمديدات كهرباء\",\n                \"order\": 2,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 3,\n                \"project_id\": 1,\n                \"name\": \"تمديدات صحية\",\n                \"order\": 3,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 4,\n                \"project_id\": 1,\n                \"name\": \"طينة / لياسة\",\n                \"order\": 4,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 5,\n                \"project_id\": 1,\n                \"name\": \"بلاط أرضيات\",\n                \"order\": 5,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 6,\n                \"project_id\": 1,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"order\": 6,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 7,\n                \"project_id\": 1,\n                \"name\": \"جبس بورد\",\n                \"order\": 7,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 8,\n                \"project_id\": 1,\n                \"name\": \"دهان\",\n                \"order\": 8,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 9,\n                \"project_id\": 1,\n                \"name\": \"أبواب ونجارة\",\n                \"order\": 9,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 10,\n                \"project_id\": 1,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"order\": 10,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 11,\n                \"project_id\": 1,\n                \"name\": \"تشطيبات نهائية\",\n                \"order\": 11,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            }\n        ],\n        \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n        \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n    }\n}"
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Project fetched.\",\n    \"data\": {\n        \"id\": 10,\n        \"name\": \"Project Alpha Updated\",\n        \"location\": \"Ryadh\",\n        \"latitude\": \"24.7137\",\n        \"longitude\": \"46.6754\",\n        \"apartment_area\": \"260.00\",\n        \"height\": \"3.30\",\n        \"status\": \"ongoing\",\n        \"project_manager_id\": null,\n        \"assistant_engineer_id\": null,\n        \"owner_id\": null,\n        \"created_by\": 7,\n        \"updated_by\": 7,\n        \"spaces\": [],\n        \"work_items\": [\n            {\n                \"id\": 68,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"ملابن الأبواب\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 1,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 69,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"تمديدات كهرباء\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 2,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 70,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"تمديدات صحية\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 3,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 71,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"طينة / لياسة\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 4,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 72,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"بلاط أرضيات\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 5,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 73,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 6,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 74,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"جبس بورد\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 7,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 75,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"دهان\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 8,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 76,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"أبواب ونجارة\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 9,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 77,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 10,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            },\n            {\n                \"id\": 78,\n                \"project_id\": 10,\n                \"parent_id\": null,\n                \"name\": \"تشطيبات نهائية\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 11,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n                \"updated_at\": \"2026-05-09T09:18:07.000000Z\"\n            }\n        ],\n        \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n        \"updated_at\": \"2026-05-09T09:21:17.000000Z\"\n    }\n}"
                 }
               ]
             },
@@ -2512,7 +2762,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"Project Alpha Updated\",\n  \"location\": \"Riyadh\",\n  \"total_area\": 260.0,\n  \"height\": 3.3,\n  \"project_manager_id\": 2,\n  \"assistant_engineer_id\": 3,\n  \"owner_id\": 4\n}",
+                  "raw": "{\n  \"name\": \"Project Alpha Updated\",\n  \"location\": \"Riyadh\",\n  \"apartment_area\": 260.0,\n  \"height\": 3.3,\n  \"latitude\": 24.7137,\n  \"longitude\": 46.6754,\n  \"status\": \"ongoing\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2520,13 +2770,13 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/projects/{{project_id}}",
+                  "raw": "{{base_url}}/projects/{{projectId}}",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "projects",
-                    "{{project_id}}"
+                    "{{projectId}}"
                   ]
                 }
               },
@@ -2549,7 +2799,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n  \"name\": \"Project Alpha Updated\",\n  \"location\": \"Riyadh\",\n  \"total_area\": 260.0,\n  \"height\": 3.3,\n  \"project_manager_id\": 2,\n  \"assistant_engineer_id\": 3,\n  \"owner_id\": 4\n}",
+                      "raw": "{\n  \"name\": \"Project Alpha Updated\",\n  \"location\": \"Ryadh\",\n  \"apartment_area\": 260.0,\n  \"height\": 3.3,\n  \"latitude\": 24.7137,\n  \"longitude\": 46.6754,\n  \"status\": \"ongoing\"\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -2557,19 +2807,19 @@
                       }
                     },
                     "url": {
-                      "raw": "{{base_url}}/projects/{{project_id}}",
+                      "raw": "{{base_url}}/projects/{{projectId}}",
                       "host": [
                         "{{base_url}}"
                       ],
                       "path": [
                         "projects",
-                        "{{project_id}}"
+                        "{{projectId}}"
                       ]
                     }
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": "Text",
+                  "_postman_previewlanguage": null,
                   "header": [
                     {
                       "key": "Host",
@@ -2577,11 +2827,11 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:26:01 GMT"
+                      "value": "Sat, 09 May 2026 09:21:17 GMT"
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:26:01 GMT"
+                      "value": "Sat, 09 May 2026 09:21:17 GMT"
                     },
                     {
                       "key": "Connection",
@@ -2605,7 +2855,7 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n    \"status\": 200,\n    \"message\": \"Project updated.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Project Alpha Updated\",\n        \"owner_name\": null,\n        \"location\": \"Riyadh\",\n        \"total_area\": \"260.00\",\n        \"height\": \"3.30\",\n        \"project_manager_id\": 2,\n        \"assistant_engineer_id\": 3,\n        \"owner_id\": 4,\n        \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n        \"updated_at\": \"2026-05-02T11:26:01.000000Z\"\n    }\n}"
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Project updated.\",\n    \"data\": {\n        \"id\": 10,\n        \"name\": \"Project Alpha Updated\",\n        \"location\": \"Ryadh\",\n        \"latitude\": \"24.7137\",\n        \"longitude\": \"46.6754\",\n        \"apartment_area\": \"260.00\",\n        \"height\": \"3.30\",\n        \"status\": \"ongoing\",\n        \"project_manager_id\": null,\n        \"assistant_engineer_id\": null,\n        \"owner_id\": null,\n        \"created_by\": 7,\n        \"updated_by\": 7,\n        \"created_at\": \"2026-05-09T09:18:07.000000Z\",\n        \"updated_at\": \"2026-05-09T09:21:17.000000Z\"\n    }\n}"
                 }
               ]
             },
@@ -2631,13 +2881,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{base_url}}/projects/{{project_id}}/summary",
+                  "raw": "{{base_url}}/projects/{{projectId}}/summary",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "projects",
-                    "{{project_id}}",
+                    "{{projectId}}",
                     "summary"
                   ]
                 }
@@ -2655,20 +2905,20 @@
                       }
                     ],
                     "url": {
-                      "raw": "{{base_url}}/projects/{{project_id}}/summary",
+                      "raw": "{{base_url}}/projects/{{projectId}}/summary",
                       "host": [
                         "{{base_url}}"
                       ],
                       "path": [
                         "projects",
-                        "{{project_id}}",
+                        "{{projectId}}",
                         "summary"
                       ]
                     }
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": "Text",
+                  "_postman_previewlanguage": null,
                   "header": [
                     {
                       "key": "Host",
@@ -2676,11 +2926,11 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:26:52 GMT"
+                      "value": "Sat, 09 May 2026 14:33:20 GMT"
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:26:52 GMT"
+                      "value": "Sat, 09 May 2026 14:33:20 GMT"
                     },
                     {
                       "key": "Connection",
@@ -2704,123 +2954,24 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n    \"status\": 200,\n    \"message\": \"Project summary fetched.\",\n    \"data\": {\n        \"project\": {\n            \"id\": 1,\n            \"name\": \"Project Alpha Updated\",\n            \"owner_name\": null,\n            \"location\": \"Riyadh\",\n            \"total_area\": \"260.00\",\n            \"height\": \"3.30\",\n            \"project_manager_id\": 2,\n            \"assistant_engineer_id\": 3,\n            \"owner_id\": 4,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:26:01.000000Z\"\n        },\n        \"spaces\": [],\n        \"work_items\": [\n            {\n                \"id\": 1,\n                \"project_id\": 1,\n                \"name\": \"ملابن الأبواب\",\n                \"order\": 1,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 2,\n                \"project_id\": 1,\n                \"name\": \"تمديدات كهرباء\",\n                \"order\": 2,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 3,\n                \"project_id\": 1,\n                \"name\": \"تمديدات صحية\",\n                \"order\": 3,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 4,\n                \"project_id\": 1,\n                \"name\": \"طينة / لياسة\",\n                \"order\": 4,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 5,\n                \"project_id\": 1,\n                \"name\": \"بلاط أرضيات\",\n                \"order\": 5,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 6,\n                \"project_id\": 1,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"order\": 6,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 7,\n                \"project_id\": 1,\n                \"name\": \"جبس بورد\",\n                \"order\": 7,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 8,\n                \"project_id\": 1,\n                \"name\": \"دهان\",\n                \"order\": 8,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 9,\n                \"project_id\": 1,\n                \"name\": \"أبواب ونجارة\",\n                \"order\": 9,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 10,\n                \"project_id\": 1,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"order\": 10,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            },\n            {\n                \"id\": 11,\n                \"project_id\": 1,\n                \"name\": \"تشطيبات نهائية\",\n                \"order\": 11,\n                \"is_default\": true,\n                \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n                \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n            }\n        ],\n        \"totals_by_finish_type\": {\n            \"paint\": 0,\n            \"ceramic\": 0,\n            \"gypsum\": 0,\n            \"none\": 0\n        },\n        \"total_ceiling_ceramic_area\": 0\n    }\n}"
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Project summary fetched.\",\n    \"data\": {\n        \"project\": {\n            \"id\": 5,\n            \"name\": \"Schowalter, Mraz and Torp Project\",\n            \"location\": \"Lionelland\",\n            \"latitude\": \"1.527405\",\n            \"longitude\": \"-142.162679\",\n            \"apartment_area\": \"6352.78\",\n            \"height\": \"8.97\",\n            \"status\": \"ongoing\",\n            \"project_manager_id\": 8,\n            \"assistant_engineer_id\": 9,\n            \"owner_id\": 10,\n            \"created_by\": 8,\n            \"updated_by\": 8,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        \"spaces\": [\n            {\n                \"id\": 3,\n                \"project_id\": 5,\n                \"type\": \"kitchen\",\n                \"wall_area\": \"152.13\",\n                \"floor_area\": \"118.72\",\n                \"wall_finish_type\": \"paint\",\n                \"ceiling_finish_type\": \"none\",\n                \"toilet_type\": \"none\",\n                \"ceiling_ceramic_area\": null,\n                \"is_balcony_floor_tiled\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 4,\n                \"project_id\": 5,\n                \"type\": \"salon\",\n                \"wall_area\": \"214.89\",\n                \"floor_area\": \"95.77\",\n                \"wall_finish_type\": \"none\",\n                \"ceiling_finish_type\": \"paint\",\n                \"toilet_type\": \"none\",\n                \"ceiling_ceramic_area\": null,\n                \"is_balcony_floor_tiled\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 5,\n                \"project_id\": 5,\n                \"type\": \"storage\",\n                \"wall_area\": \"113.32\",\n                \"floor_area\": \"151.03\",\n                \"wall_finish_type\": \"ceramic\",\n                \"ceiling_finish_type\": \"paint\",\n                \"toilet_type\": \"none\",\n                \"ceiling_ceramic_area\": null,\n                \"is_balcony_floor_tiled\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 6,\n                \"project_id\": 5,\n                \"type\": \"balcony\",\n                \"wall_area\": \"47.27\",\n                \"floor_area\": \"116.84\",\n                \"wall_finish_type\": \"gypsum\",\n                \"ceiling_finish_type\": \"none\",\n                \"toilet_type\": \"none\",\n                \"ceiling_ceramic_area\": null,\n                \"is_balcony_floor_tiled\": true,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            }\n        ],\n        \"work_items\": [\n            {\n                \"id\": 13,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"ملابن الأبواب\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 1,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 14,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"تمديدات كهرباء\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 2,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 15,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"تمديدات صحية\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 3,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 16,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"طينة / لياسة\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 4,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 17,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"بلاط أرضيات\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 5,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 18,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 6,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 19,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"جبس بورد\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 7,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 20,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"دهان\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 8,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 21,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"أبواب ونجارة\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 9,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 22,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 10,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 23,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"تشطيبات نهائية\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 11,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            }\n        ],\n        \"totals_by_finish_type\": {\n            \"paint\": 152.13,\n            \"ceramic\": 113.32,\n            \"gypsum\": 47.27,\n            \"none\": 214.89,\n            \"custom\": 0\n        },\n        \"total_ceiling_ceramic_area\": 0\n    }\n}"
                 }
               ]
             }
           ]
         },
         {
-          "name": "Spaces",
+          "name": "Project Engineers",
           "item": [
             {
-              "name": "List Spaces",
+              "name": "Assign Engineer",
               "request": {
                 "auth": {
                   "type": "bearer",
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "2|6vSg6qd5nnVBxZZ0VZu0o6fleo4odpolhzoQfNZf1e5df2e5",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/projects/{{project_id}}/spaces",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "projects",
-                    "{{project_id}}",
-                    "spaces"
-                  ]
-                }
-              },
-              "response": [
-                {
-                  "name": "List Spaces",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "key": "Accept",
-                        "value": "application/json",
-                        "type": "text"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{base_url}}/projects/{{project_id}}/spaces",
-                      "host": [
-                        "{{base_url}}"
-                      ],
-                      "path": [
-                        "projects",
-                        "{{project_id}}",
-                        "spaces"
-                      ]
-                    }
-                  },
-                  "status": "OK",
-                  "code": 200,
-                  "_postman_previewlanguage": "Text",
-                  "header": [
-                    {
-                      "key": "Host",
-                      "value": "127.0.0.1:8000"
-                    },
-                    {
-                      "key": "Date",
-                      "value": "Sat, 02 May 2026 11:34:25 GMT"
-                    },
-                    {
-                      "key": "Date",
-                      "value": "Sat, 02 May 2026 11:34:25 GMT"
-                    },
-                    {
-                      "key": "Connection",
-                      "value": "close"
-                    },
-                    {
-                      "key": "X-Powered-By",
-                      "value": "PHP/8.2.11"
-                    },
-                    {
-                      "key": "Cache-Control",
-                      "value": "no-cache, private"
-                    },
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    },
-                    {
-                      "key": "Access-Control-Allow-Origin",
-                      "value": "*"
-                    }
-                  ],
-                  "cookie": [],
-                  "body": "{\n    \"status\": 200,\n    \"message\": \"Spaces fetched.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"project_id\": 1,\n            \"type\": \"kitchen\",\n            \"area\": \"12.50\",\n            \"finish_type\": \"ceramic\",\n            \"toilet_type\": \"none\",\n            \"has_ceiling_ceramic\": true,\n            \"ceiling_ceramic_area\": \"8.00\",\n            \"created_at\": \"2026-05-02T11:34:16.000000Z\",\n            \"updated_at\": \"2026-05-02T11:34:16.000000Z\"\n        }\n    ]\n}"
-                }
-              ]
-            },
-            {
-              "name": "Create Space",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "2|6vSg6qd5nnVBxZZ0VZu0o6fleo4odpolhzoQfNZf1e5df2e5",
+                      "value": "1|zdK69t3qEs7J1MJrhRjW4DnT7nPbb1xaprD8SBtsc0a5cfb4",
                       "type": "string"
                     }
                   ]
@@ -2840,7 +2991,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"type\": \"kitchen\",\n  \"area\": 12.5,\n  \"finish_type\": \"ceramic\",\n  \"toilet_type\": \"none\",\n  \"has_ceiling_ceramic\": true,\n  \"ceiling_ceramic_area\": 8.0\n}",
+                  "raw": "{\n  \"user_id\": 8,\n  \"role\": \"project_manager\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2848,13 +2999,444 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/projects/{{project_id}}/spaces",
+                  "raw": "{{base_url}}/projects/{{projectId}}/engineers",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "projects",
-                    "{{project_id}}",
+                    "{{projectId}}",
+                    "engineers"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Assign Engineer",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"user_id\": 8,\n  \"role\": \"project_manager\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/engineers",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "engineers"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sat, 09 May 2026 14:55:44 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sat, 09 May 2026 14:55:44 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 201,\n    \"message\": \"Engineer assigned.\",\n    \"data\": {\n        \"user_id\": 8,\n        \"role\": \"project_manager\",\n        \"assigned_at\": \"2026-05-09T14:55:44.000000Z\",\n        \"project_id\": 5,\n        \"updated_at\": \"2026-05-09T14:55:44.000000Z\",\n        \"created_at\": \"2026-05-09T14:55:44.000000Z\",\n        \"id\": 1,\n        \"user\": {\n            \"id\": 8,\n            \"name\": \"Ahmad Project Manager\",\n            \"email\": \"ahmad.pm@alfanar.com\",\n            \"email_verified_at\": \"2026-05-09T09:15:55.000000Z\",\n            \"internal_id\": \"pm.ahmad@alfanar\",\n            \"status\": \"active\",\n            \"created_at\": \"2026-05-09T09:15:55.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:55.000000Z\"\n        }\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "List Engineers",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/projects/{{projectId}}/engineers",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{projectId}}",
+                    "engineers"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "List Engineers",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/engineers",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "engineers"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sat, 09 May 2026 14:56:11 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sat, 09 May 2026 14:56:11 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Engineers fetched.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"project_id\": 5,\n            \"user_id\": 8,\n            \"role\": \"project_manager\",\n            \"assigned_at\": \"2026-05-09T14:55:44.000000Z\",\n            \"created_at\": \"2026-05-09T14:55:44.000000Z\",\n            \"updated_at\": \"2026-05-09T14:55:44.000000Z\",\n            \"user\": {\n                \"id\": 8,\n                \"name\": \"Ahmad Project Manager\",\n                \"email\": \"ahmad.pm@alfanar.com\",\n                \"email_verified_at\": \"2026-05-09T09:15:55.000000Z\",\n                \"internal_id\": \"pm.ahmad@alfanar\",\n                \"status\": \"active\",\n                \"created_at\": \"2026-05-09T09:15:55.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:55.000000Z\"\n            }\n        }\n    ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "Remove Engineer",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/projects/{{projectId}}/engineers/4",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{projectId}}",
+                    "engineers",
+                    "4"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Remove Engineer",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/engineers/4",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "engineers",
+                        "4"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sat, 09 May 2026 15:01:14 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sat, 09 May 2026 15:01:14 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Engineer assignment removed.\",\n    \"data\": []\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Spaces",
+          "item": [
+            {
+              "name": "List Spaces",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/projects/{{projectId}}/spaces",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{projectId}}",
+                    "spaces"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "List Spaces",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/spaces",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "spaces"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sat, 09 May 2026 14:29:55 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sat, 09 May 2026 14:29:55 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Spaces fetched.\",\n    \"data\": [\n        {\n            \"id\": 3,\n            \"project_id\": 5,\n            \"type\": \"kitchen\",\n            \"wall_area\": \"152.13\",\n            \"floor_area\": \"118.72\",\n            \"wall_finish_type\": \"paint\",\n            \"ceiling_finish_type\": \"none\",\n            \"toilet_type\": \"none\",\n            \"ceiling_ceramic_area\": null,\n            \"is_balcony_floor_tiled\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 4,\n            \"project_id\": 5,\n            \"type\": \"salon\",\n            \"wall_area\": \"214.89\",\n            \"floor_area\": \"95.77\",\n            \"wall_finish_type\": \"none\",\n            \"ceiling_finish_type\": \"paint\",\n            \"toilet_type\": \"none\",\n            \"ceiling_ceramic_area\": null,\n            \"is_balcony_floor_tiled\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 5,\n            \"project_id\": 5,\n            \"type\": \"storage\",\n            \"wall_area\": \"113.32\",\n            \"floor_area\": \"151.03\",\n            \"wall_finish_type\": \"ceramic\",\n            \"ceiling_finish_type\": \"paint\",\n            \"toilet_type\": \"none\",\n            \"ceiling_ceramic_area\": null,\n            \"is_balcony_floor_tiled\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 6,\n            \"project_id\": 5,\n            \"type\": \"balcony\",\n            \"wall_area\": \"47.27\",\n            \"floor_area\": \"116.84\",\n            \"wall_finish_type\": \"gypsum\",\n            \"ceiling_finish_type\": \"none\",\n            \"toilet_type\": \"none\",\n            \"ceiling_ceramic_area\": null,\n            \"is_balcony_floor_tiled\": true,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        }\n    ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "Create Space",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"kitchen\",\n  \"wall_area\": 12.5,\n  \"floor_area\": 12.5,\n  \"wall_finish_type\": \"ceramic\",\n  \"ceiling_area\": 8.0,\n  \"ceiling_finish_type\": \"paint\",\n  \"toilet_type\": \"none\",\n  \"is_balcony_floor_tiled\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/projects/{{projectId}}/spaces",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{projectId}}",
                     "spaces"
                   ]
                 }
@@ -2878,7 +3460,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n  \"type\": \"kitchen\",\n  \"area\": 12.5,\n  \"finish_type\": \"ceramic\",\n  \"toilet_type\": \"none\",\n  \"has_ceiling_ceramic\": true,\n  \"ceiling_ceramic_area\": 8.0\n}",
+                      "raw": "{\n  \"type\": \"kitchen\",\n  \"wall_area\": 12.5,\n  \"floor_area\": 12.5,\n  \"wall_finish_type\": \"ceramic\",\n  \"ceiling_area\": 8.0,\n  \"ceiling_finish_type\": \"paint\",\n  \"toilet_type\": \"none\",\n  \"is_balcony_floor_tiled\": false\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -2886,20 +3468,20 @@
                       }
                     },
                     "url": {
-                      "raw": "{{base_url}}/projects/{{project_id}}/spaces",
+                      "raw": "{{base_url}}/projects/{{projectId}}/spaces",
                       "host": [
                         "{{base_url}}"
                       ],
                       "path": [
                         "projects",
-                        "{{project_id}}",
+                        "{{projectId}}",
                         "spaces"
                       ]
                     }
                   },
                   "status": "Created",
                   "code": 201,
-                  "_postman_previewlanguage": "Text",
+                  "_postman_previewlanguage": null,
                   "header": [
                     {
                       "key": "Host",
@@ -2907,11 +3489,11 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:34:16 GMT"
+                      "value": "Sat, 09 May 2026 14:33:39 GMT"
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:34:16 GMT"
+                      "value": "Sat, 09 May 2026 14:33:39 GMT"
                     },
                     {
                       "key": "Connection",
@@ -2935,7 +3517,7 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n    \"status\": 201,\n    \"message\": \"Space created.\",\n    \"data\": {\n        \"id\": 1,\n        \"project_id\": 1,\n        \"type\": \"kitchen\",\n        \"area\": \"12.50\",\n        \"finish_type\": \"ceramic\",\n        \"toilet_type\": \"none\",\n        \"has_ceiling_ceramic\": true,\n        \"ceiling_ceramic_area\": \"8.00\",\n        \"created_at\": \"2026-05-02T11:34:16.000000Z\",\n        \"updated_at\": \"2026-05-02T11:34:16.000000Z\"\n    }\n}"
+                  "body": "{\n    \"status\": 201,\n    \"message\": \"Space created.\",\n    \"data\": {\n        \"id\": 21,\n        \"project_id\": 5,\n        \"type\": \"kitchen\",\n        \"wall_area\": \"12.50\",\n        \"floor_area\": \"12.50\",\n        \"wall_finish_type\": \"ceramic\",\n        \"ceiling_finish_type\": \"paint\",\n        \"toilet_type\": \"none\",\n        \"ceiling_ceramic_area\": null,\n        \"is_balcony_floor_tiled\": false,\n        \"created_at\": \"2026-05-09T14:33:39.000000Z\",\n        \"updated_at\": \"2026-05-09T14:33:39.000000Z\"\n    }\n}"
                 }
               ]
             },
@@ -2947,12 +3529,12 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "2|6vSg6qd5nnVBxZZ0VZu0o6fleo4odpolhzoQfNZf1e5df2e5",
+                      "value": "{{auth_token}}",
                       "type": "string"
                     }
                   ]
                 },
-                "method": "PATCH",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Accept",
@@ -2967,7 +3549,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"area\": 14.0,\n  \"finish_type\": \"gypsum\",\n  \"has_ceiling_ceramic\": false\n}",
+                  "raw": "{\n  \"type\": \"kitchen\",\n  \"wall_area\": 14.0,\n  \"wall_finish_type\": \"gypsum\",\n  \"ceiling_area\": 9.0,\n  \"ceiling_finish_type\": \"paint\",\n  \"toilet_type\": \"none\",\n  \"is_balcony_floor_tiled\": false\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2975,13 +3557,13 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/spaces/{{space_id}}",
+                  "raw": "{{base_url}}/spaces/{{spaceId}}",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "spaces",
-                    "{{space_id}}"
+                    "{{spaceId}}"
                   ]
                 }
               },
@@ -2989,7 +3571,7 @@
                 {
                   "name": "Update Space",
                   "originalRequest": {
-                    "method": "PATCH",
+                    "method": "PUT",
                     "header": [
                       {
                         "key": "Accept",
@@ -3004,7 +3586,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n  \"area\": 14.0,\n  \"finish_type\": \"gypsum\",\n  \"has_ceiling_ceramic\": false\n}",
+                      "raw": "{\n  \"type\": \"kitchen\",\n  \"wall_area\": 14.0,\n  \"wall_finish_type\": \"gypsum\",\n  \"ceiling_area\": 9.0,\n  \"ceiling_finish_type\": \"paint\",\n  \"toilet_type\": \"none\",\n  \"is_balcony_floor_tiled\": false\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -3012,19 +3594,19 @@
                       }
                     },
                     "url": {
-                      "raw": "{{base_url}}/spaces/{{space_id}}",
+                      "raw": "{{base_url}}/spaces/{{spaceId}}",
                       "host": [
                         "{{base_url}}"
                       ],
                       "path": [
                         "spaces",
-                        "{{space_id}}"
+                        "{{spaceId}}"
                       ]
                     }
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": "Text",
+                  "_postman_previewlanguage": null,
                   "header": [
                     {
                       "key": "Host",
@@ -3032,11 +3614,11 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:36:09 GMT"
+                      "value": "Sat, 09 May 2026 14:36:47 GMT"
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:36:09 GMT"
+                      "value": "Sat, 09 May 2026 14:36:47 GMT"
                     },
                     {
                       "key": "Connection",
@@ -3060,7 +3642,7 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n    \"status\": 200,\n    \"message\": \"Space updated.\",\n    \"data\": {\n        \"id\": 1,\n        \"project_id\": 1,\n        \"type\": \"kitchen\",\n        \"area\": \"14.00\",\n        \"finish_type\": \"gypsum\",\n        \"toilet_type\": \"none\",\n        \"has_ceiling_ceramic\": false,\n        \"ceiling_ceramic_area\": \"8.00\",\n        \"created_at\": \"2026-05-02T11:34:16.000000Z\",\n        \"updated_at\": \"2026-05-02T11:36:09.000000Z\"\n    }\n}"
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Space updated.\",\n    \"data\": {\n        \"id\": 5,\n        \"project_id\": 5,\n        \"type\": \"kitchen\",\n        \"wall_area\": \"14.00\",\n        \"floor_area\": \"151.03\",\n        \"wall_finish_type\": \"gypsum\",\n        \"ceiling_finish_type\": \"paint\",\n        \"toilet_type\": \"none\",\n        \"ceiling_ceramic_area\": null,\n        \"is_balcony_floor_tiled\": false,\n        \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n        \"updated_at\": \"2026-05-09T14:36:47.000000Z\"\n    }\n}"
                 }
               ]
             },
@@ -3072,7 +3654,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "2|6vSg6qd5nnVBxZZ0VZu0o6fleo4odpolhzoQfNZf1e5df2e5",
+                      "value": "{{auth_token}}",
                       "type": "string"
                     }
                   ]
@@ -3086,13 +3668,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{base_url}}/spaces/{{space_id}}",
+                  "raw": "{{base_url}}/spaces/{{spaceId}}",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "spaces",
-                    "{{space_id}}"
+                    "{{spaceId}}"
                   ]
                 }
               },
@@ -3109,19 +3691,19 @@
                       }
                     ],
                     "url": {
-                      "raw": "{{base_url}}/spaces/{{space_id}}",
+                      "raw": "{{base_url}}/spaces/{{spaceId}}",
                       "host": [
                         "{{base_url}}"
                       ],
                       "path": [
                         "spaces",
-                        "{{space_id}}"
+                        "{{spaceId}}"
                       ]
                     }
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": "Text",
+                  "_postman_previewlanguage": null,
                   "header": [
                     {
                       "key": "Host",
@@ -3129,11 +3711,11 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:37:03 GMT"
+                      "value": "Sat, 09 May 2026 14:35:41 GMT"
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:37:03 GMT"
+                      "value": "Sat, 09 May 2026 14:35:41 GMT"
                     },
                     {
                       "key": "Connection",
@@ -3169,6 +3751,16 @@
             {
               "name": "List Work Items",
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "GET",
                 "header": [
                   {
@@ -3178,14 +3770,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{base_url}}/api/projects/{{project_id}}/work-items",
+                  "raw": "{{base_url}}/projects/{{projectId}}/work-items",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
-                    "api",
                     "projects",
-                    "{{project_id}}",
+                    "{{projectId}}",
                     "work-items"
                   ]
                 }
@@ -3203,20 +3794,20 @@
                       }
                     ],
                     "url": {
-                      "raw": "{{base_url}}/projects/{{project_id}}/work-items",
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items",
                       "host": [
                         "{{base_url}}"
                       ],
                       "path": [
                         "projects",
-                        "{{project_id}}",
+                        "{{projectId}}",
                         "work-items"
                       ]
                     }
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": "Text",
+                  "_postman_previewlanguage": null,
                   "header": [
                     {
                       "key": "Host",
@@ -3224,11 +3815,11 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:29:35 GMT"
+                      "value": "Sat, 09 May 2026 14:32:21 GMT"
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:29:35 GMT"
+                      "value": "Sat, 09 May 2026 14:32:21 GMT"
                     },
                     {
                       "key": "Connection",
@@ -3252,13 +3843,23 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n    \"status\": 200,\n    \"message\": \"Work items fetched.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"project_id\": 1,\n            \"name\": \"ملابن الأبواب\",\n            \"order\": 1,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 2,\n            \"project_id\": 1,\n            \"name\": \"تمديدات كهرباء\",\n            \"order\": 2,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 3,\n            \"project_id\": 1,\n            \"name\": \"تمديدات صحية\",\n            \"order\": 3,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 4,\n            \"project_id\": 1,\n            \"name\": \"طينة / لياسة\",\n            \"order\": 4,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 5,\n            \"project_id\": 1,\n            \"name\": \"بلاط أرضيات\",\n            \"order\": 5,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 6,\n            \"project_id\": 1,\n            \"name\": \"سيراميك جدران / أسقف\",\n            \"order\": 6,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 7,\n            \"project_id\": 1,\n            \"name\": \"جبس بورد\",\n            \"order\": 7,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 8,\n            \"project_id\": 1,\n            \"name\": \"دهان\",\n            \"order\": 8,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 9,\n            \"project_id\": 1,\n            \"name\": \"أبواب ونجارة\",\n            \"order\": 9,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 10,\n            \"project_id\": 1,\n            \"name\": \"ألمنيوم وأبجورات\",\n            \"order\": 10,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 11,\n            \"project_id\": 1,\n            \"name\": \"تشطيبات نهائية\",\n            \"order\": 11,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        }\n    ]\n}"
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Work items fetched.\",\n    \"data\": [\n        {\n            \"id\": 13,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"ملابن الأبواب\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 1,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 14,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"تمديدات كهرباء\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 2,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 15,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"تمديدات صحية\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 3,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 16,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"طينة / لياسة\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 4,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 17,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"بلاط أرضيات\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 5,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 18,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"سيراميك جدران / أسقف\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 6,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 19,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"جبس بورد\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 7,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 20,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"دهان\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 8,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 21,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"أبواب ونجارة\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 9,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 22,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"ألمنيوم وأبجورات\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 10,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 23,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"تشطيبات نهائية\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 11,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        }\n    ]\n}"
                 }
               ]
             },
             {
               "name": "Create Work Item",
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -3274,7 +3875,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"New Work Item\"\n}",
+                  "raw": "{\n  \"name\": \"New Work Item\",\n  \"quality_level\": \"good\",\n  \"duration_days\": 5,\n  \"sort_order\": 12,\n  \"is_active\": true,\n  \"is_custom\": false,\n  \"parent_id\": null\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3282,13 +3883,13 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/projects/{{project_id}}/work-items",
+                  "raw": "{{base_url}}/projects/{{projectId}}/work-items",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "projects",
-                    "{{project_id}}",
+                    "{{projectId}}",
                     "work-items"
                   ]
                 }
@@ -3312,7 +3913,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n  \"name\": \"New Work Item\"\n}",
+                      "raw": "{\n  \"name\": \"New Work Item\",\n  \"quality_level\": \"good\",\n  \"duration_days\": 5,\n  \"sort_order\": 12,\n  \"is_active\": true,\n  \"is_custom\": false,\n  \"parent_id\": null\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -3320,20 +3921,20 @@
                       }
                     },
                     "url": {
-                      "raw": "{{base_url}}/projects/{{project_id}}/work-items",
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items",
                       "host": [
                         "{{base_url}}"
                       ],
                       "path": [
                         "projects",
-                        "{{project_id}}",
+                        "{{projectId}}",
                         "work-items"
                       ]
                     }
                   },
                   "status": "Created",
                   "code": 201,
-                  "_postman_previewlanguage": "Text",
+                  "_postman_previewlanguage": null,
                   "header": [
                     {
                       "key": "Host",
@@ -3341,11 +3942,11 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:30:41 GMT"
+                      "value": "Sat, 09 May 2026 14:37:48 GMT"
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:30:41 GMT"
+                      "value": "Sat, 09 May 2026 14:37:48 GMT"
                     },
                     {
                       "key": "Connection",
@@ -3369,7 +3970,138 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n    \"status\": 201,\n    \"message\": \"Work item created.\",\n    \"data\": {\n        \"id\": 12,\n        \"project_id\": 1,\n        \"name\": \"New Work Item\",\n        \"order\": 12,\n        \"is_default\": false,\n        \"created_at\": \"2026-05-02T11:30:41.000000Z\",\n        \"updated_at\": \"2026-05-02T11:30:41.000000Z\"\n    }\n}"
+                  "body": "{\n    \"status\": 201,\n    \"message\": \"Work item created.\",\n    \"data\": {\n        \"id\": 79,\n        \"project_id\": 5,\n        \"parent_id\": null,\n        \"name\": \"New Work Item\",\n        \"quality_level\": \"good\",\n        \"duration_days\": 5,\n        \"sort_order\": 12,\n        \"is_default\": false,\n        \"is_active\": true,\n        \"is_custom\": true,\n        \"created_at\": \"2026-05-09T14:37:48.000000Z\",\n        \"updated_at\": \"2026-05-09T14:37:48.000000Z\"\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "Update Work Item Details",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"details\":\n    [\n        {\n        \"key\": \"tile_length\",\n        \"value\": 50,\n        \"unit\": \"cm\"\n      },\n      {\n        \"key\": \"tile_width\",\n        \"value\": 50,\n        \"unit\": \"cm\"\n      }\n    ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/details",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{projectId}}",
+                    "work-items",
+                    "{{workItemId}}",
+                    "details"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Update Work Item Details",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"details\":\n    [\n        {\n        \"key\": \"tile_length\",\n        \"value\": 50,\n        \"unit\": \"cm\"\n      },\n      {\n        \"key\": \"tile_width\",\n        \"value\": 50,\n        \"unit\": \"cm\"\n      }\n    ]\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/details",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "work-items",
+                        "{{workItemId}}",
+                        "details"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sat, 09 May 2026 16:02:04 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sat, 09 May 2026 16:02:04 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Work item details updated.\",\n    \"data\": {\n        \"id\": 12,\n        \"project_id\": 1,\n        \"parent_id\": null,\n        \"name\": \"Tile Installation\",\n        \"quality_level\": \"good\",\n        \"duration_days\": 4,\n        \"sort_order\": 12,\n        \"is_default\": false,\n        \"is_active\": true,\n        \"is_custom\": true,\n        \"details\": [\n            {\n                \"key\": \"tile_length\",\n                \"value\": \"50\",\n                \"unit\": \"cm\"\n            },\n            {\n                \"key\": \"tile_width\",\n                \"value\": \"50\",\n                \"unit\": \"cm\"\n            }\n        ],\n        \"created_at\": \"2026-05-09T15:57:34.000000Z\",\n        \"updated_at\": \"2026-05-09T15:57:34.000000Z\"\n    }\n}"
                 }
               ]
             },
@@ -3381,7 +4113,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "2|6vSg6qd5nnVBxZZ0VZu0o6fleo4odpolhzoQfNZf1e5df2e5",
+                      "value": "{{auth_token}}",
                       "type": "string"
                     }
                   ]
@@ -3395,13 +4127,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{base_url}}/work-items/{{work_item_id}}",
+                  "raw": "{{base_url}}/work-items/{{workItemId}}",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "work-items",
-                    "{{work_item_id}}"
+                    "{{workItemId}}"
                   ]
                 }
               },
@@ -3418,19 +4150,19 @@
                       }
                     ],
                     "url": {
-                      "raw": "{{base_url}}/work-items/{{work_item_id}}",
+                      "raw": "{{base_url}}/work-items/{{workItemId}}",
                       "host": [
                         "{{base_url}}"
                       ],
                       "path": [
                         "work-items",
-                        "{{work_item_id}}"
+                        "{{workItemId}}"
                       ]
                     }
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": "Text",
+                  "_postman_previewlanguage": null,
                   "header": [
                     {
                       "key": "Host",
@@ -3438,11 +4170,11 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:31:15 GMT"
+                      "value": "Sat, 09 May 2026 14:40:49 GMT"
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:31:15 GMT"
+                      "value": "Sat, 09 May 2026 14:40:49 GMT"
                     },
                     {
                       "key": "Connection",
@@ -3478,7 +4210,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "2|6vSg6qd5nnVBxZZ0VZu0o6fleo4odpolhzoQfNZf1e5df2e5",
+                      "value": "{{auth_token}}",
                       "type": "string"
                     }
                   ]
@@ -3498,7 +4230,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"items\": [\n    {\n      \"id\": 12,\n      \"order\": 1\n    },\n    {\n      \"id\": 2,\n      \"order\": 10\n    }\n  ]\n}",
+                  "raw": "{\n  \"items\": [\n    {\n      \"id\": 13,\n      \"sort_order\": 1\n    },\n    {\n      \"id\": 16,\n      \"sort_order\": 4\n    }\n  ]\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3506,13 +4238,13 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/projects/{{project_id}}/work-items/reorder",
+                  "raw": "{{base_url}}/projects/{{projectId}}/work-items/reorder",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "projects",
-                    "{{project_id}}",
+                    "{{projectId}}",
                     "work-items",
                     "reorder"
                   ]
@@ -3537,7 +4269,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n  \"items\": [\n    {\n      \"id\": 12,\n      \"order\": 1\n    },\n    {\n      \"id\": 2,\n      \"order\": 10\n    }\n  ]\n}",
+                      "raw": "{\n  \"items\": [\n    {\n      \"id\": 13,\n      \"sort_order\": 1\n    },\n    {\n      \"id\": 16,\n      \"sort_order\": 4\n    }\n  ]\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -3545,13 +4277,13 @@
                       }
                     },
                     "url": {
-                      "raw": "{{base_url}}/projects/{{project_id}}/work-items/reorder",
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/reorder",
                       "host": [
                         "{{base_url}}"
                       ],
                       "path": [
                         "projects",
-                        "{{project_id}}",
+                        "{{projectId}}",
                         "work-items",
                         "reorder"
                       ]
@@ -3559,7 +4291,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": "Text",
+                  "_postman_previewlanguage": null,
                   "header": [
                     {
                       "key": "Host",
@@ -3567,11 +4299,11 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:33:12 GMT"
+                      "value": "Sat, 09 May 2026 15:03:10 GMT"
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 02 May 2026 11:33:12 GMT"
+                      "value": "Sat, 09 May 2026 15:03:10 GMT"
                     },
                     {
                       "key": "Connection",
@@ -3595,7 +4327,7 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n    \"status\": 200,\n    \"message\": \"Work items reordered.\",\n    \"data\": [\n        {\n            \"id\": 12,\n            \"project_id\": 1,\n            \"name\": \"New Work Item\",\n            \"order\": 1,\n            \"is_default\": false,\n            \"created_at\": \"2026-05-02T11:30:41.000000Z\",\n            \"updated_at\": \"2026-05-02T11:33:12.000000Z\"\n        },\n        {\n            \"id\": 10,\n            \"project_id\": 1,\n            \"name\": \"ألمنيوم وأبجورات\",\n            \"order\": 2,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:32:24.000000Z\"\n        },\n        {\n            \"id\": 3,\n            \"project_id\": 1,\n            \"name\": \"تمديدات صحية\",\n            \"order\": 3,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 4,\n            \"project_id\": 1,\n            \"name\": \"طينة / لياسة\",\n            \"order\": 4,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 5,\n            \"project_id\": 1,\n            \"name\": \"بلاط أرضيات\",\n            \"order\": 5,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 6,\n            \"project_id\": 1,\n            \"name\": \"سيراميك جدران / أسقف\",\n            \"order\": 6,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 7,\n            \"project_id\": 1,\n            \"name\": \"جبس بورد\",\n            \"order\": 7,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 8,\n            \"project_id\": 1,\n            \"name\": \"دهان\",\n            \"order\": 8,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 9,\n            \"project_id\": 1,\n            \"name\": \"أبواب ونجارة\",\n            \"order\": 9,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        },\n        {\n            \"id\": 2,\n            \"project_id\": 1,\n            \"name\": \"تمديدات كهرباء\",\n            \"order\": 10,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:33:12.000000Z\"\n        },\n        {\n            \"id\": 11,\n            \"project_id\": 1,\n            \"name\": \"تشطيبات نهائية\",\n            \"order\": 11,\n            \"is_default\": true,\n            \"created_at\": \"2026-05-02T11:21:38.000000Z\",\n            \"updated_at\": \"2026-05-02T11:21:38.000000Z\"\n        }\n    ]\n}"
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Work items reordered.\",\n    \"data\": [\n        {\n            \"id\": 14,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"تمديدات كهرباء\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 2,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 15,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"تمديدات صحية\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 3,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T15:02:40.000000Z\"\n        },\n        {\n            \"id\": 16,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"طينة / لياسة\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 4,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T15:03:10.000000Z\"\n        },\n        {\n            \"id\": 17,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"بلاط أرضيات\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 5,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 18,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"سيراميك جدران / أسقف\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 6,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 19,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"جبس بورد\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 7,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 20,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"دهان\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 8,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 21,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"أبواب ونجارة\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 9,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 22,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"ألمنيوم وأبجورات\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 10,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 23,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"تشطيبات نهائية\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 11,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 79,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"New Work Item\",\n            \"quality_level\": \"good\",\n            \"duration_days\": 5,\n            \"sort_order\": 12,\n            \"is_default\": false,\n            \"is_active\": true,\n            \"is_custom\": true,\n            \"created_at\": \"2026-05-09T14:37:48.000000Z\",\n            \"updated_at\": \"2026-05-09T14:37:48.000000Z\"\n        }\n    ]\n}"
                 }
               ]
             }
@@ -4135,6 +4867,105 @@
         "header": []
       },
       "response": []
+    },
+    {
+      "name": "ProjectWeather",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/projects/1/weather/today",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "projects",
+                "1",
+                "weather",
+                "today"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Mon, 04 May 2026 20:44:02 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 200,\n    \"message\": \"Project weather fetched successfully.\",\n    \"data\": {\n        \"project\": {\n            \"id\": 1,\n            \"name\": \"Corkery-Howell Project\",\n            \"location\": \"West Olga\",\n            \"latitude\": \"-25.462763\",\n            \"longitude\": \"-176.405884\"\n        },\n        \"current_weather\": {\n            \"temperature\": 23.5,\n            \"humidity\": 66,\n            \"weather_code\": 1,\n            \"weather_description\": \"Mainly clear\",\n            \"wind_speed\": 49.5,\n            \"time\": \"2026-05-04T08:30\"\n        },\n        \"today_forecast\": {\n            \"temperature_max\": 23.9,\n            \"temperature_min\": 22.3,\n            \"precipitation_sum\": 1.1,\n            \"date\": \"2026-05-04\"\n        }\n    }\n}"
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "auth_token",
+      "value": ""
     }
   ]
 }

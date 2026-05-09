@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Models\Space;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 
 class UpdateSpaceRequest extends FormRequest
@@ -16,53 +15,69 @@ class UpdateSpaceRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'type' => ['sometimes', 'string', Rule::in(Space::TYPE_OPTIONS)],
-            'area' => ['sometimes', 'numeric', 'min:0.1'],
-            'finish_type' => ['sometimes', 'string', Rule::in(Space::FINISH_TYPES)],
-            'toilet_type' => ['sometimes', 'nullable', 'string', Rule::in(Space::TOILET_TYPES)],
-            'has_ceiling_ceramic' => ['sometimes', 'boolean'],
-            'ceiling_ceramic_area' => [
-                'nullable',
-                'numeric',
-                'min:0.1',
-                Rule::requiredIf($this->boolean('has_ceiling_ceramic')),
-            ],
-        ];
+        return Space::rules(true);
     }
 
     public function withValidator(Validator $validator): void
     {
         $validator->after(function (Validator $validator) {
+            $space = $this->route('space');
             $type = $this->resolvedType();
+            $ceilingFinishType = $this->resolvedCeilingFinishType();
+            $toiletType = $this->has('toilet_type')
+                ? $this->input('toilet_type')
+                : ($space instanceof Space ? $space->toilet_type : null);
+            $ceilingCeramicArea = $this->has('ceiling_ceramic_area')
+                ? $this->input('ceiling_ceramic_area')
+                : ($space instanceof Space ? $space->ceiling_ceramic_area : null);
+            $isBalconyFloorTiled = $this->has('is_balcony_floor_tiled')
+                ? $this->boolean('is_balcony_floor_tiled')
+                : ($space instanceof Space ? (bool) $space->is_balcony_floor_tiled : false);
 
-            if ($this->has('type') && $this->isBathroomOrToilet($type) && ! $this->filled('toilet_type')) {
-                $validator->errors()->add('toilet_type', 'Toilet type is required for bathroom or toilet.');
+            if ($this->isBathroomOrToilet($type)) {
+                if (! $toiletType || $toiletType === 'none') {
+                    $validator->errors()->add('toilet_type', 'Toilet type is required for bathroom or toilet.');
+                }
+            } elseif ($this->filled('toilet_type') && $toiletType !== 'none') {
+                $validator->errors()->add(
+                    'toilet_type',
+                    'Toilet type is only allowed for bathroom or toilet.'
+                );
             }
 
-            if (! $this->supportsCeilingCeramic($type)) {
-                if ($this->has('has_ceiling_ceramic') && $this->boolean('has_ceiling_ceramic')) {
-                    $validator->errors()->add(
-                        'has_ceiling_ceramic',
-                        'Ceiling ceramic is only allowed for kitchen, bathroom, toilet, or balcony.'
-                    );
-                }
-
-                if ($this->filled('ceiling_ceramic_area')) {
-                    $validator->errors()->add(
-                        'ceiling_ceramic_area',
-                        'Ceiling ceramic area is only allowed for kitchen, bathroom, toilet, or balcony.'
-                    );
-                }
+            if (! $this->supportsCeilingCeramic($type) && $this->filled('ceiling_ceramic_area')) {
+                $validator->errors()->add(
+                    'ceiling_ceramic_area',
+                    'Ceiling ceramic area is only allowed for kitchen, bathroom, toilet, or balcony.'
+                );
             }
 
-            if (! $this->isBathroomOrToilet($type) && $this->filled('toilet_type')) {
-                if ($this->input('toilet_type') !== 'none') {
-                    $validator->errors()->add(
-                        'toilet_type',
-                        'Toilet type is only allowed for bathroom or toilet.'
-                    );
-                }
+            if ($ceilingFinishType === 'ceramic' && ! $this->supportsCeilingCeramic($type)) {
+                $validator->errors()->add(
+                    'ceiling_finish_type',
+                    'Ceiling ceramic finish is only allowed for kitchen, bathroom, toilet, or balcony.'
+                );
+            }
+
+            if ($ceilingFinishType === 'ceramic' && ! $ceilingCeramicArea) {
+                $validator->errors()->add(
+                    'ceiling_ceramic_area',
+                    'Ceiling ceramic area is required when ceiling finish is ceramic.'
+                );
+            }
+
+            if ($ceilingFinishType !== 'ceramic' && $ceilingCeramicArea) {
+                $validator->errors()->add(
+                    'ceiling_ceramic_area',
+                    'Ceiling ceramic area is only allowed when ceiling finish is ceramic.'
+                );
+            }
+
+            if ($isBalconyFloorTiled && $type !== Space::TYPE_BALCONY) {
+                $validator->errors()->add(
+                    'is_balcony_floor_tiled',
+                    'Balcony floor tiled is only valid for balcony spaces.'
+                );
             }
         });
     }
@@ -78,9 +93,20 @@ class UpdateSpaceRequest extends FormRequest
         return $space instanceof Space ? $space->type : null;
     }
 
+    private function resolvedCeilingFinishType(): ?string
+    {
+        if ($this->has('ceiling_finish_type')) {
+            return $this->input('ceiling_finish_type');
+        }
+
+        $space = $this->route('space');
+
+        return $space instanceof Space ? $space->ceiling_finish_type : null;
+    }
+
     private function isBathroomOrToilet(?string $type): bool
     {
-        return in_array($type, ['bathroom', 'toilet'], true);
+        return in_array($type, [Space::TYPE_BATHROOM, Space::TYPE_TOILET], true);
     }
 
     private function supportsCeilingCeramic(?string $type): bool

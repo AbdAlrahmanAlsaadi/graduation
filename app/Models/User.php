@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -53,5 +55,15 @@ class User extends Authenticatable
     public function ownedContracts()
     {
         return $this->hasMany(Contract::class, 'owner_id');
+    public function projectAssignments(): HasMany
+    {
+        return $this->hasMany(ProjectEngineer::class, 'user_id');
+    }
+
+    public function assignedProjects(): BelongsToMany
+    {
+        return $this->belongsToMany(Project::class, 'project_engineers', 'user_id', 'project_id')
+            ->withPivot(['role', 'assigned_at'])
+            ->withTimestamps();
     }
 }
