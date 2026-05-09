@@ -15,9 +15,15 @@ class WorkItemResource extends JsonResource
         return [
             'id' => $this->id,
             'project_id' => $this->project_id,
+            'parent_id' => $this->parent_id,
             'name' => $this->name,
-            'order' => $this->order,
+            'quality_level' => $this->quality_level,
+            'duration_days' => $this->duration_days,
+            'sort_order' => $this->sort_order,
             'is_default' => (bool) $this->is_default,
+            'is_active' => (bool) $this->is_active,
+            'is_custom' => (bool) $this->is_custom,
+            'details' => WorkItemDetailResource::collection($this->whenLoaded('details')),
             'created_at' => $this->created_at?->toISOString(),
             'updated_at' => $this->updated_at?->toISOString(),
         ];

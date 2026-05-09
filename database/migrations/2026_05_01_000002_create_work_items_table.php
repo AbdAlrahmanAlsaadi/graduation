@@ -12,11 +12,32 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id')
                 ->constrained('projects')
-                ->cascadeOnDelete();
-            $table->string('name');
-            $table->unsignedInteger('order');
-            $table->boolean('is_default')->default(false);
+                ->cascadeOnDelete()
+                ->comment('parent project');
+            $table->foreignId('parent_id')
+                ->nullable()
+                ->constrained('work_items')
+                ->nullOnDelete()
+                ->comment('optional parent work item');
+            $table->string('name')->comment('work item name');
+            $table->enum('quality_level', ['basic', 'good', 'premium', 'custom'])
+                ->default('basic')
+                ->comment('basic|good|premium|custom');
+            $table->unsignedInteger('sort_order')->comment('sort order within project');
+            $table->unsignedInteger('duration_days')
+                ->nullable()
+                ->comment('estimated duration in days');
+            $table->boolean('is_default')
+                ->default(false)
+                ->comment('seeded default item');
+            $table->boolean('is_active')
+                ->default(true)
+                ->comment('visibility flag');
+            $table->boolean('is_custom')
+                ->default(false)
+                ->comment('custom user item');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

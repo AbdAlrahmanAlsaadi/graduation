@@ -2,35 +2,117 @@
 
 namespace App\Models;
 
-use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Validation\Rule;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $location
+ * @property string $latitude
+ * @property string $longitude
+ * @property string $apartment_area
+ * @property string $height
+ * @property string $status
+ * @property int|null $project_manager_id
+ * @property int|null $assistant_engineer_id
+ * @property int|null $owner_id
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Space> $spaces
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, WorkItem> $workItems
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, ProjectEngineer> $projectEngineers
+ * @property-read User|null $projectManager
+ * @property-read User|null $assistantEngineer
+ * @property-read User|null $owner
+ * @property-read User|null $createdBy
+ * @property-read User|null $updatedBy
+ * @method static Builder|Project withSummary()
+ */
 class Project extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
+    public const STATUS_PLANNED = 'planned';
+    public const STATUS_ONGOING = 'ongoing';
+    public const STATUS_COMPLETED = 'completed';
+
+    public const STATUS_OPTIONS = [
+        self::STATUS_PLANNED,
+        self::STATUS_ONGOING,
+        self::STATUS_COMPLETED,
+    ];
 
     protected $fillable = [
         'name',
-        'owner_name',
         'location',
         'latitude',
         'longitude',
-        'total_area',
+        'apartment_area',
         'height',
         'project_manager_id',
         'assistant_engineer_id',
         'owner_id',
-        'status'
+        'status',
+        'created_by',
+        'updated_by',
     ];
 
     protected function casts(): array
     {
         return [
-            'total_area' => 'decimal:2',
+            'apartment_area' => 'decimal:2',
             'height' => 'decimal:2',
+        ];
+    }
+
+    public static function rules(bool $isUpdate = false): array
+    {
+        $required = $isUpdate ? 'sometimes' : 'required';
+        $optionalNullable = $isUpdate ? ['sometimes', 'nullable'] : ['nullable'];
+
+        return [
+            'name' => [$required, 'string', 'max:255'],
+            'location' => [$required, 'string', 'max:255'],
+            'latitude' => [$required, 'numeric', 'max:255'],
+            'longitude' => [$required, 'numeric', 'max:255'],
+            'apartment_area' => [$required, 'numeric', 'min:0.1'],
+            'height' => [$required, 'numeric', 'min:0.1'],
+            'status' => [$isUpdate ? 'sometimes' : 'nullable', 'string', Rule::in(self::STATUS_OPTIONS)],
+            'project_manager_id' => [
+                ...$optionalNullable,
+                'integer',
+                'exists:users,id',
+            ],
+            'assistant_engineer_id' => [
+                ...$optionalNullable,
+                'integer',
+                'exists:users,id',
+            ],
+            'owner_id' => [
+                ...$optionalNullable,
+                'integer',
+                'exists:users,id',
+            ],
+            'created_by' => [
+                ...$optionalNullable,
+                'integer',
+                'exists:users,id',
+            ],
+            'updated_by' => [
+                ...$optionalNullable,
+                'integer',
+                'exists:users,id',
+            ],
         ];
     }
 
@@ -42,6 +124,26 @@ class Project extends Model
     public function workItems(): HasMany
     {
         return $this->hasMany(WorkItem::class);
+    }
+
+    public function projectEngineers(): HasMany
+    {
+        return $this->hasMany(ProjectEngineer::class);
+    }
+
+    public function assignEngineer(User|int $userOrId, string $role, ?string $assignedAt = null): ProjectEngineer
+    {
+        $userId = $userOrId instanceof User ? $userOrId->id : (int) $userOrId;
+
+        return $this->projectEngineers()->firstOrCreate(
+            [
+                'user_id' => $userId,
+                'role' => $role,
+            ],
+            [
+                'assigned_at' => $assignedAt,
+            ]
+        );
     }
 
     public function projectManager(): BelongsTo
@@ -57,5 +159,25 @@ class Project extends Model
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function scopeWithSummary(Builder $query): Builder
+    {
+        return $query
+            ->withCount(['spaces', 'workItems'])
+            ->with([
+                'spaces',
+                'workItems' => fn (Builder $workItems) => $workItems->orderBy('sort_order'),
+            ]);
     }
 }

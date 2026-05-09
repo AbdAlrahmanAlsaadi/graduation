@@ -20,18 +20,31 @@ class SpaceFactory extends Factory
      */
     public function definition(): array
     {
-        $hasCeilingCeramic = fake()->boolean(25);
+        $type = fake()->randomElement(Space::TYPE_OPTIONS);
+        $ceilingFinishOptions = Space::FINISH_TYPES;
+
+        if (! in_array($type, Space::CEILING_CERAMIC_TYPES, true)) {
+            $ceilingFinishOptions = array_values(array_diff($ceilingFinishOptions, ['ceramic']));
+        }
+
+        $ceilingFinishType = fake()->randomElement($ceilingFinishOptions);
+        $toiletType = in_array($type, [Space::TYPE_BATHROOM, Space::TYPE_TOILET], true)
+            ? fake()->randomElement(array_values(array_diff(Space::TOILET_TYPES, ['none'])))
+            : 'none';
+        $isBalconyFloorTiled = $type === Space::TYPE_BALCONY ? fake()->boolean(35) : false;
 
         return [
             'project_id' => Project::factory(),
-            'type' => fake()->randomElement(Space::TYPE_OPTIONS),
-            'area' => fake()->randomFloat(2, 6, 180),
-            'finish_type' => fake()->randomElement(Space::FINISH_TYPES),
-            'toilet_type' => fake()->randomElement(Space::TOILET_TYPES),
-            'has_ceiling_ceramic' => $hasCeilingCeramic,
-            'ceiling_ceramic_area' => $hasCeilingCeramic
+            'type' => $type,
+            'wall_area' => fake()->randomFloat(2, 8, 220),
+            'floor_area' => fake()->randomFloat(2, 6, 180),
+            'wall_finish_type' => fake()->randomElement(Space::FINISH_TYPES),
+            'ceiling_finish_type' => $ceilingFinishType,
+            'toilet_type' => $toiletType,
+            'ceiling_ceramic_area' => $ceilingFinishType === 'ceramic'
                 ? fake()->randomFloat(2, 2, 40)
                 : null,
+            'is_balcony_floor_tiled' => $isBalconyFloorTiled,
         ];
     }
 }

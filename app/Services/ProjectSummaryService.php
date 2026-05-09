@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Project;
+use App\Models\Space;
 
 class ProjectSummaryService
 {
@@ -13,21 +14,16 @@ class ProjectSummaryService
     {
         $project->load([
             'spaces',
-            'workItems' => fn ($query) => $query->orderBy('order'),
+            'workItems' => fn ($query) => $query->orderBy('sort_order'),
         ]);
 
-        $totals = [
-            'paint' => 0.0,
-            'ceramic' => 0.0,
-            'gypsum' => 0.0,
-            'none' => 0.0,
-        ];
+        $totals = array_fill_keys(Space::FINISH_TYPES, 0.0);
 
         $totalCeilingCeramicArea = 0.0;
 
         foreach ($project->spaces as $space) {
-            if (array_key_exists($space->finish_type, $totals)) {
-                $totals[$space->finish_type] += (float) $space->area;
+            if (array_key_exists($space->wall_finish_type, $totals)) {
+                $totals[$space->wall_finish_type] += (float) $space->wall_area;
             }
 
             $totalCeilingCeramicArea += (float) ($space->ceiling_ceramic_area ?? 0);

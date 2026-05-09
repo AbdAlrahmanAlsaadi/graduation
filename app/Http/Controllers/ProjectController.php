@@ -76,7 +76,7 @@ class ProjectController extends Controller
         try {
             $project->load([
                 'spaces',
-                'workItems' => fn ($query) => $query->orderBy('order'),
+                'workItems' => fn ($query) => $query->orderBy('sort_order'),
             ]);
 
             return Response::success(

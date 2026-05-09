@@ -32,7 +32,7 @@ class ReorderWorkItemsRequest extends FormRequest
                 'distinct',
                 $existsRule,
             ],
-            'items.*.order' => ['required', 'integer', 'min:1'],
+            'items.*.sort_order' => ['required', 'integer', 'min:1'],
         ];
     }
 }
