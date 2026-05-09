@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Cairo';
+    src: url('{{ public_path("fonts/Cairo-Regular.ttf") }}');
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
+    unicode-bidi: embed;
+}

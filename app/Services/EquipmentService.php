@@ -106,7 +106,8 @@ class EquipmentService
     {
         $request->validated();
 
-        $query = Equipment::query();
+        $query = Equipment::query()
+            ->with(['project:id,name']); 
 
         if ($request->status !== 'all') {
             $query->where('status', $request->status);

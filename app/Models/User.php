@@ -49,4 +49,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function ownedContracts()
+    {
+        return $this->hasMany(Contract::class, 'owner_id');
+    }
 }

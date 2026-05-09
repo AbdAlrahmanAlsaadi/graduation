@@ -15,30 +15,26 @@ class EquipmentFactory extends Factory
 
     public function definition(): array
     {
+        $types = [
+            'حفارة',
+            'رافعة',
+            'خلاطة خرسانة',
+            'جرافة',
+            'رافعة شوكية',
+            'مولدة كهرباء',
+            'ضاغط هواء',
+        ];
+
+        $type = fake()->randomElement($types);
+
         return [
             'project_id' => fake()->boolean(70)
                 ? $this->getOrCreateProject()->id
                 : null,
 
-            'name' => fake()->randomElement([
-                'Excavator',
-                'Crane',
-                'Concrete Mixer',
-                'Bulldozer',
-                'Forklift',
-                'Generator',
-                'Compressor',
-            ]) . ' ' . fake()->numberBetween(100, 999),
+            'name' => $type . ' ' . fake()->numberBetween(100, 999),
 
-            'type' => fake()->randomElement([
-                'Excavator',
-                'Crane',
-                'Mixer',
-                'Bulldozer',
-                'Forklift',
-                'Generator',
-                'Compressor',
-            ]),
+            'type' => $type,
 
             'identifier_no' => $this->generateIdentifierNo(),
 

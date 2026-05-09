@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminResetUserPasswordRequest;
 use App\Http\Requests\ChangeUserStatusRequest;
 use App\Http\Requests\CompanyLoginRequest;
 use App\Http\Requests\CreateInternalUserRequest;
@@ -103,6 +104,26 @@ class AuthController extends Controller
             $data = $this->authService->getUsersByRole($request);
             return Response::success($data['message'], $data['users'], (int) $data['status']);
         } catch (Throwable $throwable) {
+            $code = is_int($throwable->getCode()) && $throwable->getCode() > 0
+                ? $throwable->getCode()
+                : 500;
+
+            return Response::error($throwable->getMessage(), $code);
+        }
+    }
+    public function resetPassword(AdminResetUserPasswordRequest $request, $userId)
+    {
+        try {
+            $data = $this->authService->resetUserPassword($request, $userId);
+
+            return Response::success(
+                $data['message'],
+                [
+                    'user' => $data['user'],
+                ],                (int) $data['status']
+            );
+        } catch (Throwable $throwable) {
+
             $code = is_int($throwable->getCode()) && $throwable->getCode() > 0
                 ? $throwable->getCode()
                 : 500;
