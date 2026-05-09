@@ -52,6 +52,9 @@ class User extends Authenticatable
         ];
     }
 
+    public function ownedContracts()
+    {
+        return $this->hasMany(Contract::class, 'owner_id');
     public function projectAssignments(): HasMany
     {
         return $this->hasMany(ProjectEngineer::class, 'user_id');

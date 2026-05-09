@@ -312,4 +312,34 @@ class AuthService
             'status' => 200,
         ];
     }
+    public function resetUserPassword($request, $userId): array
+    {
+        $request->validated();
+
+        $admin = Auth::user();
+
+        if (! Hash::check($request->admin_password, $admin->password)) {
+            throw new \Exception('Admin password is incorrect.', 401);
+        }
+
+        $user = User::query()->find($userId);
+
+        if (! $user) {
+            throw new \Exception('User not found.', 404);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+
+        return [
+            'message' => 'User password updated successfully.',
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'internal_id' => $user->internal_id,
+            ],
+            'status' => 200,
+        ];
+    }
 }

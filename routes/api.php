@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ProjectEngineerController;
@@ -50,6 +51,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('deleteUser/{userId}', [AuthController::class, 'deleteInternalUser']);
             Route::get('users/by-role', [AuthController::class, 'getUsersByRole']);
 
+            Route::post('users/{id}/reset-password', [AuthController::class, 'resetPassword']);
+
+
+
+        Route::post('contracts', [ContractController::class, 'store']);
+
+        Route::get('contracts/{id}/export-pdf', [ContractController::class, 'exportPdf']);
+
+
 
         Route::post('Addequipment', [EquipmentController::class, 'store']);
         Route::post('equipment/maintenance', [EquipmentController::class, 'storeMaintenance']);
@@ -77,5 +87,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('projects/{project}/engineers', [ProjectEngineerController::class, 'store']);
         Route::delete('projects/{project}/engineers/{assignment}', [ProjectEngineerController::class, 'destroy']);
     });
+
 });
 
