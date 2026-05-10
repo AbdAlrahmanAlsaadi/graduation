@@ -31,8 +31,8 @@ class SpaceController extends Controller
     {
         try {
             $data = $request->validated();
-            if ($request->has('is_balcony_floor_tiled')) {
-                $data['is_balcony_floor_tiled'] = $request->boolean('is_balcony_floor_tiled');
+            if ($request->has('is_shed_floor_tiled')) {
+                $data['is_shed_floor_tiled'] = $request->boolean('is_shed_floor_tiled');
             }
 
             $space = $project->spaces()->create($data);
@@ -52,8 +52,8 @@ class SpaceController extends Controller
         try {
             $data = $request->validated();
 
-            if ($request->has('is_balcony_floor_tiled')) {
-                $data['is_balcony_floor_tiled'] = $request->boolean('is_balcony_floor_tiled');
+            if ($request->has('is_shed_floor_tiled')) {
+                $data['is_shed_floor_tiled'] = $request->boolean('is_shed_floor_tiled');
             }
 
             $space->update($data);

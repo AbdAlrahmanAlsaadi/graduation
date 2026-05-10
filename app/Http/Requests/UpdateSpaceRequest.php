@@ -27,12 +27,12 @@ class UpdateSpaceRequest extends FormRequest
             $toiletType = $this->has('toilet_type')
                 ? $this->input('toilet_type')
                 : ($space instanceof Space ? $space->toilet_type : null);
-            $ceilingCeramicArea = $this->has('ceiling_ceramic_area')
-                ? $this->input('ceiling_ceramic_area')
-                : ($space instanceof Space ? $space->ceiling_ceramic_area : null);
-            $isBalconyFloorTiled = $this->has('is_balcony_floor_tiled')
-                ? $this->boolean('is_balcony_floor_tiled')
-                : ($space instanceof Space ? (bool) $space->is_balcony_floor_tiled : false);
+            $ceilingCeramicArea = $this->has('ceiling_area')
+                ? $this->input('ceiling_area')
+                : ($space instanceof Space ? $space->ceiling_area : null);
+            $isshedFloorTiled = $this->has('is_shed_floor_tiled')
+                ? $this->boolean('is_shed_floor_tiled')
+                : ($space instanceof Space ? (bool) $space->is_shed_floor_tiled : false);
 
             if ($this->isBathroomOrToilet($type)) {
                 if (! $toiletType || $toiletType === 'none') {
@@ -45,38 +45,38 @@ class UpdateSpaceRequest extends FormRequest
                 );
             }
 
-            if (! $this->supportsCeilingCeramic($type) && $this->filled('ceiling_ceramic_area')) {
+            if (! $this->supportsCeilingCeramic($type) && $this->filled('ceiling_area')) {
                 $validator->errors()->add(
-                    'ceiling_ceramic_area',
-                    'Ceiling ceramic area is only allowed for kitchen, bathroom, toilet, or balcony.'
+                    'ceiling_area',
+                    'Ceiling ceramic area is only allowed for kitchen, bathroom, toilet, or shed.'
                 );
             }
 
             if ($ceilingFinishType === 'ceramic' && ! $this->supportsCeilingCeramic($type)) {
                 $validator->errors()->add(
                     'ceiling_finish_type',
-                    'Ceiling ceramic finish is only allowed for kitchen, bathroom, toilet, or balcony.'
+                    'Ceiling ceramic finish is only allowed for kitchen, bathroom, toilet, or shed.'
                 );
             }
 
             if ($ceilingFinishType === 'ceramic' && ! $ceilingCeramicArea) {
                 $validator->errors()->add(
-                    'ceiling_ceramic_area',
+                    'ceiling_area',
                     'Ceiling ceramic area is required when ceiling finish is ceramic.'
                 );
             }
 
             if ($ceilingFinishType !== 'ceramic' && $ceilingCeramicArea) {
                 $validator->errors()->add(
-                    'ceiling_ceramic_area',
+                    'ceiling_area',
                     'Ceiling ceramic area is only allowed when ceiling finish is ceramic.'
                 );
             }
 
-            if ($isBalconyFloorTiled && $type !== Space::TYPE_BALCONY) {
+            if ($isshedFloorTiled && $type !== Space::TYPE_SHED) {
                 $validator->errors()->add(
-                    'is_balcony_floor_tiled',
-                    'Balcony floor tiled is only valid for balcony spaces.'
+                    'is_shed_floor_tiled',
+                    'shed floor tiled is only valid for shed spaces.'
                 );
             }
         });

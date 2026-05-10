@@ -38,38 +38,17 @@ class StoreSpaceRequest extends FormRequest
                 );
             }
 
-            if (! $this->supportsCeilingCeramic($type) && $this->filled('ceiling_ceramic_area')) {
-                $validator->errors()->add(
-                    'ceiling_ceramic_area',
-                    'Ceiling ceramic area is only allowed for kitchen, bathroom, toilet, or balcony.'
-                );
-            }
-
             if ($ceilingFinishType === 'ceramic' && ! $this->supportsCeilingCeramic($type)) {
                 $validator->errors()->add(
                     'ceiling_finish_type',
-                    'Ceiling ceramic finish is only allowed for kitchen, bathroom, toilet, or balcony.'
+                    'Ceiling ceramic finish is only allowed for kitchen, bathroom, toilet, or shed.'
                 );
             }
 
-            if ($ceilingFinishType === 'ceramic' && ! $this->filled('ceiling_ceramic_area')) {
+            if ($this->boolean('is_shed_floor_tiled') && $type !== Space::TYPE_SHED) {
                 $validator->errors()->add(
-                    'ceiling_ceramic_area',
-                    'Ceiling ceramic area is required when ceiling finish is ceramic.'
-                );
-            }
-
-            if ($ceilingFinishType !== 'ceramic' && $this->filled('ceiling_ceramic_area')) {
-                $validator->errors()->add(
-                    'ceiling_ceramic_area',
-                    'Ceiling ceramic area is only allowed when ceiling finish is ceramic.'
-                );
-            }
-
-            if ($this->boolean('is_balcony_floor_tiled') && $type !== Space::TYPE_BALCONY) {
-                $validator->errors()->add(
-                    'is_balcony_floor_tiled',
-                    'Balcony floor tiled is only valid for balcony spaces.'
+                    'is_shed_floor_tiled',
+                    'shed floor tiled is only valid for shed spaces.'
                 );
             }
         });

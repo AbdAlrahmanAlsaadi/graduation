@@ -17,7 +17,7 @@ class ProjectSummaryResource extends JsonResource
             'spaces' => SpaceResource::collection($this->resource['spaces']),
             'work_items' => WorkItemResource::collection($this->resource['work_items']),
             'totals_by_finish_type' => $this->resource['totals_by_finish_type'],
-            'total_ceiling_ceramic_area' => $this->resource['total_ceiling_ceramic_area'],
+            'total_ceiling_area' => $this->resource['total_ceiling_area'],
         ];
     }
 }
