@@ -32,7 +32,7 @@ class ProjectService
                 $data['created_by'] = $data['created_by'] ?? $userId;
                 $data['updated_by'] = $data['updated_by'] ?? $userId;
             }
-
+            $data['status'] = Project::STATUS_PLANNED;
             $project = Project::query()->create($data);
             $now = now();
             $workItems = [];

@@ -87,7 +87,7 @@ class Project extends Model
             'longitude' => [$required, 'numeric', 'max:255'],
             'apartment_area' => [$required, 'numeric', 'min:0.1'],
             'height' => [$required, 'numeric', 'min:0.1'],
-            'status' => [$isUpdate ? 'sometimes' : 'nullable', 'string', Rule::in(self::STATUS_OPTIONS)],
+            'status' => ['sometimes', 'string', Rule::in(self::STATUS_OPTIONS)],
             'project_manager_id' => [
                 ...$optionalNullable,
                 'integer',

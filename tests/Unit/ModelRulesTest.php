@@ -26,11 +26,10 @@ class ModelRulesTest extends TestCase
         $payload = [
             'type' => Space::TYPE_ROOM,
             'wall_area' => 22.5,
-            'floor_area' => 18.0,
             'wall_finish_type' => Space::FINISH_TYPES[0],
             'ceiling_finish_type' => 'none',
             'toilet_type' => 'none',
-            'is_balcony_floor_tiled' => false,
+            'is_shed_floor_tiled' => false,
         ];
 
         $validator = Validator::make($payload, Space::rules());

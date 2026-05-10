@@ -25,7 +25,7 @@ return new class extends Migration
                 ->comment('basic|good|premium|custom');
             $table->unsignedInteger('sort_order')->comment('sort order within project');
             $table->unsignedInteger('duration_days')
-                ->nullable()
+                ->default(10)
                 ->comment('estimated duration in days');
             $table->boolean('is_default')
                 ->default(false)
