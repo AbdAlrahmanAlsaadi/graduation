@@ -37,6 +37,10 @@ class WorkItem extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public const STATUS_PLANNED = 'planned';
+    public const STATUS_ONGOING = 'ongoing';
+    public const STATUS_COMPLETED = 'completed';
+
     public const QUALITY_LEVEL_BASIC = 'basic';
     public const QUALITY_LEVEL_GOOD = 'good';
     public const QUALITY_LEVEL_PREMIUM = 'premium';
@@ -61,6 +65,10 @@ class WorkItem extends Model
         'is_custom',
     ];
 
+    protected $attributes = [
+        'status' => self::STATUS_PLANNED,
+    ];
+
     protected function casts(): array
     {
         return [
@@ -69,25 +77,28 @@ class WorkItem extends Model
             'is_default' => 'boolean',
             'is_active' => 'boolean',
             'is_custom' => 'boolean',
+            'started_at' => 'datetime',
+            'completed_at' => 'datetime',
         ];
     }
 
     public static function rules(bool $isUpdate = false): array
     {
         $required = $isUpdate ? 'sometimes' : 'required';
+        $nullable = $isUpdate ? 'sometimes' : 'nullable';
 
         return [
             'name' => [$required, 'string', 'max:255'],
             'quality_level' => [
-                $isUpdate ? 'sometimes' : 'nullable',
+                $nullable,
                 'string',
                 Rule::in(self::QUALITY_LEVELS),
             ],
-            'duration_days' => [$isUpdate ? 'sometimes' : 'nullable', 'integer', 'min:1'],
-            'sort_order' => [$isUpdate ? 'sometimes' : 'nullable', 'integer', 'min:1'],
+            'duration_days' => [$nullable, 'integer', 'min:1'],
+            'sort_order' => [$nullable, 'integer', 'min:1'],
             'is_active' => ['sometimes', 'boolean'],
             'is_custom' => ['sometimes', 'boolean'],
-            'parent_id' => [$isUpdate ? 'sometimes' : 'nullable', 'nullable', 'integer', 'exists:work_items,id'],
+            'parent_id' => [$nullable, 'nullable', 'integer', 'exists:work_items,id'],
         ];
     }
 
@@ -117,22 +128,22 @@ class WorkItem extends Model
     public function syncDetails(array $details): void
     {
         DB::transaction(function () use ($details) {
-            $this->details()->delete();
+            $keys = array_column($details, 'key');
 
-            if ($details === []) {
-                return;
-            }
-
-            $payload = [];
-            foreach ($details as $detail) {
-                $payload[] = [
-                    'key' => $detail['key'],
-                    'value' => $detail['value'],
-                    'unit' => $detail['unit'] ?? null,
+            $this->details()->whereIn('key', $keys)->delete();
+            $now = now();
+            $rows = [];
+            foreach ($details as $d) {
+                $rows[] = [
+                    'work_item_id' => $this->id,
+                    'key' => $d['key'],
+                    'value' => (string) $d['value'],
+                    'unit' => $d['unit'] ?? null,
+                    'created_at' => $now,
+                    'updated_at' => $now,
                 ];
             }
-
-            $this->details()->createMany($payload);
+            $this->details()->createMany($rows);
         });
     }
 
@@ -144,5 +155,20 @@ class WorkItem extends Model
     public function scopeDefault(Builder $query): Builder
     {
         return $query->where('is_default', true);
+    }
+
+    public function isPlanned(): bool
+    {
+        return $this->status === self::STATUS_PLANNED;
+    }
+
+    public function isOngoing(): bool
+    {
+        return $this->status === self::STATUS_ONGOING;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->status === self::STATUS_COMPLETED;
     }
 }

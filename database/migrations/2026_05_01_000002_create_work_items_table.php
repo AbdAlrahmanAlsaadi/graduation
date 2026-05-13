@@ -36,6 +36,11 @@ return new class extends Migration
             $table->boolean('is_custom')
                 ->default(false)
                 ->comment('custom user item');
+            $table->enum('status', ['planned', 'ongoing', 'completed'])
+                ->default('planned')
+                ->comment('planned|ongoing|completed');
+            $table->time('started_at')->nullable();
+            $table->time('completed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

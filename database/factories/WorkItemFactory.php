@@ -29,6 +29,7 @@ class WorkItemFactory extends Factory
             'sort_order' => fake()->numberBetween(1, 20),
             'is_default' => false,
             'is_active' => true,
+            'status' => Project::STATUS_PLANNED,
             'is_custom' => fake()->boolean(40),
         ];
     }

@@ -36,7 +36,7 @@ class ProjectFactory extends Factory
             'longitude' => (string) fake()->longitude(),
             'apartment_area' => fake()->randomFloat(2, 500, 10000),
             'height' => fake()->randomFloat(2, 2.5, 15),
-            'status' => fake()->randomElement(Project::STATUS_OPTIONS),
+            'status' => Project::STATUS_PLANNED,
             'created_by' => $projectManager->id,
             'updated_by' => $projectManager->id,
         ];

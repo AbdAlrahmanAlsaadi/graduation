@@ -102,10 +102,50 @@ class ProjectController extends Controller
         }
     }
 
+    public function start(Project $project): JsonResponse
+    {
+        try {
+            $authResponse = $this->ensureProjectAccess();
+            if ($authResponse) {
+                return $authResponse;
+            }
+
+            $project = $this->projectService->startProject($project);
+
+            return Response::success(
+                'Project started.',
+                new ProjectResource($project->loadMissing('workItems'))
+            );
+        } catch (Throwable $throwable) {
+            return $this->handleException($throwable);
+        }
+    }
+
+    public function complete(Project $project): JsonResponse
+    {
+        try {
+            $authResponse = $this->ensureProjectAccess();
+            if ($authResponse) {
+                return $authResponse;
+            }
+
+            $project = $this->projectService->completeProject($project);
+
+            return Response::success(
+                'Project completed.',
+                new ProjectResource($project->loadMissing('workItems'))
+            );
+        } catch (Throwable $throwable) {
+            return $this->handleException($throwable);
+        }
+    }
+
     private function handleException(Throwable $throwable): JsonResponse
     {
         if ($throwable instanceof ValidationException) {
-            return Response::Validation('Validation failed.', $throwable->errors());
+            $status = $throwable->status ?? 422;
+
+            return Response::Validation('Validation failed.', $throwable->errors(), $status);
         }
 
         $status = (int) $throwable->getCode();
@@ -122,6 +162,21 @@ class ProjectController extends Controller
 
         if (! $user || ! $user->hasRole('company_admin')) {
             return Response::error('Only admin can assign project roles.', 403);
+        }
+
+        return null;
+    }
+
+    private function ensureProjectAccess(): ?JsonResponse
+    {
+        $user = Auth::user();
+
+        if (! $user) {
+            return Response::error('Unauthorized.', 401);
+        }
+
+        if (! $user->hasAnyRole(['company_admin', 'project_manager'])) {
+            return Response::error('Forbidden.', 403);
         }
 
         return null;

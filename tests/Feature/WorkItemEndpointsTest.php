@@ -131,6 +131,74 @@ class WorkItemEndpointsTest extends TestCase
             ->assertJsonPath('data.0.details.0.key', 'tile_length');
     }
 
+    public function test_start_work_item_sets_status_and_started_at(): void
+    {
+        $user = $this->createUserWithRole('project_manager');
+        $project = $this->createProjectFor($user);
+        $workItem = WorkItem::query()->create([
+            'project_id' => $project->id,
+            'name' => 'Start Work Item',
+            'quality_level' => WorkItem::QUALITY_LEVEL_GOOD,
+            'duration_days' => 3,
+            'sort_order' => 1,
+            'is_default' => false,
+            'is_active' => true,
+            'is_custom' => true,
+            'status' => WorkItem::STATUS_PLANNED,
+        ]);
+
+        Sanctum::actingAs($user, ['*'], 'sanctum');
+
+        $response = $this->postJson("/api/projects/{$project->id}/work-items/{$workItem->id}/start");
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonPath('data.status', WorkItem::STATUS_ONGOING);
+
+        $this->assertNotNull($response->json('data.started_at'));
+
+        $workItem->refresh();
+        $this->assertSame(WorkItem::STATUS_ONGOING, $workItem->status);
+        $this->assertNotNull($workItem->started_at);
+    }
+
+    public function test_complete_work_item_requires_started_and_sets_completed_at(): void
+    {
+        $user = $this->createUserWithRole('project_manager');
+        $project = $this->createProjectFor($user);
+        $workItem = WorkItem::query()->create([
+            'project_id' => $project->id,
+            'name' => 'Complete Work Item',
+            'quality_level' => WorkItem::QUALITY_LEVEL_GOOD,
+            'duration_days' => 3,
+            'sort_order' => 1,
+            'is_default' => false,
+            'is_active' => true,
+            'is_custom' => true,
+            'status' => WorkItem::STATUS_PLANNED,
+        ]);
+
+        Sanctum::actingAs($user, ['*'], 'sanctum');
+
+        $this->postJson("/api/projects/{$project->id}/work-items/{$workItem->id}/complete")
+            ->assertStatus(400);
+
+        $this->postJson("/api/projects/{$project->id}/work-items/{$workItem->id}/start")
+            ->assertStatus(200);
+
+        $response = $this->postJson("/api/projects/{$project->id}/work-items/{$workItem->id}/complete");
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonPath('data.status', WorkItem::STATUS_COMPLETED);
+
+        $this->assertNotNull($response->json('data.completed_at'));
+
+        $workItem->refresh();
+        $this->assertSame(WorkItem::STATUS_COMPLETED, $workItem->status);
+        $this->assertNotNull($workItem->completed_at);
+    }
+
     private function createProjectFor(User $user): Project
     {
         return Project::query()->create([
