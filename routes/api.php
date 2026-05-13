@@ -73,15 +73,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::middleware('role:company_admin|project_manager')->group(function () {
         Route::get('projects/{project}/summary', [ProjectController::class, 'summary']);
+        Route::post('projects/{project}/start', [ProjectController::class, 'start']);
+        Route::post('projects/{project}/complete', [ProjectController::class, 'complete']);
         Route::post('projects/{project}/spaces', [SpaceController::class, 'store']);
         Route::put('spaces/{space}', [SpaceController::class, 'update']);
         Route::delete('spaces/{space}', [SpaceController::class, 'destroy']);
         Route::apiResource('projects.work-items', WorkItemController::class)
             ->shallow()
             ->only(['store', 'destroy']);
-        Route::put('projects/{project}/work-items/{workItem}', [WorkItemController::class, 'update']);
-        Route::put('projects/{project}/work-items/{workItem}/details', [WorkItemController::class, 'updateDetails']);
         Route::put('projects/{project}/work-items/reorder', [WorkItemController::class, 'reorder']);
+        Route::post('projects/{project}/work-items/{workItem}', [WorkItemController::class, 'update']);
+        Route::put('projects/{project}/work-items/{workItem}/details', [WorkItemController::class, 'updateDetails']);
+        Route::post('projects/{project}/work-items/{workItem}/start', [WorkItemController::class, 'start']);
+        Route::post('projects/{project}/work-items/{workItem}/complete', [WorkItemController::class, 'complete']);
         // Engineers payload: { user_id, role, assigned_at? }
         Route::get('projects/{project}/engineers', [ProjectEngineerController::class, 'index']);
         Route::post('projects/{project}/engineers', [ProjectEngineerController::class, 'store']);

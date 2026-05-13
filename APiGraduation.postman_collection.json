@@ -3098,6 +3098,362 @@
                   "body": "{\n    \"status\": 200,\n    \"message\": \"Project summary fetched.\",\n    \"data\": {\n        \"project\": {\n            \"id\": 5,\n            \"name\": \"Schowalter, Mraz and Torp Project\",\n            \"location\": \"Lionelland\",\n            \"latitude\": \"1.527405\",\n            \"longitude\": \"-142.162679\",\n            \"apartment_area\": \"6352.78\",\n            \"height\": \"8.97\",\n            \"status\": \"ongoing\",\n            \"project_manager_id\": 8,\n            \"assistant_engineer_id\": 9,\n            \"owner_id\": 10,\n            \"created_by\": 8,\n            \"updated_by\": 8,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        \"spaces\": [\n            {\n                \"id\": 3,\n                \"project_id\": 5,\n                \"type\": \"kitchen\",\n                \"wall_area\": \"152.13\",\n                \"floor_area\": \"118.72\",\n                \"wall_finish_type\": \"paint\",\n                \"ceiling_finish_type\": \"none\",\n                \"toilet_type\": \"none\",\n                \"ceiling_ceramic_area\": null,\n                \"is_balcony_floor_tiled\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 4,\n                \"project_id\": 5,\n                \"type\": \"salon\",\n                \"wall_area\": \"214.89\",\n                \"floor_area\": \"95.77\",\n                \"wall_finish_type\": \"none\",\n                \"ceiling_finish_type\": \"paint\",\n                \"toilet_type\": \"none\",\n                \"ceiling_ceramic_area\": null,\n                \"is_balcony_floor_tiled\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 5,\n                \"project_id\": 5,\n                \"type\": \"storage\",\n                \"wall_area\": \"113.32\",\n                \"floor_area\": \"151.03\",\n                \"wall_finish_type\": \"ceramic\",\n                \"ceiling_finish_type\": \"paint\",\n                \"toilet_type\": \"none\",\n                \"ceiling_ceramic_area\": null,\n                \"is_balcony_floor_tiled\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 6,\n                \"project_id\": 5,\n                \"type\": \"balcony\",\n                \"wall_area\": \"47.27\",\n                \"floor_area\": \"116.84\",\n                \"wall_finish_type\": \"gypsum\",\n                \"ceiling_finish_type\": \"none\",\n                \"toilet_type\": \"none\",\n                \"ceiling_ceramic_area\": null,\n                \"is_balcony_floor_tiled\": true,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            }\n        ],\n        \"work_items\": [\n            {\n                \"id\": 13,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"ملابن الأبواب\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 1,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 14,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"تمديدات كهرباء\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 2,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 15,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"تمديدات صحية\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 3,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 16,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"طينة / لياسة\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 4,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 17,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"بلاط أرضيات\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 5,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 18,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 6,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 19,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"جبس بورد\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 7,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 20,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"دهان\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 8,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 21,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"أبواب ونجارة\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 9,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 22,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 10,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            },\n            {\n                \"id\": 23,\n                \"project_id\": 5,\n                \"parent_id\": null,\n                \"name\": \"تشطيبات نهائية\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": null,\n                \"sort_order\": 11,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n                \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n            }\n        ],\n        \"totals_by_finish_type\": {\n            \"paint\": 152.13,\n            \"ceramic\": 113.32,\n            \"gypsum\": 47.27,\n            \"none\": 214.89,\n            \"custom\": 0\n        },\n        \"total_ceiling_ceramic_area\": 0\n    }\n}"
                 }
               ]
+            },
+            {
+              "name": "Start Project",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                      "pm.test('Project is ongoing', function () {",
+                      "  var data = pm.response.json().data;",
+                      "  pm.expect(data.status).to.eql('ongoing');",
+                      "  pm.expect(data.started_at).to.be.ok;",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/projects/{{projectId}}/start",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{projectId}}",
+                    "start"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Start Project",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/start",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "start"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 13 May 2026 09:35:22 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 13 May 2026 09:35:22 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Project started.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Graham, D'Amore and Roob Project\",\n        \"location\": \"West Eastonmouth\",\n        \"latitude\": \"26.246818\",\n        \"longitude\": \"-90.943676\",\n        \"apartment_area\": \"1314.92\",\n        \"height\": \"7.04\",\n        \"status\": \"ongoing\",\n        \"project_manager_id\": 2,\n        \"assistant_engineer_id\": 3,\n        \"owner_id\": null,\n        \"created_by\": 2,\n        \"updated_by\": 2,\n        \"started_at\": \"2026-05-13T09:35:22.000000Z\",\n        \"completed_at\": null,\n        \"work_items\": [\n            {\n                \"id\": 1,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"updated name\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 3,\n                \"sort_order\": 1,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": false,\n                \"is_custom\": true,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:34:36.000000Z\"\n            },\n            {\n                \"id\": 2,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"تمديدات كهرباء\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 2,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 3,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"تمديدات صحية\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 3,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 4,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"طينة / لياسة\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 4,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 5,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"بلاط أرضيات\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 5,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 6,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 6,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 7,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"جبس بورد\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 7,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 8,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"دهان\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 8,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 9,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"أبواب ونجارة\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 9,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 10,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 10,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 11,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"تشطيبات نهائية\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 11,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 12,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"Tile Installation\",\n                \"quality_level\": \"good\",\n                \"duration_days\": 4,\n                \"sort_order\": 12,\n                \"status\": \"planned\",\n                \"is_default\": false,\n                \"is_active\": true,\n                \"is_custom\": true,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            }\n        ],\n        \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n        \"updated_at\": \"2026-05-13T09:35:22.000000Z\"\n    }\n}"
+                },
+                {
+                  "name": "already completed",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/start",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "start"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 13 May 2026 09:36:32 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 13 May 2026 09:36:32 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 400,\n    \"message\": \"Project already completed.\",\n    \"data\": []\n}"
+                }
+              ]
+            },
+            {
+              "name": "Complete Project",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                      "pm.test('Project is completed', function () {",
+                      "  var data = pm.response.json().data;",
+                      "  pm.expect(data.status).to.eql('completed');",
+                      "  pm.expect(data.completed_at).to.be.ok;",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/projects/{{projectId}}/complete",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{projectId}}",
+                    "complete"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Complete Project",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/complete",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "complete"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 13 May 2026 09:35:44 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 13 May 2026 09:35:44 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Project completed.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Graham, D'Amore and Roob Project\",\n        \"location\": \"West Eastonmouth\",\n        \"latitude\": \"26.246818\",\n        \"longitude\": \"-90.943676\",\n        \"apartment_area\": \"1314.92\",\n        \"height\": \"7.04\",\n        \"status\": \"completed\",\n        \"project_manager_id\": 2,\n        \"assistant_engineer_id\": 3,\n        \"owner_id\": null,\n        \"created_by\": 2,\n        \"updated_by\": 2,\n        \"started_at\": \"2026-05-13T09:35:22.000000Z\",\n        \"completed_at\": \"2026-05-13T09:35:44.000000Z\",\n        \"work_items\": [\n            {\n                \"id\": 1,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"updated name\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 3,\n                \"sort_order\": 1,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": false,\n                \"is_custom\": true,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:34:36.000000Z\"\n            },\n            {\n                \"id\": 2,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"تمديدات كهرباء\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 2,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 3,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"تمديدات صحية\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 3,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 4,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"طينة / لياسة\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 4,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 5,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"بلاط أرضيات\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 5,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 6,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 6,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 7,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"جبس بورد\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 7,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 8,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"دهان\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 8,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 9,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"أبواب ونجارة\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 9,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 10,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 10,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 11,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"تشطيبات نهائية\",\n                \"quality_level\": \"basic\",\n                \"duration_days\": 10,\n                \"sort_order\": 11,\n                \"status\": \"planned\",\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            },\n            {\n                \"id\": 12,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"Tile Installation\",\n                \"quality_level\": \"good\",\n                \"duration_days\": 4,\n                \"sort_order\": 12,\n                \"status\": \"planned\",\n                \"is_default\": false,\n                \"is_active\": true,\n                \"is_custom\": true,\n                \"started_at\": null,\n                \"completed_at\": null,\n                \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n                \"updated_at\": \"2026-05-13T09:27:04.000000Z\"\n            }\n        ],\n        \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n        \"updated_at\": \"2026-05-13T09:35:44.000000Z\"\n    }\n}"
+                },
+                {
+                  "name": "Start before complete",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/complete",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "complete"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 13 May 2026 09:36:10 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 13 May 2026 09:36:10 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 400,\n    \"message\": \"Validation failed.\",\n    \"data\": {\n        \"errors\": {\n            \"status\": [\n                \"Project must be started before completing.\"\n            ]\n        }\n    }\n}"
+                }
+              ]
             }
           ]
         },
@@ -4162,6 +4518,404 @@
           "name": "Work Items",
           "item": [
             {
+              "name": "Work Item Details",
+              "item": [
+                {
+                  "name": "Update Mellaben",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{auth_token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"wood_doors_count\": 5,\n  \"aluminum_doors_count\": 1,\n  \"windows_count\": 10\n}\n",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/details",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "work-items",
+                        "{{workItemId}}",
+                        "details"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "Update Mellaben",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"wood_doors_count\": 5,\n  \"aluminum_doors_count\": 1,\n  \"windows_count\": 10\n}\n",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/details",
+                          "host": [
+                            "{{base_url}}"
+                          ],
+                          "path": [
+                            "projects",
+                            "{{projectId}}",
+                            "work-items",
+                            "{{workItemId}}",
+                            "details"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Host",
+                          "value": "127.0.0.1:8000"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 13 May 2026 13:22:27 GMT"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 13 May 2026 13:22:26 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "close"
+                        },
+                        {
+                          "key": "X-Powered-By",
+                          "value": "PHP/8.2.11"
+                        },
+                        {
+                          "key": "Cache-Control",
+                          "value": "no-cache, private"
+                        },
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "key": "Access-Control-Allow-Origin",
+                          "value": "*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"status\": 200,\n    \"message\": \"Work item details updated.\",\n    \"data\": {\n        \"id\": 57,\n        \"project_id\": 6,\n        \"parent_id\": null,\n        \"name\": \"ملابن الأبواب\",\n        \"quality_level\": \"basic\",\n        \"duration_days\": 10,\n        \"sort_order\": 1,\n        \"status\": \"planned\",\n        \"is_default\": true,\n        \"is_active\": true,\n        \"is_custom\": false,\n        \"details\": [\n            {\n                \"key\": \"wood_doors_count\",\n                \"value\": \"5\",\n                \"unit\": \"count\"\n            },\n            {\n                \"key\": \"aluminum_doors_count\",\n                \"value\": \"1\",\n                \"unit\": \"count\"\n            },\n            {\n                \"key\": \"windows_count\",\n                \"value\": \"10\",\n                \"unit\": \"count\"\n            }\n        ],\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2026-05-13T13:21:09.000000Z\",\n        \"updated_at\": \"2026-05-13T13:21:09.000000Z\"\n    }\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Update Floor Tiles Details",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{auth_token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"tile_length\": 60,\n  \"tile_width\": 60\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/details",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "work-items",
+                        "{{workItemId}}",
+                        "details"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "Update Floor Tiles Details",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tile_length\": 60,\n  \"tile_width\": 60\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/details",
+                          "host": [
+                            "{{base_url}}"
+                          ],
+                          "path": [
+                            "projects",
+                            "{{projectId}}",
+                            "work-items",
+                            "{{workItemId}}",
+                            "details"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Host",
+                          "value": "127.0.0.1:8000"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 13 May 2026 13:25:16 GMT"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 13 May 2026 13:25:16 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "close"
+                        },
+                        {
+                          "key": "X-Powered-By",
+                          "value": "PHP/8.2.11"
+                        },
+                        {
+                          "key": "Cache-Control",
+                          "value": "no-cache, private"
+                        },
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "key": "Access-Control-Allow-Origin",
+                          "value": "*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"status\": 200,\n    \"message\": \"Work item details updated.\",\n    \"data\": {\n        \"id\": 61,\n        \"project_id\": 6,\n        \"parent_id\": null,\n        \"name\": \"بلاط أرضيات\",\n        \"quality_level\": \"basic\",\n        \"duration_days\": 10,\n        \"sort_order\": 5,\n        \"status\": \"planned\",\n        \"is_default\": true,\n        \"is_active\": true,\n        \"is_custom\": false,\n        \"details\": [\n            {\n                \"key\": \"tile_length\",\n                \"value\": \"60\",\n                \"unit\": \"cm\"\n            },\n            {\n                \"key\": \"tile_width\",\n                \"value\": \"60\",\n                \"unit\": \"cm\"\n            }\n        ],\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2026-05-13T13:21:09.000000Z\",\n        \"updated_at\": \"2026-05-13T13:21:09.000000Z\"\n    }\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Update Wall Ceramic Details",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{auth_token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"ceramic_length\": 30,\n  \"ceramic_width\": 60\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/details",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "work-items",
+                        "{{workItemId}}",
+                        "details"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "Update Wall Ceramic Details",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"ceramic_length\": 30,\n  \"ceramic_width\": 60\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/details",
+                          "host": [
+                            "{{base_url}}"
+                          ],
+                          "path": [
+                            "projects",
+                            "{{projectId}}",
+                            "work-items",
+                            "{{workItemId}}",
+                            "details"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Host",
+                          "value": "127.0.0.1:8000"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 13 May 2026 13:26:39 GMT"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 13 May 2026 13:26:39 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "close"
+                        },
+                        {
+                          "key": "X-Powered-By",
+                          "value": "PHP/8.2.11"
+                        },
+                        {
+                          "key": "Cache-Control",
+                          "value": "no-cache, private"
+                        },
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "key": "Access-Control-Allow-Origin",
+                          "value": "*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"status\": 200,\n    \"message\": \"Work item details updated.\",\n    \"data\": {\n        \"id\": 62,\n        \"project_id\": 6,\n        \"parent_id\": null,\n        \"name\": \"سيراميك جدران / أسقف\",\n        \"quality_level\": \"basic\",\n        \"duration_days\": 10,\n        \"sort_order\": 6,\n        \"status\": \"planned\",\n        \"is_default\": true,\n        \"is_active\": true,\n        \"is_custom\": false,\n        \"details\": [\n            {\n                \"key\": \"ceramic_length\",\n                \"value\": \"30\",\n                \"unit\": \"cm\"\n            },\n            {\n                \"key\": \"ceramic_width\",\n                \"value\": \"60\",\n                \"unit\": \"cm\"\n            }\n        ],\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2026-05-13T13:21:09.000000Z\",\n        \"updated_at\": \"2026-05-13T13:21:09.000000Z\"\n    }\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "name": "List Work Items",
               "request": {
                 "auth": {
@@ -4388,7 +5142,7 @@
               ]
             },
             {
-              "name": "Update Work Item Details",
+              "name": "Update Work Item",
               "request": {
                 "auth": {
                   "type": "bearer",
@@ -4400,7 +5154,7 @@
                     }
                   ]
                 },
-                "method": "PUT",
+                "method": "POST",
                 "header": [
                   {
                     "key": "Accept",
@@ -4414,16 +5168,38 @@
                   }
                 ],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"details\":\n    [\n        {\n        \"key\": \"tile_length\",\n        \"value\": 50,\n        \"unit\": \"cm\"\n      },\n      {\n        \"key\": \"tile_width\",\n        \"value\": 50,\n        \"unit\": \"cm\"\n      }\n    ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "name",
+                      "value": "updated name",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "duration_days",
+                      "value": "3",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "is_active",
+                      "value": "0",
+                      "type": "text",
+                      "uuid": "f8eaffde-8078-436d-8804-164ceca75d70",
+                      "disabled": true
+                    },
+                    {
+                      "key": "is_custom",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "505153f5-acb0-468d-8bac-952fbceb6be0",
+                      "disabled": true
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/details",
+                  "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}",
                   "host": [
                     "{{base_url}}"
                   ],
@@ -4431,16 +5207,15 @@
                     "projects",
                     "{{projectId}}",
                     "work-items",
-                    "{{workItemId}}",
-                    "details"
+                    "{{workItemId}}"
                   ]
                 }
               },
               "response": [
                 {
-                  "name": "Update Work Item Details",
+                  "name": "Update Work Item",
                   "originalRequest": {
-                    "method": "PUT",
+                    "method": "POST",
                     "header": [
                       {
                         "key": "Accept",
@@ -4454,8 +5229,35 @@
                       }
                     ],
                     "body": {
-                      "mode": "raw",
-                      "raw": "{\n    \"details\":\n    [\n        {\n        \"key\": \"tile_length\",\n        \"value\": 50,\n        \"unit\": \"cm\"\n      },\n      {\n        \"key\": \"tile_width\",\n        \"value\": 50,\n        \"unit\": \"cm\"\n      }\n    ]\n}",
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "name",
+                          "value": "updated name",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "duration_days",
+                          "value": "3",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "is_active",
+                          "value": "0",
+                          "type": "text",
+                          "uuid": "f8eaffde-8078-436d-8804-164ceca75d70",
+                          "disabled": true
+                        },
+                        {
+                          "key": "is_custom",
+                          "value": "1",
+                          "type": "text",
+                          "uuid": "505153f5-acb0-468d-8bac-952fbceb6be0",
+                          "disabled": true
+                        }
+                      ],
                       "options": {
                         "raw": {
                           "language": "json"
@@ -4463,7 +5265,7 @@
                       }
                     },
                     "url": {
-                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/details",
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}",
                       "host": [
                         "{{base_url}}"
                       ],
@@ -4471,8 +5273,7 @@
                         "projects",
                         "{{projectId}}",
                         "work-items",
-                        "{{workItemId}}",
-                        "details"
+                        "{{workItemId}}"
                       ]
                     }
                   },
@@ -4486,11 +5287,11 @@
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 09 May 2026 16:02:04 GMT"
+                      "value": "Wed, 13 May 2026 09:34:36 GMT"
                     },
                     {
                       "key": "Date",
-                      "value": "Sat, 09 May 2026 16:02:04 GMT"
+                      "value": "Wed, 13 May 2026 09:34:36 GMT"
                     },
                     {
                       "key": "Connection",
@@ -4514,7 +5315,7 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n    \"status\": 200,\n    \"message\": \"Work item details updated.\",\n    \"data\": {\n        \"id\": 12,\n        \"project_id\": 1,\n        \"parent_id\": null,\n        \"name\": \"Tile Installation\",\n        \"quality_level\": \"good\",\n        \"duration_days\": 4,\n        \"sort_order\": 12,\n        \"is_default\": false,\n        \"is_active\": true,\n        \"is_custom\": true,\n        \"details\": [\n            {\n                \"key\": \"tile_length\",\n                \"value\": \"50\",\n                \"unit\": \"cm\"\n            },\n            {\n                \"key\": \"tile_width\",\n                \"value\": \"50\",\n                \"unit\": \"cm\"\n            }\n        ],\n        \"created_at\": \"2026-05-09T15:57:34.000000Z\",\n        \"updated_at\": \"2026-05-09T15:57:34.000000Z\"\n    }\n}"
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Work item updated.\",\n    \"data\": {\n        \"id\": 1,\n        \"project_id\": 1,\n        \"parent_id\": null,\n        \"name\": \"updated name\",\n        \"quality_level\": \"basic\",\n        \"duration_days\": 3,\n        \"sort_order\": 1,\n        \"status\": \"planned\",\n        \"is_default\": true,\n        \"is_active\": false,\n        \"is_custom\": true,\n        \"details\": [],\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2026-05-13T09:27:04.000000Z\",\n        \"updated_at\": \"2026-05-13T09:34:36.000000Z\"\n    }\n}"
                 }
               ]
             },
@@ -4743,6 +5544,110 @@
                   "body": "{\n    \"status\": 200,\n    \"message\": \"Work items reordered.\",\n    \"data\": [\n        {\n            \"id\": 14,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"تمديدات كهرباء\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 2,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 15,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"تمديدات صحية\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 3,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T15:02:40.000000Z\"\n        },\n        {\n            \"id\": 16,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"طينة / لياسة\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 4,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T15:03:10.000000Z\"\n        },\n        {\n            \"id\": 17,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"بلاط أرضيات\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 5,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 18,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"سيراميك جدران / أسقف\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 6,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 19,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"جبس بورد\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 7,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 20,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"دهان\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 8,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 21,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"أبواب ونجارة\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 9,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 22,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"ألمنيوم وأبجورات\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 10,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 23,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"تشطيبات نهائية\",\n            \"quality_level\": \"basic\",\n            \"duration_days\": null,\n            \"sort_order\": 11,\n            \"is_default\": true,\n            \"is_active\": true,\n            \"is_custom\": false,\n            \"created_at\": \"2026-05-09T09:15:58.000000Z\",\n            \"updated_at\": \"2026-05-09T09:15:58.000000Z\"\n        },\n        {\n            \"id\": 79,\n            \"project_id\": 5,\n            \"parent_id\": null,\n            \"name\": \"New Work Item\",\n            \"quality_level\": \"good\",\n            \"duration_days\": 5,\n            \"sort_order\": 12,\n            \"is_default\": false,\n            \"is_active\": true,\n            \"is_custom\": true,\n            \"created_at\": \"2026-05-09T14:37:48.000000Z\",\n            \"updated_at\": \"2026-05-09T14:37:48.000000Z\"\n        }\n    ]\n}"
                 }
               ]
+            },
+            {
+              "name": "Start Work Item",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                      "pm.test('Work item is ongoing', function () {",
+                      "  var data = pm.response.json().data;",
+                      "  pm.expect(data.status).to.eql('ongoing');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/start",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{projectId}}",
+                    "work-items",
+                    "{{workItemId}}",
+                    "start"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Complete Work Item",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                      "pm.test('Work item is completed', function () {",
+                      "  var data = pm.response.json().data;",
+                      "  pm.expect(data.status).to.eql('completed');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/complete",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{projectId}}",
+                    "work-items",
+                    "{{workItemId}}",
+                    "complete"
+                  ]
+                }
+              },
+              "response": []
             }
           ]
         }

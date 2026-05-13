@@ -67,11 +67,17 @@ class Project extends Model
         'updated_by',
     ];
 
+    protected $attributes = [
+        'status' => self::STATUS_PLANNED,
+    ];
+
     protected function casts(): array
     {
         return [
             'apartment_area' => 'decimal:2',
             'height' => 'decimal:2',
+            'started_at' => 'datetime',
+            'completed_at' => 'datetime',
         ];
     }
 
@@ -160,9 +166,11 @@ class Project extends Model
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+
     public function contracts()
     {
         return $this->hasMany(Contract::class);
+    }
 
     public function createdBy(): BelongsTo
     {
@@ -182,5 +190,20 @@ class Project extends Model
                 'spaces',
                 'workItems' => fn (Builder $workItems) => $workItems->orderBy('sort_order'),
             ]);
+    }
+
+    public function isPlanned(): bool
+    {
+        return $this->status === self::STATUS_PLANNED;
+    }
+
+    public function isOngoing(): bool
+    {
+        return $this->status === self::STATUS_ONGOING;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->status === self::STATUS_COMPLETED;
     }
 }
