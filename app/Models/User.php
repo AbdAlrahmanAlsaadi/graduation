@@ -55,6 +55,8 @@ class User extends Authenticatable
     public function ownedContracts()
     {
         return $this->hasMany(Contract::class, 'owner_id');
+    }
+
     public function projectAssignments(): HasMany
     {
         return $this->hasMany(ProjectEngineer::class, 'user_id');
@@ -65,5 +67,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Project::class, 'project_engineers', 'user_id', 'project_id')
             ->withPivot(['role', 'assigned_at'])
             ->withTimestamps();
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

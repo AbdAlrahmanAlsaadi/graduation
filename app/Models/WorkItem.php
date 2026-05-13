@@ -145,4 +145,8 @@ class WorkItem extends Model
     {
         return $query->where('is_default', true);
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

@@ -163,7 +163,7 @@ class Project extends Model
     public function contracts()
     {
         return $this->hasMany(Contract::class);
-
+    }
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
