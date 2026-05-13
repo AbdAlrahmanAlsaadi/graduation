@@ -33,6 +33,7 @@ Route::middleware(['auth:sanctum'])->group(
         Route::get('documents/{documentId}', [DocumentController::class, 'show']);
         Route::get('documents/versions/{versionId}/download', [DocumentController::class, 'downloadVersion']);
         Route::get('/projects/{projectId}/weather/today', [WeatherController::class, 'getTodayByProject']);
+        Route::get('projects/{id}/documents',[DocumentController::class, 'getProjectDocuments']);
     });
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager|assistant|project_owner')->group(function () {
@@ -102,5 +103,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('work-items/{id}/comments', [CommentController::class, 'index'])
         ->middleware(['auth:sanctum']);
 
+    Route::post(
+        'equipment-bookings', [EquipmentController::class, 'storebook']
+    )->middleware(['auth:sanctum']);
+
+    Route::post(
+        'equipment-bookings/{id}/finish',
+        [EquipmentController::class, 'finishBooking']
+    )->middleware('auth:sanctum');
 });
 

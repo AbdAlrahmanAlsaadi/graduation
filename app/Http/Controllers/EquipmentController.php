@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CloseEquipmentMaintenanceRequest;
 use App\Http\Requests\FilterEquipmentByStatusRequest;
+use App\Http\Requests\FinishEquipmentBookingRequest;
+use App\Http\Requests\StoreEquipmentBookingRequest;
 use App\Http\Requests\StoreEquipmentRequest;
 use App\Http\Responses\Response;
 use App\Services\EquipmentService;
@@ -88,4 +90,64 @@ class EquipmentController extends Controller
 
             return Response::error($throwable->getMessage(), $code);
         }
-    }}
+    }
+
+    public function storebook(StoreEquipmentBookingRequest $request)
+    {
+        try {
+
+            $data = $this->equipmentService
+                ->storebook($request);
+
+            return Response::success(
+                $data['message'],
+                [
+                    'booking' => $data['booking'],
+                ],
+                (int) $data['status']
+            );
+        } catch (Throwable $throwable) {
+
+            $code = is_int($throwable->getCode())
+                && $throwable->getCode() > 0
+                ? $throwable->getCode()
+                : 500;
+
+            return Response::error(
+                $throwable->getMessage(),
+                $code
+            );
+        }
+    }
+
+    public function finishBooking(
+        FinishEquipmentBookingRequest $request,
+        $bookingId
+    ) {
+        try {
+
+            $data = $this->equipmentService
+                ->finishBooking($request, $bookingId);
+
+            return Response::success(
+                $data['message'],
+                [
+                    'booking' => $data['booking'],
+                ],
+                (int) $data['status']
+            );
+        } catch (Throwable $throwable) {
+
+            $code = is_int($throwable->getCode())
+                && $throwable->getCode() > 0
+                ? $throwable->getCode()
+                : 500;
+
+            return Response::error(
+                $throwable->getMessage(),
+                $code
+            );
+        }
+    }
+}
+

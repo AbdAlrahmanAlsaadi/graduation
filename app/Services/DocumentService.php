@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Document;
 use App\Models\DocumentVersion;
+use App\Models\Project;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -185,6 +186,68 @@ class DocumentService
         return [
             'file_path' => $fullPath,
             'file_name' => basename($version->file_path),
+        ];
+    }
+    public function getProjectDocuments($projectId): array
+    {
+        $project = Project::query()
+
+            ->with([
+                'documents.versions' => function ($query) {
+                    $query->latest();
+                },
+            ])
+
+            ->find($projectId);
+
+        if (! $project) {
+            throw new \Exception(
+                'Project not found.',
+                404
+            );
+        }
+
+        $documents = $project->documents
+            ->map(function ($document) {
+
+                $latestVersion = $document->versions->first();
+
+                return [
+
+                    'id' => $document->id,
+
+                    'title' => $document->title,
+
+                    'category' => $document->category,
+
+                    'versions_count' => $document->versions->count(),
+
+                    'latest_version' => $latestVersion
+                        ? [
+                            'version_no' => $latestVersion->version_no,
+
+                            'file_url' => asset(
+                                'storage/' . $latestVersion->file_path
+                            ),
+
+                            'created_at' => $latestVersion->created_at,
+                        ]
+                        : null,
+                ];
+            });
+
+        return [
+
+            'message' => 'Project documents fetched successfully.',
+
+            'project' => [
+                'id' => $project->id,
+                'name' => $project->name,
+            ],
+
+            'documents' => $documents,
+
+            'status' => 200,
         ];
     }
 }
