@@ -18,7 +18,6 @@ return new class extends Migration
             $table->enum('type', Space::TYPE_OPTIONS)
                 ->comment('space type');
             $table->decimal('wall_area', 10, 2)->comment('wall surface area');
-            $table->decimal('floor_area', 10, 2)->comment('floor surface area');
             $table->enum('wall_finish_type', Space::FINISH_TYPES)
                 ->comment('wall finish type');
             $table->enum('ceiling_finish_type', Space::FINISH_TYPES)
@@ -27,12 +26,12 @@ return new class extends Migration
             $table->enum('toilet_type', Space::TOILET_TYPES)
                 ->default('none')
                 ->comment('toilet fixture type');
-            $table->decimal('ceiling_ceramic_area', 10, 2)
+            $table->decimal('ceiling_area', 10, 2)
                 ->nullable()
                 ->comment('ceiling ceramic area when applicable');
-            $table->boolean('is_balcony_floor_tiled')
+            $table->boolean('is_shed_floor_tiled')
                 ->default(false)
-                ->comment('balcony floor tiled flag');
+                ->comment('shed floor tiled flag');
             $table->timestamps();
             $table->softDeletes();
         });

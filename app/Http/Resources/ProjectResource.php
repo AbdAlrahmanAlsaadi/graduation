@@ -26,6 +26,8 @@ class ProjectResource extends JsonResource
             'owner_id' => $this->owner_id,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
+            'started_at' => $this->started_at?->toISOString(),
+            'completed_at' => $this->completed_at?->toISOString(),
             'spaces' => SpaceResource::collection($this->whenLoaded('spaces')),
             'work_items' => WorkItemResource::collection($this->whenLoaded('workItems')),
             'created_at' => $this->created_at?->toISOString(),

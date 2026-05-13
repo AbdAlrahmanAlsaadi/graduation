@@ -20,10 +20,13 @@ class WorkItemResource extends JsonResource
             'quality_level' => $this->quality_level,
             'duration_days' => $this->duration_days,
             'sort_order' => $this->sort_order,
+            'status' => $this->status,
             'is_default' => (bool) $this->is_default,
             'is_active' => (bool) $this->is_active,
             'is_custom' => (bool) $this->is_custom,
             'details' => WorkItemDetailResource::collection($this->whenLoaded('details')),
+            'started_at' => $this->started_at?->toISOString(),
+            'completed_at' => $this->completed_at?->toISOString(),
             'created_at' => $this->created_at?->toISOString(),
             'updated_at' => $this->updated_at?->toISOString(),
         ];

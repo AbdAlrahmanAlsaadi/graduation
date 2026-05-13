@@ -25,7 +25,7 @@ return new class extends Migration
                 ->comment('basic|good|premium|custom');
             $table->unsignedInteger('sort_order')->comment('sort order within project');
             $table->unsignedInteger('duration_days')
-                ->nullable()
+                ->default(10)
                 ->comment('estimated duration in days');
             $table->boolean('is_default')
                 ->default(false)
@@ -36,6 +36,11 @@ return new class extends Migration
             $table->boolean('is_custom')
                 ->default(false)
                 ->comment('custom user item');
+            $table->enum('status', ['planned', 'ongoing', 'completed'])
+                ->default('planned')
+                ->comment('planned|ongoing|completed');
+            $table->time('started_at')->nullable();
+            $table->time('completed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

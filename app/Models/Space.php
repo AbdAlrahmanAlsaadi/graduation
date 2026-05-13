@@ -13,16 +13,14 @@ use Illuminate\Validation\Rule;
  * @property int $project_id
  * @property string $type
  * @property string $wall_area
- * @property string $floor_area
  * @property string $wall_finish_type
  * @property string $ceiling_finish_type
  * @property string $toilet_type
- * @property string|null $ceiling_ceramic_area
- * @property bool $is_balcony_floor_tiled
+ * @property string|null $ceiling_area
+ * @property bool $is_shed_floor_tiled
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read float $effective_floor_area
  * @property-read Project $project
  */
 class Space extends Model
@@ -37,7 +35,7 @@ class Space extends Model
     public const TYPE_TOILET = 'toilet';
     public const TYPE_CORRIDOR = 'corridor';
     public const TYPE_ENTRANCE = 'entrance';
-    public const TYPE_BALCONY = 'balcony';
+    public const TYPE_SHED = 'shed';
     public const TYPE_STORAGE = 'storage';
     public const TYPE_CUSTOM = 'custom';
 
@@ -49,7 +47,7 @@ class Space extends Model
         self::TYPE_TOILET,
         self::TYPE_CORRIDOR,
         self::TYPE_ENTRANCE,
-        self::TYPE_BALCONY,
+        self::TYPE_SHED,
         self::TYPE_STORAGE,
         self::TYPE_CUSTOM,
     ];
@@ -72,28 +70,26 @@ class Space extends Model
         self::TYPE_KITCHEN,
         self::TYPE_BATHROOM,
         self::TYPE_TOILET,
-        self::TYPE_BALCONY,
+        self::TYPE_SHED,
     ];
 
     protected $fillable = [
         'project_id',
         'type',
         'wall_area',
-        'floor_area',
         'wall_finish_type',
         'ceiling_finish_type',
         'toilet_type',
-        'ceiling_ceramic_area',
-        'is_balcony_floor_tiled',
+        'ceiling_area',
+        'is_shed_floor_tiled',
     ];
 
     protected function casts(): array
     {
         return [
             'wall_area' => 'decimal:2',
-            'floor_area' => 'decimal:2',
-            'ceiling_ceramic_area' => 'decimal:2',
-            'is_balcony_floor_tiled' => 'boolean',
+            'ceiling_area' => 'decimal:2',
+            'is_shed_floor_tiled' => 'boolean',
         ];
     }
 
@@ -104,12 +100,11 @@ class Space extends Model
         return [
             'type' => [$required, 'string', Rule::in(self::TYPE_OPTIONS)],
             'wall_area' => [$required, 'numeric', 'min:0.1'],
-            'floor_area' => [$required, 'numeric', 'min:0.1'],
             'wall_finish_type' => [$required, 'string', Rule::in(self::FINISH_TYPES)],
             'ceiling_finish_type' => [$required, 'string', Rule::in(self::FINISH_TYPES)],
             'toilet_type' => [$isUpdate ? 'sometimes' : 'nullable', 'string', Rule::in(self::TOILET_TYPES)],
-            'ceiling_ceramic_area' => ['nullable', 'numeric', 'min:0.1'],
-            'is_balcony_floor_tiled' => ['sometimes', 'boolean'],
+            'ceiling_area' => [$required, 'numeric', 'min:0.1'],
+            'is_shed_floor_tiled' => ['sometimes', 'boolean'],
         ];
     }
 
@@ -120,10 +115,10 @@ class Space extends Model
 
     public function getEffectiveFloorAreaAttribute(): float
     {
-        if ($this->type === self::TYPE_BALCONY && $this->is_balcony_floor_tiled) {
-            return (float) ($this->ceiling_ceramic_area ?? 0);
+        if ($this->type === self::TYPE_SHED && $this->is_shed_floor_tiled) {
+            return (float) ($this->ceiling_area ?? 0);
         }
 
-        return (float) ($this->floor_area ?? 0);
+        return 0;
     }
 }

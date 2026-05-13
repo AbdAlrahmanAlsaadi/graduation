@@ -67,11 +67,17 @@ class Project extends Model
         'updated_by',
     ];
 
+    protected $attributes = [
+        'status' => self::STATUS_PLANNED,
+    ];
+
     protected function casts(): array
     {
         return [
             'apartment_area' => 'decimal:2',
             'height' => 'decimal:2',
+            'started_at' => 'datetime',
+            'completed_at' => 'datetime',
         ];
     }
 
@@ -87,7 +93,7 @@ class Project extends Model
             'longitude' => [$required, 'numeric', 'max:255'],
             'apartment_area' => [$required, 'numeric', 'min:0.1'],
             'height' => [$required, 'numeric', 'min:0.1'],
-            'status' => [$isUpdate ? 'sometimes' : 'nullable', 'string', Rule::in(self::STATUS_OPTIONS)],
+            'status' => ['sometimes', 'string', Rule::in(self::STATUS_OPTIONS)],
             'project_manager_id' => [
                 ...$optionalNullable,
                 'integer',
@@ -160,10 +166,15 @@ class Project extends Model
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+
     public function contracts()
     {
         return $this->hasMany(Contract::class);
     }
+<<<<<<< feature/comment
+=======
+
+>>>>>>> main
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -182,5 +193,20 @@ class Project extends Model
                 'spaces',
                 'workItems' => fn (Builder $workItems) => $workItems->orderBy('sort_order'),
             ]);
+    }
+
+    public function isPlanned(): bool
+    {
+        return $this->status === self::STATUS_PLANNED;
+    }
+
+    public function isOngoing(): bool
+    {
+        return $this->status === self::STATUS_ONGOING;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->status === self::STATUS_COMPLETED;
     }
 }

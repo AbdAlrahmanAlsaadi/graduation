@@ -15,12 +15,6 @@ class UpdateWorkItemRequest extends FormRequest
     public function rules(): array
     {
         $rules = WorkItem::rules(true);
-
-        $rules['details'] = ['nullable', 'array'];
-        $rules['details.*.key'] = ['required_with:details', 'string'];
-        $rules['details.*.value'] = ['required_with:details'];
-        $rules['details.*.unit'] = ['nullable', 'string'];
-
         return $rules;
     }
 }

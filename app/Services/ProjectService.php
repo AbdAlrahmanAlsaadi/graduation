@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\WorkItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use RuntimeException;
 
 class ProjectService
@@ -32,7 +33,7 @@ class ProjectService
                 $data['created_by'] = $data['created_by'] ?? $userId;
                 $data['updated_by'] = $data['updated_by'] ?? $userId;
             }
-
+            $data['status'] = Project::STATUS_PLANNED;
             $project = Project::query()->create($data);
             $now = now();
             $workItems = [];
@@ -94,5 +95,55 @@ class ProjectService
         $project->update($data);
 
         return $project->fresh();
+    }
+
+    /**
+     * Start a project if it is planned.
+     */
+    public function startProject(Project $project): Project
+    {
+        if ($project->isCompleted()) {
+            throw new RuntimeException('Project already completed.', 400);
+        }
+
+        if ($project->isOngoing()) {
+            return $project;
+        }
+
+        return DB::transaction(function () use ($project) {
+            if ($project->started_at === null) {
+                $project->started_at = now();
+            }
+            $project->status = Project::STATUS_ONGOING;
+            $project->save();
+
+            return $project->fresh();
+        });
+    }
+
+    /**
+     * Complete a project if it has been started.
+     */
+    public function completeProject(Project $project): Project
+    {
+        if ($project->isCompleted()) {
+            return $project;
+        }
+
+        if ($project->isPlanned()) {
+            throw ValidationException::withMessages([
+                'status' => 'Project must be started before completing.',
+            ])->status(400);
+        }
+
+        return DB::transaction(function () use ($project) {
+            $project->status = Project::STATUS_COMPLETED;
+            if ($project->completed_at === null) {
+                $project->completed_at = now();
+            }
+            $project->save();
+
+            return $project->fresh();
+        });
     }
 }

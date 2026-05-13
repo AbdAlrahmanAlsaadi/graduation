@@ -31,20 +31,19 @@ class SpaceFactory extends Factory
         $toiletType = in_array($type, [Space::TYPE_BATHROOM, Space::TYPE_TOILET], true)
             ? fake()->randomElement(array_values(array_diff(Space::TOILET_TYPES, ['none'])))
             : 'none';
-        $isBalconyFloorTiled = $type === Space::TYPE_BALCONY ? fake()->boolean(35) : false;
+        $isshedFloorTiled = $type === Space::TYPE_SHED ? fake()->boolean(35) : false;
 
         return [
             'project_id' => Project::factory(),
             'type' => $type,
             'wall_area' => fake()->randomFloat(2, 8, 220),
-            'floor_area' => fake()->randomFloat(2, 6, 180),
             'wall_finish_type' => fake()->randomElement(Space::FINISH_TYPES),
             'ceiling_finish_type' => $ceilingFinishType,
             'toilet_type' => $toiletType,
-            'ceiling_ceramic_area' => $ceilingFinishType === 'ceramic'
+            'ceiling_area' => $ceilingFinishType === 'ceramic'
                 ? fake()->randomFloat(2, 2, 40)
                 : null,
-            'is_balcony_floor_tiled' => $isBalconyFloorTiled,
+            'is_shed_floor_tiled' => $isshedFloorTiled,
         ];
     }
 }

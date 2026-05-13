@@ -24,10 +24,9 @@ class SpaceEndpointsTest extends TestCase
         $payload = [
             'type' => Space::TYPE_BATHROOM,
             'wall_area' => 40.5,
-            'floor_area' => 12.2,
             'wall_finish_type' => 'ceramic',
             'ceiling_finish_type' => 'ceramic',
-            'ceiling_ceramic_area' => 10.5,
+            'ceiling_area' => 10.5,
         ];
 
         $this->postJson("/api/projects/{$project->id}/spaces", $payload)
@@ -40,7 +39,7 @@ class SpaceEndpointsTest extends TestCase
             ->assertJsonPath('data.type', Space::TYPE_BATHROOM);
     }
 
-    public function test_create_balcony_space_allows_floor_tiled_flag(): void
+    public function test_create_shed_space_allows_floor_tiled_flag(): void
     {
         $user = $this->createUserWithRole('project_manager');
         $project = $this->createProjectFor($user);
@@ -48,19 +47,18 @@ class SpaceEndpointsTest extends TestCase
         Sanctum::actingAs($user, ['*'], 'sanctum');
 
         $payload = [
-            'type' => Space::TYPE_BALCONY,
+            'type' => Space::TYPE_SHED,
             'wall_area' => 18.5,
-            'floor_area' => 7.8,
             'wall_finish_type' => 'paint',
             'ceiling_finish_type' => 'ceramic',
-            'ceiling_ceramic_area' => 6.3,
+            'ceiling_area' => 6.3,
             'toilet_type' => 'none',
-            'is_balcony_floor_tiled' => true,
+            'is_shed_floor_tiled' => true,
         ];
 
         $this->postJson("/api/projects/{$project->id}/spaces", $payload)
             ->assertStatus(201)
-            ->assertJsonPath('data.is_balcony_floor_tiled', true);
+            ->assertJsonPath('data.is_shed_floor_tiled', true);
     }
 
     private function createProjectFor(User $user): Project

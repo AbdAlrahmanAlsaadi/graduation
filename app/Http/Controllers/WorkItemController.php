@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReorderWorkItemsRequest;
+use App\Http\Requests\WorkItemDetailsRequest;
 use App\Http\Requests\StoreWorkItemRequest;
 use App\Http\Requests\UpdateWorkItemRequest;
 use App\Http\Resources\WorkItemResource;
@@ -10,8 +11,9 @@ use App\Http\Responses\Response;
 use App\Models\Project;
 use App\Models\WorkItem;
 use App\Services\WorkItemService;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
@@ -19,6 +21,7 @@ class WorkItemController extends Controller
 {
     public function __construct(private WorkItemService $workItemService)
     {
+
     }
 
     public function index(Project $project): JsonResponse
@@ -64,22 +67,14 @@ class WorkItemController extends Controller
         }
     }
 
-    public function updateDetails(Project $project, WorkItem $workItem, Request $request): JsonResponse
+    public function updateDetails(Project $project, WorkItem $workItem, WorkItemDetailsRequest $request): JsonResponse
     {
         try {
             if ((int) $workItem->project_id !== (int) $project->id) {
                 return Response::error('Work item not found.', 404);
             }
 
-            $data = $request->validate([
-                'details' => ['nullable', 'array'],
-                'details.*.key' => ['required_with:details', 'string'],
-                'details.*.value' => ['required_with:details'],
-                'details.*.unit' => ['nullable', 'string'],
-            ]);
-
-            $details = $data['details'] ?? [];
-            $workItem->syncDetails($details);
+            $this->workItemService->updateDetails($project, $workItem, $request->validated());
 
             return Response::success(
                 'Work item details updated.',
@@ -115,10 +110,50 @@ class WorkItemController extends Controller
         }
     }
 
+    public function start(Project $project, WorkItem $workItem): JsonResponse
+    {
+        try {
+            $authResponse = $this->ensureWorkItemAccess();
+            if ($authResponse) {
+                return $authResponse;
+            }
+
+            $workItem = $this->workItemService->startWorkItem($project, $workItem);
+
+            return Response::success(
+                'Work item started.',
+                new WorkItemResource($workItem->loadMissing('details'))
+            );
+        } catch (Throwable $throwable) {
+            return $this->handleException($throwable);
+        }
+    }
+
+    public function complete(Project $project, WorkItem $workItem): JsonResponse
+    {
+        try {
+            $authResponse = $this->ensureWorkItemAccess();
+            if ($authResponse) {
+                return $authResponse;
+            }
+
+            $workItem = $this->workItemService->completeWorkItem($project, $workItem);
+
+            return Response::success(
+                'Work item completed.',
+                new WorkItemResource($workItem->loadMissing('details'))
+            );
+        } catch (Throwable $throwable) {
+            return $this->handleException($throwable);
+        }
+    }
+
     private function handleException(Throwable $throwable): JsonResponse
     {
         if ($throwable instanceof ValidationException) {
-            return Response::Validation('Validation failed.', $throwable->errors());
+            $status = $throwable->status ?? 422;
+
+            return Response::Validation('Validation failed.', $throwable->errors(), $status);
         }
 
         $status = (int) $throwable->getCode();
@@ -127,5 +162,20 @@ class WorkItemController extends Controller
         }
 
         return Response::error($throwable->getMessage(), $status);
+    }
+
+    private function ensureWorkItemAccess(): ?JsonResponse
+    {
+        $user = Auth::user();
+
+        if (! $user) {
+            return Response::error('Unauthorized.', 401);
+        }
+
+        if (! $user->hasAnyRole(['company_admin', 'project_manager'])) {
+            return Response::error('Forbidden.', 403);
+        }
+
+        return null;
     }
 }

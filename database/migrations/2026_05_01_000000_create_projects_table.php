@@ -46,6 +46,8 @@ return new class extends Migration
                 ->constrained('users')
                 ->restrictOnDelete()
                 ->comment('last updated by user');
+            $table->time('started_at')->nullable();
+            $table->time('completed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
