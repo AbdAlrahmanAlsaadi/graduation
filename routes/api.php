@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EquipmentController;
@@ -91,6 +92,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('projects/{project}/engineers', [ProjectEngineerController::class, 'store']);
         Route::delete('projects/{project}/engineers/{assignment}', [ProjectEngineerController::class, 'destroy']);
     });
+
+
+
+
+
+    Route::post('work-items/{id}/comments', [CommentController::class, 'store'])
+        ->middleware(['auth:sanctum']);
+    Route::get('work-items/{id}/comments', [CommentController::class, 'index'])
+        ->middleware(['auth:sanctum']);
 
 });
 

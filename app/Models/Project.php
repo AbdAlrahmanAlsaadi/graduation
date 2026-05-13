@@ -171,7 +171,10 @@ class Project extends Model
     {
         return $this->hasMany(Contract::class);
     }
+<<<<<<< feature/comment
+=======
 
+>>>>>>> main
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
