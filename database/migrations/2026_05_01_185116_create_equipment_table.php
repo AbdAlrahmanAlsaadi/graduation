@@ -13,11 +13,8 @@ return new class extends Migration
     {
         Schema::create('equipment', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id')->nullable()
 
-                ->constrained('projects')
-                ->cascadeOnDelete();
-
+             
             $table->string('name');
             $table->string('type');
             $table->string('identifier_no')->unique();

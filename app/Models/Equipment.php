@@ -17,12 +17,13 @@ class Equipment extends Model
         'status',
     ];
 
-    public function project()
-    {
-        return $this->belongsTo(Project::class);
-    }
+   
     public function maintenances()
     {
         return $this->hasMany(EquipmentMaintenance::class);
+    }
+    public function bookings()
+    {
+        return $this->hasMany(EquipmentBooking::class);
     }
 }

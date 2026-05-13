@@ -171,10 +171,7 @@ class Project extends Model
     {
         return $this->hasMany(Contract::class);
     }
-<<<<<<< feature/comment
-=======
 
->>>>>>> main
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -208,5 +205,10 @@ class Project extends Model
     public function isCompleted(): bool
     {
         return $this->status === self::STATUS_COMPLETED;
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
     }
 }

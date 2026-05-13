@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Models\Equipment;
+use App\Models\EquipmentBooking;
 use App\Models\EquipmentMaintenance;
+use App\Models\WorkItem;
+use Illuminate\Support\Facades\Auth;
 
 class EquipmentService
 {
@@ -14,13 +17,15 @@ class EquipmentService
         $identifierNo = $this->generateIdentifierNo();
 
         $equipment = Equipment::query()->create([
-            'id' => $request->project_id,
+
             'name' => $request->name,
+
             'type' => $request->type,
+
             'identifier_no' => $identifierNo,
+
             'status' => $request->status ?? 'Available',
         ]);
-
         return [
             'message' => 'Equipment created successfully.',
             'equipment' => $equipment,
@@ -107,7 +112,7 @@ class EquipmentService
         $request->validated();
 
         $query = Equipment::query()
-            ->with(['project:id,name']); 
+            ->with(['project:id,name']);
 
         if ($request->status !== 'all') {
             $query->where('status', $request->status);
@@ -158,4 +163,260 @@ class EquipmentService
             'status' => 200,
         ];
     }
+    public function storebook($request): array
+    {
+        $request->validated();
+
+        $user = Auth::user();
+
+        $workItem = WorkItem::query()
+            ->with('project')
+            ->find($request->work_item_id);
+
+        if (! $workItem) {
+            throw new \Exception('Work item not found.', 404);
+        }
+
+        $project = $workItem->project;
+
+        $isCompanyAdmin = $user->hasRole('company_admin');
+
+        $isProjectManager =
+            $user->hasRole('project_manager') &&
+            $project->project_manager_id == $user->id;
+
+        $isAssistant =
+            $user->hasRole('assistant') &&
+            $project->assistant_engineer_id == $user->id;
+
+        if (! $isCompanyAdmin && ! $isProjectManager && ! $isAssistant) {
+            throw new \Exception(
+                'You are not allowed to book equipment for this project.',
+                403
+            );
+        }
+
+        $equipment = Equipment::query()->find($request->equipment_id);
+
+        if (! $equipment) {
+            throw new \Exception('Equipment not found.', 404);
+        }
+
+        if ($equipment->status === 'Maintenance') {
+            throw new \Exception(
+                'Equipment is under maintenance.',
+                422
+            );
+        }
+
+
+        if ($equipment->status === 'Booked') {
+            throw new \Exception(
+                'Equipment is already booked.',
+                422
+            );
+        }
+
+        $hasConflict = EquipmentBooking::query()
+
+            ->where('equipment_id', $equipment->id)
+
+            ->where('status', 'active')
+
+            ->where(function ($query) use ($request) {
+
+                $query
+                    ->whereBetween('start_date', [
+                        $request->start_date,
+                        $request->end_date
+                    ])
+
+                    ->orWhereBetween('end_date', [
+                        $request->start_date,
+                        $request->end_date
+                    ]);
+            })
+
+            ->exists();
+
+        if ($hasConflict) {
+            throw new \Exception(
+                'Equipment is already booked for this period.',
+                422
+            );
+        }
+
+        $booking = EquipmentBooking::query()->create([
+
+            'equipment_id' => $equipment->id,
+
+            'work_item_id' => $workItem->id,
+
+            'booked_by' => $user->id,
+
+            'start_date' => $request->start_date,
+
+            'end_date' => $request->end_date,
+
+            'notes' => $request->notes,
+
+            'status' => 'active',
+        ]);
+
+        $equipment->update([
+            'status' => 'Booked',
+        ]);
+
+        $booking->load([
+            'equipment',
+            'bookedBy',
+            'workItem.project',
+        ]);
+
+        return [
+
+            'message' => 'Equipment booked successfully.',
+
+            'booking' => [
+
+                'id' => $booking->id,
+
+                'status' => $booking->status,
+
+                'start_date' => $booking->start_date,
+
+                'end_date' => $booking->end_date,
+
+                'notes' => $booking->notes,
+
+                'equipment' => [
+                    'id' => $booking->equipment->id,
+                    'name' => $booking->equipment->name,
+                    'type' => $booking->equipment->type,
+                ],
+
+                'work_item' => [
+                    'id' => $booking->workItem->id,
+                    'name' => $booking->workItem->name,
+                ],
+
+                'project' => [
+                    'id' => $booking->workItem->project->id,
+                    'name' => $booking->workItem->project->name,
+                ],
+
+                'booked_by' => [
+                    'id' => $booking->bookedBy->id,
+                    'name' => $booking->bookedBy->name,
+                ],
+            ],
+
+            'status' => 201,
+        ];
+    }
+    public function finishBooking($request, $bookingId): array
+    {
+        $request->validated();
+
+        $user = Auth::user();
+
+        $booking = EquipmentBooking::query()
+            ->with([
+                'equipment',
+                'workItem.project',
+                'bookedBy',
+            ])
+            ->find($bookingId);
+
+        if (! $booking) {
+            throw new \Exception(
+                'Booking not found.',
+                404
+            );
+        }
+
+        if ($booking->status !== 'active') {
+            throw new \Exception(
+                'Booking is already completed.',
+                422
+            );
+        }
+
+        if ($request->end_date < $booking->start_date) {
+            throw new \Exception(
+                'End date cannot be before booking start date.',
+                422
+            );
+        }
+
+        $booking->update([
+
+            'end_date' => $request->end_date,
+
+            'status' => 'completed',
+        ]);
+        $project = $booking->workItem->project;
+
+        $isCompanyAdmin = $user->hasRole('company_admin');
+
+        $isProjectManager =
+            $user->hasRole('project_manager') &&
+            $project->project_manager_id == $user->id;
+
+        $isAssistant =
+            $user->hasRole('assistant') &&
+            $project->assistant_engineer_id == $user->id;
+
+        if (! $isCompanyAdmin && ! $isProjectManager && ! $isAssistant) {
+            throw new \Exception(
+                'You are not allowed to finish this booking.',
+                403
+            );
+        }
+
+        $booking->update([
+
+            'end_date' => $request->end_date,
+
+            'status' => 'completed',
+        ]);
+
+        $booking->equipment->update([
+            'status' => 'Available',
+        ]);
+
+        return [
+
+            'message' => 'Equipment booking completed successfully.',
+
+            'booking' => [
+
+                'id' => $booking->id,
+
+                'status' => $booking->status,
+
+                'start_date' => $booking->start_date,
+
+                'end_date' => $booking->end_date,
+
+                'equipment' => [
+                    'id' => $booking->equipment->id,
+                    'name' => $booking->equipment->name,
+                ],
+
+                'work_item' => [
+                    'id' => $booking->workItem->id,
+                    'name' => $booking->workItem->name,
+                ],
+
+                'project' => [
+                    'id' => $project->id,
+                    'name' => $project->name,
+                ],
+            ],
+
+            'status' => 200,
+        ];
+    }
+
 }
