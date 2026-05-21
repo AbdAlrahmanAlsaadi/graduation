@@ -8,6 +8,7 @@ use App\Http\Requests\CompanyLoginRequest;
 use App\Http\Requests\CreateInternalUserRequest;
 use App\Http\Requests\FilterUsersByRoleRequest;
 use App\Http\Requests\InternalLoginRequest;
+use App\Http\Requests\SearchUserRequest;
 use App\Http\Responses\Response;
 use App\Services\Authentication\AuthService;
 use App\Services\AuthService as ServicesAuthService;
@@ -121,6 +122,28 @@ class AuthController extends Controller
                 [
                     'user' => $data['user'],
                 ],                (int) $data['status']
+            );
+        } catch (Throwable $throwable) {
+
+            $code = is_int($throwable->getCode()) && $throwable->getCode() > 0
+                ? $throwable->getCode()
+                : 500;
+
+            return Response::error($throwable->getMessage(), $code);
+        }
+    }
+    public function search(SearchUserRequest $request)
+    {
+        try {
+
+            $data = $this->authService->search($request);
+
+            return Response::success(
+                $data['message'],
+                [
+                    'users' => $data['users'],
+                ],
+                (int) $data['status']
             );
         } catch (Throwable $throwable) {
 

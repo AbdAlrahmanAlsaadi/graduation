@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CloseEquipmentMaintenanceRequest;
 use App\Http\Requests\FilterEquipmentByStatusRequest;
 use App\Http\Requests\FinishEquipmentBookingRequest;
+use App\Http\Requests\SearchEquipmentRequest;
 use App\Http\Requests\StoreEquipmentBookingRequest;
 use App\Http\Requests\StoreEquipmentRequest;
 use App\Http\Responses\Response;
@@ -147,6 +148,28 @@ class EquipmentController extends Controller
                 $throwable->getMessage(),
                 $code
             );
+        }
+    }
+    public function search(SearchEquipmentRequest $request)
+    {
+        try {
+
+            $data = $this->equipmentService->search($request);
+
+            return Response::success(
+                $data['message'],
+                [
+                    'equipment' => $data['equipment'],
+                ],
+                (int) $data['status']
+            );
+        } catch (Throwable $throwable) {
+
+            $code = is_int($throwable->getCode()) && $throwable->getCode() > 0
+                ? $throwable->getCode()
+                : 500;
+
+            return Response::error($throwable->getMessage(), $code);
         }
     }
 }
