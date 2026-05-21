@@ -342,4 +342,28 @@ class AuthService
             'status' => 200,
         ];
     }
+    public function search($request): array
+    {
+        $request->validated();
+
+        $users = User::query()
+            ->where('name', 'like', '%' . $request->keyword . '%')
+            ->orWhere('internal_id', 'like', '%' . $request->keyword . '%')
+            ->get()
+            ->map(function ($user) {
+
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'internal_id' => $user->internal_id,
+                    'status' => $user->status,
+                ];
+            });
+
+        return [
+            'message' => 'Users search completed successfully.',
+            'users' => $users,
+            'status' => 200,
+        ];
+    }
 }

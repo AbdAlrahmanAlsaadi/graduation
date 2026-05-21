@@ -17,7 +17,7 @@ class Equipment extends Model
         'status',
     ];
 
-   
+
     public function maintenances()
     {
         return $this->hasMany(EquipmentMaintenance::class);
@@ -25,5 +25,11 @@ class Equipment extends Model
     public function bookings()
     {
         return $this->hasMany(EquipmentBooking::class);
+    }
+    public function activeBooking()
+    {
+        return $this->hasOne(EquipmentBooking::class)
+            ->where('status', 'active')
+            ->latestOfMany();
     }
 }

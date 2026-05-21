@@ -418,5 +418,64 @@ class EquipmentService
             'status' => 200,
         ];
     }
+    public function search($request): array
+    {
+        $request->validated();
 
+        $equipment = Equipment::query()
+            ->with([
+                'activeBooking.workItem.project',
+            ])
+            ->where('name', 'like', '%' . $request->keyword . '%')
+            ->orWhere('type', 'like', '%' . $request->keyword . '%')
+            ->orWhere('identifier_no', 'like', '%' . $request->keyword . '%')
+            ->get()
+            ->map(function ($equipment) {
+
+                $response = [
+                    'id' => $equipment->id,
+                    'name' => $equipment->name,
+                    'type' => $equipment->type,
+                    'identifier_no' => $equipment->identifier_no,
+                    'status' => $equipment->status,
+                ];
+
+                $booking = $equipment->activeBooking;
+
+                if (
+                    $equipment->status === 'Booked' &&
+                    $booking &&
+                    $booking->workItem
+                ) {
+
+                    $response['booking'] = [
+                        'id' => $booking->id,
+                        'start_date' => $booking->start_date,
+                        'end_date' => $booking->end_date,
+                    ];
+
+                    $response['work_item'] = [
+                        'id' => $booking->workItem->id,
+                        'name' => $booking->workItem->name,
+                    ];
+
+                    $project = $booking->workItem->project;
+
+                    $response['project'] = $project ? [
+                        'id' => $project->id,
+                        'name' => $project->name,
+                        'location' => $project->location,
+                        'status' => $project->status,
+                    ] : null;
+                }
+
+                return $response;
+            });
+
+        return [
+            'message' => 'Equipment search completed successfully.',
+            'equipment' => $equipment,
+            'status' => 200,
+        ];
+    }
 }

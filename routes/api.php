@@ -111,5 +111,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
         'equipment-bookings/{id}/finish',
         [EquipmentController::class, 'finishBooking']
     )->middleware('auth:sanctum');
+
+
+
+    Route::get('equipment/search', [EquipmentController::class, 'search'])
+        ->middleware(['auth:sanctum']);
+
+    Route::get('users/search', [AuthController::class, 'search'])
+        ->middleware(['auth:sanctum']);
+
+    Route::get('project/search', [ProjectController::class, 'search'])
+        ->middleware(['auth:sanctum']);
 });
 

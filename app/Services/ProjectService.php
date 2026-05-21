@@ -146,4 +146,113 @@ class ProjectService
             return $project->fresh();
         });
     }
-}
+    public function search($request): array
+    {
+        $request->validated();
+
+        $projects = Project::query()
+
+            ->with([
+                'projectManager',
+                'assistantEngineer',
+                'owner',
+                'workItems',
+                'workItems.equipmentBookings.equipment',
+            ])
+
+            ->where(function ($query) use ($request) {
+
+                $query->where('name', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('location', 'like', '%' . $request->keyword . '%');
+            })
+
+            ->paginate(10);
+
+        if ($projects->total() === 0) {
+            throw new \Exception('No projects found.', 404);
+        }
+
+        $projects->getCollection()->transform(function ($project) {
+
+            $equipment = collect();
+
+            foreach ($project->workItems as $workItem) {
+
+                foreach ($workItem->equipmentBookings as $booking) {
+
+                    if ($booking->equipment) {
+
+                        $equipment->push([
+                            'id' => $booking->equipment->id,
+                            'name' => $booking->equipment->name,
+                            'type' => $booking->equipment->type,
+                            'identifier_no' => $booking->equipment->identifier_no,
+                            'status' => $booking->equipment->status,
+                        ]);
+                    }
+                }
+            }
+
+            return [
+
+                'id' => $project->id,
+                'name' => $project->name,
+                'location' => $project->location,
+                'latitude' => $project->latitude,
+                'longitude' => $project->longitude,
+                'status' => $project->status,
+
+                'manager' => $project->projectManager ? [
+                    'id' => $project->projectManager->id,
+                    'name' => $project->projectManager->name,
+                    'internal_id' => $project->projectManager->internal_id,
+                ] : null,
+
+                'assistant_engineer' => $project->assistantEngineer ? [
+                    'id' => $project->assistantEngineer->id,
+                    'name' => $project->assistantEngineer->name,
+                    'internal_id' => $project->assistantEngineer->internal_id,
+                ] : null,
+
+                'owner' => $project->owner ? [
+                    'id' => $project->owner->id,
+                    'name' => $project->owner->name,
+                    'internal_id' => $project->owner->internal_id,
+                ] : null,
+
+                'work_items_count' => $project->workItems->count(),
+
+                'equipment_count' => $equipment->unique('id')->count(),
+
+                'work_items' => $project->workItems->map(function ($item) {
+
+                    return [
+                        'id' => $item->id,
+                        'name' => $item->name,
+                        'quality_level' => $item->quality_level,
+                        'duration_days' => $item->duration_days,
+                        'is_active' => $item->is_active,
+                    ];
+                })->values(),
+
+                'equipment' => $equipment
+                    ->unique('id')
+                    ->values(),
+            ];
+        });
+
+        return [
+            'message' => 'Projects fetched successfully.',
+
+            'projects' => $projects->items(),
+
+            'pagination' => [
+                'current_page' => $projects->currentPage(),
+                'last_page' => $projects->lastPage(),
+                'per_page' => $projects->perPage(),
+                'total' => $projects->total(),
+            ],
+
+            'status' => 200,
+        ];
+    }}
