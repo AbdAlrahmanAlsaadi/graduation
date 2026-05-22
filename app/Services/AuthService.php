@@ -2,6 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\ActivityLog;
+use App\Models\Comment;
+use App\Models\EquipmentBooking;
+use App\Models\Project;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -366,4 +370,243 @@ class AuthService
             'status' => 200,
         ];
     }
-}
+    public function statistics(
+        $request,
+        $userId
+    ): array {
+        $user = User::query()
+            ->with('roles')
+            ->find($userId);
+
+        if (! $user) {
+
+            throw new \Exception(
+                'User not found.',
+                404
+            );
+        }
+
+        $projects = Project::query()
+
+            ->where('project_manager_id', $user->id)
+
+            ->orWhere('assistant_engineer_id', $user->id)
+
+            ->orWhere('owner_id', $user->id)
+
+            ->get();
+
+        $activities = ActivityLog::query()
+
+            ->where('user_id', $user->id)
+
+            ->latest()
+
+            ->take(10)
+
+            ->get();
+
+        if ($request->type === 'projects') {
+
+            return [
+
+                'message' =>
+                'Projects fetched successfully.',
+
+                'data' => [
+
+                    'projects' => $projects
+                        ->map(function ($project) {
+
+                            return [
+
+                                'id' => $project->id,
+
+                                'name' => $project->name,
+
+                                'status' => $project->status,
+                            ];
+                        }),
+                ],
+
+                'status' => 200,
+            ];
+        }
+
+        if ($request->type === 'activities') {
+
+            return [
+
+                'message' =>
+                'Activities fetched successfully.',
+
+                'data' => [
+
+                    'activities' => $activities
+                        ->map(function ($activity) {
+
+                            return [
+
+                                'action' =>
+                                $activity->action,
+
+                                'method' =>
+                                $activity->method,
+
+                                'endpoint' =>
+                                $activity->endpoint,
+
+                                'description' =>
+                                $activity->description,
+
+                                'created_at' =>
+                                $activity->created_at,
+                            ];
+                        }),
+                ],
+
+                'status' => 200,
+            ];
+        }
+
+        if ($request->type === 'endpoints') {
+
+            $endpoints = ActivityLog::query()
+
+                ->where('user_id', $user->id)
+
+                ->selectRaw(
+                    'endpoint, COUNT(*) as total'
+                )
+
+                ->groupBy('endpoint')
+
+                ->orderByDesc('total')
+
+                ->get();
+
+            return [
+
+                'message' =>
+                'Endpoints fetched successfully.',
+
+                'data' => [
+
+                    'endpoints' => $endpoints,
+                ],
+
+                'status' => 200,
+            ];
+        }
+
+        if ($request->type === 'comments') {
+
+            $comments = Comment::query()
+
+                ->where('user_id', $user->id)
+
+                ->latest()
+
+                ->get();
+
+            return [
+
+                'message' =>
+                'Comments fetched successfully.',
+
+                'data' => [
+
+                    'comments' => $comments,
+                ],
+
+                'status' => 200,
+            ];
+        }
+
+        if ($request->type === 'bookings') {
+
+            $bookings = EquipmentBooking::query()
+
+                ->with([
+                    'equipment',
+                    'workItem',
+                ])
+
+                ->where('booked_by', $user->id)
+
+                ->latest()
+
+                ->get();
+
+            return [
+
+                'message' =>
+                'Bookings fetched successfully.',
+
+                'data' => [
+
+                    'bookings' => $bookings,
+                ],
+
+                'status' => 200,
+            ];
+        }
+
+        $commentsCount = Comment::query()
+
+            ->where('user_id', $user->id)
+
+            ->count();
+
+        $bookingsCount = EquipmentBooking::query()
+
+            ->where('booked_by', $user->id)
+
+            ->count();
+
+        $apiCallsCount = ActivityLog::query()
+
+            ->where('user_id', $user->id)
+
+            ->count();
+
+        return [
+
+            'message' =>
+            'User statistics fetched successfully.',
+
+            'data' => [
+
+                'user' => [
+
+                    'id' => $user->id,
+
+                    'name' => $user->name,
+
+                    'internal_id' => $user->internal_id,
+
+                    'status' => $user->status,
+
+                    'roles' => $user->roles
+                        ->pluck('name'),
+                ],
+
+                'statistics' => [
+
+                    'projects_count' =>
+                    $projects->count(),
+
+                    'comments_count' =>
+                    $commentsCount,
+
+                    'equipment_bookings_count' =>
+                    $bookingsCount,
+
+                    'api_calls_count' =>
+                    $apiCallsCount,
+                ],
+            ],
+
+            'status' => 200,
+        ];
+    }}
