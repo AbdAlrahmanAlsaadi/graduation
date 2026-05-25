@@ -1,33 +1,43 @@
 <?php
 
-namespace App\Http\Requests;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class UserStatisticsRequest extends FormRequest
+return new class extends Migration
 {
-    public function authorize(): bool
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
-        return true;
+        Schema::create('activity_logs', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+
+            $table->string('action');
+            $table->string('method')->nullable();
+            $table->string('endpoint')->nullable();
+
+            $table->string('entity_type')->nullable();
+            $table->unsignedBigInteger('entity_id')->nullable();
+
+            $table->text('description')->nullable();
+            $table->string('ip_address')->nullable();
+
+            $table->timestamps();
+
+            $table->index(['user_id', 'action']);
+            $table->index(['entity_type', 'entity_id']);
+        });
     }
 
-    public function rules(): array
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
-        return [
-
-            'project_id' => 'nullable|exists:projects,id',
-
-            'from' => 'nullable|date',
-
-            'to' => 'nullable|date|after_or_equal:from',
-
-            'action' => 'nullable|string',
-
-            'endpoint' => 'nullable|string',
-
-            'method' => 'nullable|string',
-
-            'per_page' => 'nullable|integer|min:1|max:100',
-        ];
+        Schema::dropIfExists('activity_logs');
     }
-}
+};
