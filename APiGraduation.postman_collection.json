@@ -5595,7 +5595,73 @@
                   ]
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Start Work Item",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/start",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "work-items",
+                        "{{workItemId}}",
+                        "start"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 13 May 2026 13:52:57 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 13 May 2026 13:52:56 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Work item started.\",\n    \"data\": {\n        \"id\": 62,\n        \"project_id\": 6,\n        \"parent_id\": null,\n        \"name\": \"سيراميك جدران / أسقف\",\n        \"quality_level\": \"basic\",\n        \"duration_days\": 10,\n        \"sort_order\": 6,\n        \"status\": \"ongoing\",\n        \"is_default\": true,\n        \"is_active\": true,\n        \"is_custom\": false,\n        \"details\": [\n            {\n                \"key\": \"ceramic_length\",\n                \"value\": \"30\",\n                \"unit\": \"cm\"\n            },\n            {\n                \"key\": \"ceramic_width\",\n                \"value\": \"60\",\n                \"unit\": \"cm\"\n            }\n        ],\n        \"started_at\": \"2026-05-13T13:52:56.000000Z\",\n        \"completed_at\": null,\n        \"created_at\": \"2026-05-13T13:21:09.000000Z\",\n        \"updated_at\": \"2026-05-13T13:52:56.000000Z\"\n    }\n}"
+                }
+              ]
             },
             {
               "name": "Complete Work Item",
@@ -5647,7 +5713,73 @@
                   ]
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Complete Work Item",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/complete",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "work-items",
+                        "{{workItemId}}",
+                        "complete"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 13 May 2026 13:53:12 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 13 May 2026 13:53:12 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Work item completed.\",\n    \"data\": {\n        \"id\": 62,\n        \"project_id\": 6,\n        \"parent_id\": null,\n        \"name\": \"سيراميك جدران / أسقف\",\n        \"quality_level\": \"basic\",\n        \"duration_days\": 10,\n        \"sort_order\": 6,\n        \"status\": \"completed\",\n        \"is_default\": true,\n        \"is_active\": true,\n        \"is_custom\": false,\n        \"details\": [\n            {\n                \"key\": \"ceramic_length\",\n                \"value\": \"30\",\n                \"unit\": \"cm\"\n            },\n            {\n                \"key\": \"ceramic_width\",\n                \"value\": \"60\",\n                \"unit\": \"cm\"\n            }\n        ],\n        \"started_at\": \"2026-05-13T13:52:56.000000Z\",\n        \"completed_at\": \"2026-05-13T13:53:12.000000Z\",\n        \"created_at\": \"2026-05-13T13:21:09.000000Z\",\n        \"updated_at\": \"2026-05-13T13:53:12.000000Z\"\n    }\n}"
+                }
+              ]
             }
           ]
         }

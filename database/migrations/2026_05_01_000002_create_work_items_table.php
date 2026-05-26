@@ -39,6 +39,7 @@ return new class extends Migration
             $table->enum('status', ['planned', 'ongoing', 'completed'])
                 ->default('planned')
                 ->comment('planned|ongoing|completed');
+            $table->decimal('weight', 8, 2)->default(1)->comment('aggregation weight');
             $table->time('started_at')->nullable();
             $table->time('completed_at')->nullable();
             $table->timestamps();

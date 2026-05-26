@@ -10,6 +10,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\WorkItemController;
+use App\Http\Controllers\WorkItemProgressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -94,9 +95,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('projects/{project}/engineers', [ProjectEngineerController::class, 'index']);
         Route::post('projects/{project}/engineers', [ProjectEngineerController::class, 'store']);
         Route::delete('projects/{project}/engineers/{assignment}', [ProjectEngineerController::class, 'destroy']);
+        Route::put('/projects/{project}/work-items/{workItem}/progress/{spaceId}',[WorkItemProgressController::class, 'updateRoom']);
+        Route::put('projects/{project}/work-items/{workItem}/progress', [WorkItemProgressController::class, 'update']);
+        Route::get('projects/{project}/progress', [WorkItemProgressController::class, 'projectProgress']);
     });
-
-
 
 
 

@@ -13,8 +13,7 @@ class WorkItemDetailResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'key' => $this->key,
-            'value' => $this->value,
+            $this->key => $this->value,
             'unit' => $this->unit,
         ];
     }

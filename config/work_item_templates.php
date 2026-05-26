@@ -4,17 +4,17 @@ return [
 
     // 9.1 بند الملابن
     'ملابن الأبواب' => [
-        'wood_doors_count' => [
+        'total_wood_doors' => [
             'unit' => 'count',
             'rule' => 'required|integer|min:0',
             'label' => 'عدد أبواب الخشب',
         ],
-        'aluminum_doors_count' => [
+        'total_aluminum_doors' => [
             'unit' => 'count',
             'rule' => 'required|integer|min:0',
             'label' => 'عدد أبواب الألمنيوم',
         ],
-        'windows_count' => [
+        'total_windows' => [
             'unit' => 'count',
             'rule' => 'required|integer|min:0',
             'label' => 'عدد النوافذ',
