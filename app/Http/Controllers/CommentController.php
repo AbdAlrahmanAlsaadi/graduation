@@ -2,52 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GetProjectWeatherByDateRequest;
-use App\Http\Responses\Response;
-use App\Services\WeatherService;
-use Illuminate\Http\Request;
 use Throwable;
+use App\Http\Responses\Response;
+use App\Services\CommentService;
+use App\Http\Requests\StoreCommentRequest;
 
-class WeatherController extends Controller
+class CommentController extends Controller
 {
-    protected WeatherService $weatherService;
+    protected CommentService $commentService;
 
-    public function __construct(WeatherService $weatherService)
+    public function __construct(CommentService $commentService)
     {
-        $this->weatherService = $weatherService;
+        $this->commentService = $commentService;
     }
 
-    public function getTodayByProject($projectId)
+    public function store(StoreCommentRequest $request, $workItemId)
     {
         try {
-            $data = $this->weatherService->getTodayWeatherForProject($projectId);
+
+            $data = $this->commentService->store($request, $workItemId);
 
             return Response::success(
                 $data['message'],
-                $data['data'],
+                [
+                    'comment' => $data['comment'],
+                ],
                 (int) $data['status']
             );
         } catch (Throwable $throwable) {
+
             $code = is_int($throwable->getCode()) && $throwable->getCode() > 0
                 ? $throwable->getCode()
                 : 500;
 
             return Response::error($throwable->getMessage(), $code);
-        }}
-
-    public function getByDate($projectId, GetProjectWeatherByDateRequest $request)
+        }
+    }
+    public function index($workItemId)
     {
         try {
 
-            $data = $this->weatherService
-                ->getWeatherForProjectByDate(
-                    $projectId,
-                    $request->date
-                );
+            $data = $this->commentService->index($workItemId);
 
             return Response::success(
                 $data['message'],
-                $data['data'],
+                [
+                    'comments' => $data['comments'],
+                ],
                 (int) $data['status']
             );
         } catch (Throwable $throwable) {

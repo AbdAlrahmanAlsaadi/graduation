@@ -156,7 +156,10 @@ class WorkItem extends Model
     {
         return $query->where('is_default', true);
     }
-
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
     public function isPlanned(): bool
     {
         return $this->status === self::STATUS_PLANNED;
@@ -170,5 +173,9 @@ class WorkItem extends Model
     public function isCompleted(): bool
     {
         return $this->status === self::STATUS_COMPLETED;
+    }
+    public function equipmentBookings()
+    {
+        return $this->hasMany(EquipmentBooking::class);
     }
 }

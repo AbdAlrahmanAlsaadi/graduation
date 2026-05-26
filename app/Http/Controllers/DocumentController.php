@@ -86,4 +86,35 @@ class DocumentController extends Controller
             return Response::error($throwable->getMessage(), $code);
         }
     }
+
+
+
+    public function getProjectDocuments($projectId)
+    {
+        try {
+
+            $data = $this->documentService
+                ->getProjectDocuments($projectId);
+
+            return Response::success(
+                $data['message'],
+                [
+                    'project' => $data['project'],
+                    'documents' => $data['documents'],
+                ],
+                (int) $data['status']
+            );
+        } catch (Throwable $throwable) {
+
+            $code = is_int($throwable->getCode())
+                && $throwable->getCode() > 0
+                ? $throwable->getCode()
+                : 500;
+
+            return Response::error(
+                $throwable->getMessage(),
+                $code
+            );
+        }
+    }
 }

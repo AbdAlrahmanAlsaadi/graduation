@@ -64,6 +64,110 @@ class WeatherService
         ];
     }
 
+    public function getWeatherForProjectByDate($projectId, $date): array
+    {
+        $project = Project::query()->find($projectId);
+
+        if (! $project) {
+            throw new \Exception('Project not found.', 404);
+        }
+
+        if (
+            $project->latitude === null ||
+            $project->longitude === null ||
+            $project->latitude === '' ||
+            $project->longitude === ''
+        ) {
+            throw new \Exception(
+                'Project location coordinates are missing.',
+                422
+            );
+        }
+
+        $response = Http::timeout(15)->get(
+            'https://api.open-meteo.com/v1/forecast',
+            [
+
+                'latitude' => $project->latitude,
+
+                'longitude' => $project->longitude,
+
+                'daily' => implode(',', [
+                    'weather_code',
+                    'temperature_2m_max',
+                    'temperature_2m_min',
+                    'precipitation_sum',
+                    'wind_speed_10m_max',
+                ]),
+
+                'timezone' => 'auto',
+
+                'start_date' => $date,
+
+                'end_date' => $date,
+            ]
+        );
+
+        if (! $response->successful()) {
+            throw new \Exception('Failed to fetch weather data.', 502);
+        }
+
+        $weatherData = $response->json();
+
+        if (empty($weatherData['daily']['time'])) {
+            throw new \Exception(
+                'No weather data available for this date.',
+                404
+            );
+        }
+
+        $weatherCode = $weatherData['daily']['weather_code'][0] ?? null;
+
+        return [
+
+            'message' => 'Project weather fetched successfully.',
+
+            'data' => [
+
+                'project' => [
+
+                    'id' => $project->id,
+
+                    'name' => $project->name,
+
+                    'location' => $project->location,
+
+                    'latitude' => $project->latitude,
+
+                    'longitude' => $project->longitude,
+                ],
+
+                'weather' => [
+
+                    'date' => $weatherData['daily']['time'][0] ?? null,
+
+                    'temperature_max' =>
+                    $weatherData['daily']['temperature_2m_max'][0] ?? null,
+
+                    'temperature_min' =>
+                    $weatherData['daily']['temperature_2m_min'][0] ?? null,
+
+                    'precipitation_sum' =>
+                    $weatherData['daily']['precipitation_sum'][0] ?? null,
+
+                    'wind_speed_max' =>
+                    $weatherData['daily']['wind_speed_10m_max'][0] ?? null,
+
+                    'weather_code' => $weatherCode,
+
+                    'weather_description' =>
+                    $this->mapWeatherCode($weatherCode),
+                ],
+            ],
+
+            'status' => 200,
+        ];
+    }
     private function mapWeatherCode($code): string
     {
         return match ((int) $code) {

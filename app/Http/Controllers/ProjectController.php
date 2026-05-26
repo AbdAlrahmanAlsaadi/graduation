@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchProjectRequest;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
@@ -180,5 +181,28 @@ class ProjectController extends Controller
         }
 
         return null;
+    }
+    public function search(SearchProjectRequest $request)
+    {
+        try {
+
+            $data = $this->projectService->search($request);
+
+            return Response::success(
+                $data['message'],
+                [
+                    'projects' => $data['projects'],
+                    'pagination' => $data['pagination'],
+                ],
+                (int) $data['status']
+            );
+        } catch (Throwable $throwable) {
+
+            $code = is_int($throwable->getCode()) && $throwable->getCode() > 0
+                ? $throwable->getCode()
+                : 500;
+
+            return Response::error($throwable->getMessage(), $code);
+        }
     }
 }

@@ -19,7 +19,6 @@ class StoreEquipmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_id' => ['nullable', 'exists:projects,project_id'],
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'max:255'],
             'status' => ['nullable', Rule::in(['Available', 'Maintenance', 'Booked'])],
@@ -29,7 +28,6 @@ class StoreEquipmentRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'project_id.required' => 'The project_id field is required.',
             'project_id.exists' => 'The selected project does not exist.',
             'name.required' => 'The equipment name field is required.',
             'type.required' => 'The equipment type field is required.',

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EquipmentController;
@@ -33,6 +34,9 @@ Route::middleware(['auth:sanctum'])->group(
         Route::get('documents/{documentId}', [DocumentController::class, 'show']);
         Route::get('documents/versions/{versionId}/download', [DocumentController::class, 'downloadVersion']);
         Route::get('/projects/{projectId}/weather/today', [WeatherController::class, 'getTodayByProject']);
+        Route::get('projects/{projectId}/weather/by-date',[WeatherController::class, 'getByDate']
+        );
+        Route::get('projects/{id}/documents',[DocumentController::class, 'getProjectDocuments']);
     });
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager|assistant|project_owner')->group(function () {
@@ -91,10 +95,39 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('projects/{project}/engineers', [ProjectEngineerController::class, 'index']);
         Route::post('projects/{project}/engineers', [ProjectEngineerController::class, 'store']);
         Route::delete('projects/{project}/engineers/{assignment}', [ProjectEngineerController::class, 'destroy']);
-
         Route::put('/projects/{project}/work-items/{workItem}/progress/{spaceId}',[WorkItemProgressController::class, 'updateRoom']);
         Route::put('projects/{project}/work-items/{workItem}/progress', [WorkItemProgressController::class, 'update']);
         Route::get('projects/{project}/progress', [WorkItemProgressController::class, 'projectProgress']);
     });
+
+
+
+    Route::post('work-items/{id}/comments', [CommentController::class, 'store'])
+        ->middleware(['auth:sanctum']);
+    Route::get('work-items/{id}/comments', [CommentController::class, 'index'])
+        ->middleware(['auth:sanctum']);
+
+    Route::post(
+        'equipment-bookings', [EquipmentController::class, 'storebook']
+    )->middleware(['auth:sanctum']);
+
+    Route::post(
+        'equipment-bookings/{id}/finish',
+        [EquipmentController::class, 'finishBooking']
+    )->middleware('auth:sanctum');
+
+
+
+    Route::get('equipment/search', [EquipmentController::class, 'search'])
+        ->middleware(['auth:sanctum']);
+
+    Route::get('users/search', [AuthController::class, 'search'])
+        ->middleware(['auth:sanctum']);
+
+    Route::get('project/search', [ProjectController::class, 'search'])
+        ->middleware(['auth:sanctum']);
 });
+
+
+Route::get( 'users/{userId}/statistics',[AuthController::class, 'statistics'])->middleware(['auth:sanctum','role:company_admin',]);
 

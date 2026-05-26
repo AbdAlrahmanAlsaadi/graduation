@@ -206,4 +206,9 @@ class Project extends Model
     {
         return $this->status === self::STATUS_COMPLETED;
     }
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
 }

@@ -8,9 +8,12 @@ use App\Http\Requests\CompanyLoginRequest;
 use App\Http\Requests\CreateInternalUserRequest;
 use App\Http\Requests\FilterUsersByRoleRequest;
 use App\Http\Requests\InternalLoginRequest;
+use App\Http\Requests\SearchUserRequest;
+use App\Http\Requests\UserStatisticsRequest;
 use App\Http\Responses\Response;
 use App\Services\Authentication\AuthService;
 use App\Services\AuthService as ServicesAuthService;
+use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class AuthController extends Controller
@@ -129,6 +132,66 @@ class AuthController extends Controller
                 : 500;
 
             return Response::error($throwable->getMessage(), $code);
+        }
+    }
+    public function search(SearchUserRequest $request)
+    {
+        try {
+
+            $data = $this->authService->search($request);
+
+            return Response::success(
+                $data['message'],
+                [
+                    'users' => $data['users'],
+                ],
+                (int) $data['status']
+            );
+        } catch (Throwable $throwable) {
+
+            $code = is_int($throwable->getCode()) && $throwable->getCode() > 0
+                ? $throwable->getCode()
+                : 500;
+
+            return Response::error($throwable->getMessage(), $code);
+        }
+    }
+    public function statistics(
+        UserStatisticsRequest $request,
+        $userId
+    ) {
+        try {
+
+            if (! Auth::user()->hasRole('company_admin')) {
+
+                throw new \Exception(
+                    'Unauthorized.',
+                    403
+                );
+            }
+
+            $data = $this->authService
+                ->statistics($request, $userId);
+
+            return Response::success(
+
+                $data['message'],
+
+                $data['data'],
+
+                (int) $data['status']
+            );
+        } catch (Throwable $throwable) {
+
+            $code = is_int($throwable->getCode())
+                && $throwable->getCode() > 0
+                ? $throwable->getCode()
+                : 500;
+
+            return Response::error(
+                $throwable->getMessage(),
+                $code
+            );
         }
     }
 }
