@@ -215,13 +215,11 @@
               "query": [
                 {
                   "key": "email",
-                  "value": "admin@alfanar.com",
-                  "type": "text"
+                  "value": "admin@alfanar.com"
                 },
                 {
                   "key": "password",
-                  "value": "password",
-                  "type": "text"
+                  "value": "password"
                 }
               ]
             }
@@ -2402,14 +2400,6 @@
               "body": "{\n    \"status\": 200,\n    \"message\": \"Users fetched successfully.\",\n    \"data\": [\n        {\n            \"id\": 2,\n            \"name\": \"Ahmad Project Manager\",\n            \"internal_id\": \"pm.ahmad@alfanar\",\n            \"status\": \"active\",\n            \"created_at\": \"2026-05-04T20:38:45.000000Z\",\n            \"updated_at\": \"2026-05-04T20:38:45.000000Z\",\n            \"role\": \"project_manager\",\n            \"permissions\": []\n        }\n    ]\n}"
             }
           ]
-        },
-        {
-          "name": "New Request",
-          "request": {
-            "method": "GET",
-            "header": []
-          },
-          "response": []
         },
         {
           "name": "ResetUserPAssword",
@@ -5782,6 +5772,513 @@
               ]
             }
           ]
+        },
+        {
+          "name": "Project Progress",
+          "item": [
+            {
+              "name": "Update Work Item Progress",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"completed_wood_doors\": 4,\r\n  \"completed_aluminum_doors\": 2,\r\n  \"completed_windows\": 6\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/progress",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{projectId}}",
+                    "work-items",
+                    "{{workItemId}}",
+                    "progress"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Mellaben",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"completed_wood_doors\": 4,\r\n  \"completed_aluminum_doors\": 2,\r\n  \"completed_windows\": 6\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/progress",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "work-items",
+                        "{{workItemId}}",
+                        "progress"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sun, 24 May 2026 21:42:19 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sun, 24 May 2026 21:42:19 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Progress updated successfully\",\n    \"data\": {\n        \"work_item\": {\n            \"id\": 24,\n            \"name\": \"ملابن الأبواب\",\n            \"percent\": 100,\n            \"weight\": \"1.00\",\n            \"details\": [\n                {\n                    \"key\": \"total_wood_doors\",\n                    \"value\": \"4\",\n                    \"unit\": \"count\",\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"total_aluminum_doors\",\n                    \"value\": \"2\",\n                    \"unit\": \"count\",\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"total_windows\",\n                    \"value\": \"6\",\n                    \"unit\": \"count\",\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"completed_wood_doors\",\n                    \"value\": \"4\",\n                    \"unit\": null,\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"completed_aluminum_doors\",\n                    \"value\": \"2\",\n                    \"unit\": null,\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"completed_windows\",\n                    \"value\": \"6\",\n                    \"unit\": null,\n                    \"meta\": null\n                }\n            ]\n        },\n        \"project\": {\n            \"id\": 3,\n            \"name\": \"Green, Ward and Schuster Project\",\n            \"project_percent\": 9.09,\n            \"items\": [\n                {\n                    \"id\": 24,\n                    \"name\": \"ملابن الأبواب\",\n                    \"percent\": 100,\n                    \"weight\": \"1.00\",\n                    \"details\": [\n                        {\n                            \"key\": \"total_wood_doors\",\n                            \"value\": \"4\",\n                            \"unit\": \"count\",\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"total_aluminum_doors\",\n                            \"value\": \"2\",\n                            \"unit\": \"count\",\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"total_windows\",\n                            \"value\": \"6\",\n                            \"unit\": \"count\",\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"completed_wood_doors\",\n                            \"value\": \"4\",\n                            \"unit\": null,\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"completed_aluminum_doors\",\n                            \"value\": \"2\",\n                            \"unit\": null,\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"completed_windows\",\n                            \"value\": \"6\",\n                            \"unit\": null,\n                            \"meta\": null\n                        }\n                    ]\n                },\n                {\n                    \"id\": 25,\n                    \"name\": \"تمديدات كهرباء\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 26,\n                    \"name\": \"تمديدات صحية\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 27,\n                    \"name\": \"طينة / لياسة\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 28,\n                    \"name\": \"بلاط أرضيات\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 29,\n                    \"name\": \"سيراميك جدران / أسقف\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 30,\n                    \"name\": \"جبس بورد\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 31,\n                    \"name\": \"دهان\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 32,\n                    \"name\": \"أبواب ونجارة\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 33,\n                    \"name\": \"ألمنيوم وأبجورات\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 34,\n                    \"name\": \"تشطيبات نهائية\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                }\n            ]\n        }\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "Update Work Item Progress in space",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"completed\": true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/progress/5",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{projectId}}",
+                    "work-items",
+                    "{{workItemId}}",
+                    "progress",
+                    "5"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Mellaben",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"completed_wood_doors\": 4,\r\n  \"completed_aluminum_doors\": 2,\r\n  \"completed_windows\": 6\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/progress",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "work-items",
+                        "{{workItemId}}",
+                        "progress"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sun, 24 May 2026 21:42:19 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sun, 24 May 2026 21:42:19 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Progress updated successfully\",\n    \"data\": {\n        \"work_item\": {\n            \"id\": 24,\n            \"name\": \"ملابن الأبواب\",\n            \"percent\": 100,\n            \"weight\": \"1.00\",\n            \"details\": [\n                {\n                    \"key\": \"total_wood_doors\",\n                    \"value\": \"4\",\n                    \"unit\": \"count\",\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"total_aluminum_doors\",\n                    \"value\": \"2\",\n                    \"unit\": \"count\",\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"total_windows\",\n                    \"value\": \"6\",\n                    \"unit\": \"count\",\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"completed_wood_doors\",\n                    \"value\": \"4\",\n                    \"unit\": null,\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"completed_aluminum_doors\",\n                    \"value\": \"2\",\n                    \"unit\": null,\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"completed_windows\",\n                    \"value\": \"6\",\n                    \"unit\": null,\n                    \"meta\": null\n                }\n            ]\n        },\n        \"project\": {\n            \"id\": 3,\n            \"name\": \"Green, Ward and Schuster Project\",\n            \"project_percent\": 9.09,\n            \"items\": [\n                {\n                    \"id\": 24,\n                    \"name\": \"ملابن الأبواب\",\n                    \"percent\": 100,\n                    \"weight\": \"1.00\",\n                    \"details\": [\n                        {\n                            \"key\": \"total_wood_doors\",\n                            \"value\": \"4\",\n                            \"unit\": \"count\",\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"total_aluminum_doors\",\n                            \"value\": \"2\",\n                            \"unit\": \"count\",\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"total_windows\",\n                            \"value\": \"6\",\n                            \"unit\": \"count\",\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"completed_wood_doors\",\n                            \"value\": \"4\",\n                            \"unit\": null,\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"completed_aluminum_doors\",\n                            \"value\": \"2\",\n                            \"unit\": null,\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"completed_windows\",\n                            \"value\": \"6\",\n                            \"unit\": null,\n                            \"meta\": null\n                        }\n                    ]\n                },\n                {\n                    \"id\": 25,\n                    \"name\": \"تمديدات كهرباء\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 26,\n                    \"name\": \"تمديدات صحية\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 27,\n                    \"name\": \"طينة / لياسة\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 28,\n                    \"name\": \"بلاط أرضيات\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 29,\n                    \"name\": \"سيراميك جدران / أسقف\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 30,\n                    \"name\": \"جبس بورد\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 31,\n                    \"name\": \"دهان\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 32,\n                    \"name\": \"أبواب ونجارة\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 33,\n                    \"name\": \"ألمنيوم وأبجورات\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 34,\n                    \"name\": \"تشطيبات نهائية\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                }\n            ]\n        }\n    }\n}"
+                },
+                {
+                  "name": "تحديث بلاط أرضيات",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"completed\": false\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/progress/1",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "work-items",
+                        "{{workItemId}}",
+                        "progress",
+                        "1"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sun, 24 May 2026 23:45:17 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sun, 24 May 2026 23:45:17 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Room progress updated\",\n    \"data\": {\n        \"work_item\": {\n            \"id\": 5,\n            \"name\": \"بلاط أرضيات\",\n            \"percent\": 100,\n            \"weight\": \"1.00\",\n            \"details\": [\n                {\n                    \"rooms_status\": \"{\\\"1\\\":false,\\\"3\\\":true,\\\"5\\\":true}\",\n                    \"unit\": null,\n                    \"meta\": null\n                }\n            ]\n        },\n        \"project\": {\n            \"id\": 1,\n            \"name\": \"Cruickshank, Fritsch and Howell Project\",\n            \"project_percent\": 9.09,\n            \"items\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"ملابن الأبواب\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"تمديدات كهرباء\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"تمديدات صحية\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"طينة / لياسة\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"بلاط أرضيات\",\n                    \"percent\": 100,\n                    \"weight\": \"1.00\",\n                    \"details\": [\n                        {\n                            \"rooms_status\": \"{\\\"1\\\":false,\\\"3\\\":true,\\\"5\\\":true}\",\n                            \"unit\": null,\n                            \"meta\": null\n                        }\n                    ]\n                },\n                {\n                    \"id\": 6,\n                    \"name\": \"سيراميك جدران / أسقف\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 7,\n                    \"name\": \"جبس بورد\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 8,\n                    \"name\": \"دهان\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 9,\n                    \"name\": \"أبواب ونجارة\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 10,\n                    \"name\": \"ألمنيوم وأبجورات\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 11,\n                    \"name\": \"تشطيبات نهائية\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 12,\n                    \"name\": \"Tile Installation\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": [\n                        {\n                            \"tile_length\": \"30\",\n                            \"unit\": \"cm\",\n                            \"meta\": null\n                        },\n                        {\n                            \"tile_width\": \"30\",\n                            \"unit\": \"cm\",\n                            \"meta\": null\n                        }\n                    ]\n                }\n            ]\n        }\n    }\n}"
+                },
+                {
+                  "name": "Update Work Item Progress in space",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"completed\": true\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/progress/2",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "work-items",
+                        "{{workItemId}}",
+                        "progress",
+                        "2"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 25 May 2026 23:19:24 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 25 May 2026 23:19:24 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Room progress updated\",\n    \"data\": {\n        \"work_item\": {\n            \"id\": 2,\n            \"name\": \"تمديدات كهرباء\",\n            \"percent\": 40,\n            \"weight\": \"1.00\",\n            \"details\": [\n                {\n                    \"rooms_status\": \"{\\\"1\\\":true,\\\"2\\\":true}\",\n                    \"unit\": null,\n                    \"meta\": null\n                }\n            ]\n        },\n        \"project\": {\n            \"id\": 1,\n            \"name\": \"Cruickshank, Fritsch and Howell Project\",\n            \"project_percent\": 7.27,\n            \"items\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"تمديدات كهرباء\",\n                    \"percent\": 40,\n                    \"weight\": \"1.00\",\n                    \"details\": [\n                        {\n                            \"rooms_status\": \"{\\\"1\\\":true,\\\"2\\\":true}\",\n                            \"unit\": null,\n                            \"meta\": null\n                        }\n                    ]\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"تمديدات صحية\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"طينة / لياسة\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"بلاط أرضيات\",\n                    \"percent\": 40,\n                    \"weight\": \"1.00\",\n                    \"details\": [\n                        {\n                            \"rooms_status\": \"{\\\"1\\\":false,\\\"3\\\":true,\\\"5\\\":true}\",\n                            \"unit\": null,\n                            \"meta\": null\n                        }\n                    ]\n                },\n                {\n                    \"id\": 6,\n                    \"name\": \"سيراميك جدران / أسقف\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 7,\n                    \"name\": \"جبس بورد\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 8,\n                    \"name\": \"دهان\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 9,\n                    \"name\": \"أبواب ونجارة\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 10,\n                    \"name\": \"ألمنيوم وأبجورات\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 11,\n                    \"name\": \"تشطيبات نهائية\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 12,\n                    \"name\": \"Tile Installation\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": [\n                        {\n                            \"tile_length\": \"30\",\n                            \"unit\": \"cm\",\n                            \"meta\": null\n                        },\n                        {\n                            \"tile_width\": \"30\",\n                            \"unit\": \"cm\",\n                            \"meta\": null\n                        }\n                    ]\n                }\n            ]\n        }\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "Progress",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/projects/{{project_id}}}/progress",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{project_id}}}",
+                    "progress"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Progress",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{project_id}}}/progress",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{project_id}}}",
+                        "progress"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 25 May 2026 23:20:12 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 25 May 2026 23:20:12 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Project progress fetched\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Cruickshank, Fritsch and Howell Project\",\n        \"project_percent\": 9.09,\n        \"items\": [\n            {\n                \"id\": 2,\n                \"name\": \"تمديدات كهرباء\",\n                \"percent\": 60,\n                \"weight\": \"1.00\",\n                \"details\": [\n                    {\n                        \"rooms_status\": \"{\\\"1\\\":true,\\\"2\\\":true,\\\"3\\\":true}\",\n                        \"unit\": null,\n                        \"meta\": null\n                    }\n                ]\n            },\n            {\n                \"id\": 3,\n                \"name\": \"تمديدات صحية\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 4,\n                \"name\": \"طينة / لياسة\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 5,\n                \"name\": \"بلاط أرضيات\",\n                \"percent\": 40,\n                \"weight\": \"1.00\",\n                \"details\": [\n                    {\n                        \"rooms_status\": \"{\\\"1\\\":false,\\\"3\\\":true,\\\"5\\\":true}\",\n                        \"unit\": null,\n                        \"meta\": null\n                    }\n                ]\n            },\n            {\n                \"id\": 6,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 7,\n                \"name\": \"جبس بورد\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 8,\n                \"name\": \"دهان\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 9,\n                \"name\": \"أبواب ونجارة\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 10,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 11,\n                \"name\": \"تشطيبات نهائية\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 12,\n                \"name\": \"Tile Installation\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": [\n                    {\n                        \"tile_length\": \"30\",\n                        \"unit\": \"cm\",\n                        \"meta\": null\n                    },\n                    {\n                        \"tile_width\": \"30\",\n                        \"unit\": \"cm\",\n                        \"meta\": null\n                    }\n                ]\n            }\n        ]\n    }\n}"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -6216,6 +6713,408 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "GetDocForProject",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/projects/{{projectId}}/documents",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{projectId}}",
+                    "documents"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 13 May 2026 22:47:54 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Project documents fetched successfully.\",\n    \"data\": {\n        \"project\": {\n            \"id\": 1,\n            \"name\": \"Harris, Schulist and Schiller Project\"\n        },\n        \"documents\": [\n            {\n                \"id\": 1,\n                \"title\": \"title\",\n                \"category\": \"category\",\n                \"versions_count\": 1,\n                \"latest_version\": {\n                    \"version_no\": 1,\n                    \"file_url\": \"http://127.0.0.1:8000/storage/documents/custom-name-2.pdf\",\n                    \"created_at\": \"2026-05-13T22:42:34.000000Z\"\n                }\n            },\n            {\n                \"id\": 2,\n                \"title\": \"title\",\n                \"category\": \"category\",\n                \"versions_count\": 1,\n                \"latest_version\": {\n                    \"version_no\": 1,\n                    \"file_url\": \"http://127.0.0.1:8000/storage/documents/custom-name-3.pdf\",\n                    \"created_at\": \"2026-05-13T22:42:37.000000Z\"\n                }\n            },\n            {\n                \"id\": 3,\n                \"title\": \"title\",\n                \"category\": \"category\",\n                \"versions_count\": 1,\n                \"latest_version\": {\n                    \"version_no\": 1,\n                    \"file_url\": \"http://127.0.0.1:8000/storage/documents/custom-name-4.pdf\",\n                    \"created_at\": \"2026-05-13T22:42:40.000000Z\"\n                }\n            },\n            {\n                \"id\": 4,\n                \"title\": \"title\",\n                \"category\": \"category\",\n                \"versions_count\": 1,\n                \"latest_version\": {\n                    \"version_no\": 1,\n                    \"file_url\": \"http://127.0.0.1:8000/storage/documents/custom-name-5.pdf\",\n                    \"created_at\": \"2026-05-13T22:42:42.000000Z\"\n                }\n            },\n            {\n                \"id\": 5,\n                \"title\": \"title\",\n                \"category\": \"category\",\n                \"versions_count\": 1,\n                \"latest_version\": {\n                    \"version_no\": 1,\n                    \"file_url\": \"http://127.0.0.1:8000/storage/documents/custom-name-6.pdf\",\n                    \"created_at\": \"2026-05-13T22:42:44.000000Z\"\n                }\n            },\n            {\n                \"id\": 6,\n                \"title\": \"title\",\n                \"category\": \"category\",\n                \"versions_count\": 1,\n                \"latest_version\": {\n                    \"version_no\": 1,\n                    \"file_url\": \"http://127.0.0.1:8000/storage/documents/custom-name-7.pdf\",\n                    \"created_at\": \"2026-05-13T22:46:25.000000Z\"\n                }\n            }\n        ]\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Comment",
+      "item": [
+        {
+          "name": "AddComment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|F3NQVCfJJknI5xRWRZwTAsEzRsRBWqj6IEKRMziT9c03b932",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "comment",
+                  "value": "تم الانتهاء من صب السقف.",
+                  "type": "text",
+                  "uuid": "af48f893-278b-4868-a9ee-8a60f532cf29"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/work-items/1/comments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "work-items",
+                "1",
+                "comments"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "comment",
+                      "value": "تم الانتهاء من صب السقف.",
+                      "type": "text",
+                      "uuid": "af48f893-278b-4868-a9ee-8a60f532cf29"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/work-items/1/comments",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "work-items",
+                    "1",
+                    "comments"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 13 May 2026 18:45:56 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 201,\n    \"message\": \"Comment added successfully.\",\n    \"data\": {\n        \"comment\": {\n            \"work_item_id\": 1,\n            \"user_id\": 2,\n            \"comment\": \"تم الانتهاء من صب السقف.\",\n            \"updated_at\": \"2026-05-13T18:45:56.000000Z\",\n            \"created_at\": \"2026-05-13T18:45:56.000000Z\",\n            \"id\": 1,\n            \"user\": {\n                \"id\": 2,\n                \"name\": \"Ahmad Project Manager\",\n                \"email\": \"ahmad.pm@alfanar.com\",\n                \"email_verified_at\": \"2026-05-13T18:35:38.000000Z\",\n                \"internal_id\": \"pm.ahmad@alfanar\",\n                \"status\": \"active\",\n                \"created_at\": \"2026-05-13T18:35:38.000000Z\",\n                \"updated_at\": \"2026-05-13T18:35:38.000000Z\"\n            },\n            \"work_item\": {\n                \"id\": 1,\n                \"project_id\": 1,\n                \"parent_id\": null,\n                \"name\": \"ملابن الأبواب\",\n                \"quality_level\": \"basic\",\n                \"sort_order\": 1,\n                \"duration_days\": null,\n                \"is_default\": true,\n                \"is_active\": true,\n                \"is_custom\": false,\n                \"created_at\": \"2026-05-13T18:35:43.000000Z\",\n                \"updated_at\": \"2026-05-13T18:35:43.000000Z\",\n                \"deleted_at\": null\n            }\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetComment",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/work-items/1/comments",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "work-items",
+                    "1",
+                    "comments"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 13 May 2026 18:51:35 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Comments fetched successfully.\",\n    \"data\": {\n        \"comments\": [\n            {\n                \"id\": 1,\n                \"comment\": \"تم الانتهاء من صب السقف.\",\n                \"created_at\": \"2026-05-13T18:45:56.000000Z\",\n                \"user\": {\n                    \"id\": 2,\n                    \"name\": \"Ahmad Project Manager\",\n                    \"internal_id\": \"pm.ahmad@alfanar\"\n                },\n                \"work_item\": {\n                    \"id\": 1,\n                    \"name\": \"ملابن الأبواب\"\n                }\n            }\n        ]\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Weather",
+      "item": [
+        {
+          "name": "WeatherByday",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/projects/1/weather/by-date?date=2026-05-22",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "1",
+                    "weather",
+                    "by-date"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "2026-05-22",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 22 May 2026 15:21:55 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Project weather fetched successfully.\",\n    \"data\": {\n        \"project\": {\n            \"id\": 1,\n            \"name\": \"Yost-Bartell Project\",\n            \"location\": \"Gastonberg\",\n            \"latitude\": \"46.023782\",\n            \"longitude\": \"-130.37195\"\n        },\n        \"weather\": {\n            \"date\": \"2026-05-22\",\n            \"temperature_max\": 11,\n            \"temperature_min\": 9.4,\n            \"precipitation_sum\": 0,\n            \"wind_speed_max\": 31.1,\n            \"weather_code\": 45,\n            \"weather_description\": \"Fog\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "ProjectWeather",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/projects/1/weather/today",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "1",
+                    "weather",
+                    "today"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 04 May 2026 20:44:02 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": 200,\n    \"message\": \"Project weather fetched successfully.\",\n    \"data\": {\n        \"project\": {\n            \"id\": 1,\n            \"name\": \"Corkery-Howell Project\",\n            \"location\": \"West Olga\",\n            \"latitude\": \"-25.462763\",\n            \"longitude\": \"-176.405884\"\n        },\n        \"current_weather\": {\n            \"temperature\": 23.5,\n            \"humidity\": 66,\n            \"weather_code\": 1,\n            \"weather_description\": \"Mainly clear\",\n            \"wind_speed\": 49.5,\n            \"time\": \"2026-05-04T08:30\"\n        },\n        \"today_forecast\": {\n            \"temperature_max\": 23.9,\n            \"temperature_min\": 22.3,\n            \"precipitation_sum\": 1.1,\n            \"date\": \"2026-05-04\"\n        }\n    }\n}"
+            }
+          ]
         }
       ]
     },
@@ -6319,16 +7218,70 @@
       "response": []
     },
     {
-      "name": "ProjectWeather",
+      "name": "Equipmentbooking",
       "request": {
-        "method": "GET",
-        "header": []
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "1|TvdDvE9O4ZREvttsxrt9NkcJJYKO0eTutfPc34kSa242ed3c",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "equipment_id",
+              "value": "2",
+              "type": "text",
+              "uuid": "f9dca9e4-3af2-46fb-8c72-69de0f4ccc9b"
+            },
+            {
+              "key": "work_item_id",
+              "value": "4",
+              "type": "text",
+              "uuid": "6e9225ff-d64b-4904-8270-438fd22110ae"
+            },
+            {
+              "key": "start_date",
+              "value": "2026-05-14",
+              "type": "text",
+              "uuid": "6e9e1370-ea71-4a45-b8dd-4ed73f6f869a"
+            },
+            {
+              "key": "notes",
+              "value": "notes",
+              "type": "text",
+              "uuid": "f8bda1f1-6923-497c-892b-f3fc62a9d8eb"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/equipment-bookings",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "equipment-bookings"
+          ]
+        }
       },
       "response": [
         {
-          "name": "Success",
+          "name": "Alreadybooked",
           "originalRequest": {
-            "method": "GET",
+            "method": "POST",
             "header": [
               {
                 "key": "Accept",
@@ -6336,16 +7289,401 @@
                 "type": "text"
               }
             ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "equipment_id",
+                  "value": "1",
+                  "type": "text",
+                  "uuid": "f9dca9e4-3af2-46fb-8c72-69de0f4ccc9b"
+                },
+                {
+                  "key": "work_item_id",
+                  "value": "4",
+                  "type": "text",
+                  "uuid": "6e9225ff-d64b-4904-8270-438fd22110ae"
+                },
+                {
+                  "key": "start_date",
+                  "value": "2026-05-14",
+                  "type": "text",
+                  "uuid": "6e9e1370-ea71-4a45-b8dd-4ed73f6f869a"
+                },
+                {
+                  "key": "notes",
+                  "value": "notes",
+                  "type": "text",
+                  "uuid": "f8bda1f1-6923-497c-892b-f3fc62a9d8eb"
+                }
+              ]
+            },
             "url": {
-              "raw": "{{base_url}}/projects/1/weather/today",
+              "raw": "{{base_url}}/equipment-bookings",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "projects",
-                "1",
-                "weather",
-                "today"
+                "equipment-bookings"
+              ]
+            }
+          },
+          "status": "Unprocessable Content",
+          "code": 422,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 13 May 2026 22:18:06 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 422,\n    \"message\": \"Equipment is already booked.\",\n    \"data\": []\n}"
+        },
+        {
+          "name": "maintenance",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "equipment_id",
+                  "value": "12",
+                  "type": "text",
+                  "uuid": "f9dca9e4-3af2-46fb-8c72-69de0f4ccc9b"
+                },
+                {
+                  "key": "work_item_id",
+                  "value": "4",
+                  "type": "text",
+                  "uuid": "6e9225ff-d64b-4904-8270-438fd22110ae"
+                },
+                {
+                  "key": "start_date",
+                  "value": "2026-05-14",
+                  "type": "text",
+                  "uuid": "6e9e1370-ea71-4a45-b8dd-4ed73f6f869a"
+                },
+                {
+                  "key": "notes",
+                  "value": "notes",
+                  "type": "text",
+                  "uuid": "f8bda1f1-6923-497c-892b-f3fc62a9d8eb"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/equipment-bookings",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "equipment-bookings"
+              ]
+            }
+          },
+          "status": "Unprocessable Content",
+          "code": 422,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 13 May 2026 22:18:44 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 422,\n    \"message\": \"Equipment is under maintenance.\",\n    \"data\": []\n}"
+        },
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "equipment_id",
+                  "value": "2",
+                  "type": "text",
+                  "uuid": "f9dca9e4-3af2-46fb-8c72-69de0f4ccc9b"
+                },
+                {
+                  "key": "work_item_id",
+                  "value": "4",
+                  "type": "text",
+                  "uuid": "6e9225ff-d64b-4904-8270-438fd22110ae"
+                },
+                {
+                  "key": "start_date",
+                  "value": "2026-05-14",
+                  "type": "text",
+                  "uuid": "6e9e1370-ea71-4a45-b8dd-4ed73f6f869a"
+                },
+                {
+                  "key": "notes",
+                  "value": "notes",
+                  "type": "text",
+                  "uuid": "f8bda1f1-6923-497c-892b-f3fc62a9d8eb"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/equipment-bookings",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "equipment-bookings"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 13 May 2026 22:19:31 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 201,\n    \"message\": \"Equipment booked successfully.\",\n    \"data\": {\n        \"booking\": {\n            \"id\": 10,\n            \"status\": \"active\",\n            \"start_date\": \"2026-05-14\",\n            \"end_date\": null,\n            \"notes\": \"notes\",\n            \"equipment\": {\n                \"id\": 2,\n                \"name\": \"ضاغط هواء 339\",\n                \"type\": \"ضاغط هواء\"\n            },\n            \"work_item\": {\n                \"id\": 4,\n                \"name\": \"طينة / لياسة\"\n            },\n            \"project\": {\n                \"id\": 1,\n                \"name\": \"Harris, Schulist and Schiller Project\"\n            },\n            \"booked_by\": {\n                \"id\": 2,\n                \"name\": \"Ahmad Project Manager\"\n            }\n        }\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "Bookingfinish",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "1|TvdDvE9O4ZREvttsxrt9NkcJJYKO0eTutfPc34kSa242ed3c",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "end_date",
+              "value": "2026-05-19",
+              "type": "text",
+              "uuid": "a628369f-07a5-4aec-a89d-059fbc964f0f"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/equipment-bookings/2/finish",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "equipment-bookings",
+            "2",
+            "finish"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Failed",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "end_date",
+                  "value": "2026-05-10",
+                  "type": "text",
+                  "uuid": "a628369f-07a5-4aec-a89d-059fbc964f0f"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/equipment-bookings/2/finish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "equipment-bookings",
+                "2",
+                "finish"
+              ]
+            }
+          },
+          "status": "Unprocessable Content",
+          "code": 422,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 13 May 2026 22:32:20 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 422,\n    \"message\": \"End date cannot be before booking start date.\",\n    \"data\": []\n}"
+        },
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "end_date",
+                  "value": "2026-05-19",
+                  "type": "text",
+                  "uuid": "a628369f-07a5-4aec-a89d-059fbc964f0f"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/equipment-bookings/2/finish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "equipment-bookings",
+                "2",
+                "finish"
               ]
             }
           },
@@ -6371,7 +7709,7 @@
             },
             {
               "key": "Date",
-              "value": "Mon, 04 May 2026 20:44:02 GMT"
+              "value": "Wed, 13 May 2026 22:32:34 GMT"
             },
             {
               "key": "Content-Type",
@@ -6383,7 +7721,550 @@
             }
           ],
           "cookie": [],
-          "body": "{\n    \"status\": 200,\n    \"message\": \"Project weather fetched successfully.\",\n    \"data\": {\n        \"project\": {\n            \"id\": 1,\n            \"name\": \"Corkery-Howell Project\",\n            \"location\": \"West Olga\",\n            \"latitude\": \"-25.462763\",\n            \"longitude\": \"-176.405884\"\n        },\n        \"current_weather\": {\n            \"temperature\": 23.5,\n            \"humidity\": 66,\n            \"weather_code\": 1,\n            \"weather_description\": \"Mainly clear\",\n            \"wind_speed\": 49.5,\n            \"time\": \"2026-05-04T08:30\"\n        },\n        \"today_forecast\": {\n            \"temperature_max\": 23.9,\n            \"temperature_min\": 22.3,\n            \"precipitation_sum\": 1.1,\n            \"date\": \"2026-05-04\"\n        }\n    }\n}"
+          "body": "{\n    \"status\": 200,\n    \"message\": \"Equipment booking completed successfully.\",\n    \"data\": {\n        \"booking\": {\n            \"id\": 2,\n            \"status\": \"completed\",\n            \"start_date\": \"2026-05-11\",\n            \"end_date\": \"2026-05-19\",\n            \"equipment\": {\n                \"id\": 17,\n                \"name\": \"ضاغط هواء 135\"\n            },\n            \"work_item\": {\n                \"id\": 12,\n                \"name\": \"Tile Installation\"\n            },\n            \"project\": {\n                \"id\": 1,\n                \"name\": \"Harris, Schulist and Schiller Project\"\n            }\n        }\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "SearchUser",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "2|kuNbY1QXFJ35wiCpsMpTL73LivFMZL5k8PTnTnDs0891dcc9",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "keyword",
+              "value": "a",
+              "type": "text",
+              "uuid": "4a23fceb-4eb0-429a-9a9e-a86805a65419"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/users/search?keyword=a",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "keyword",
+              "value": "a",
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "SearchUSer",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "keyword",
+                  "value": "a",
+                  "type": "text",
+                  "uuid": "4a23fceb-4eb0-429a-9a9e-a86805a65419"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/users/search?keyword=a",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "keyword",
+                  "value": "a",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 21 May 2026 17:45:53 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 200,\n    \"message\": \"Users search completed successfully.\",\n    \"data\": {\n        \"users\": [\n            {\n                \"id\": 1,\n                \"name\": \"Company Admin\",\n                \"internal_id\": null,\n                \"status\": \"active\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"Ahmad Project Manager\",\n                \"internal_id\": \"pm.ahmad@alfanar\",\n                \"status\": \"active\"\n            },\n            {\n                \"id\": 3,\n                \"name\": \"Sara Assistant\",\n                \"internal_id\": \"asst.sara@alfanar\",\n                \"status\": \"active\"\n            },\n            {\n                \"id\": 4,\n                \"name\": \"Khaled Project Owner\",\n                \"internal_id\": \"owner.khaled@alfanar\",\n                \"status\": \"active\"\n            }\n        ]\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "SearchEquipment",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": [
+        {
+          "name": "SearchEquipment",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/equipment/search?keyword=رافعة شوكية",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "equipment",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "keyword",
+                  "value": "رافعة شوكية",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 21 May 2026 17:59:22 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 200,\n    \"message\": \"Equipment search completed successfully.\",\n    \"data\": {\n        \"equipment\": [\n            {\n                \"id\": 1,\n                \"name\": \"رافعة شوكية 681\",\n                \"type\": \"رافعة شوكية\",\n                \"identifier_no\": \"EQ-625686\",\n                \"status\": \"Booked\",\n                \"booking\": {\n                    \"id\": 9,\n                    \"start_date\": \"2026-05-14\",\n                    \"end_date\": null\n                },\n                \"work_item\": {\n                    \"id\": 4,\n                    \"name\": \"طينة / لياسة\"\n                },\n                \"project\": {\n                    \"id\": 1,\n                    \"name\": \"Harris, Schulist and Schiller Project\",\n                    \"location\": \"Friesenside\",\n                    \"status\": \"planned\"\n                }\n            },\n            {\n                \"id\": 5,\n                \"name\": \"رافعة شوكية 937\",\n                \"type\": \"رافعة شوكية\",\n                \"identifier_no\": \"EQ-098691\",\n                \"status\": \"Available\"\n            },\n            {\n                \"id\": 13,\n                \"name\": \"رافعة شوكية 612\",\n                \"type\": \"رافعة شوكية\",\n                \"identifier_no\": \"EQ-254134\",\n                \"status\": \"Maintenance\"\n            }\n        ]\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "SEarchProject",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": [
+        {
+          "name": "SeqrchProject",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "keyword",
+                  "value": "alpha",
+                  "type": "text",
+                  "uuid": "c4105c2c-44b2-40d8-a77d-5f31ad6289e9"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/project/search?keyword=Harris&page=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "project",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "keyword",
+                  "value": "Harris"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 21 May 2026 18:13:16 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 200,\n    \"message\": \"Projects fetched successfully.\",\n    \"data\": {\n        \"projects\": [\n            {\n                \"id\": 1,\n                \"name\": \"Harris, Schulist and Schiller Project\",\n                \"location\": \"Friesenside\",\n                \"latitude\": \"-44.360729\",\n                \"longitude\": \"-152.356013\",\n                \"status\": \"planned\",\n                \"manager\": {\n                    \"id\": 2,\n                    \"name\": \"Ahmad Project Manager\",\n                    \"internal_id\": \"pm.ahmad@alfanar\"\n                },\n                \"assistant_engineer\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\",\n                    \"internal_id\": \"asst.sara@alfanar\"\n                },\n                \"owner\": {\n                    \"id\": 4,\n                    \"name\": \"Khaled Project Owner\",\n                    \"internal_id\": \"owner.khaled@alfanar\"\n                },\n                \"work_items_count\": 12,\n                \"equipment_count\": 4,\n                \"work_items\": [\n                    {\n                        \"id\": 1,\n                        \"name\": \"ملابن الأبواب\",\n                        \"quality_level\": \"basic\",\n                        \"duration_days\": 10,\n                        \"is_active\": true\n                    },\n                    {\n                        \"id\": 2,\n                        \"name\": \"تمديدات كهرباء\",\n                        \"quality_level\": \"basic\",\n                        \"duration_days\": 10,\n                        \"is_active\": true\n                    },\n                    {\n                        \"id\": 3,\n                        \"name\": \"تمديدات صحية\",\n                        \"quality_level\": \"basic\",\n                        \"duration_days\": 10,\n                        \"is_active\": true\n                    },\n                    {\n                        \"id\": 4,\n                        \"name\": \"طينة / لياسة\",\n                        \"quality_level\": \"basic\",\n                        \"duration_days\": 10,\n                        \"is_active\": true\n                    },\n                    {\n                        \"id\": 5,\n                        \"name\": \"بلاط أرضيات\",\n                        \"quality_level\": \"basic\",\n                        \"duration_days\": 10,\n                        \"is_active\": true\n                    },\n                    {\n                        \"id\": 6,\n                        \"name\": \"سيراميك جدران / أسقف\",\n                        \"quality_level\": \"basic\",\n                        \"duration_days\": 10,\n                        \"is_active\": true\n                    },\n                    {\n                        \"id\": 7,\n                        \"name\": \"جبس بورد\",\n                        \"quality_level\": \"basic\",\n                        \"duration_days\": 10,\n                        \"is_active\": true\n                    },\n                    {\n                        \"id\": 8,\n                        \"name\": \"دهان\",\n                        \"quality_level\": \"basic\",\n                        \"duration_days\": 10,\n                        \"is_active\": true\n                    },\n                    {\n                        \"id\": 9,\n                        \"name\": \"أبواب ونجارة\",\n                        \"quality_level\": \"basic\",\n                        \"duration_days\": 10,\n                        \"is_active\": true\n                    },\n                    {\n                        \"id\": 10,\n                        \"name\": \"ألمنيوم وأبجورات\",\n                        \"quality_level\": \"basic\",\n                        \"duration_days\": 10,\n                        \"is_active\": true\n                    },\n                    {\n                        \"id\": 11,\n                        \"name\": \"تشطيبات نهائية\",\n                        \"quality_level\": \"basic\",\n                        \"duration_days\": 10,\n                        \"is_active\": true\n                    },\n                    {\n                        \"id\": 12,\n                        \"name\": \"Tile Installation\",\n                        \"quality_level\": \"good\",\n                        \"duration_days\": 4,\n                        \"is_active\": true\n                    }\n                ],\n                \"equipment\": [\n                    {\n                        \"id\": 1,\n                        \"name\": \"رافعة شوكية 681\",\n                        \"type\": \"رافعة شوكية\",\n                        \"identifier_no\": \"EQ-625686\",\n                        \"status\": \"Booked\"\n                    },\n                    {\n                        \"id\": 2,\n                        \"name\": \"ضاغط هواء 339\",\n                        \"type\": \"ضاغط هواء\",\n                        \"identifier_no\": \"EQ-459198\",\n                        \"status\": \"Available\"\n                    },\n                    {\n                        \"id\": 18,\n                        \"name\": \"حفارة 650\",\n                        \"type\": \"حفارة\",\n                        \"identifier_no\": \"EQ-886978\",\n                        \"status\": \"Booked\"\n                    },\n                    {\n                        \"id\": 17,\n                        \"name\": \"ضاغط هواء 135\",\n                        \"type\": \"ضاغط هواء\",\n                        \"identifier_no\": \"EQ-281692\",\n                        \"status\": \"Available\"\n                    }\n                ]\n            }\n        ],\n        \"pagination\": {\n            \"current_page\": 1,\n            \"last_page\": 1,\n            \"per_page\": 10,\n            \"total\": 1\n        }\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "Userstatistics",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "1|iyosaM3FDPmco32iMd2gH7oSoz8Eo6zIgt0Kc3Cbf4e1560c",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/users/2/statistics?type=projects",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "2",
+            "statistics"
+          ],
+          "query": [
+            {
+              "key": "type",
+              "value": "projects"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "AvailabelType",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "type",
+                  "value": "ss",
+                  "type": "text",
+                  "uuid": "21a6d6a4-dcf1-4766-9484-19355e617f3a"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/users/2/statistics?type=sss",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "2",
+                "statistics"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "sss",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "Unprocessable Content",
+          "code": 422,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 22 May 2026 15:04:06 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"message\": \"Invalid type. Available types are: overview, projects, activities, endpoints, comments, bookings.\",\n    \"errors\": {\n        \"type\": [\n            \"Invalid type. Available types are: overview, projects, activities, endpoints, comments, bookings.\"\n        ]\n    }\n}"
+        },
+        {
+          "name": "Activities",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/2/statistics?type=activities",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "2",
+                "statistics"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "activities"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 22 May 2026 15:08:15 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 200,\n    \"message\": \"Activities fetched successfully.\",\n    \"data\": {\n        \"activities\": [\n            {\n                \"action\": \"Create\",\n                \"method\": \"POST\",\n                \"endpoint\": \"api/work-items/1/comments\",\n                \"description\": \"POST request to api/work-items/1/comments\",\n                \"created_at\": \"2026-05-22T14:49:14.000000Z\"\n            }\n        ]\n    }\n}"
+        },
+        {
+          "name": "Projects",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/2/statistics?type=projects",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "2",
+                "statistics"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "projects"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 22 May 2026 15:08:38 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 200,\n    \"message\": \"Projects fetched successfully.\",\n    \"data\": {\n        \"projects\": [\n            {\n                \"id\": 1,\n                \"name\": \"Yost-Bartell Project\",\n                \"status\": \"planned\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"Herzog, Lindgren and Schaden Project\",\n                \"status\": \"planned\"\n            },\n            {\n                \"id\": 3,\n                \"name\": \"Lebsack, Paucek and Gleason Project\",\n                \"status\": \"planned\"\n            },\n            {\n                \"id\": 4,\n                \"name\": \"Schaefer-Schroeder Project\",\n                \"status\": \"planned\"\n            },\n            {\n                \"id\": 5,\n                \"name\": \"Bayer, Rodriguez and Donnelly Project\",\n                \"status\": \"planned\"\n            }\n        ]\n    }\n}"
         }
       ]
     }

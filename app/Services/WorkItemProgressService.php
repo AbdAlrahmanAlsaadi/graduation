@@ -67,13 +67,39 @@ class WorkItemProgressService
                 $oldValue = $old ? json_decode($old->value, true) : [];
                 if (!is_array($oldValue)) $oldValue = [];
 
-                $merged = array_merge($oldValue, $value);
+                $filtered = [];
+
+                foreach ($value as $spaceId => $completed) {
+                    // 1) تحقق أن الغرفة موجودة بالمشروع
+                    $space = Space::where('id', $spaceId)
+                        ->where('project_id', $project->id)
+                        ->first();
+
+                    if (!$space) {
+                        continue; // تجاهل الغرفة
+                    }
+
+                    // 2) تحقق أن الغرفة ينطبق عليها البند
+                    $type = $this->logic['mapping'][$item->name] ?? null;
+                    $method = $type ? 'filter' . ucfirst($type) : null;
+
+                    if ($method && method_exists($this, $method)) {
+                        if (!$this->{$method}($space)) {
+                            continue; // تجاهل الغرفة إذا ما بتنطبق
+                        }
+                    }
+
+                    // 3) الغرفة صالحة → أضفها
+                    $filtered[$spaceId] = $completed;
+                }
+
+                // دمج القديم مع الجديد
+                $merged = array_merge($oldValue, $filtered);
 
                 WorkItemDetail::updateOrCreate(
                     ['work_item_id' => $item->id, 'key' => 'rooms_status'],
                     ['value' => json_encode($merged)]
                 );
-
                 continue;
             }
 
@@ -91,7 +117,6 @@ class WorkItemProgressService
             'percent'   => $percent,
         ];
     }
-
     /* =========================================================================
        UPDATE SINGLE ROOM STATUS (NEW ENDPOINT)
        ========================================================================= */
@@ -101,42 +126,41 @@ class WorkItemProgressService
         $space = Space::where('id', $spaceId)
             ->where('project_id', $project->id)
             ->first();
-
+    
         if (!$space) {
             abort(404, "Space does not belong to this project.");
         }
-        
+    
         // تحقق أن الغرفة ينطبق عليها البند
-        $type = $this->logic['mapping'][$item->name];
-        $method = 'filter' . ucfirst($type);
-
-        if (method_exists($this, $method)) {
+        $type = $this->logic['mapping'][$item->name] ?? null;
+        $method = $type ? 'filter' . ucfirst($type) : null;
+    
+        if ($method && method_exists($this, $method)) {
             if (!$this->{$method}($space)) {
                 abort(422, "This space does not apply to this work item.");
             }
         }
-
-
+    
         // get old rooms_status
         $old = WorkItemDetail::where('work_item_id', $item->id)
             ->where('key', 'rooms_status')
             ->first();
-
+    
         $status = $old ? json_decode($old->value, true) : [];
         if (!is_array($status)) $status = [];
-
+    
         // update one room
         $status[$spaceId] = $completed;
-
+    
         // save
         WorkItemDetail::updateOrCreate(
             ['work_item_id' => $item->id, 'key' => 'rooms_status'],
             ['value' => json_encode($status)]
         );
-
+    
         // compute percent
         $percent = $this->computeWorkItemPercent($item);
-
+    
         return [
             'work_item' => $item->refresh(),
             'percent'   => $percent,
@@ -326,4 +350,37 @@ class WorkItemProgressService
 
         return ($done / $total) * 100;
     }
+
+    protected function filterGypsum(Space $space): bool
+    {
+        return $space->ceiling_finish_type === 'gypsum';
+    }
+
+    protected function filterPaint(Space $space): bool
+    {
+        return $space->wall_finish_type === 'paint';
+    }
+
+    protected function filterCeramic(Space $space): bool
+    {
+        return $space->wall_finish_type === 'ceramic'
+            || $space->ceiling_finish_type === 'ceramic';
+    }
+
+    protected function filterTile(Space $space): bool
+    {
+        return in_array($space->type, ['room', 'salon', 'kitchen']);
+    }
+
+    protected function filterRooms(Space $space): bool
+    {
+        return $space->wall_finish_type !== 'ceramic';
+    }
+
+    protected function filterElectricity(Space $space): bool
+    {
+        return true; // كل الفراغات
+    }
+
 }
+
