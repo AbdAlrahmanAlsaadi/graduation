@@ -194,4 +194,23 @@ class AuthController extends Controller
             );
         }
     }
+    public function account()
+    {
+        try {
+
+            $data = $this->authService->account();
+
+            return Response::success(
+                $data['message'],
+                $data['data'],
+                $data['status']
+            );
+        } catch (\Throwable $throwable) {
+
+            return Response::error(
+                $throwable->getMessage(),
+                $throwable->getCode() ?: 500
+            );
+        }
+    }
 }

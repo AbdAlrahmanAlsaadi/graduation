@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\OwnerProjectController;
 use App\Http\Controllers\ProjectEngineerController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SpaceController;
@@ -131,3 +132,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::get( 'users/{userId}/statistics',[AuthController::class, 'statistics'])->middleware(['auth:sanctum','role:company_admin',]);
 
+
+
+Route::middleware(['auth:sanctum','role:project_owner'])->group(function () {
+    Route::get('owner/projects',[OwnerProjectController::class, 'myProjects']);
+    Route::get('owner/projects/{project}',[OwnerProjectController::class, 'show']);
+    Route::get('owner/projects/{project}/spaces',[OwnerProjectController::class, 'spaces']);
+    Route::get('owner/projects/{project}/work-items',[OwnerProjectController::class, 'workItems']);
+
+    Route::get('owner/account', [AuthController::class, 'account']
+    );
+
+});

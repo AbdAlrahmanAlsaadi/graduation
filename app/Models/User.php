@@ -76,4 +76,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(EquipmentBooking::class, 'booked_by');
     }
+    public function ownedProjects(): HasMany
+    {
+        return $this->hasMany(Project::class, 'owner_id');
+    }
 }
