@@ -609,4 +609,33 @@ class AuthService
 
             'status' => 200,
         ];
+    }
+
+
+    public function account(): array
+    {
+        $owner = auth()->user();
+
+        return [
+
+            'message' => 'Account fetched successfully.',
+
+            'data' => [
+
+                'name' => $owner->name,
+
+                'email' => $owner->email,
+
+                'projects_count' => $owner->ownedProjects()->count(),
+
+                'active_projects_count' => $owner
+                    ->ownedProjects()
+                    ->where('status', 'ongoing')
+                    ->count(),
+
+                'avatar' => $owner->avatar ?? null,
+            ],
+
+            'status' => 200,
+        ];
     }}
