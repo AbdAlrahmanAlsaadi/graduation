@@ -12,8 +12,11 @@ use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\WorkItemController;
 use App\Http\Controllers\WorkItemProgressController;
+use App\Models\User;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Kreait\Firebase\Contract\Messaging;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -144,3 +147,9 @@ Route::middleware(['auth:sanctum','role:project_owner'])->group(function () {
     );
 
 });
+
+
+Route::middleware('auth:sanctum')->post('fcm-token', [AuthController::class, 'Fcm']);
+
+
+
