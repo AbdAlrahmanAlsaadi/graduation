@@ -27,6 +27,8 @@ class User extends Authenticatable
         'internal_id',
         'password',
         'status',
+        'fcm_token',
+
     ];
 
     /**
@@ -79,5 +81,10 @@ class User extends Authenticatable
     public function ownedProjects(): HasMany
     {
         return $this->hasMany(Project::class, 'owner_id');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
     }
 }

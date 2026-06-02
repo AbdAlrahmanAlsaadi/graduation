@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('password');
             $table->rememberToken();
+            $table->text('fcm_token')->nullable();
             $table->timestamps();
         });
 
