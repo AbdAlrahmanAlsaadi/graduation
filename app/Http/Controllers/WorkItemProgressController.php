@@ -7,8 +7,10 @@ use App\Services\WorkItemProgressService;
 use App\Http\Resources\WorkItemProgressResource;
 use App\Http\Resources\ProjectProgressResource;
 use App\Models\Project;
+use App\Models\Space;
 use App\Models\WorkItem;
 use App\Http\Responses\Response;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Throwable;
 
@@ -28,7 +30,7 @@ class WorkItemProgressController extends Controller
 
             $result = $this->service->updateProgress($project, $workItem, $request->validated());
 
-            $workItemFresh = $result['work_item'];
+            $workItemFresh = $result['work_item']->load('details', 'progressPhotos');
             $workItemFresh->percent = $result['percent'];
 
             // Compute project percent
@@ -75,16 +77,24 @@ class WorkItemProgressController extends Controller
 
             $validated = $request->validate([
                 'completed' => ['required', 'boolean'],
+                'photos' => ['sometimes', 'array'],
+                'photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             ]);
+
+            $photos = $this->extractPhotos($request);
+            if (!empty($photos)) {
+                $validated['photos'] = $photos;
+            }
 
             $result = $this->service->updateRoomStatus(
                 $project,
                 $workItem,
                 $spaceId,
-                $validated['completed']
+                $validated['completed'],
+                $validated['photos'] ?? []
             );
 
-            $workItemFresh = $result['work_item'];
+            $workItemFresh = $result['work_item']->load('details', 'progressPhotos');
             $workItemFresh->percent = $result['percent'];
 
             // Compute project percent
@@ -117,6 +127,26 @@ class WorkItemProgressController extends Controller
         }
     }
 
+    /**
+     * @return array<int, \Illuminate\Http\UploadedFile>
+     */
+    private function extractPhotos(Request $request): array
+    {
+        $photos = $request->file('photos');
+        if ($photos === null) {
+            $files = $request->allFiles();
+            if (array_key_exists('photos', $files)) {
+                $photos = $files['photos'];
+            }
+        }
+
+        if ($photos instanceof \Illuminate\Http\UploadedFile) {
+            return [$photos];
+        }
+
+        return is_array($photos) ? $photos : [];
+    }
+
     /* ============================================================
        PROJECT PROGRESS
        ============================================================ */
@@ -142,6 +172,55 @@ class WorkItemProgressController extends Controller
 
         } catch (Throwable $e) {
             return Response::error('Failed to fetch project progress. ' . $e->getMessage(), 500);
+        }
+    }
+
+    /* ============================================================
+       CERAMIC SPACES
+       ============================================================ */
+    public function ceramicSpaces(Project $project)
+    {
+        try {
+            $spaces = Space::query()
+                ->where('project_id', $project->id)
+                ->get()
+                ->filter(fn($space) => $space->wall_finish_type === 'ceramic'
+                    || $space->ceiling_finish_type === 'ceramic')
+                ->values()
+                ->map(fn($space) => [
+                    'id' => $space->id,
+                    'type' => $space->type,
+                    'wall_finish_type' => $space->wall_finish_type,
+                    'ceiling_finish_type' => $space->ceiling_finish_type,
+                ]);
+
+            return Response::success('Ceramic spaces fetched', $spaces);
+        } catch (Throwable $e) {
+            return Response::error('Failed to fetch ceramic spaces. ' . $e->getMessage(), 500);
+        }
+    }
+
+    /* ============================================================
+       GYPSUM SPACES
+       ============================================================ */
+    public function gypsumSpaces(Project $project)
+    {
+        try {
+            $spaces = Space::query()
+                ->where('project_id', $project->id)
+                ->get()
+                ->filter(fn($space) => $space->ceiling_finish_type === 'gypsum')
+                ->values()
+                ->map(fn($space) => [
+                    'id' => $space->id,
+                    'type' => $space->type,
+                    'wall_finish_type' => $space->wall_finish_type,
+                    'ceiling_finish_type' => $space->ceiling_finish_type,
+                ]);
+
+            return Response::success('Gypsum spaces fetched', $spaces);
+        } catch (Throwable $e) {
+            return Response::error('Failed to fetch gypsum spaces. ' . $e->getMessage(), 500);
         }
     }
 }

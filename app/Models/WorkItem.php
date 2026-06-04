@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use App\Models\ProgressPhoto;
 
 /**
  * @property int $id
@@ -82,6 +83,25 @@ class WorkItem extends Model
         ];
     }
 
+        // في ملف WorkItem.php
+    public const DEPENDENCIES = [
+        // [السابق, اللاحق]
+        ['تمديدات كهرباء', 'طينة / لياسة'],
+        ['تمديدات صحية', 'طينة / لياسة'],
+        ['ملابن الأبواب', 'طينة / لياسة'],
+        ['طينة / لياسة', 'بلاط أرضيات'],
+        ['طينة / لياسة', 'سيراميك جدران / أسقف'],
+        ['طينة / لياسة', 'جبس بورد'],
+        ['طينة / لياسة', 'دهان'],
+        ['بلاط أرضيات', 'دهان'],
+        ['سيراميك جدران / أسقف', 'دهان'],
+        ['جبس بورد', 'دهان'],
+        ['دهان', 'أبواب ونجارة'],
+        ['دهان', 'ألمنيوم وأبجورات'],
+        ['أبواب ونجارة', 'تشطيبات نهائية'],
+        ['ألمنيوم وأبجورات', 'تشطيبات نهائية'],
+    ];
+
     public static function rules(bool $isUpdate = false): array
     {
         $required = $isUpdate ? 'sometimes' : 'required';
@@ -120,6 +140,11 @@ class WorkItem extends Model
     public function details(): HasMany
     {
         return $this->hasMany(WorkItemDetail::class);
+    }
+
+    public function progressPhotos(): HasMany
+    {
+        return $this->hasMany(ProgressPhoto::class);
     }
 
     /**

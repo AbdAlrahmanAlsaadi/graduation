@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Services\WorkItemProgressService;
 
 class WorkItemResource extends JsonResource
 {
@@ -12,6 +13,8 @@ class WorkItemResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $service = new WorkItemProgressService();
+
         return [
             'id' => $this->id,
             'project_id' => $this->project_id,
@@ -25,6 +28,7 @@ class WorkItemResource extends JsonResource
             'is_active' => (bool) $this->is_active,
             'is_custom' => (bool) $this->is_custom,
             'details' => WorkItemDetailResource::collection($this->whenLoaded('details')),
+            'percent' => $service->computeWorkItemPercent($this->resource),
             'started_at' => $this->started_at?->toISOString(),
             'completed_at' => $this->completed_at?->toISOString(),
             'created_at' => $this->created_at?->toISOString(),
@@ -32,3 +36,5 @@ class WorkItemResource extends JsonResource
         ];
     }
 }
+
+//computeWorkItemPercent

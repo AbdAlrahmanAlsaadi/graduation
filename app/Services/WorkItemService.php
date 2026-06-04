@@ -98,6 +98,37 @@ class WorkItemService
      */
     public function reorder(Project $project, array $items): Collection
     {
+        // جلب جميع البنود الحالية مع أسمائها وترتيبها
+        $workItems = $project->workItems()->select('id', 'name', 'sort_order')->get();
+
+        $existingOrders = $workItems->pluck('sort_order', 'id')->all();
+        $idToName = $workItems->pluck('name', 'id')->all();
+
+        // دمج التغييرات المطلوبة مع الحالي
+        $finalOrders = $existingOrders;
+        foreach ($items as $item) {
+            if (!array_key_exists($item['id'], $existingOrders)) {
+                throw new \InvalidArgumentException("البند رقم {$item['id']} غير موجود في المشروع.");
+            }
+            $finalOrders[$item['id']] = $item['sort_order'];
+        }
+
+        foreach (WorkItem::DEPENDENCIES as [$prerequisiteName, $dependentName]) {
+            $prerequisiteId = array_search($prerequisiteName, $idToName);
+            $dependentId = array_search($dependentName, $idToName);
+
+            if ($prerequisiteId === false || $dependentId === false) {
+                continue;
+            }
+
+            if ($finalOrders[$prerequisiteId] >= $finalOrders[$dependentId]) {
+                throw new \InvalidArgumentException(
+                    "لا يمكن أن يكون \"{$dependentName}\" قبل أو في نفس ترتيب \"{$prerequisiteName}\". " .
+                    "الترتيب الهندسي الصحيح يقتضي أن يسبق \"{$prerequisiteName}\" البند \"{$dependentName}\"."
+                );
+            }
+        }
+
         DB::transaction(function () use ($project, $items) {
             foreach ($items as $item) {
                 WorkItem::query()
