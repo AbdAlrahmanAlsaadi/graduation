@@ -5,8 +5,10 @@ namespace App\Services;
 use App\Models\Project;
 use App\Models\WorkItem;
 use App\Models\WorkItemDetail;
+use App\Models\ProgressPhoto;
 use App\Models\Space;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class WorkItemProgressService
 {
@@ -56,6 +58,18 @@ class WorkItemProgressService
 
     public function updateProgress(Project $project, WorkItem $item, array $data): array
     {
+        if (array_key_exists('photos', $data)) {
+            $photos = $data['photos'] ?? [];
+            if ($photos instanceof \Illuminate\Http\UploadedFile) {
+                $photos = [$photos];
+            }
+            if (!is_array($photos)) {
+                $photos = [];
+            }
+            $this->storeProgressPhotos($project, $item, $photos);
+            unset($data['photos']);
+        }
+
         foreach ($data as $key => $value) {
 
             // special case: rooms_status → merge
@@ -113,7 +127,7 @@ class WorkItemProgressService
         $percent = $this->computeWorkItemPercent($item);
 
         return [
-            'work_item' => $item->refresh(),
+            'work_item' => $item->refresh()->load('progressPhotos'),
             'percent'   => $percent,
         ];
     }
@@ -121,8 +135,15 @@ class WorkItemProgressService
        UPDATE SINGLE ROOM STATUS (NEW ENDPOINT)
        ========================================================================= */
 
-    public function updateRoomStatus(Project $project, WorkItem $item, int $spaceId, bool $completed): array
+    /**
+     * @param array<int, \Illuminate\Http\UploadedFile> $photos
+     */
+    public function updateRoomStatus(Project $project, WorkItem $item, int $spaceId, bool $completed, array $photos = []): array
     {
+        if (!empty($photos)) {
+            $this->storeProgressPhotos($project, $item, $photos);
+        }
+
         $space = Space::where('id', $spaceId)
             ->where('project_id', $project->id)
             ->first();
@@ -162,9 +183,34 @@ class WorkItemProgressService
         $percent = $this->computeWorkItemPercent($item);
     
         return [
-            'work_item' => $item->refresh(),
+            'work_item' => $item->refresh()->load('progressPhotos'),
             'percent'   => $percent,
         ];
+    }
+
+    /**
+     * @param array<int, \Illuminate\Http\UploadedFile> $photos
+     */
+    private function storeProgressPhotos(Project $project, WorkItem $item, array $photos): void
+    {
+        if (empty($photos)) {
+            return;
+        }
+
+        $baseDir = 'progress-photos/' . $project->id . '/' . $item->id;
+
+        foreach ($photos as $photo) {
+            $extension = $photo->getClientOriginalExtension();
+            $fileName = Str::uuid()->toString() . '.' . $extension;
+            $storedPath = $photo->storeAs($baseDir, $fileName, 'public');
+
+            ProgressPhoto::create([
+                'project_id' => $project->id,
+                'work_item_id' => $item->id,
+                'file_path' => $storedPath,
+                'original_name' => $photo->getClientOriginalName(),
+            ]);
+        }
     }
 
     /* =========================================================================
@@ -306,21 +352,62 @@ class WorkItemProgressService
     protected function computeGypsum(Collection $details, Collection $spaces): float
     {
         return $this->computeRoomsStatus($details, $spaces, fn($s) =>
-            $s->ceiling_finish_type === 'gypsum'
+            $s->ceiling_finish_type === 'gypsum' || 
+            $s->wall_finish_type === 'gypsum'
         );
     }
 
     protected function computePaint(Collection $details, Collection $spaces): float
     {
         return $this->computeRoomsStatus($details, $spaces, fn($s) =>
-            $s->wall_finish_type === 'paint'
+            $s->wall_finish_type === 'paint' ||
+            $s->ceiling_finish_type === 'paint'
         );
+    }
+
+    protected function computeSanitary(Collection $details, Collection $spaces): float
+    {
+        $targets = [
+            Space::TYPE_KITCHEN => 'kitchen_done',
+            Space::TYPE_BATHROOM => 'bathroom_done',
+            Space::TYPE_TOILET => 'toilet_done',
+        ];
+
+        $typesInProject = $spaces->pluck('type')->unique()->toArray();
+
+        $total = 0;
+        $done = 0;
+
+        foreach ($targets as $type => $key) {
+            if (!in_array($type, $typesInProject, true)) {
+                continue;
+            }
+
+            $total++;
+            if (($details[$key]->value ?? false) == true) {
+                $done++;
+            }
+        }
+
+        if ($total === 0) {
+            return 0;
+        }
+
+        return ($done / $total) * 100;
     }
 
     protected function computeDoors(Collection $details): float
     {
         $total = (int) ($details['total_doors']->value ?? 0);
         $done  = (int) ($details['completed_doors']->value ?? 0);
+
+        $kitchenCabinet = $details['kitchen_cabinet_done']->value ?? null;
+        if ($kitchenCabinet !== null) {
+            $total += 1;
+            if ($kitchenCabinet == true) {
+                $done += 1;
+            }
+        }
 
         if ($total == 0) return 0;
 
@@ -353,12 +440,14 @@ class WorkItemProgressService
 
     protected function filterGypsum(Space $space): bool
     {
-        return $space->ceiling_finish_type === 'gypsum';
+        return $space->ceiling_finish_type === 'gypsum'
+            || $space->wall_finish_type === 'gypsum';
     }
 
     protected function filterPaint(Space $space): bool
     {
-        return $space->wall_finish_type === 'paint';
+        return $space->wall_finish_type === 'paint'
+            || $space->ceiling_finish_type === 'paint';
     }
 
     protected function filterCeramic(Space $space): bool
@@ -380,6 +469,15 @@ class WorkItemProgressService
     protected function filterElectricity(Space $space): bool
     {
         return true; // كل الفراغات
+    }
+
+    protected function filterSanitary(Space $space): bool
+    {
+        return in_array($space->type, [
+            Space::TYPE_KITCHEN,
+            Space::TYPE_BATHROOM,
+            Space::TYPE_TOILET,
+        ], true);
     }
 
 }

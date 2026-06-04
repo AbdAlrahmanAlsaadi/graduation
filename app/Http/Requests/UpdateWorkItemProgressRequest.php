@@ -41,7 +41,17 @@ class UpdateWorkItemProgressRequest extends FormRequest
             'kitchen_done' => 'sometimes|boolean',
             'bathroom_done' => 'sometimes|boolean',
             'toilet_done' => 'sometimes|boolean',
+            'total_doors' => 'sometimes|integer|min:0',
+            'completed_doors' => 'sometimes|integer|min:0',
+            'kitchen_cabinet_done' => 'sometimes|boolean',
+            'total_aluminum' => 'sometimes|integer|min:0',
+            'completed_aluminum' => 'sometimes|integer|min:0',
+            'final_items_total' => 'sometimes|integer|min:0',
+            'final_items_completed' => 'sometimes|integer|min:0',
+            'all_finished' => 'sometimes|boolean',
             'meta' => 'sometimes|array',
+            'photos' => 'sometimes|array',
+            'photos.*' => 'image|mimes:jpg,jpeg,png,webp|max:5120',
         ];
     }
 }

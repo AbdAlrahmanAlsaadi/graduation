@@ -99,9 +99,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('projects/{project}/engineers', [ProjectEngineerController::class, 'index']);
         Route::post('projects/{project}/engineers', [ProjectEngineerController::class, 'store']);
         Route::delete('projects/{project}/engineers/{assignment}', [ProjectEngineerController::class, 'destroy']);
-        Route::put('/projects/{project}/work-items/{workItem}/progress/{spaceId}',[WorkItemProgressController::class, 'updateRoom']);
-        Route::put('projects/{project}/work-items/{workItem}/progress', [WorkItemProgressController::class, 'update']);
+        Route::post('/projects/{project}/work-items/{workItem}/progress/{spaceId}',[WorkItemProgressController::class, 'updateRoom']);
+        Route::post('projects/{project}/work-items/{workItem}/progress', [WorkItemProgressController::class, 'update']);
         Route::get('projects/{project}/progress', [WorkItemProgressController::class, 'projectProgress']);
+        Route::get('projects/{project}/spaces/ceramic', [WorkItemProgressController::class, 'ceramicSpaces']);
+        Route::get('projects/{project}/spaces/gypsum', [WorkItemProgressController::class, 'gypsumSpaces']);
     });
 
 
