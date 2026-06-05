@@ -75,7 +75,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('equipment/{equipmentId}', [EquipmentController::class, 'destroy']);
         Route::get('equipment/by-status', [EquipmentController::class, 'getByStatus']);
         Route::post('equipment/maintenance/{maintenanceId}/close', [EquipmentController::class, 'closeMaintenance']);
-
+        Route::get('equipment/{id}',[EquipmentController::class, 'show']
+        );
         Route::apiResource('projects', ProjectController::class)
             ->only(['store', 'update', 'destroy']);
     });

@@ -10,6 +10,7 @@ use App\Http\Resources\WorkItemResource;
 use App\Http\Responses\Response;
 use App\Models\Project;
 use App\Models\WorkItem;
+use App\Services\EquipmentService;
 use App\Services\WorkItemService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,10 +20,10 @@ use Throwable;
 
 class WorkItemController extends Controller
 {
-    public function __construct(private WorkItemService $workItemService)
-    {
-
-    }
+    public function __construct(
+        private WorkItemService $workItemService,
+        private EquipmentService $equipmentService
+    ) {}
 
     public function index(Project $project): JsonResponse
     {
@@ -129,25 +130,43 @@ class WorkItemController extends Controller
         }
     }
 
-    public function complete(Project $project, WorkItem $workItem): JsonResponse
-    {
+    public function complete(
+        Project $project,
+        WorkItem $workItem
+    ): JsonResponse {
+
         try {
+
             $authResponse = $this->ensureWorkItemAccess();
+
             if ($authResponse) {
                 return $authResponse;
             }
 
-            $workItem = $this->workItemService->completeWorkItem($project, $workItem);
+            $workItem = $this->workItemService
+                ->completeWorkItem(
+                    $project,
+                    $workItem
+                );
+
+            $this->equipmentService
+                ->completeBookingsForWorkItem(
+                    $workItem
+                );
 
             return Response::success(
                 'Work item completed.',
-                new WorkItemResource($workItem->loadMissing('details'))
+                new WorkItemResource(
+                    $workItem->loadMissing('details')
+                )
             );
         } catch (Throwable $throwable) {
-            return $this->handleException($throwable);
+
+            return $this->handleException(
+                $throwable
+            );
         }
     }
-
     private function handleException(Throwable $throwable): JsonResponse
     {
         if ($throwable instanceof ValidationException) {
