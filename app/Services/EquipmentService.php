@@ -112,13 +112,42 @@ class EquipmentService
         $request->validated();
 
         $query = Equipment::query()
-            ->with(['project:id,name']);
+            ->with([
+                'activeBooking.workItem.project'
+            ]);
 
         if ($request->status !== 'all') {
             $query->where('status', $request->status);
         }
 
-        $equipment = $query->get();
+        $equipment = $query->get()->map(function ($equipment) {
+
+            $response = [
+                'id' => $equipment->id,
+                'name' => $equipment->name,
+                'type' => $equipment->type,
+                'identifier_no' => $equipment->identifier_no,
+                'status' => $equipment->status,
+            ];
+
+            if (
+                $equipment->status === 'Booked' &&
+                $equipment->activeBooking
+            ) {
+
+                $response['work_item'] = [
+                    'id' => $equipment->activeBooking->workItem->id,
+                    'name' => $equipment->activeBooking->workItem->name,
+                ];
+
+                $response['project'] = [
+                    'id' => $equipment->activeBooking->workItem->project->id,
+                    'name' => $equipment->activeBooking->workItem->project->name,
+                ];
+            }
+
+            return $response;
+        });
 
         return [
             'message' => 'Equipment fetched successfully.',

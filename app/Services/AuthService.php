@@ -61,7 +61,7 @@ class AuthService
             return [
                 'user' => [],
                 'message' => 'Internal account not found.',
-                'status' => 404
+                'status' => 401
             ];
         }
 
