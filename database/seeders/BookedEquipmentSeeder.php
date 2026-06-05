@@ -45,7 +45,6 @@ class BookedEquipmentSeeder extends Seeder
 
                     'start_date' => now()->subDays(rand(1, 5)),
 
-                    'end_date' => now()->addDays(rand(3, 10)),
 
                     'status' => 'active',
 

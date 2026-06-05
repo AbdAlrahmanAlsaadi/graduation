@@ -172,5 +172,32 @@ class EquipmentController extends Controller
             return Response::error($throwable->getMessage(), $code);
         }
     }
+    public function show($id)
+    {
+        try {
+
+            $data = $this->equipmentService
+                ->show($id);
+
+            return Response::success(
+                $data['message'],
+                [
+                    'equipment' => $data['equipment'],
+                ],
+                (int) $data['status']
+            );
+        } catch (Throwable $throwable) {
+
+            $code = is_int($throwable->getCode())
+                && $throwable->getCode() > 0
+                ? $throwable->getCode()
+                : 500;
+
+            return Response::error(
+                $throwable->getMessage(),
+                $code
+            );
+        }
+    }
 }
 
