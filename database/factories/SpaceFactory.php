@@ -40,9 +40,7 @@ class SpaceFactory extends Factory
             'wall_finish_type' => fake()->randomElement(Space::FINISH_TYPES),
             'ceiling_finish_type' => $ceilingFinishType,
             'toilet_type' => $toiletType,
-            'ceiling_area' => $ceilingFinishType === 'ceramic'
-                ? fake()->randomFloat(2, 2, 40)
-                : null,
+            'ceiling_area' => fake()->randomFloat(2, 2, 40),
             'is_shed_floor_tiled' => $isshedFloorTiled,
         ];
     }

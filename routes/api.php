@@ -5,12 +5,14 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\OwnerProjectController;
 use App\Http\Controllers\ProjectEngineerController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\WorkItemController;
+use App\Http\Controllers\WorkItemMaterialController;
 use App\Http\Controllers\WorkItemProgressController;
 use App\Models\User;
 use App\Services\NotificationService;
@@ -46,8 +48,20 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager|assistant|project_owner')->group(function () {
         Route::apiResource('projects', ProjectController::class)->only(['index', 'show']);
         Route::get('projects/{project}/spaces', [SpaceController::class, 'index']);
+        Route::get('projects/{project}/spaces/ceramic', [SpaceController::class, 'ceramicSpaces']);
+        Route::get('projects/{project}/spaces/gypsum', [SpaceController::class, 'gypsumSpaces']);
+        Route::get('projects/{project}/spaces/sanitary', [SpaceController::class, 'sanitarySpaces']);
+         Route::get('projects/{project}/progress', [WorkItemProgressController::class, 'projectProgress']);
+   
         //Route::get('spaces/{spaceId}', [SpaceController::class, 'show']);
         Route::apiResource('projects.work-items', WorkItemController::class)->only(['index']);
+    });
+
+    Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
+        
+        Route::post('/projects/{project}/work-items/{workItem}/progress/{spaceId}',[WorkItemProgressController::class, 'updateRoom']);
+        Route::post('projects/{project}/work-items/{workItem}/progress', [WorkItemProgressController::class, 'update']);
+        Route::get('projects/{project}/progress', [WorkItemProgressController::class, 'projectProgress']);
     });
 
     Route::middleware('role:company_admin')->group(function () {
@@ -82,6 +96,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     Route::middleware('role:company_admin|project_manager')->group(function () {
+        Route::apiResource('materials', MaterialController::class);
+
         Route::get('projects/{project}/summary', [ProjectController::class, 'summary']);
         Route::post('projects/{project}/start', [ProjectController::class, 'start']);
         Route::post('projects/{project}/complete', [ProjectController::class, 'complete']);
@@ -100,11 +116,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('projects/{project}/engineers', [ProjectEngineerController::class, 'index']);
         Route::post('projects/{project}/engineers', [ProjectEngineerController::class, 'store']);
         Route::delete('projects/{project}/engineers/{assignment}', [ProjectEngineerController::class, 'destroy']);
+        
         Route::post('/projects/{project}/work-items/{workItem}/progress/{spaceId}',[WorkItemProgressController::class, 'updateRoom']);
         Route::post('projects/{project}/work-items/{workItem}/progress', [WorkItemProgressController::class, 'update']);
         Route::get('projects/{project}/progress', [WorkItemProgressController::class, 'projectProgress']);
-        Route::get('projects/{project}/spaces/ceramic', [WorkItemProgressController::class, 'ceramicSpaces']);
-        Route::get('projects/{project}/spaces/gypsum', [WorkItemProgressController::class, 'gypsumSpaces']);
+
+        Route::get('work-items/{workItem}/materials', [WorkItemMaterialController::class, 'index']);
+        Route::post('work-items/{workItem}/materials', [WorkItemMaterialController::class, 'store']);
+        Route::put('work-items/{workItem}/materials/{material}', [WorkItemMaterialController::class, 'update']);
+        Route::delete('work-items/{workItem}/materials/{material}', [WorkItemMaterialController::class, 'destroy']);
+        //Route::post('work-items/{workItem}/materials/sync', [WorkItemMaterialController::class, 'sync']);
     });
 
 

@@ -20,5 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AvailableEquipmentSeeder::class);
         $this->call(MaintenanceEquipmentSeeder::class);
         $this->call(BookedEquipmentSeeder::class);
+        $this->call(MaterialsSeeder::class);
+        $this->call(WorkItemMaterialsSeeder::class);
     }
 }

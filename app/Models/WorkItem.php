@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -140,6 +141,23 @@ class WorkItem extends Model
     public function details(): HasMany
     {
         return $this->hasMany(WorkItemDetail::class);
+    }
+
+    /**
+     * @return BelongsToMany<Material, $this>
+     */
+    public function materials(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Material::class,
+            'work_item_materials',
+            'work_item_name',
+            'material_id',
+            'name',
+            'id'
+        )
+            ->withPivot(['sort_order', 'is_required'])
+            ->withTimestamps();
     }
 
     public function progressPhotos(): HasMany
