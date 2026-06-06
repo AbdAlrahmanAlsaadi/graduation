@@ -13,6 +13,7 @@ use App\Http\Requests\UserStatisticsRequest;
 use App\Http\Responses\Response;
 use App\Services\Authentication\AuthService;
 use App\Services\AuthService as ServicesAuthService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Throwable;
 
@@ -69,6 +70,22 @@ class AuthController extends Controller
         } catch (Throwable $throwable) {
             return Response::error($throwable->getMessage(), $throwable->getCode() ?: 500);
         }
+    }
+    public function Fcm(Request $request)
+    {
+        $request->validate([
+            'fcm_token' => 'required|string',
+        ]);
+
+        $user = Auth::user();
+
+        $user->update([
+            'fcm_token' => $request->fcm_token,
+        ]);
+
+        return response()->json([
+            'message' => 'FCM token updated successfully'
+        ]);
     }
 
 
@@ -191,6 +208,25 @@ class AuthController extends Controller
             return Response::error(
                 $throwable->getMessage(),
                 $code
+            );
+        }
+    }
+    public function account()
+    {
+        try {
+
+            $data = $this->authService->account();
+
+            return Response::success(
+                $data['message'],
+                $data['data'],
+                $data['status']
+            );
+        } catch (\Throwable $throwable) {
+
+            return Response::error(
+                $throwable->getMessage(),
+                $throwable->getCode() ?: 500
             );
         }
     }

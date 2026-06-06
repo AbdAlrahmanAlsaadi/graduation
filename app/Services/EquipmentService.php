@@ -6,6 +6,7 @@ use App\Models\Equipment;
 use App\Models\EquipmentBooking;
 use App\Models\EquipmentMaintenance;
 use App\Models\WorkItem;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class EquipmentService
@@ -112,13 +113,42 @@ class EquipmentService
         $request->validated();
 
         $query = Equipment::query()
-            ->with(['project:id,name']);
+            ->with([
+                'activeBooking.workItem.project'
+            ]);
 
         if ($request->status !== 'all') {
             $query->where('status', $request->status);
         }
 
-        $equipment = $query->get();
+        $equipment = $query->get()->map(function ($equipment) {
+
+            $response = [
+                'id' => $equipment->id,
+                'name' => $equipment->name,
+                'type' => $equipment->type,
+                'identifier_no' => $equipment->identifier_no,
+                'status' => $equipment->status,
+            ];
+
+            if (
+                $equipment->status === 'Booked' &&
+                $equipment->activeBooking
+            ) {
+
+                $response['work_item'] = [
+                    'id' => $equipment->activeBooking->workItem->id,
+                    'name' => $equipment->activeBooking->workItem->name,
+                ];
+
+                $response['project'] = [
+                    'id' => $equipment->activeBooking->workItem->project->id,
+                    'name' => $equipment->activeBooking->workItem->project->name,
+                ];
+            }
+
+            return $response;
+        });
 
         return [
             'message' => 'Equipment fetched successfully.',
@@ -477,5 +507,205 @@ class EquipmentService
             'equipment' => $equipment,
             'status' => 200,
         ];
+    }
+
+
+    public function show($id): array
+{
+    $equipment = Equipment::query()
+        ->with([
+            'activeBooking.workItem.project',
+            'activeBooking.bookedBy',
+
+            'bookings.workItem.project',
+            'bookings.bookedBy',
+
+            'maintenances',
+        ])
+        ->find($id);
+
+    if (! $equipment) {
+        throw new \Exception(
+            'Equipment not found.',
+            404
+        );
+    }
+
+    $currentBooking = null;
+
+    if ($equipment->activeBooking) {
+
+        $booking = $equipment->activeBooking;
+
+        $duration = null;
+
+        if ($booking->start_date && $booking->end_date) {
+            $duration = Carbon::parse($booking->start_date)
+                ->diffInDays(
+                    Carbon::parse($booking->end_date)
+                );
+        }
+
+        $currentBooking = [
+
+            'id' => $booking->id,
+
+            'start_date' => $booking->start_date,
+
+            'end_date' => $booking->end_date,
+
+            'duration_days' => $duration,
+
+            'work_item' => [
+                'id' => $booking->workItem->id,
+                'name' => $booking->workItem->name,
+            ],
+
+            'project' => [
+                'id' => $booking->workItem->project->id,
+                'name' => $booking->workItem->project->name,
+            ],
+
+            'booked_by' => [
+                'id' => $booking->bookedBy->id,
+                'name' => $booking->bookedBy->name,
+            ],
+        ];
+    }
+
+    $currentMaintenance = $equipment
+        ->maintenances()
+        ->whereNull('end_date')
+        ->latest('start_date')
+        ->first();
+
+    $maintenanceData = null;
+
+    if ($currentMaintenance) {
+
+        $duration = Carbon::parse(
+            $currentMaintenance->start_date
+        )->diffInDays(now());
+
+        $maintenanceData = [
+
+            'id' => $currentMaintenance->id,
+
+            'type' => $currentMaintenance->type,
+
+            'description' => $currentMaintenance->description,
+
+            'start_date' => $currentMaintenance->start_date,
+
+            'end_date' => $currentMaintenance->end_date,
+
+            'duration_days' => $duration,
+
+            'status' => 'active',
+        ];
+    }
+
+    $bookingHistory = $equipment->bookings
+        ->map(function ($booking) {
+
+            return [
+
+                'id' => $booking->id,
+
+                'status' => $booking->status,
+
+                'start_date' => $booking->start_date,
+
+                'end_date' => $booking->end_date,
+
+                'work_item' =>
+                    $booking->workItem?->name,
+
+                'project' =>
+                    $booking->workItem?->project?->name,
+            ];
+        })
+        ->values();
+
+    $maintenanceHistory = $equipment->maintenances
+        ->map(function ($maintenance) {
+
+            return [
+
+                'id' => $maintenance->id,
+
+                'type' => $maintenance->type,
+
+                'description' => $maintenance->description,
+
+                'start_date' => $maintenance->start_date,
+
+                'end_date' => $maintenance->end_date,
+
+                'status' => $maintenance->end_date
+                    ? 'completed'
+                    : 'active',
+            ];
+        })
+        ->values();
+
+    return [
+
+        'message' =>
+            'Equipment details fetched successfully.',
+
+        'equipment' => [
+
+            'id' => $equipment->id,
+
+            'name' => $equipment->name,
+
+            'type' => $equipment->type,
+
+            'identifier_no' =>
+                $equipment->identifier_no,
+
+            'status' => $equipment->status,
+
+            'current_booking' =>
+                $currentBooking,
+
+            'current_maintenance' =>
+                $maintenanceData,
+
+            'booking_history' =>
+                $bookingHistory,
+
+            'maintenance_history' =>
+                $maintenanceHistory,
+        ],
+
+        'status' => 200,
+    ];
+}
+    public function completeBookingsForWorkItem(
+        WorkItem $workItem
+    ): void {
+
+        $bookings = EquipmentBooking::query()
+            ->with('equipment')
+            ->where('work_item_id', $workItem->id)
+            ->where('status', 'active')
+            ->get();
+
+        foreach ($bookings as $booking) {
+
+            $booking->update([
+                'status' => 'completed',
+                'end_date' => now(),
+            ]);
+
+            if ($booking->equipment) {
+
+                $booking->equipment->update([
+                    'status' => 'Available',
+                ]);
+            }
+        }
     }
 }

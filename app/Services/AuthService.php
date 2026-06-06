@@ -61,7 +61,7 @@ class AuthService
             return [
                 'user' => [],
                 'message' => 'Internal account not found.',
-                'status' => 404
+                'status' => 401
             ];
         }
 
@@ -605,6 +605,35 @@ class AuthService
                     'api_calls_count' =>
                     $apiCallsCount,
                 ],
+            ],
+
+            'status' => 200,
+        ];
+    }
+
+
+    public function account(): array
+    {
+        $owner = auth()->user();
+
+        return [
+
+            'message' => 'Account fetched successfully.',
+
+            'data' => [
+
+                'name' => $owner->name,
+
+                'email' => $owner->email,
+
+                'projects_count' => $owner->ownedProjects()->count(),
+
+                'active_projects_count' => $owner
+                    ->ownedProjects()
+                    ->where('status', 'ongoing')
+                    ->count(),
+
+                'avatar' => $owner->avatar ?? null,
             ],
 
             'status' => 200,
