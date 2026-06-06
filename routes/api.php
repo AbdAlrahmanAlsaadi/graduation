@@ -59,9 +59,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
         
-        Route::post('/projects/{project}/work-items/{workItem}/progress/{spaceId}',[WorkItemProgressController::class, 'updateRoom']);
-        Route::post('projects/{project}/work-items/{workItem}/progress', [WorkItemProgressController::class, 'update']);
-        Route::get('projects/{project}/progress', [WorkItemProgressController::class, 'projectProgress']);
     });
 
     Route::middleware('role:company_admin')->group(function () {
@@ -119,10 +116,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('projects/{project}/engineers', [ProjectEngineerController::class, 'store']);
         Route::delete('projects/{project}/engineers/{assignment}', [ProjectEngineerController::class, 'destroy']);
         
-        Route::post('/projects/{project}/work-items/{workItem}/progress/{spaceId}',[WorkItemProgressController::class, 'updateRoom']);
-        Route::post('projects/{project}/work-items/{workItem}/progress', [WorkItemProgressController::class, 'update']);
-        Route::get('projects/{project}/progress', [WorkItemProgressController::class, 'projectProgress']);
-
         Route::get('work-items/{workItem}/materials', [WorkItemMaterialController::class, 'index']);
         Route::post('work-items/{workItem}/materials', [WorkItemMaterialController::class, 'store']);
         Route::post('work-items/{workItem}/materials/{material}', [WorkItemMaterialController::class, 'update']);
