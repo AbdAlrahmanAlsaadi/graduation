@@ -49,6 +49,7 @@ class MaterialService
     {
         $material = $this->findById($id);
         $material->update($data);
+        $material->save();
 
         return $material->fresh();
     }

@@ -156,6 +156,7 @@ class WorkItem extends Model
             'name',
             'id'
         )
+            ->using(WorkItemMaterial::class)
             ->withPivot(['sort_order', 'is_required'])
             ->withTimestamps();
     }

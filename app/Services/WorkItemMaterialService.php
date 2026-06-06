@@ -3,9 +3,8 @@
 namespace App\Services;
 
 use App\Models\Material;
-use App\Models\WorkItem;
+use App\Models\WorkItemMaterial;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 use RuntimeException;
 
 class WorkItemMaterialService
@@ -17,40 +16,24 @@ class WorkItemMaterialService
      */
     public function syncMaterials(string $workItemName, array $materials): Collection
     {
-        return DB::transaction(function () use ($workItemType, $materials) {
-            $syncData = [];
+        return WorkItemMaterial::query()->getConnection()->transaction(function () use ($workItemName, $materials) {
+            WorkItemMaterial::query()
+                ->where('work_item_name', $workItemName)
+                ->delete();
 
             foreach ($materials as $item) {
                 $material = Material::query()->find($item['material_id']);
+
                 if (! $material) {
                     throw new RuntimeException('Material not found.', 404);
                 }
 
-                $syncData[$item['material_id']] = [
+                WorkItemMaterial::query()->create([
                     'work_item_name' => $workItemName,
+                    'material_id' => $item['material_id'],
                     'sort_order' => $item['sort_order'],
                     'is_required' => $item['is_required'],
-                ];
-            }
-
-            DB::table('work_item_materials')->where('work_item_name', $workItemName)->delete();
-
-            if ($syncData !== []) {
-                $now = now();
-                $rows = [];
-
-                foreach ($syncData as $materialId => $pivotData) {
-                    $rows[] = [
-                        'work_item_name' => $pivotData['work_item_name'],
-                        'material_id' => $materialId,
-                        'sort_order' => $pivotData['sort_order'],
-                        'is_required' => $pivotData['is_required'],
-                        'created_at' => $now,
-                        'updated_at' => $now,
-                    ];
-                }
-
-                DB::table('work_item_materials')->insert($rows);
+                ]);
             }
 
             return $this->getMaterialsForWorkItem($workItemName);
@@ -62,11 +45,10 @@ class WorkItemMaterialService
      */
     public function getMaterialsForWorkItem(string $workItemName): Collection
     {
-        return Material::query()
-            ->select('materials.*')
-            ->join('work_item_materials', 'materials.id', '=', 'work_item_materials.material_id')
-            ->where('work_item_materials.work_item_name', $workItemName)
-            ->orderBy('work_item_materials.sort_order')
+        return WorkItemMaterial::query()
+            ->with('material')
+            ->where('work_item_name', $workItemName)
+            ->orderBy('sort_order')
             ->get();
     }
 
@@ -81,20 +63,18 @@ class WorkItemMaterialService
             throw new RuntimeException('Material not found.', 404);
         }
 
-        if (DB::table('work_item_materials')
+        if (WorkItemMaterial::query()
             ->where('work_item_name', $workItemName)
             ->where('material_id', $materialId)
             ->exists()) {
             throw new RuntimeException('Material already attached to this work item.', 409);
         }
 
-        DB::table('work_item_materials')->insert([
+        WorkItemMaterial::query()->create([
             'work_item_name' => $workItemName,
             'material_id' => $materialId,
             'sort_order' => $sortOrder,
             'is_required' => $isRequired,
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
 
         return $this->getMaterialsForWorkItem($workItemName);
@@ -105,14 +85,14 @@ class WorkItemMaterialService
      */
     public function detachMaterial(string $workItemName, int $materialId): Collection
     {
-        if (! DB::table('work_item_materials')
+        if (! WorkItemMaterial::query()
             ->where('work_item_name', $workItemName)
             ->where('material_id', $materialId)
             ->exists()) {
             throw new RuntimeException('Material is not attached to this work item.', 404);
         }
 
-        DB::table('work_item_materials')
+        WorkItemMaterial::query()
             ->where('work_item_name', $workItemName)
             ->where('material_id', $materialId)
             ->delete();
@@ -125,24 +105,30 @@ class WorkItemMaterialService
      *
      * @param array{sort_order?:int, is_required?:bool} $pivotData
      */
-    public function updatePivotData(string $workItemName, int $materialId, array $pivotData): Collection
+    public function updatePivotData(string $workItemName, int $materialId, array $pivotData)
     {
         if (! Material::query()->find($materialId)) {
             throw new RuntimeException('Material not found.', 404);
         }
 
-        if (! DB::table('work_item_materials')
+        $workItemMaterial = WorkItemMaterial::query()
             ->where('work_item_name', $workItemName)
             ->where('material_id', $materialId)
-            ->exists()) {
+            ->first();
+
+        if (! $workItemMaterial) {
             throw new RuntimeException('Material is not attached to this work item.', 404);
         }
 
-        DB::table('work_item_materials')
+        $workItemMaterial->fill($pivotData);
+        $workItemMaterial->save();
+
+        $data = WorkItemMaterial::query()
+            ->with('material')
             ->where('work_item_name', $workItemName)
             ->where('material_id', $materialId)
-            ->update(array_merge($pivotData, ['updated_at' => now()]));
+            ->firstOrFail();
 
-        return $this->getMaterialsForWorkItem($workItemName);
+        return $data;
     }
 }
