@@ -78,6 +78,79 @@ class SpaceController extends Controller
         }
     }
 
+    /* ============================================================
+       CERAMIC SPACES
+       ============================================================ */
+    public function ceramicSpaces(Project $project)
+    {
+        try {
+            $spaces = Space::query()
+                ->where('project_id', $project->id)
+                ->get()
+                ->filter(fn($space) => $space->wall_finish_type === 'ceramic'
+                    || $space->ceiling_finish_type === 'ceramic')
+                ->values()
+                ->map(fn($space) => [
+                    'id' => $space->id,
+                    'type' => $space->type,
+                    'wall_finish_type' => $space->wall_finish_type,
+                    'ceiling_finish_type' => $space->ceiling_finish_type,
+                ]);
+
+            return Response::success('Ceramic spaces fetched', $spaces);
+        } catch (Throwable $e) {
+            return Response::error('Failed to fetch ceramic spaces. ' . $e->getMessage(), 500);
+        }
+    }
+
+    /* ============================================================
+       GYPSUM SPACES
+       ============================================================ */
+    public function gypsumSpaces(Project $project)
+    {
+        try {
+            $spaces = Space::query()
+                ->where('project_id', $project->id)
+                ->get()
+                ->filter(fn($space) => $space->ceiling_finish_type === 'gypsum')
+                ->values()
+                ->map(fn($space) => [
+                    'id' => $space->id,
+                    'type' => $space->type,
+                    'wall_finish_type' => $space->wall_finish_type,
+                    'ceiling_finish_type' => $space->ceiling_finish_type,
+                ]);
+
+            return Response::success('Gypsum spaces fetched', $spaces);
+        } catch (Throwable $e) {
+            return Response::error('Failed to fetch gypsum spaces. ' . $e->getMessage(), 500);
+        }
+    }
+
+    /* ============================================================
+       SANITARY SPACES
+       ============================================================ */
+    public function sanitarySpaces(Project $project)
+    {
+        try {
+            $spaces = Space::query()
+                ->where('project_id', $project->id)
+                ->whereIn('type', [
+                    Space::TYPE_KITCHEN,
+                    Space::TYPE_BATHROOM,
+                    Space::TYPE_TOILET,
+                ])
+                ->get();
+
+            return Response::success(
+                'Sanitary spaces fetched.',
+                SpaceResource::collection($spaces)
+            );
+        } catch (Throwable $e) {
+            return Response::error('Failed to fetch sanitary spaces. ' . $e->getMessage(), 500);
+        }
+    }
+
     private function handleException(Throwable $throwable): JsonResponse
     {
         if ($throwable instanceof ValidationException) {
