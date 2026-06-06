@@ -25,9 +25,9 @@ class WorkItemMaterialController extends Controller
     public function index(WorkItem $workItem): JsonResponse
     {
         try {
-            $materials = $this->workItemMaterialService->getMaterialsForWorkItem($workItem->name);
+            $workItemMaterials = $this->workItemMaterialService->getMaterialsForWorkItem($workItem->name);
 
-            return Response::success('Work item materials fetched.', $materials);
+            return Response::success('Work item materials fetched.', $workItemMaterials);
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
         }
@@ -41,14 +41,14 @@ class WorkItemMaterialController extends Controller
         try {
             $data = $request->validated();
 
-            $materials = $this->workItemMaterialService->attachMaterial(
+            $workItemMaterials = $this->workItemMaterialService->attachMaterial(
                 $workItem->name,
                 (int) $data['material_id'],
                 (int) $data['sort_order'],
                 (bool) $data['is_required']
             );
 
-            return Response::success('Material attached to work item.', $materials, 201);
+            return Response::success('Material attached to work item.', $workItemMaterials, 201);
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
         }
@@ -60,13 +60,13 @@ class WorkItemMaterialController extends Controller
     public function update(WorkItem $workItem, Material $material, UpdateWorkItemMaterialRequest $request): JsonResponse
     {
         try {
-            $materials = $this->workItemMaterialService->updatePivotData(
+            $workItemMaterial = $this->workItemMaterialService->updatePivotData(
                 $workItem->name,
                 (int) $material->id,
                 $request->validated()
             );
 
-            return Response::success('Work item material updated.', $materials);
+            return Response::success('Work item material updated.', $workItemMaterial);
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
         }
@@ -78,9 +78,9 @@ class WorkItemMaterialController extends Controller
     public function destroy(WorkItem $workItem, Material $material): JsonResponse
     {
         try {
-            $materials = $this->workItemMaterialService->detachMaterial($workItem->name, (int) $material->id);
+            $workItemMaterials = $this->workItemMaterialService->detachMaterial($workItem->name, (int) $material->id);
 
-            return Response::success('Material detached from work item.', $materials);
+            return Response::success('Material detached from work item.', $workItemMaterials);
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
         }
@@ -92,12 +92,12 @@ class WorkItemMaterialController extends Controller
     public function sync(WorkItem $workItem, SyncWorkItemMaterialsRequest $request): JsonResponse
     {
         try {
-            $materials = $this->workItemMaterialService->syncMaterials(
+            $workItemMaterials = $this->workItemMaterialService->syncMaterials(
                 $workItem->name,
                 $request->validated()['materials']
             );
 
-            return Response::success('Work item materials synced.', $materials);
+            return Response::success('Work item materials synced.', $workItemMaterials);
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
         }

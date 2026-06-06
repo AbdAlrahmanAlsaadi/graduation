@@ -97,6 +97,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::middleware('role:company_admin|project_manager')->group(function () {
         Route::apiResource('materials', MaterialController::class);
+        
+        Route::post('materials/{material}', [MaterialController::class, 'update']);
 
         Route::get('projects/{project}/summary', [ProjectController::class, 'summary']);
         Route::post('projects/{project}/start', [ProjectController::class, 'start']);
@@ -123,7 +125,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::get('work-items/{workItem}/materials', [WorkItemMaterialController::class, 'index']);
         Route::post('work-items/{workItem}/materials', [WorkItemMaterialController::class, 'store']);
-        Route::put('work-items/{workItem}/materials/{material}', [WorkItemMaterialController::class, 'update']);
+        Route::post('work-items/{workItem}/materials/{material}', [WorkItemMaterialController::class, 'update']);
         Route::delete('work-items/{workItem}/materials/{material}', [WorkItemMaterialController::class, 'destroy']);
         //Route::post('work-items/{workItem}/materials/sync', [WorkItemMaterialController::class, 'sync']);
     });
