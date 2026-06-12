@@ -652,4 +652,38 @@ class AuthService
 
             'status' => 200,
         ];
-    }}
+    }
+
+
+    public function profile(): array
+    {
+        $user = auth()->user();
+
+        return [
+
+            'message' => 'Account fetched successfully.',
+
+            'data' => [
+
+                'name' => $user->name,
+
+                'email' => $user->email,
+
+                'role' => 'مساعد تنفيذي',
+
+                'assigned_projects_count' =>
+                    $user->assignedProjects()->count(),
+
+                'account_status' =>
+                    $user->status === 'active'
+                        ? 'verified'
+                        : 'inactive',
+
+                'avatar' => null,
+
+            ],
+
+            'status' => 200,
+        ];
+    }
+}
