@@ -52,13 +52,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('projects/{project}/spaces/gypsum', [SpaceController::class, 'gypsumSpaces']);
         Route::get('projects/{project}/spaces/sanitary', [SpaceController::class, 'sanitarySpaces']);
          Route::get('projects/{project}/progress', [WorkItemProgressController::class, 'projectProgress']);
-   
+
         //Route::get('spaces/{spaceId}', [SpaceController::class, 'show']);
         Route::apiResource('projects.work-items', WorkItemController::class)->only(['index']);
     });
 
     Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
-        
+
     });
 
     Route::middleware('role:company_admin')->group(function () {
@@ -94,7 +94,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::middleware('role:company_admin|project_manager')->group(function () {
         Route::apiResource('materials', MaterialController::class);
-        
+
         Route::post('materials/{material}', [MaterialController::class, 'update']);
 
         Route::get('projects/{project}/summary', [ProjectController::class, 'summary']);
@@ -115,7 +115,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('projects/{project}/engineers', [ProjectEngineerController::class, 'index']);
         Route::post('projects/{project}/engineers', [ProjectEngineerController::class, 'store']);
         Route::delete('projects/{project}/engineers/{assignment}', [ProjectEngineerController::class, 'destroy']);
-        
+
         Route::get('work-items/{workItem}/materials', [WorkItemMaterialController::class, 'index']);
         Route::post('work-items/{workItem}/materials', [WorkItemMaterialController::class, 'store']);
         Route::post('work-items/{workItem}/materials/{material}', [WorkItemMaterialController::class, 'update']);
@@ -170,5 +170,9 @@ Route::middleware(['auth:sanctum','role:project_owner'])->group(function () {
 
 Route::middleware('auth:sanctum')->post('fcm-token', [AuthController::class, 'Fcm']);
 
+Route::middleware(['auth:sanctum'])->group(function () {
 
+    Route::get('/assistant/account', [AuthController::class, 'profile']
+    );
+}   );
 
