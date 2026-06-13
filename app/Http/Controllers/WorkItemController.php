@@ -10,6 +10,7 @@ use App\Http\Resources\WorkItemResource;
 use App\Http\Responses\Response;
 use App\Models\Project;
 use App\Models\WorkItem;
+use App\Models\WorkItemDetail;
 use App\Services\EquipmentService;
 use App\Services\WorkItemService;
 use Illuminate\Http\JsonResponse;
@@ -196,5 +197,92 @@ class WorkItemController extends Controller
         }
 
         return null;
+    }
+
+    public function approveDetail(
+        WorkItemDetail $detail
+    ): JsonResponse {
+
+        try {
+
+            $user = auth()->user();
+
+            if (
+                ! $user->hasRole('company_admin') &&
+                ! $user->hasRole('project_manager')
+            ) {
+                return Response::error(
+                    'Unauthorized.',
+                    403
+                );
+            }
+
+            $detail =
+                $this->workItemService
+                ->approveDetail($detail);
+
+            return Response::success(
+                'Work item detail approved successfully.',
+                $detail
+            );
+        } catch (Throwable $throwable) {
+
+            return $this->handleException(
+                $throwable
+            );
+        }
+    }
+
+
+    public function pendingUpdates()
+    {
+        try {
+
+            $data = $this->workItemService
+                ->pendingDetails();
+
+            return Response::success(
+                $data['message'],
+                $data['data'],
+                $data['status']
+            );
+        } catch (Throwable $throwable) {
+
+            return $this->handleException(
+                $throwable
+            );
+        }
+    }
+    public function rejectWorkItem(
+        WorkItem $workItem,
+        Request $request
+    ): JsonResponse {
+
+        $data = $this->workItemService
+            ->rejectWorkItem(
+                $workItem,
+                $request->reason
+            );
+
+
+        return Response::success(
+            $data['message'],
+            $data['data'],
+            $data['status']
+        );
+    }
+    public function approveWorkItem(
+        WorkItem $workItem
+    ): JsonResponse {
+
+        $data = $this->workItemService
+            ->approveWorkItem($workItem);
+
+        return Response::success(
+            $data['message'],
+            $data['data'],
+            $data['status']
+        );
+
     }
 }

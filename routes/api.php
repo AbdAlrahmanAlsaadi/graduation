@@ -92,7 +92,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             ->only(['store', 'update', 'destroy']);
     });
 
-    Route::middleware('role:company_admin|project_manager')->group(function () {
+    Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
         Route::apiResource('materials', MaterialController::class);
 
         Route::post('materials/{material}', [MaterialController::class, 'update']);
@@ -108,7 +108,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             ->only(['store', 'destroy']);
         Route::put('projects/{project}/work-items/reorder', [WorkItemController::class, 'reorder']);
         Route::post('projects/{project}/work-items/{workItem}', [WorkItemController::class, 'update']);
-        Route::put('projects/{project}/work-items/{workItem}/details', [WorkItemController::class, 'updateDetails']);
+        Route::post('projects/{project}/work-items/{workItem}/details', [WorkItemController::class, 'updateDetails']);
         Route::post('projects/{project}/work-items/{workItem}/start', [WorkItemController::class, 'start']);
         Route::post('projects/{project}/work-items/{workItem}/complete', [WorkItemController::class, 'complete']);
         // Engineers payload: { user_id, role, assigned_at? }
@@ -121,6 +121,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('work-items/{workItem}/materials/{material}', [WorkItemMaterialController::class, 'update']);
         Route::delete('work-items/{workItem}/materials/{material}', [WorkItemMaterialController::class, 'destroy']);
         //Route::post('work-items/{workItem}/materials/sync', [WorkItemMaterialController::class, 'sync']);
+
+        Route::get('work-item-details/pending',  [WorkItemController::class, 'pendingUpdates'] );
+
+        Route::post('work-items/{workItem}/approve',[WorkItemController::class, 'approveWorkItem']);
+        Route::post('work-items/{workItem}/reject',[WorkItemController::class, 'rejectWorkItem']);
+
     });
 
 

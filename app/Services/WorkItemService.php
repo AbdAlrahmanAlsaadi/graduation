@@ -2,9 +2,13 @@
 
 namespace App\Services;
 
+use App\Models\Notification;
 use App\Models\Project;
+use App\Models\User;
 use App\Models\WorkItem;
+use App\Models\WorkItemDetail;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
 
@@ -62,20 +66,30 @@ class WorkItemService
         });
     }
 
-    public function updateDetails(Project $project, WorkItem $workItem, array $data): WorkItem
-    {
+    public function updateDetails(
+        Project $project,
+        WorkItem $workItem,
+        array $data
+    ): WorkItem {
+
         $template = config("work_item_templates.{$workItem->name}");
 
-        if (!$template) {
-            abort(400, "No template defined for work item name: {$workItem->name}");
+        if (! $template) {
+            abort(
+                400,
+                "No template defined for work item name: {$workItem->name}"
+            );
         }
 
-        // بناء details تلقائياً
         $details = [];
 
         foreach ($template as $key => $meta) {
-            if (!array_key_exists($key, $data)) {
-                abort(422, "Missing required field: {$key}");
+
+            if (! array_key_exists($key, $data)) {
+                abort(
+                    422,
+                    "Missing required field: {$key}"
+                );
             }
 
             $details[] = [
@@ -85,13 +99,64 @@ class WorkItemService
             ];
         }
 
-        // تخزين التفاصيل
-        $workItem->syncDetails($details);
+        $user = Auth::user();
+
+        $requiresApproval = $user->hasRole('assistant');
+
+        $workItem->syncDetails(
+            $details,
+            $requiresApproval
+        );
+
+        /*
+    |--------------------------------------------------------------------------
+    | Assistant -> Manager Notification
+    |--------------------------------------------------------------------------
+    */
+        if ($requiresApproval) {
+
+            $manager = $project->projectManager;
+
+            if ($manager) {
+
+                app(NotificationService::class)->send(
+                    $manager,
+                    [
+                        'project_id' => $project->id,
+
+                        'project_work_item_id' => $workItem->id,
+
+                        'type' => 'work_item_progress_updated',
+
+                        'title' => 'طلب اعتماد نسبة إنجاز',
+
+                        'body' => "قام {$user->name} بتحديث نسبة الإنجاز للبند {$workItem->name}",
+
+                        'sender_id' => $user->id,
+
+                        'data' => [
+
+                            'action' => 'approval_required',
+
+                            'project_id' => $project->id,
+
+                            'project_name' => $project->name,
+
+                            'work_item_id' => $workItem->id,
+
+                            'work_item_name' => $workItem->name,
+
+                            'assistant_id' => $user->id,
+
+                            'assistant_name' => $user->name,
+                        ],
+                    ]
+                );
+            }
+        }
 
         return $workItem->fresh('details');
     }
-
-
 
     /**
      * @param array<int, array{id:int, sort_order:int}> $items
@@ -196,4 +261,398 @@ class WorkItemService
             return $workItem->fresh();
         });
     }
-}
+
+
+
+
+
+
+
+    public function pendingDetails(): array
+    {
+        $user = auth()->user();
+
+        $query = WorkItemDetail::query()
+            ->with([
+                'workItem.project',
+            ])
+            ->where('approval_status', 'pending');
+
+        if ($user->hasRole('project_manager')) {
+
+            $query->whereHas(
+                'workItem.project',
+                function ($q) use ($user) {
+
+                    $q->where(
+                        'project_manager_id',
+                        $user->id
+                    );
+                }
+            );
+        }
+
+        $details = $query
+            ->latest()
+            ->get();
+
+        $grouped = $details->groupBy('work_item_id');
+
+        return [
+
+            'message' => 'Pending updates fetched successfully.',
+
+            'data' => $grouped->map(function ($items) {
+
+                $first = $items->first();
+
+                return [
+
+                    'work_item_id' => $first->workItem->id,
+
+                    'work_item_name' => $first->workItem->name,
+
+                    'project' => [
+
+                        'id' => $first->workItem->project->id,
+
+                        'name' => $first->workItem->project->name,
+                    ],
+
+                    'requested_at' => $first->created_at,
+
+                    'updates' => $items->map(function ($detail) {
+
+                        return [
+
+                            'detail_id' => $detail->id,
+
+                            'field' => $detail->key,
+
+                            'current_value' => $detail->value,
+
+                            'requested_value' => $detail->pending_value,
+                        ];
+                    })->values(),
+                ];
+            })->values(),
+
+            'status' => 200,
+        ];
+    }
+    public function approveWorkItem(
+        WorkItem $workItem
+    ): array {
+
+        $user = auth()->user();
+
+        $project = $workItem->project;
+
+
+        if (
+            $user->hasRole('project_manager')
+            && $project->project_manager_id != $user->id
+        ) {
+
+            throw new RuntimeException(
+                'You are not assigned to this project.',
+                403
+            );
+        }
+
+
+        $pendingDetails = $workItem->details()
+            ->where('approval_status', 'pending')
+            ->get();
+
+
+        if ($pendingDetails->isEmpty()) {
+
+            throw new RuntimeException(
+                'No pending updates found for this work item.',
+                404
+            );
+        }
+
+
+        $notification = Notification::query()
+            ->where('project_work_item_id', $workItem->id)
+            ->where('type', 'work_item_progress_updated')
+            ->latest()
+            ->first();
+
+
+        DB::transaction(function () use (
+            $pendingDetails,
+            $user
+        ) {
+
+            $pendingDetails->each(function ($detail) use ($user) {
+
+                $detail->update([
+
+                    'value' => $detail->pending_value,
+
+                    'pending_value' => null,
+
+                    'approval_status' => 'approved',
+
+                    'approved_by' => $user->id,
+
+                    'approved_at' => now(),
+                ]);
+            });
+        });
+
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Notification to assistant
+    |--------------------------------------------------------------------------
+    */
+
+        if ($notification) {
+
+            $assistant = User::find(
+                $notification->data['assistant_id'] ?? null
+            );
+
+
+            if ($assistant) {
+
+                app(NotificationService::class)->send(
+                    $assistant,
+                    [
+
+                        'project_id' => $project->id,
+
+                        'project_work_item_id' => $workItem->id,
+
+                        'type' => 'work_item_progress_approved',
+
+                        'title' => 'تم قبول تحديث الإنجاز',
+
+                        'body' => "تم قبول تحديث نسبة الإنجاز للبند {$workItem->name}",
+
+
+                        'data' => [
+
+                            'project_id' => $project->id,
+
+                            'work_item_id' => $workItem->id,
+
+                        ],
+
+                    ]
+                );
+            }
+        }
+
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Notification to owner
+    |--------------------------------------------------------------------------
+    */
+
+
+
+
+        return [
+
+            'message' => 'Work item update approved successfully.',
+
+
+            'data' => [
+
+                'work_item' => [
+
+                    'id' => $workItem->id,
+
+                    'name' => $workItem->name,
+
+                ],
+
+
+                'approved_details' => $pendingDetails->map(function ($detail) {
+
+                    return [
+
+                        'id' => $detail->id,
+
+                        'field' => $detail->key,
+
+                        'value' => $detail->value,
+
+                    ];
+                }),
+
+            ],
+
+
+            'status' => 200,
+
+        ];
+    }
+    public function rejectWorkItem(
+        WorkItem $workItem,
+        string $reason
+    ): array {
+
+        $user = auth()->user();
+
+        $project = $workItem->project;
+
+
+        if (
+            $user->hasRole('project_manager')
+            && $project->project_manager_id != $user->id
+        ) {
+
+            throw new RuntimeException(
+                'You are not assigned to this project.',
+                403
+            );
+        }
+
+
+        $pendingDetails = $workItem->details()
+            ->where('approval_status', 'pending')
+            ->get();
+
+
+        if ($pendingDetails->isEmpty()) {
+
+            throw new RuntimeException(
+                'No pending updates found for this work item.',
+                404
+            );
+        }
+
+
+
+        $notification = Notification::query()
+            ->where('project_work_item_id', $workItem->id)
+            ->where('type', 'work_item_progress_updated')
+            ->latest()
+            ->first();
+
+
+
+        DB::transaction(function () use (
+            $pendingDetails,
+            $user
+        ) {
+
+            $pendingDetails->each(function ($detail) use ($user) {
+
+
+                $detail->update([
+
+                    'pending_value' => null,
+
+                    'approval_status' => 'rejected',
+
+                    'approved_by' => $user->id,
+
+                    'approved_at' => now(),
+
+                ]);
+            });
+        });
+
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Notify Assistant
+    |--------------------------------------------------------------------------
+    */
+
+
+        if ($notification) {
+
+
+            $assistant = User::find(
+                $notification->data['assistant_id'] ?? null
+            );
+
+
+            if ($assistant) {
+
+
+                app(NotificationService::class)->send(
+                    $assistant,
+                    [
+
+                        'project_id' => $project->id,
+
+                        'project_work_item_id' => $workItem->id,
+
+
+                        'type' => 'work_item_progress_rejected',
+
+
+                        'title' => 'تم رفض تحديث الإنجاز',
+
+
+                        'body' =>
+                        "تم رفض تحديث نسبة الإنجاز للبند {$workItem->name}",
+
+
+                        'data' => [
+
+                            'project_id' => $project->id,
+
+                            'work_item_id' => $workItem->id,
+
+                            'reason' => $reason,
+
+                        ],
+
+                    ]
+                );
+            }
+        }
+
+
+
+        return [
+
+            'message' => 'Work item update rejected successfully.',
+
+
+            'data' => [
+
+                'work_item' => [
+
+                    'id' => $workItem->id,
+
+                    'name' => $workItem->name,
+
+                ],
+
+
+                'rejected_details' => $pendingDetails->map(function ($detail) {
+
+                    return [
+
+                        'id' => $detail->id,
+
+                        'field' => $detail->key,
+
+                    ];
+                }),
+
+
+                'reason' => $reason,
+
+            ],
+
+
+            'status' => 200,
+
+        ];
+    }}
