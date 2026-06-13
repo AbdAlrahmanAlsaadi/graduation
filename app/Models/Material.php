@@ -32,4 +32,9 @@ class Material extends Model
             ->withPivot(['sort_order', 'is_required'])
             ->withTimestamps();
     }
+    public function invoiceItems()
+    {
+        return $this->hasMany( WorkItemInvoiceItem::class
+        );
+    }
 }

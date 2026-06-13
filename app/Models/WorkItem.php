@@ -226,4 +226,17 @@ class WorkItem extends Model
     {
         return $this->hasMany(Notification::class, );
     }
+    public function invoices()
+    {
+        return $this->hasMany(
+            WorkItemInvoice::class
+        );
+    }
+
+    public function laborCosts()
+    {
+        return $this->hasMany(
+            WorkItemLaborCost::class
+        );
+    }
 }
