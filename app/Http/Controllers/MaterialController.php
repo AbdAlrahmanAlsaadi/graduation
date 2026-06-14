@@ -111,23 +111,22 @@ class MaterialController extends Controller
 
             return Response::error(
                 $throwable->getMessage(),
-                $throwable->getCode() ?: 500
+                500
             );
         }
     }
 
-    public function indexvInvoice($projectId)
-{
-$result = $this->materialService
+    public function indexInvoice($projectId)
+    {
+        $result = $this->materialService
+            ->getProjectInvoices($projectId);
 
-->getProjectInvoices($projectId);
-
-
-return Response::success(
-    $result['invoices'],
-    $result['message'],
-    $result['status']
-);
+        return Response::success(
+            $result,
+            $result['message'],
+            $result['status']
+        );
+    
 
 
 }
