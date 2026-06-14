@@ -142,24 +142,20 @@ $invoice = DB::transaction(function () use (
     $user
 ) {
 
-    $lastInvoice = WorkItemInvoice::query()
-        ->latest('id')
-        ->first();
+            $nextNumber =
+                (WorkItemInvoice::withTrashed()->max('id') ?? 0)
+                + 1;
 
-    $nextNumber = $lastInvoice
-        ? $lastInvoice->id + 1
-        : 1;
-
-    $invoiceNumber =
-        'INV-'
-        . now()->format('Ymd')
-        . '-'
-        . str_pad(
-            $nextNumber,
-            5,
-            '0',
-            STR_PAD_LEFT
-        );
+            $invoiceNumber =
+                'INV-'
+                . now()->format('Ymd')
+                . '-'
+                . str_pad(
+                    $nextNumber,
+                    5,
+                    '0',
+                    STR_PAD_LEFT
+                );
 
     $totalAmount = 0;
 
@@ -317,72 +313,81 @@ return [
 
 }
     public function getProjectInvoices($projectId): array
-    {
-        $project = Project::find($projectId);
+{
+    $project = Project::find($projectId);
 
-        if (! $project) {
-            throw new \Exception(
-                'Project not found.',
-                404
-            );
-        }
-
-        $invoices = WorkItemInvoice::query()
-            ->where('project_id', $projectId)
-            ->with([
-                'workItem:id,name',
-                'creator:id,name',
-            ])
-            ->latest()
-            ->get()
-            ->map(function ($invoice) {
-
-                return [
-
-                    'id' => $invoice->id,
-
-                    'invoice_number' =>
-                    $invoice->invoice_number,
-
-                    'invoice_date' =>
-                    $invoice->invoice_date,
-
-                    'supplier_name' =>
-                    $invoice->supplier_name,
-
-                    'work_item' => [
-                        'id' => $invoice->workItem->id,
-                        'name' => $invoice->workItem->name,
-                    ],
-
-                    'total_amount' =>
-                    $invoice->total_amount,
-
-                    'created_by' => [
-                        'id' => $invoice->creator->id,
-                        'name' => $invoice->creator->name,
-                    ],
-
-                    'created_at' =>
-                    $invoice->created_at,
-                ];
-            });
-
-        return [
-
-            'message' =>
-            'Project invoices fetched successfully.',
-
-            'project' => [
-                'id' => $project->id,
-                'name' => $project->name,
-            ],
-
-            'invoices' => $invoices,
-
-            'status' => 200,
-        ];
+    if (! $project) {
+        throw new \Exception(
+            'Project not found.',
+            404
+        );
     }
+
+    $invoicesQuery = WorkItemInvoice::query()
+        ->where('project_id', $projectId)
+        ->with([
+            'workItem:id,name',
+            'creator:id,name',
+        ]);
+
+    // 👇 مجموع الفواتير
+    $totalInvoicesAmount = (clone $invoicesQuery)
+        ->sum('total_amount');
+
+    $invoices = $invoicesQuery
+        ->latest()
+        ->get()
+        ->map(function ($invoice) {
+
+            return [
+
+                'id' => $invoice->id,
+
+                'invoice_number' =>
+                $invoice->invoice_number,
+
+                'invoice_date' =>
+                $invoice->invoice_date,
+
+                'supplier_name' =>
+                $invoice->supplier_name,
+
+                'work_item' => [
+                    'id' => $invoice->workItem->id,
+                    'name' => $invoice->workItem->name,
+                ],
+
+                'total_amount' =>
+                $invoice->total_amount,
+
+                'created_by' => [
+                    'id' => $invoice->creator->id,
+                    'name' => $invoice->creator->name,
+                ],
+
+                'created_at' =>
+                $invoice->created_at,
+            ];
+        });
+
+    return [
+
+        'message' =>
+        'Project invoices fetched successfully.',
+
+        'project' => [
+            'id' => $project->id,
+            'name' => $project->name,
+        ],
+
+        'total_invoices_amount' =>
+        (float) $totalInvoicesAmount, // 👈 المهم
+
+        'invoices' => $invoices,
+
+        'status' => 200,
+    ];
+}
     public function deleteInvoice($invoiceId): array
     {
         $invoice = WorkItemInvoice::query()

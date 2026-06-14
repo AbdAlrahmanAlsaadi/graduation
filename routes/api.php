@@ -133,7 +133,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('work-item-invoices',  [MaterialController::class, 'storeInvoice']
         );
 
-        Route::get('projects/{projectId}/invoices',[MaterialController::class, 'indexvInvoice']
+        Route::get('projects/{projectId}/invoices',[MaterialController::class, 'indexInvoice']
         );
         Route::delete('invoices/{invoiceId}', [MaterialController::class, 'destroyinvoice']
         );
