@@ -127,6 +127,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('work-items/{workItem}/approve',[WorkItemController::class, 'approveWorkItem']);
         Route::post('work-items/{workItem}/reject',[WorkItemController::class, 'rejectWorkItem']);
 
+
+
+
+        Route::post('work-item-invoices',  [MaterialController::class, 'storeInvoice']
+        );
+
+        Route::get('projects/{projectId}/invoices',[MaterialController::class, 'indexvInvoice']
+        );
+        Route::delete('invoices/{invoiceId}', [MaterialController::class, 'destroyinvoice']
+        );
+
+        Route::get('/projects/{projectId}/archived-invoices', [MaterialController::class, 'archived']
+        );
     });
 
 
