@@ -87,4 +87,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class);
     }
+    public function createdInvoices()
+    {
+        return $this->hasMany(WorkItemInvoice::class,'created_by');
+    }
+
+    public function createdLaborCosts()
+    {
+        return $this->hasMany(
+            WorkItemLaborCost::class,
+            'created_by'
+        );
+    }
 }

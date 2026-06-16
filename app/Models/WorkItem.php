@@ -169,24 +169,58 @@ class WorkItem extends Model
     /**
      * @param array<int, array{key:string, value:mixed, unit:?string}> $details
      */
-    public function syncDetails(array $details): void
-    {
-        DB::transaction(function () use ($details) {
+    public function syncDetails(
+        array $details,
+        bool $requiresApproval = false
+    ): void {
+        DB::transaction(function () use ($details, $requiresApproval) {
+
             $keys = array_column($details, 'key');
 
-            $this->details()->whereIn('key', $keys)->delete();
+            $this->details()
+                ->whereIn('key', $keys)
+                ->delete();
+
             $now = now();
+
             $rows = [];
+
             foreach ($details as $d) {
+
                 $rows[] = [
+
                     'work_item_id' => $this->id,
+
                     'key' => $d['key'],
-                    'value' => (string) $d['value'],
+
+                    'value' => $requiresApproval
+                        ? ''
+                        : (string) $d['value'],
+
+                    'pending_value' => $requiresApproval
+                        ? (string) $d['value']
+                        : null,
+
+                    'approval_status' => $requiresApproval
+                        ? 'pending'
+                        : 'approved',
+
+                    'approved_by' => $requiresApproval
+                        ? null
+                        : auth()->id(),
+
+                    'approved_at' => $requiresApproval
+                        ? null
+                        : now(),
+
                     'unit' => $d['unit'] ?? null,
+
                     'created_at' => $now,
+
                     'updated_at' => $now,
                 ];
             }
+
             $this->details()->createMany($rows);
         });
     }
@@ -225,5 +259,18 @@ class WorkItem extends Model
     public function notifications()
     {
         return $this->hasMany(Notification::class, );
+    }
+    public function invoices()
+    {
+        return $this->hasMany(
+            WorkItemInvoice::class
+        );
+    }
+
+    public function laborCosts()
+    {
+        return $this->hasMany(
+            WorkItemLaborCost::class
+        );
     }
 }

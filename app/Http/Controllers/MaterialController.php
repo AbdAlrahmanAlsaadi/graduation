@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreWorkItemInvoiceRequest;
 use App\Http\Requests\StoreMaterialRequest;
 use App\Http\Requests\UpdateMaterialRequest;
 use App\Http\Responses\Response;
@@ -87,4 +88,76 @@ class MaterialController extends Controller
 
         return Response::error($throwable->getMessage(), $status);
     }
+
+
+
+
+    public function storeInvoice(
+        StoreWorkItemInvoiceRequest $request
+    ) {
+        try {
+
+            $data = $this->materialService
+                ->storeInvoice($request);
+
+            return Response::success(
+                $data['message'],
+                [
+                    'invoice' => $data['invoice'],
+                ],
+                $data['status']
+            );
+        } catch (\Throwable $throwable) {
+
+            return Response::error(
+                $throwable->getMessage(),
+                500
+            );
+        }
+    }
+
+    public function indexInvoice($projectId)
+    {
+        $result = $this->materialService
+            ->getProjectInvoices($projectId);
+
+        return Response::success(
+            $result,
+            $result['message'],
+            $result['status']
+        );
+    
+
+
+}
+    public function destroyinvoice($invoiceId)
+    {
+        $result = $this->materialService
+            ->deleteInvoice($invoiceId);
+
+        return Response::success(
+            $result['invoice'],
+            $result['message'],
+            $result['status']
+        );
+    }
+    public function archived($projectId)
+{
+$result = $this->materialService
+->getArchivedInvoices($projectId);
+
+
+return Response::success(
+    [
+        'project' => $result['project'],
+        'invoices' => $result['invoices'],
+    ],
+    $result['message'],
+    $result['status']
+);
+
+
+}
+
+
 }

@@ -252,6 +252,7 @@ class AuthService
     }
 
 
+
     public function deleteInternalUser($userId): array
     {
         $user = User::query()->find($userId);
@@ -262,6 +263,19 @@ class AuthService
 
         if ($user->hasRole('company_admin')) {
             throw new \Exception('You cannot delete company admin.', 403);
+        }
+
+        $hasProjects = Project::query()
+            ->where('project_manager_id', $user->id)
+            ->orWhere('assistant_engineer_id', $user->id)
+            ->orWhere('owner_id', $user->id)
+            ->exists();
+
+        if ($hasProjects) {
+            throw new \Exception(
+                'Cannot delete this user because they are assigned to one or more projects.',
+                409
+            );
         }
 
         $userName = $user->name;
@@ -638,4 +652,38 @@ class AuthService
 
             'status' => 200,
         ];
-    }}
+    }
+
+
+    public function profile(): array
+    {
+        $user = auth()->user();
+
+        return [
+
+            'message' => 'Account fetched successfully.',
+
+            'data' => [
+
+                'name' => $user->name,
+
+                'email' => $user->email,
+
+                'role' => 'مساعد تنفيذي',
+
+                'assigned_projects_count' =>
+                    $user->assignedProjects()->count(),
+
+                'account_status' =>
+                    $user->status === 'active'
+                        ? 'verified'
+                        : 'inactive',
+
+                'avatar' => null,
+
+            ],
+
+            'status' => 200,
+        ];
+    }
+}
