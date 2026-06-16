@@ -15,6 +15,7 @@ class WorkItemDetailResource extends JsonResource
         return [
             $this->key => $this->value,
             'unit' => $this->unit,
+            'progress_photos' => $this->workItem->progressPhotos
         ];
     }
 }
