@@ -37,7 +37,6 @@ class Space extends Model
     public const TYPE_ENTRANCE = 'entrance';
     public const TYPE_SHED = 'shed';
     public const TYPE_STORAGE = 'storage';
-    public const TYPE_CUSTOM = 'custom';
 
     public const TYPE_OPTIONS = [
         self::TYPE_ROOM,
@@ -49,7 +48,6 @@ class Space extends Model
         self::TYPE_ENTRANCE,
         self::TYPE_SHED,
         self::TYPE_STORAGE,
-        self::TYPE_CUSTOM,
     ];
 
     public const FINISH_TYPES = [

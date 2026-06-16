@@ -38,13 +38,6 @@ class StoreSpaceRequest extends FormRequest
                 );
             }
 
-            if ($ceilingFinishType === 'ceramic' && ! $this->supportsCeilingCeramic($type)) {
-                $validator->errors()->add(
-                    'ceiling_finish_type',
-                    'Ceiling ceramic finish is only allowed for kitchen, bathroom, toilet, or shed.'
-                );
-            }
-
             if ($this->boolean('is_shed_floor_tiled') && $type !== Space::TYPE_SHED) {
                 $validator->errors()->add(
                     'is_shed_floor_tiled',

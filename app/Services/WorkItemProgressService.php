@@ -158,7 +158,7 @@ class WorkItemProgressService
     
         if ($method && method_exists($this, $method)) {
             if (!$this->{$method}($space)) {
-                abort(422, "This space does not apply to this work item.");
+                abort(422, "This space does not apply to this work item." . " Method: {$method}");
             }
         }
     
@@ -220,21 +220,46 @@ class WorkItemProgressService
     public function computeWorkItemPercent(WorkItem $item): float
     {
         $type = $this->logic['mapping'][$item->name] ?? null;
-
         if (!$type) return 0;
 
         $method = 'compute' . ucfirst($type);
-
         if (!method_exists($this, $method)) return 0;
 
         $details = $item->details()->get()->keyBy('key');
         $spaces  = Space::where('project_id', $item->project_id)->get();
 
-        return round(
-            $this->{$method}($details, $spaces),
-            $this->logic['settings']['percent_precision']
-        );
+        $ref = new \ReflectionMethod($this, $method);
+        $paramCount = $ref->getNumberOfParameters();
+
+        if ($paramCount >= 3) {
+            $result = $this->{$method}($details, $spaces, $item->name);
+        } elseif ($paramCount === 2) {
+            $result = $this->{$method}($details, $spaces);
+        } else {
+            $result = $this->{$method}($details);
+        }
+
+        return round($result, $this->logic['settings']['percent_precision']);
     }
+
+    // public function computeWorkItemPercent(WorkItem $item): float
+    // {
+    //     $type = $this->logic['mapping'][$item->name] ?? null;
+
+    //     if (!$type) return 0;
+
+    //     $method = 'compute' . ucfirst($type);
+
+    //     if (!method_exists($this, $method)) return 0;
+
+    //     $details = $item->details()->get()->keyBy('key');
+    //     $spaces  = Space::where('project_id', $item->project_id)->get();
+
+    //     return round(
+    //         $this->{$method}($details, $spaces),
+    //         $this->logic['settings']['percent_precision']
+    //     );
+    // }
 
     /* =========================================================================
        COMPUTE PROJECT PERCENT
@@ -264,9 +289,8 @@ class WorkItemProgressService
        GENERIC ROOMS_STATUS STRATEGY
        ========================================================================= */
 
-    protected function computeRoomsStatus(Collection $details, Collection $spaces, callable $filter): float
+    protected function computeRoomsStatus(Collection $details, Collection $spaces, callable $filter, ?string $workItemName = null): float
     {
-        // 1) الغرف التي ينطبق عليها البند
         $filteredSpaces = $spaces->filter($filter);
         $validSpaceIds = $filteredSpaces->pluck('id')->toArray();
 
@@ -274,27 +298,78 @@ class WorkItemProgressService
             return 0;
         }
 
-        // 2) rooms_status
-        $statusJson = $details['rooms_status']->value ?? null;
+        $roomsStatusDetail = $details->get('rooms_status');
+        $statusJson = $roomsStatusDetail ? $roomsStatusDetail->value : null;
         $status = $statusJson ? json_decode($statusJson, true) : [];
+        if (!is_array($status)) $status = [];
 
-        if (!is_array($status)) {
-            $status = [];
-        }
+        $totalArea = 0.0;
+        $doneArea  = 0.0;
+        $hasAreaData = false;
 
-        // 3) احسب الغرف المنجزة فقط إذا كانت ضمن validSpaceIds
-        $done = 0;
-        foreach ($validSpaceIds as $id) {
-            if (isset($status[$id]) && $status[$id] === true) {
-                $done++;
+        foreach ($filteredSpaces as $s) {
+            $spaceArea = null;
+            if ($workItemName) {
+                $spaceArea = $this->getSpaceAreaForWorkItem($s, $workItemName);
+            }
+
+            if ($spaceArea !== null && $spaceArea > 0) {
+                $hasAreaData = true;
+                $totalArea += $spaceArea;
+                if (isset($status[$s->id]) && ($status[$s->id] === true || $status[$s->id] == 1)) {
+                    $doneArea += $spaceArea;
+                }
             }
         }
 
-        // 4) total = عدد الغرف التي ينطبق عليها البند
-        $total = count($validSpaceIds);
+        if ($hasAreaData && $totalArea > 0) {
+            return ($doneArea / $totalArea) * 100;
+        }
 
-        return ($done / $total) * 100;
+        // fallback to count-based percent
+        $doneCount = 0;
+        foreach ($validSpaceIds as $id) {
+            if (isset($status[$id]) && ($status[$id] === true || $status[$id] == 1)) {
+                $doneCount++;
+            }
+        }
+        $totalCount = count($validSpaceIds);
+        if ($totalCount === 0) return 0;
+        return ($doneCount / $totalCount) * 100;
     }
+
+
+    // protected function computeRoomsStatus(Collection $details, Collection $spaces, callable $filter): float
+    // {
+    //     // 1) الغرف التي ينطبق عليها البند
+    //     $filteredSpaces = $spaces->filter($filter);
+    //     $validSpaceIds = $filteredSpaces->pluck('id')->toArray();
+
+    //     if (empty($validSpaceIds)) {
+    //         return 0;
+    //     }
+
+    //     // 2) rooms_status
+    //     $statusJson = $details['rooms_status']->value ?? null;
+    //     $status = $statusJson ? json_decode($statusJson, true) : [];
+
+    //     if (!is_array($status)) {
+    //         $status = [];
+    //     }
+
+    //     // 3) احسب الغرف المنجزة فقط إذا كانت ضمن validSpaceIds
+    //     $done = 0;
+    //     foreach ($validSpaceIds as $id) {
+    //         if (isset($status[$id]) && $status[$id] === true) {
+    //             $done++;
+    //         }
+    //     }
+
+    //     // 4) total = عدد الغرف التي ينطبق عليها البند
+    //     $total = count($validSpaceIds);
+
+    //     return ($done / $total) * 100;
+    // }
 
     /* =========================================================================
        STRATEGIES
@@ -324,44 +399,50 @@ class WorkItemProgressService
         return $weights > 0 ? $sum / $weights : 0;
     }
 
-    protected function computeElectricity(Collection $details, Collection $spaces): float
+    protected function computeElectricity(Collection $details, Collection $spaces, ?string $itemName = null): float
     {
-        return $this->computeRoomsStatus($details, $spaces, fn($s) => true);
+        return $this->computeRoomsStatus($details, $spaces, fn($s) => true,
+        $itemName ?? 'تمديدات كهرباء ');
     }
 
-    protected function computeRooms(Collection $details, Collection $spaces): float
+    protected function computeRooms(Collection $details, Collection $spaces, ?string $itemName = null): float
     {
         return $this->computeRoomsStatus($details, $spaces, fn($s) =>
-            $s->wall_finish_type !== 'ceramic'
+            $s->wall_finish_type !== 'ceramic',
+        $itemName ?? 'سيراميك جدران / أسقف'
         );
     }
 
-    protected function computeTile(Collection $details, Collection $spaces): float
+    protected function computeTile(Collection $details, Collection $spaces, ?string $itemName = null): float
     {
-        return $this->computeRoomsStatus($details, $spaces, fn($s) => true);
+        return $this->computeRoomsStatus($details, $spaces, fn($s) => true,
+        $itemName ?? 'بلاط أرضيات');
     }
 
-    protected function computeCeramic(Collection $details, Collection $spaces): float
+    protected function computeCeramic(Collection $details, Collection $spaces, ?string $itemName = null): float
     {
         return $this->computeRoomsStatus($details, $spaces, fn($s) =>
             $s->wall_finish_type === 'ceramic' ||
-            $s->ceiling_finish_type === 'ceramic'
+            $s->ceiling_finish_type === 'ceramic',
+        $itemName ?? 'سيراميك جدران / أسقف'
         );
     }
 
-    protected function computeGypsum(Collection $details, Collection $spaces): float
+    protected function computeGypsum(Collection $details, Collection $spaces, ?string $itemName = null): float
     {
         return $this->computeRoomsStatus($details, $spaces, fn($s) =>
             $s->ceiling_finish_type === 'gypsum' || 
-            $s->wall_finish_type === 'gypsum'
+            $s->wall_finish_type === 'gypsum',
+        $itemName ?? 'جبس بورد'
         );
     }
 
-    protected function computePaint(Collection $details, Collection $spaces): float
+    protected function computePaint(Collection $details, Collection $spaces, ?string $itemName = null): float
     {
         return $this->computeRoomsStatus($details, $spaces, fn($s) =>
             $s->wall_finish_type === 'paint' ||
-            $s->ceiling_finish_type === 'paint'
+            $s->ceiling_finish_type === 'paint',
+        $itemName ?? 'دهان'
         );
     }
 
@@ -463,7 +544,7 @@ class WorkItemProgressService
 
     protected function filterRooms(Space $space): bool
     {
-        return $space->wall_finish_type !== 'ceramic';
+        return $space->wall_finish_type !== 'ceramic' || ($space->ceiling_finish_type === 'paint' || $space->wall_finish_type === 'paint' || $space->ceiling_finish_type === 'gypsum' || $space->wall_finish_type === 'gypsum');
     }
 
     protected function filterElectricity(Space $space): bool
@@ -479,6 +560,67 @@ class WorkItemProgressService
             Space::TYPE_TOILET,
         ], true);
     }
+
+    private function getSpaceAreaForWorkItem(Space $space, string $workItemName): ?float
+    {
+        $area = 0.0;
+
+        switch ($workItemName) {
+            case 'سيراميك جدران / أسقف': // ceramic walls/ceilings
+                if (($space->wall_finish_type ?? null) === 'ceramic' && $space->wall_area) {
+                    $area += (float) $space->wall_area;
+                }
+                if (($space->ceiling_finish_type ?? null) === 'ceramic' && $space->ceiling_area) {
+                    $area += (float) $space->ceiling_area;
+                }
+                break;
+
+            case 'بلاط أرضيات': // floor tiles — use ceiling_area as floor proxy if floor_area absent
+                if (isset($space->floor_area) && $space->floor_area > 0) {
+                    $area += (float) $space->floor_area;
+                } elseif (!is_null($space->ceiling_area) && $space->ceiling_area > 0) {
+                    $area += (float) $space->ceiling_area;
+                }
+                break;
+
+            case 'دهان': // paint
+                if (($space->wall_finish_type ?? null) === 'paint' && $space->wall_area) {
+                    $area += (float) $space->wall_area;
+                }
+                if (($space->ceiling_finish_type ?? null) === 'paint' && $space->ceiling_area) {
+                    $area += (float) $space->ceiling_area;
+                }
+                break;
+
+            case 'جبس بورد': // gypsum
+                if (($space->ceiling_finish_type ?? null) === 'gypsum' && $space->ceiling_area) {
+                    $area += (float) $space->ceiling_area;
+                }
+                if (($space->wall_finish_type ?? null) === 'gypsum' && $space->wall_area) {
+                    $area += (float) $space->wall_area;
+                }
+                break;
+            case 'تمديدات كهرباء':
+                if (!empty($space->wall_area)) $area += (float) $space->wall_area;
+                if (!empty($space->ceiling_area)) $area += (float) $space->ceiling_area;
+                break;
+            case 'تمديدات كهرباء سواد': // electricity — use wall+ceiling as proxy
+                if (!empty($space->wall_area)) $area += (float) $space->wall_area;
+                if (!empty($space->ceiling_area)) $area += (float) $space->ceiling_area;
+                break;
+            case 'تمديدات كهرباء بياض': // electricity — use wall+ceiling as proxy
+                if (!empty($space->wall_area)) $area += (float) $space->wall_area;
+                if (!empty($space->ceiling_area)) $area += (float) $space->ceiling_area;
+                break;
+
+            default:
+                return null;
+        }
+
+        return $area > 0 ? $area : null;
+    }
+
+
 
 }
 
