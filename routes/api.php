@@ -14,6 +14,7 @@ use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\WorkItemController;
 use App\Http\Controllers\WorkItemMaterialController;
 use App\Http\Controllers\WorkItemProgressController;
+use App\Http\Controllers\WorkshopCostCalculationController;
 use App\Models\User;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
@@ -143,8 +144,27 @@ Route::middleware(['auth:sanctum'])->group(function () {
         );
 
         Route::get('/projects/{projectId}/archived-invoices', [MaterialController::class, 'archived']
-        );
-    });
+);
+
+
+
+
+            Route::post(
+                'projects/{projectId}/plaster',
+                [WorkshopCostCalculationController::class, 'plaster']
+            );
+
+                    Route::post(
+                'projects/{projectId}/paint',
+                        [WorkshopCostCalculationController::class, 'paint']
+                    );
+
+                    Route::post(
+                'projects/{projectId}/tile',
+                        [WorkshopCostCalculationController::class, 'tile']
+                    );
+                });
+
 
 
 
