@@ -113,7 +113,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             ->only(['store', 'destroy']);
         Route::put('projects/{project}/work-items/reorder', [WorkItemController::class, 'reorder']);
         Route::post('projects/{project}/work-items/{workItem}', [WorkItemController::class, 'update']);
-        Route::post('projects/{project}/work-items/{workItem}/details', [WorkItemController::class, 'updateDetails']);
+       // Route::post('projects/{project}/work-items/{workItem}/details', [WorkItemController::class, 'updateDetails']);
         Route::post('projects/{project}/work-items/{workItem}/start', [WorkItemController::class, 'start']);
         Route::post('projects/{project}/work-items/{workItem}/complete', [WorkItemController::class, 'complete']);
         // Engineers payload: { user_id, role, assigned_at? }
