@@ -7,7 +7,9 @@ use App\Models\WorkItem;
 use App\Models\WorkItemDetail;
 use App\Models\ProgressPhoto;
 use App\Models\Space;
+use App\Models\User;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class WorkItemProgressService
@@ -56,81 +58,228 @@ class WorkItemProgressService
        UPDATE PROGRESS (PARTIAL UPDATE)
        ========================================================================= */
 
-    public function updateProgress(Project $project, WorkItem $item, array $data): array
+    public function updateProgress(Project $project, WorkItem $item, array $data)
     {
+        $user = Auth::user();
+
+        $isAssistant = $user->hasRole('assistant');
+
         if (array_key_exists('photos', $data)) {
+
             $photos = $data['photos'] ?? [];
+
             if ($photos instanceof \Illuminate\Http\UploadedFile) {
                 $photos = [$photos];
             }
-            if (!is_array($photos)) {
+
+            if (! is_array($photos)) {
                 $photos = [];
             }
-            $this->storeProgressPhotos($project, $item, $photos);
+
+            $this->storeProgressPhotos(
+                $project,
+                $item,
+                $photos
+            );
+
             unset($data['photos']);
         }
 
         foreach ($data as $key => $value) {
 
-            // special case: rooms_status → merge
             if ($key === 'rooms_status') {
-                $old = WorkItemDetail::where('work_item_id', $item->id)
+
+                $old = WorkItemDetail::query()
+                    ->where('work_item_id', $item->id)
                     ->where('key', 'rooms_status')
                     ->first();
 
-                $oldValue = $old ? json_decode($old->value, true) : [];
-                if (!is_array($oldValue)) $oldValue = [];
+                $oldValue = $old
+                    ? json_decode($old->value, true)
+                    : [];
+
+                if (! is_array($oldValue)) {
+                    $oldValue = [];
+                }
 
                 $filtered = [];
 
                 foreach ($value as $spaceId => $completed) {
-                    // 1) تحقق أن الغرفة موجودة بالمشروع
-                    $space = Space::where('id', $spaceId)
+
+                    $space = Space::query()
+                        ->where('id', $spaceId)
                         ->where('project_id', $project->id)
                         ->first();
 
-                    if (!$space) {
-                        continue; // تجاهل الغرفة
+                    if (! $space) {
+                        continue;
                     }
 
-                    // 2) تحقق أن الغرفة ينطبق عليها البند
                     $type = $this->logic['mapping'][$item->name] ?? null;
-                    $method = $type ? 'filter' . ucfirst($type) : null;
 
-                    if ($method && method_exists($this, $method)) {
-                        if (!$this->{$method}($space)) {
-                            continue; // تجاهل الغرفة إذا ما بتنطبق
+                    $method = $type
+                        ? 'filter' . ucfirst($type)
+                        : null;
+
+                    if (
+                        $method &&
+                        method_exists($this, $method)
+                    ) {
+                        if (! $this->{$method}($space)) {
+                            continue;
                         }
                     }
 
-                    // 3) الغرفة صالحة → أضفها
                     $filtered[$spaceId] = $completed;
                 }
 
-                // دمج القديم مع الجديد
-                $merged = array_merge($oldValue, $filtered);
-
-                WorkItemDetail::updateOrCreate(
-                    ['work_item_id' => $item->id, 'key' => 'rooms_status'],
-                    ['value' => json_encode($merged)]
+                $merged = array_merge(
+                    $oldValue,
+                    $filtered
                 );
+
+                if ($isAssistant) {
+
+                    WorkItemDetail::updateOrCreate(
+                        [
+                            'work_item_id' => $item->id,
+                            'key' => 'rooms_status',
+                        ],
+                        [
+                            'value' => WorkItemDetail::query()
+                                ->where('work_item_id', $item->id)
+                                ->where('key', 'rooms_status')
+                                ->value('value') ?? '{}',
+
+                            'pending_value' => json_encode($merged),
+
+                            'approval_status' => 'pending',
+                        ]
+                    );
+                } else {
+
+                    WorkItemDetail::updateOrCreate(
+                        [
+                            'work_item_id' => $item->id,
+                            'key' => 'rooms_status',
+                        ],
+                        [
+                            'value' => json_encode($merged),
+
+                            'pending_value' => null,
+
+                            'approval_status' => 'approved',
+
+                            'approved_by' => $user->id,
+
+                            'approved_at' => now(),
+                        ]
+                    );
+                }
+
                 continue;
             }
 
-            // numeric progress
-            WorkItemDetail::updateOrCreate(
-                ['work_item_id' => $item->id, 'key' => $key],
-                ['value' => $value]
-            );
+            if ($isAssistant) {
+
+                $existingValue = WorkItemDetail::query()
+                    ->where('work_item_id', $item->id)
+                    ->where('key', $key)
+                    ->value('value');
+
+                WorkItemDetail::updateOrCreate(
+                    [
+                        'work_item_id' => $item->id,
+                        'key' => $key,
+                    ],
+                    [
+                        'value' => $existingValue ?? 0,
+
+                        'pending_value' => (string) $value,
+
+                        'approval_status' => 'pending',
+                    ]
+                );
+            } else {
+
+                WorkItemDetail::updateOrCreate(
+                    [
+                        'work_item_id' => $item->id,
+                        'key' => $key,
+                    ],
+                    [
+                        'value' => $value,
+
+                        'pending_value' => null,
+
+                        'approval_status' => 'approved',
+
+                        'approved_by' => $user->id,
+
+                        'approved_at' => now(),
+                    ]
+                );
+            }
         }
+        if ($isAssistant) {
 
-        $percent = $this->computeWorkItemPercent($item);
+            $manager = User::query()->find(
+                $project->project_manager_id
+            );
 
-        return [
-            'work_item' => $item->refresh()->load('progressPhotos'),
-            'percent'   => $percent,
-        ];
-    }
+            if ($manager) {
+
+                app(NotificationService::class)->send(
+                    $manager,
+                    [
+                        'project_id' => $project->id,
+
+                        'project_work_item_id' => $item->id,
+
+                        'type' => 'work_item_progress_updated',
+
+                        'title' => 'طلب اعتماد نسبة إنجاز',
+
+                        'body' => "قام {$user->name} بتحديث نسبة الإنجاز للبند {$item->name}",
+
+                        'sender_id' => $user->id,
+
+                        'data' => [
+
+                            'action' => 'approval_required',
+
+                            'project_id' => $project->id,
+
+                            'project_name' => $project->name,
+
+                            'work_item_id' => $item->id,
+
+                            'work_item_name' => $item->name,
+
+                            'assistant_id' => $user->id,
+
+                            'assistant_name' => $user->name,
+                        ],
+                    ]
+                );
+            }
+
+            return [
+
+                'pending_approval' => true,
+
+                'message' => 'Progress update submitted successfully and is waiting for manager approval.',
+
+                'work_item' => [
+
+                    'id' => $item->id,
+
+                    'name' => $item->name,
+
+                    'approval_status' => 'pending',
+                ],
+            ];
+        }}
     /* =========================================================================
        UPDATE SINGLE ROOM STATUS (NEW ENDPOINT)
        ========================================================================= */
@@ -147,41 +296,41 @@ class WorkItemProgressService
         $space = Space::where('id', $spaceId)
             ->where('project_id', $project->id)
             ->first();
-    
+
         if (!$space) {
             abort(404, "Space does not belong to this project.");
         }
-    
+
         // تحقق أن الغرفة ينطبق عليها البند
         $type = $this->logic['mapping'][$item->name] ?? null;
         $method = $type ? 'filter' . ucfirst($type) : null;
-    
+
         if ($method && method_exists($this, $method)) {
             if (!$this->{$method}($space)) {
                 abort(422, "This space does not apply to this work item." . " Method: {$method}");
             }
         }
-    
+
         // get old rooms_status
         $old = WorkItemDetail::where('work_item_id', $item->id)
             ->where('key', 'rooms_status')
             ->first();
-    
+
         $status = $old ? json_decode($old->value, true) : [];
         if (!is_array($status)) $status = [];
-    
+
         // update one room
         $status[$spaceId] = $completed;
-    
+
         // save
         WorkItemDetail::updateOrCreate(
             ['work_item_id' => $item->id, 'key' => 'rooms_status'],
             ['value' => json_encode($status)]
         );
-    
+
         // compute percent
         $percent = $this->computeWorkItemPercent($item);
-    
+
         return [
             'work_item' => $item->refresh()->load('progressPhotos'),
             'percent'   => $percent,
@@ -431,7 +580,7 @@ class WorkItemProgressService
     protected function computeGypsum(Collection $details, Collection $spaces, ?string $itemName = null): float
     {
         return $this->computeRoomsStatus($details, $spaces, fn($s) =>
-            $s->ceiling_finish_type === 'gypsum' || 
+            $s->ceiling_finish_type === 'gypsum' ||
             $s->wall_finish_type === 'gypsum',
         $itemName ?? 'جبس بورد'
         );

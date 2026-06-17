@@ -21,47 +21,100 @@ class WorkItemProgressController extends Controller
     /* ============================================================
        UPDATE PROGRESS (JSON كامل)
        ============================================================ */
-    public function update(UpdateWorkItemProgressRequest $request, Project $project, WorkItem $workItem)
-    {
+    public function update(
+        UpdateWorkItemProgressRequest $request,
+        Project $project,
+        WorkItem $workItem
+    ) {
         try {
+
             if ($workItem->project_id !== $project->id) {
-                return Response::error('Work item does not belong to this project.', 404);
+                return Response::error(
+                    'Work item does not belong to this project.',
+                    404
+                );
             }
 
-            $result = $this->service->updateProgress($project, $workItem, $request->validated());
+            $result = $this->service->updateProgress(
+                $project,
+                $workItem,
+                $request->validated()
+            );
 
-            $workItemFresh = $result['work_item']->load('details', 'progressPhotos');
+            /*
+        |--------------------------------------------------------------
+        | Assistant update => waiting approval
+        |--------------------------------------------------------------
+        */
+            if ($result['pending_approval'] === true) {
+
+                return Response::success(
+                    'Progress update request sent successfully and is waiting for project manager approval.',
+                    [
+                        'work_item_id' => $workItem->id,
+                        'work_item_name' => $workItem->name,
+                        'approval_status' => 'pending',
+                    ]
+                );
+            }
+
+            /*
+        |--------------------------------------------------------------
+        | Approved immediately (manager/admin)
+        |--------------------------------------------------------------
+        */
+
+            $workItemFresh = $result['work_item']
+                ->load('details', 'progressPhotos');
+
             $workItemFresh->percent = $result['percent'];
 
-            // Compute project percent
-            $projectPercent = $this->service->computeProjectPercent($project);
+            $projectPercent = $this->service->computeProjectPercent(
+                $project
+            );
+
             $project->project_percent = $projectPercent;
 
-            // Load ONLY active work items
             $items = $project->workItems()
                 ->where('is_active', true)
                 ->with('details')
                 ->get()
                 ->map(function ($item) use ($workItemFresh) {
+
                     if ($item->id === $workItemFresh->id) {
-                        // استخدم النسبة المحسوبة مسبقاً
+
                         $item->percent = $workItemFresh->percent;
                     } else {
-                        // احسب فقط للبنود الأخرى
-                        $item->percent = $this->service->computeWorkItemPercent($item);
+
+                        $item->percent = $this->service
+                            ->computeWorkItemPercent($item);
                     }
+
                     return $item;
                 });
 
-            $project->setRelation('workItems', $items);
+            $project->setRelation(
+                'workItems',
+                $items
+            );
 
-            return Response::success('Progress updated successfully', [
-                'work_item' => new WorkItemProgressResource($workItemFresh),
-                'project'   => new ProjectProgressResource($project),
-            ]);
-
+            return Response::success(
+                'Progress updated successfully',
+                [
+                    'work_item' => new WorkItemProgressResource(
+                        $workItemFresh
+                    ),
+                    'project' => new ProjectProgressResource(
+                        $project
+                    ),
+                ]
+            );
         } catch (Throwable $e) {
-            return Response::error('Failed to update progress. ' . $e->getMessage(), 500);
+
+            return Response::error(
+                'Failed to update progress. ' . $e->getMessage(),
+                500
+            );
         }
     }
 

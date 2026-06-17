@@ -275,6 +275,7 @@ class WorkItemService
         $query = WorkItemDetail::query()
             ->with([
                 'workItem.project',
+                'workItem.progressPhotos',
             ])
             ->where('approval_status', 'pending');
 
@@ -321,6 +322,25 @@ class WorkItemService
 
                     'requested_at' => $first->created_at,
 
+                    'photos' => $first->workItem
+                        ->progressPhotos
+                        ->map(function ($photo) {
+
+                            return [
+
+                                'id' => $photo->id,
+
+                                'url' => asset(
+                                    'storage/' . $photo->file_path
+                                ),
+
+                                'original_name' => $photo->original_name,
+
+                                'created_at' => $photo->created_at,
+                            ];
+                        })
+                        ->values(),
+
                     'updates' => $items->map(function ($detail) {
 
                         return [
@@ -332,6 +352,8 @@ class WorkItemService
                             'current_value' => $detail->value,
 
                             'requested_value' => $detail->pending_value,
+
+                            'approval_status' => $detail->approval_status,
                         ];
                     })->values(),
                 ];
@@ -348,7 +370,6 @@ class WorkItemService
 
         $project = $workItem->project;
 
-
         if (
             $user->hasRole('project_manager')
             && $project->project_manager_id != $user->id
@@ -360,11 +381,9 @@ class WorkItemService
             );
         }
 
-
         $pendingDetails = $workItem->details()
             ->where('approval_status', 'pending')
             ->get();
-
 
         if ($pendingDetails->isEmpty()) {
 
@@ -374,20 +393,18 @@ class WorkItemService
             );
         }
 
-
         $notification = Notification::query()
             ->where('project_work_item_id', $workItem->id)
             ->where('type', 'work_item_progress_updated')
             ->latest()
             ->first();
 
-
         DB::transaction(function () use (
             $pendingDetails,
             $user
         ) {
 
-            $pendingDetails->each(function ($detail) use ($user) {
+            foreach ($pendingDetails as $detail) {
 
                 $detail->update([
 
@@ -401,14 +418,22 @@ class WorkItemService
 
                     'approved_at' => now(),
                 ]);
-            });
+            }
         });
-
-
 
         /*
     |--------------------------------------------------------------------------
-    | Notification to assistant
+    | Refresh Details After Approval
+    |--------------------------------------------------------------------------
+    */
+
+        $approvedDetails = $workItem->details()
+            ->where('approval_status', 'approved')
+            ->get();
+
+        /*
+    |--------------------------------------------------------------------------
+    | Notification to Assistant
     |--------------------------------------------------------------------------
     */
 
@@ -417,7 +442,6 @@ class WorkItemService
             $assistant = User::find(
                 $notification->data['assistant_id'] ?? null
             );
-
 
             if ($assistant) {
 
@@ -435,7 +459,6 @@ class WorkItemService
 
                         'body' => "تم قبول تحديث نسبة الإنجاز للبند {$workItem->name}",
 
-
                         'data' => [
 
                             'project_id' => $project->id,
@@ -443,27 +466,14 @@ class WorkItemService
                             'work_item_id' => $workItem->id,
 
                         ],
-
                     ]
                 );
             }
         }
 
-
-
-        /*
-    |--------------------------------------------------------------------------
-    | Notification to owner
-    |--------------------------------------------------------------------------
-    */
-
-
-
-
         return [
 
             'message' => 'Work item update approved successfully.',
-
 
             'data' => [
 
@@ -475,8 +485,7 @@ class WorkItemService
 
                 ],
 
-
-                'approved_details' => $pendingDetails->map(function ($detail) {
+                'approved_details' => $approvedDetails->map(function ($detail) {
 
                     return [
 
@@ -486,14 +495,15 @@ class WorkItemService
 
                         'value' => $detail->value,
 
+                        'approved_by' => $detail->approved_by,
+
+                        'approved_at' => $detail->approved_at,
                     ];
                 }),
 
             ],
 
-
             'status' => 200,
-
         ];
     }
     public function rejectWorkItem(
@@ -504,7 +514,6 @@ class WorkItemService
         $user = auth()->user();
 
         $project = $workItem->project;
-
 
         if (
             $user->hasRole('project_manager')
@@ -517,11 +526,9 @@ class WorkItemService
             );
         }
 
-
         $pendingDetails = $workItem->details()
             ->where('approval_status', 'pending')
             ->get();
-
 
         if ($pendingDetails->isEmpty()) {
 
@@ -531,26 +538,22 @@ class WorkItemService
             );
         }
 
-
-
         $notification = Notification::query()
             ->where('project_work_item_id', $workItem->id)
             ->where('type', 'work_item_progress_updated')
             ->latest()
             ->first();
 
-
-
         DB::transaction(function () use (
             $pendingDetails,
             $user
         ) {
 
-            $pendingDetails->each(function ($detail) use ($user) {
-
+            foreach ($pendingDetails as $detail) {
 
                 $detail->update([
 
+                    // لا نلمس القيمة المعتمدة الحالية
                     'pending_value' => null,
 
                     'approval_status' => 'rejected',
@@ -558,12 +561,11 @@ class WorkItemService
                     'approved_by' => $user->id,
 
                     'approved_at' => now(),
-
                 ]);
-            });
+            }
         });
 
-
+        $pendingDetails->fresh();
 
         /*
     |--------------------------------------------------------------------------
@@ -571,17 +573,13 @@ class WorkItemService
     |--------------------------------------------------------------------------
     */
 
-
         if ($notification) {
-
 
             $assistant = User::find(
                 $notification->data['assistant_id'] ?? null
             );
 
-
             if ($assistant) {
-
 
                 app(NotificationService::class)->send(
                     $assistant,
@@ -591,16 +589,12 @@ class WorkItemService
 
                         'project_work_item_id' => $workItem->id,
 
-
                         'type' => 'work_item_progress_rejected',
-
 
                         'title' => 'تم رفض تحديث الإنجاز',
 
-
                         'body' =>
                         "تم رفض تحديث نسبة الإنجاز للبند {$workItem->name}",
-
 
                         'data' => [
 
@@ -617,12 +611,9 @@ class WorkItemService
             }
         }
 
-
-
         return [
 
             'message' => 'Work item update rejected successfully.',
-
 
             'data' => [
 
@@ -634,7 +625,6 @@ class WorkItemService
 
                 ],
 
-
                 'rejected_details' => $pendingDetails->map(function ($detail) {
 
                     return [
@@ -643,16 +633,17 @@ class WorkItemService
 
                         'field' => $detail->key,
 
+                        'current_value' => $detail->value,
+
+                        'status' => 'rejected',
+
                     ];
                 }),
-
 
                 'reason' => $reason,
 
             ],
 
-
             'status' => 200,
-
         ];
     }}

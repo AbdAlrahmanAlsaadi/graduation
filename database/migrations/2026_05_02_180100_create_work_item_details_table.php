@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('key')
                 ->comment('detail key');
 
-            $table->text('value')
+            $table->text('value')->nullable()
+
                 ->comment('approved value');
 
             $table->text('pending_value')
