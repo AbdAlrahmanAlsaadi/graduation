@@ -25,7 +25,10 @@ class StoreSpaceRequest extends FormRequest
             $ceilingFinishType = $this->input('ceiling_finish_type');
 
             if ($this->isBathroomOrToilet($type)) {
-                if (! $this->filled('toilet_type') || $this->input('toilet_type') === 'none') {
+                if($type == 'bathroom') {
+                    
+                }
+                else if (! $this->filled('toilet_type') || $this->input('toilet_type') === 'none') {
                     $validator->errors()->add(
                         'toilet_type',
                         'Toilet type is required for bathroom or toilet.'

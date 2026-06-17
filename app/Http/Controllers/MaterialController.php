@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateMaterialRequest;
 use App\Http\Responses\Response;
 use App\Models\Material;
 use App\Services\MaterialService;
+use App\Http\Resources\MaterialResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -23,7 +24,7 @@ class MaterialController extends Controller
         try {
             $materials = $this->materialService->getAll();
 
-            return Response::success('Materials fetched.', $materials);
+            return Response::success('Materials fetched.', MaterialResource::collection($materials));
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
         }
@@ -34,7 +35,7 @@ class MaterialController extends Controller
         try {
             $material = $this->materialService->create($request->validated());
 
-            return Response::success('Material created.', $material, 201);
+            return Response::success('Material created.', MaterialResource::make($material), 201);
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
         }
@@ -44,8 +45,9 @@ class MaterialController extends Controller
     {
         try {
             $material = $this->materialService->findById((int) $material->id);
+            
 
-            return Response::success('Material fetched.', $material);
+            return Response::success('Material fetched.', MaterialResource::make($material));
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
         }
@@ -56,7 +58,7 @@ class MaterialController extends Controller
         try {
             $updated = $this->materialService->update((int) $material->id, $request->validated());
 
-            return Response::success('Material updated.', $updated);
+            return Response::success('Material updated.', MaterialResource::make($updated));
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
         }

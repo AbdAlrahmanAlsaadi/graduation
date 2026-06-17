@@ -19,19 +19,18 @@ class Material extends Model
      * @return BelongsToMany<WorkItem, $this>
      */
     public function workItems(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            WorkItem::class,
-            'work_item_materials',
-            'material_id',
-            'work_item_name',
-            'id',
-            'name'
-        )
-            ->using(WorkItemMaterial::class)
-            ->withPivot(['sort_order', 'is_required'])
-            ->withTimestamps();
-    }
+{
+    return $this->belongsToMany(
+        WorkItem::class,
+        'work_item_materials',   // pivot table
+        'material_id',           // foreignPivotKey (pivot column that points to this model)
+        'work_item_name',        // relatedPivotKey (pivot column that points to WorkItem)
+        'id',                    // parentKey (Material primary key)
+        'name'                   // relatedKey (WorkItem key to match pivot.work_item_name)
+    )
+    ->using(WorkItemMaterial::class)
+    ->withTimestamps();
+}
     public function invoiceItems()
     {
         return $this->hasMany( WorkItemInvoiceItem::class

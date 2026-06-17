@@ -12,8 +12,6 @@ return new class extends Migration
             $table->id();
             $table->string('work_item_name');
             $table->foreignId('material_id')->constrained('materials')->cascadeOnDelete();
-            $table->integer('sort_order')->default(0);
-            $table->boolean('is_required')->default(true);
             $table->timestamps();
 
             $table->unique(['work_item_name', 'material_id']);

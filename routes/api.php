@@ -198,4 +198,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/assistant/account', [AuthController::class, 'profile']
     );
 }   );
-
+} );

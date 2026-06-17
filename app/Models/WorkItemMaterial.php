@@ -14,8 +14,6 @@ class WorkItemMaterial extends Pivot
     protected $fillable = [
         'work_item_name',
         'material_id',
-        'sort_order',
-        'is_required',
     ];
 
     protected $primaryKey = 'id';
@@ -26,14 +24,12 @@ class WorkItemMaterial extends Pivot
     {
         return [
             'material_id' => 'integer',
-            'sort_order' => 'integer',
-            'is_required' => 'boolean',
         ];
     }
 
     public function material(): BelongsTo
     {
-        return $this->belongsTo(Material::class);
+        return $this->belongsTo(Material::class, 'material_id', 'id');
     }
 
     public function workItem(): BelongsTo

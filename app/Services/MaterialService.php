@@ -18,7 +18,7 @@ class MaterialService
      */
     public function getAll(): Collection
     {
-        return Material::query()->orderBy('name')->get();
+        return Material::query()->orderBy('name')->get()->load(['workItems']);
     }
 
     /**
@@ -31,7 +31,7 @@ class MaterialService
         if (! $material) {
             throw new RuntimeException('Material not found.', 404);
         }
-
+        $material->load(['workItems']);
         return $material;
     }
 
@@ -80,67 +80,67 @@ class MaterialService
             ->get();
     }
     public function storeInvoice($request): array
-{
-$request->validated();
+    {
+    $request->validated();
 
 
-$user = Auth::user();
+    $user = Auth::user();
 
-$project = Project::query()
-    ->find($request->project_id);
+    $project = Project::query()
+        ->find($request->project_id);
 
-if (! $project) {
-    throw new \Exception(
-        'Project not found.',
-        404
-    );
-}
+    if (! $project) {
+        throw new \Exception(
+            'Project not found.',
+            404
+        );
+    }
 
-$workItem = WorkItem::query()
-    ->find($request->work_item_id);
+    $workItem = WorkItem::query()
+        ->find($request->work_item_id);
 
-if (! $workItem) {
-    throw new \Exception(
-        'Work item not found.',
-        404
-    );
-}
+    if (! $workItem) {
+        throw new \Exception(
+            'Work item not found.',
+            404
+        );
+    }
 
-if ($workItem->project_id != $project->id) {
-    throw new \Exception(
-        'Work item does not belong to this project.',
-        422
-    );
-}
+    if ($workItem->project_id != $project->id) {
+        throw new \Exception(
+            'Work item does not belong to this project.',
+            422
+        );
+    }
 
-$isCompanyAdmin =
-    $user->hasRole('company_admin');
+    $isCompanyAdmin =
+        $user->hasRole('company_admin');
 
-$isProjectManager =
-    $user->hasRole('project_manager')
-    && $project->project_manager_id == $user->id;
+    $isProjectManager =
+        $user->hasRole('project_manager')
+        && $project->project_manager_id == $user->id;
 
-$isAssistant =
-    $user->hasRole('assistant')
-    && $project->assistant_engineer_id == $user->id;
+    $isAssistant =
+        $user->hasRole('assistant')
+        && $project->assistant_engineer_id == $user->id;
 
-if (
-    ! $isCompanyAdmin
-    && ! $isProjectManager
-    && ! $isAssistant
-) {
-    throw new \Exception(
-        'You are not allowed to create invoices for this project.',
-        403
-    );
-}
+    if (
+        ! $isCompanyAdmin
+        && ! $isProjectManager
+        && ! $isAssistant
+    ) {
+        throw new \Exception(
+            'You are not allowed to create invoices for this project.',
+            403
+        );
+    }
 
-$invoice = DB::transaction(function () use (
-    $request,
-    $project,
-    $workItem,
-    $user
-) {
+    $invoice = DB::transaction(function () use (
+        $request,
+        $project,
+        $workItem,
+        $user
+    ) {
 
             $nextNumber =
                 (WorkItemInvoice::withTrashed()->max('id') ?? 0)

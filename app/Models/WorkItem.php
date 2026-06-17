@@ -151,14 +151,13 @@ class WorkItem extends Model
         return $this->belongsToMany(
             Material::class,
             'work_item_materials',
-            'work_item_name',
-            'material_id',
-            'name',
-            'id'
+            'work_item_name', // foreignPivotKey (pivot column that points to WorkItem)
+            'material_id',    // relatedPivotKey (pivot column that points to Material)
+            'name',           // parentKey (WorkItem key used on pivot)
+            'id'              // relatedKey (Material primary key)
         )
-            ->using(WorkItemMaterial::class)
-            ->withPivot(['sort_order', 'is_required'])
-            ->withTimestamps();
+        ->using(WorkItemMaterial::class)
+        ->withTimestamps();
     }
 
     public function progressPhotos(): HasMany
