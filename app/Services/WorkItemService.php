@@ -656,4 +656,13 @@ class WorkItemService
             ->orderBy('sort_order')
             ->get();
     }
+
+    public function getSystemWorkItems()
+    {
+        return WorkItem::query()
+            ->select('name')
+            ->distinct()
+            ->orderBy('name')
+            ->get();
+    }
     }

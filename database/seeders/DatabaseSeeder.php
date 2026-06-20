@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(WorkItemMaterialsSeeder::class);
         $this->call(WorkItemInvoiceSeeder::class);
         $this->call(WorkItemInvoiceItemSeeder::class);
+        $this->call(NotificationSeeder::class);
     }
 }

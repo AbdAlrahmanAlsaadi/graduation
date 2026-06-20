@@ -10,6 +10,7 @@ use App\Http\Requests\FilterUsersByRoleRequest;
 use App\Http\Requests\InternalLoginRequest;
 use App\Http\Requests\SearchUserRequest;
 use App\Http\Requests\UserStatisticsRequest;
+use App\Http\Resources\NotificationResource;
 use App\Http\Responses\Response;
 use App\Services\Authentication\AuthService;
 use App\Services\AuthService as ServicesAuthService;
@@ -250,6 +251,29 @@ class AuthController extends Controller
             return Response::error(
                 $throwable->getMessage(),
                 $throwable->getCode() ?: 500
+            );
+        }
+    }
+    public function myNotifications()
+    {
+        try {
+
+            $notifications = $this->authService
+                ->getUserNotifications(
+                    auth()->user()
+                );
+
+            return Response::success(
+                'Notifications fetched successfully.',
+                NotificationResource::collection(
+                    $notifications
+                )
+            );
+        } catch (Throwable $e) {
+
+            return Response::error(
+                $e->getMessage(),
+                500
             );
         }
     }
