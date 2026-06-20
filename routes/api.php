@@ -139,6 +139,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
             Route::get('projects/{project}/work-items/list',[WorkItemController::class, 'workItems']
             );
+            Route::get('/work-items/system',[WorkItemController::class, 'getSystemWorkItems'] );
 
 
         Route::post('work-item-invoices',  [MaterialController::class, 'storeInvoice']
@@ -182,6 +183,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ->middleware(['auth:sanctum']);
     Route::get('work-items/{id}/comments', [CommentController::class, 'index'])
         ->middleware(['auth:sanctum']);
+
+        Route::get(
+            'notifications',
+            [AuthController::class, 'myNotifications']
+        )->middleware(['auth:sanctum']);
 
     Route::post(
         'equipment-bookings', [EquipmentController::class, 'storebook']

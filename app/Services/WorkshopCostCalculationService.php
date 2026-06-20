@@ -141,7 +141,7 @@ class WorkshopCostCalculationService
         return $result;
     }
 
-   
+
         public function calculateTileCost(
     int $projectId,
     float $pricePerMeter,
@@ -183,12 +183,15 @@ class WorkshopCostCalculationService
             ->where('ceiling_finish_type', 'ceramic')
             ->sum('ceiling_area');
 
+        $WallAreaeithoutCeramic = $spaces
+            ->where('ceiling_finish_type','!=', 'ceramic')
+            ->sum('wall_area');
         $skirtingArea = 0;
 
         if ($projectHeight > 0) {
 
             $skirtingArea =
-                ($ceramicWallArea / $projectHeight)
+                ($WallAreaeithoutCeramic / $projectHeight)
                 * $skirtingFactor;
         }
 
