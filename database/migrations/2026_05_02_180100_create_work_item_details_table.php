@@ -23,24 +23,6 @@ return new class extends Migration
 
                 ->comment('approved value');
 
-            $table->text('pending_value')
-                ->nullable()
-                ->comment('waiting for approval');
-
-            $table->enum('approval_status', [
-                'approved',
-                'pending',
-                'rejected'
-            ])->default('approved');
-
-            $table->foreignId('approved_by')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete();
-
-            $table->timestamp('approved_at')
-                ->nullable();
-
             $table->string('unit')
                 ->nullable()
                 ->comment('unit of measure');

@@ -7,7 +7,6 @@ use App\Http\Requests\SyncWorkItemMaterialsRequest;
 use App\Http\Requests\UpdateWorkItemMaterialRequest;
 use App\Http\Responses\Response;
 use App\Models\Material;
-use App\Models\WorkItem;
 use App\Services\WorkItemMaterialService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
@@ -22,10 +21,10 @@ class WorkItemMaterialController extends Controller
     /**
      * List materials attached to the given work item.
      */
-    public function index(WorkItem $workItem): JsonResponse
+    public function index(string $workItemName): JsonResponse
     {
         try {
-            $workItemMaterials = $this->workItemMaterialService->getMaterialsForWorkItem($workItem->name);
+            $workItemMaterials = $this->workItemMaterialService->getMaterialsForWorkItem($workItemName);
 
             return Response::success('Work item materials fetched.', $workItemMaterials);
         } catch (Throwable $throwable) {
@@ -36,17 +35,12 @@ class WorkItemMaterialController extends Controller
     /**
      * Attach one material to a work item with pivot data.
      */
-    public function store(WorkItem $workItem, StoreWorkItemMaterialRequest $request): JsonResponse
+    public function store(StoreWorkItemMaterialRequest $request): JsonResponse
     {
         try {
             $data = $request->validated();
 
-            $workItemMaterials = $this->workItemMaterialService->attachMaterial(
-                $workItem->name,
-                (int) $data['material_id'],
-                (int) $data['sort_order'],
-                (bool) $data['is_required']
-            );
+            $workItemMaterials = $this->workItemMaterialService->attachMaterial($data);
 
             return Response::success('Material attached to work item.', $workItemMaterials, 201);
         } catch (Throwable $throwable) {
@@ -57,11 +51,11 @@ class WorkItemMaterialController extends Controller
     /**
      * Update pivot data for one attached material.
      */
-    public function update(WorkItem $workItem, Material $material, UpdateWorkItemMaterialRequest $request): JsonResponse
+    public function update(string $workItemName, Material $material, UpdateWorkItemMaterialRequest $request): JsonResponse
     {
         try {
             $workItemMaterial = $this->workItemMaterialService->updatePivotData(
-                $workItem->name,
+                $workItemName,
                 (int) $material->id,
                 $request->validated()
             );
@@ -75,10 +69,10 @@ class WorkItemMaterialController extends Controller
     /**
      * Detach a material from a work item.
      */
-    public function destroy(WorkItem $workItem, Material $material): JsonResponse
+    public function destroy(string $workItemName, Material $material): JsonResponse
     {
         try {
-            $workItemMaterials = $this->workItemMaterialService->detachMaterial($workItem->name, (int) $material->id);
+            $workItemMaterials = $this->workItemMaterialService->detachMaterial($workItemName, (int) $material->id);
 
             return Response::success('Material detached from work item.', $workItemMaterials);
         } catch (Throwable $throwable) {
@@ -89,11 +83,11 @@ class WorkItemMaterialController extends Controller
     /**
      * Replace all work item materials in one operation.
      */
-    public function sync(WorkItem $workItem, SyncWorkItemMaterialsRequest $request): JsonResponse
+    public function sync(string $workItemName, SyncWorkItemMaterialsRequest $request): JsonResponse
     {
         try {
             $workItemMaterials = $this->workItemMaterialService->syncMaterials(
-                $workItem->name,
+                $workItemName,
                 $request->validated()['materials']
             );
 

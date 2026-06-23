@@ -17,6 +17,7 @@ use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\WorkItemController;
 use App\Http\Controllers\WorkItemMaterialController;
 use App\Http\Controllers\WorkItemProgressController;
+use App\Http\Controllers\ProgressUpdateRequestController;
 use App\Http\Controllers\WorkshopCostCalculationController;
 use App\Models\User;
 use App\Services\AgnesService;
@@ -101,6 +102,27 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
         Route::post('/projects/{project}/work-items/{workItem}/progress/{spaceId}',[WorkItemProgressController::class, 'updateRoom']);
         Route::post('projects/{project}/work-items/{workItem}/progress', [WorkItemProgressController::class, 'update']);
+    });
+
+    // ── Progress Update Requests (Approval Workflow) ────────────────────
+
+    // Assistant submits progress update requests
+    Route::middleware('role:assistant')->group(function () {
+        Route::post('projects/{project}/work-items/{workItem}/progress-requests', [ProgressUpdateRequestController::class, 'store']);
+        Route::post('projects/{project}/work-items/{workItem}/progress-requests/room/{spaceId}', [ProgressUpdateRequestController::class, 'storeRoom']);
+    });
+
+    // View progress update requests (all project roles)
+    Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
+        Route::get('projects/{project}/work-items/{workItem}/progress-requests', [ProgressUpdateRequestController::class, 'index']);
+        Route::get('progress-requests/{progressUpdateRequest}', [ProgressUpdateRequestController::class, 'show']);
+    });
+
+    // Engineer approves or rejects
+    Route::middleware('role:company_admin|project_manager')->group(function () {
+        Route::post('progress-requests/{progressUpdateRequest}/approve', [ProgressUpdateRequestController::class, 'approve']);
+        Route::post('progress-requests/{progressUpdateRequest}/reject', [ProgressUpdateRequestController::class, 'reject']);
+    });
 
     Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
         Route::apiResource('materials', MaterialController::class);
@@ -126,11 +148,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('projects/{project}/engineers', [ProjectEngineerController::class, 'store']);
         Route::delete('projects/{project}/engineers/{assignment}', [ProjectEngineerController::class, 'destroy']);
 
-        Route::get('work-items/{workItem}/materials', [WorkItemMaterialController::class, 'index']);
-        Route::post('work-items/{workItem}/materials', [WorkItemMaterialController::class, 'store']);
-        Route::post('work-items/{workItem}/materials/{material}', [WorkItemMaterialController::class, 'update']);
-        Route::delete('work-items/{workItem}/materials/{material}', [WorkItemMaterialController::class, 'destroy']);
-        //Route::post('work-items/{workItem}/materials/sync', [WorkItemMaterialController::class, 'sync']);
+        Route::get('work-items/{workItemName}/materials', [WorkItemMaterialController::class, 'index']);
+        Route::post('work-items/materials/attach', [WorkItemMaterialController::class, 'store']);
+        //Route::post('work-items/{workItemName}/materials/{material}', [WorkItemMaterialController::class, 'update']);
+        Route::delete('work-items/{workItemName}/materials/{material}', [WorkItemMaterialController::class, 'destroy']);
+        //Route::post('work-items/{workItemName}/materials/sync', [WorkItemMaterialController::class, 'sync']);
 
         Route::get('work-item-details/pending',  [WorkItemController::class, 'pendingUpdates'] );
 
@@ -140,7 +162,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('projects/{project}/work-items/list',[WorkItemController::class, 'workItems']
             );
             Route::get('/work-items/system',[WorkItemController::class, 'getSystemWorkItems'] );
-
 
         Route::post('work-item-invoices',  [MaterialController::class, 'storeInvoice']
         );
@@ -158,8 +179,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
             Route::get('/units',[MaterialController::class, 'getUnits']);
 
-
-
             Route::post(
                 'projects/{projectId}/plaster',
                 [WorkshopCostCalculationController::class, 'plaster']
@@ -175,9 +194,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
                         [WorkshopCostCalculationController::class, 'tile']
                     );
                 });
-
-
-
 
     Route::post('work-items/{id}/comments', [CommentController::class, 'store'])
         ->middleware(['auth:sanctum']);
