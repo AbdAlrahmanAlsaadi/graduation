@@ -9,6 +9,11 @@ use App\Http\Responses\Response;
 use App\Models\Material;
 use App\Services\MaterialService;
 use App\Http\Resources\MaterialResource;
+use App\Http\Resources\WorkItemDetailResource;
+use App\Http\Resources\WorkItemInvoiceDetailsResource;
+use App\Http\Resources\WorkItemInvoiceItemResource;
+use App\Models\Project;
+use App\Models\WorkItemInvoice;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -45,7 +50,7 @@ class MaterialController extends Controller
     {
         try {
             $material = $this->materialService->findById((int) $material->id);
-            
+
 
             return Response::success('Material fetched.', MaterialResource::make($material));
         } catch (Throwable $throwable) {
@@ -128,7 +133,7 @@ class MaterialController extends Controller
             $result['message'],
             $result['status']
         );
-    
+
 
 
 }
@@ -160,6 +165,36 @@ return Response::success(
 
 
 }
+    public function getUnits(): JsonResponse
+    {
+        return Response::success(
+            'Units fetched successfully.',
+            $this->materialService->getMaterialUnits()
+        );
+    }
+    public function showInvoice(
+        Project $project,
+        WorkItemInvoice $invoice
+    ) {
+        try {
 
+            $invoice = $this->materialService
+                ->showInvoice(
+                    $project,
+                    $invoice
+                );
 
-}
+            return Response::success(
+                'Invoice details fetched successfully.',
+                new WorkItemInvoiceDetailsResource(
+                    $invoice
+                )
+            );
+        } catch (Throwable $e) {
+
+            return Response::error(
+                $e->getMessage(),
+                500
+            );
+        }
+    }}

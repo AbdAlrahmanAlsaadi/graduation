@@ -285,4 +285,31 @@ class WorkItemController extends Controller
         );
 
     }
+    public function workItems(Project $project)
+    {
+        return Response::success(
+            'Work items fetched successfully.',
+            $this->workItemService->getProjectWorkItems($project)
+        );
+    }
+
+    public function getSystemWorkItems()
+    {
+        try {
+
+            $items = $this->workItemService
+                ->getSystemWorkItems();
+
+            return Response::success(
+                'Work items fetched successfully.',
+                $items
+            );
+        } catch (Throwable $e) {
+
+            return Response::error(
+                $e->getMessage(),
+                500
+            );
+        }
+    }
 }

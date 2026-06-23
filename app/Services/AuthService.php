@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\ActivityLog;
 use App\Models\Comment;
 use App\Models\EquipmentBooking;
+use App\Models\Notification;
 use App\Models\Project;
 use App\Models\User;
 use Exception;
@@ -685,5 +686,21 @@ class AuthService
 
             'status' => 200,
         ];
+    }
+    public function getUserNotifications(
+        User $user
+    ) {
+        return Notification::query()
+
+            ->where('user_id', $user->id)
+
+            ->with([
+                'project',
+                'workItem'
+            ])
+
+            ->latest()
+
+            ->paginate(20);
     }
 }

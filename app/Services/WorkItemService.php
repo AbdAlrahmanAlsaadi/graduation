@@ -646,4 +646,23 @@ class WorkItemService
 
             'status' => 200,
         ];
-    }}
+    }
+
+    public function getProjectWorkItems(Project $project)
+    {
+        return $project->workItems()
+            ->select('id', 'name')
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+    }
+
+    public function getSystemWorkItems()
+    {
+        return WorkItem::query()
+            ->select('name')
+            ->distinct()
+            ->orderBy('name')
+            ->get();
+    }
+    }

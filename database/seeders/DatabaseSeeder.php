@@ -22,5 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call(BookedEquipmentSeeder::class);
         $this->call(MaterialsSeeder::class);
         $this->call(WorkItemMaterialsSeeder::class);
+        $this->call(WorkItemInvoiceSeeder::class);
+        $this->call(WorkItemInvoiceItemSeeder::class);
+        $this->call(NotificationSeeder::class);
     }
 }

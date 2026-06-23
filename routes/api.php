@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\AIConstructionController;
+use App\Http\Controllers\AIImageController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\ImageGenerationController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\OwnerProjectController;
 use App\Http\Controllers\ProjectEngineerController;
@@ -17,8 +20,10 @@ use App\Http\Controllers\WorkItemProgressController;
 use App\Http\Controllers\ProgressUpdateRequestController;
 use App\Http\Controllers\WorkshopCostCalculationController;
 use App\Models\User;
+use App\Services\AgnesService;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Kreait\Firebase\Contract\Messaging;
 
@@ -154,6 +159,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('work-items/{workItem}/approve',[WorkItemController::class, 'approveWorkItem']);
         Route::post('work-items/{workItem}/reject',[WorkItemController::class, 'rejectWorkItem']);
 
+            Route::get('projects/{project}/work-items/list',[WorkItemController::class, 'workItems']
+            );
+            Route::get('/work-items/system',[WorkItemController::class, 'getSystemWorkItems'] );
+
         Route::post('work-item-invoices',  [MaterialController::class, 'storeInvoice']
         );
 
@@ -164,6 +173,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::get('/projects/{projectId}/archived-invoices', [MaterialController::class, 'archived']
 );
+            Route::get('/projects/{project}/invoices/{invoice}',  [MaterialController::class, 'showInvoice']
+            );
+
+
+            Route::get('/units',[MaterialController::class, 'getUnits']);
+
             Route::post(
                 'projects/{projectId}/plaster',
                 [WorkshopCostCalculationController::class, 'plaster']
@@ -184,6 +199,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ->middleware(['auth:sanctum']);
     Route::get('work-items/{id}/comments', [CommentController::class, 'index'])
         ->middleware(['auth:sanctum']);
+
+        Route::get(
+            'notifications',
+            [AuthController::class, 'myNotifications']
+        )->middleware(['auth:sanctum']);
 
     Route::post(
         'equipment-bookings', [EquipmentController::class, 'storebook']
@@ -230,3 +250,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/assistant/account', [AuthController::class, 'profile']
     );
 }   );
+} );
+
+Route::post('/ai-inspect-job', [App\Http\Controllers\AiInspectionController::class, 'inspect']);

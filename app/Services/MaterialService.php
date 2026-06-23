@@ -502,4 +502,33 @@ return [
 
 
 }
+    public function getMaterialUnits(): array
+    {
+        return Material::query()
+            ->select('unit')
+            ->distinct()
+            ->orderBy('unit')
+            ->pluck('unit')
+            ->values()
+            ->toArray();
+    }
+    public function showInvoice(
+        Project $project,
+        WorkItemInvoice $invoice
+    ): WorkItemInvoice {
+
+        if ($invoice->project_id !== $project->id) {
+
+            throw new RuntimeException(
+                'Invoice does not belong to this project.',
+                404
+            );
+        }
+
+        return $invoice->load([
+            'project',
+            'workItem',
+            'items.material',
+        ]);
+    }
 }
