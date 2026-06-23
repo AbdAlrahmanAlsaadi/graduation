@@ -18,7 +18,7 @@ class MaterialService
      */
     public function getAll(): Collection
     {
-        return Material::query()->orderBy('name')->get()->load(['workItems']);
+        return Material::query()->get()->load(['workItems']);
     }
 
     /**

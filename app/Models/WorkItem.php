@@ -272,4 +272,9 @@ class WorkItem extends Model
             WorkItemLaborCost::class
         );
     }
+
+    public function progressUpdateRequests(): HasMany
+    {
+        return $this->hasMany(ProgressUpdateRequest::class);
+    }
 }

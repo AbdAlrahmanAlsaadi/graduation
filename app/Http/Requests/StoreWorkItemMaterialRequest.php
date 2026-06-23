@@ -15,8 +15,7 @@ class StoreWorkItemMaterialRequest extends FormRequest
     {
         return [
             'material_id' => ['required', 'integer', 'exists:materials,id'],
-            'sort_order' => ['required', 'integer', 'min:0'],
-            'is_required' => ['required', 'boolean'],
+            'workItemName' => ['required', 'string', 'exists:work_items,name'],
         ];
     }
 }

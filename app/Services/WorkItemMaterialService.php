@@ -31,8 +31,6 @@ class WorkItemMaterialService
                 WorkItemMaterial::query()->create([
                     'work_item_name' => $workItemName,
                     'material_id' => $item['material_id'],
-                    'sort_order' => $item['sort_order'],
-                    'is_required' => $item['is_required'],
                 ]);
             }
 
@@ -48,36 +46,33 @@ class WorkItemMaterialService
         return WorkItemMaterial::query()
             ->with('material')
             ->where('work_item_name', $workItemName)
-            ->orderBy('sort_order')
             ->get();
     }
 
     /**
      * Attach one material to a work item type.
      */
-    public function attachMaterial(string $workItemName, int $materialId, int $sortOrder = 0, bool $isRequired = true): Collection
+    public function attachMaterial(array $data): Collection
     {
-        $material = Material::query()->find($materialId);
+        $material = Material::query()->find($data['material_id']);
 
-        if (! $material) {
+        if (! $material) {  
             throw new RuntimeException('Material not found.', 404);
         }
 
         if (WorkItemMaterial::query()
-            ->where('work_item_name', $workItemName)
-            ->where('material_id', $materialId)
+            ->where('work_item_name', $data['workItemName'])
+            ->where('material_id', $data['material_id'])
             ->exists()) {
             throw new RuntimeException('Material already attached to this work item.', 409);
         }
 
         WorkItemMaterial::query()->create([
-            'work_item_name' => $workItemName,
-            'material_id' => $materialId,
-            'sort_order' => $sortOrder,
-            'is_required' => $isRequired,
+            'work_item_name' => $data['workItemName'],
+            'material_id' => $data['material_id'],
         ]);
 
-        return $this->getMaterialsForWorkItem($workItemName);
+        return $this->getMaterialsForWorkItem($data['workItemName']);
     }
 
     /**
