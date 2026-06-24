@@ -16,6 +16,8 @@ use Throwable;
 
 class ProgressUpdateRequestController extends Controller
 {
+    use \Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
     public function __construct(
         private ProgressApprovalService $service
     ) {}

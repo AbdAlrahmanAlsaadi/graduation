@@ -396,6 +396,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'email_verified_at' => now(),
                 'status' => 'active',
+                'fcm_token' => 'asdf1342'
             ]
         );
         $companyAdminUser->assignRole('company_admin');
@@ -422,6 +423,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'email_verified_at' => now(),
                 'status' => 'active',
+                'fcm_token' => 'asdf1342'
             ]
         );
         $assistantUser->assignRole('assistant');
@@ -435,6 +437,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'email_verified_at' => now(),
                 'status' => 'active',
+                'fcm_token' => 'asdf1342'
             ]
         );
         $projectOwnerUser->assignRole('project_owner');

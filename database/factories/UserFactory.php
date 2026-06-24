@@ -29,6 +29,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'internal_id' => fake()->unique()->bothify('INT-####'),
             'status' => 'active',
+            'fcm_token' => 'ABC123',
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
