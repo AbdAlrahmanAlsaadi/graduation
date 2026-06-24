@@ -18,14 +18,6 @@ class WorkItemDetail extends Model
 
         'value',
 
-        'pending_value',
-
-        'approval_status',
-
-        'approved_by',
-
-        'approved_at',
-
         'unit',
     ];
 

@@ -31,11 +31,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-
-
-
-
-
 Route::post('auth/company/login', [AuthController::class, 'companySignIn']);
 Route::post('auth/internal/login', [AuthController::class, 'internalSignIn']);
 Route::middleware('auth:sanctum')->post('sign-out', [AuthController::class, 'signOut']);
@@ -80,13 +75,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
             Route::post('users/{id}/reset-password', [AuthController::class, 'resetPassword']);
 
-
-
         Route::post('contracts', [ContractController::class, 'store']);
 
         Route::get('contracts/{id}/export-pdf', [ContractController::class, 'exportPdf']);
-
-
 
         Route::post('Addequipment', [EquipmentController::class, 'store']);
         Route::post('equipment/maintenance', [EquipmentController::class, 'storeMaintenance']);
@@ -103,7 +94,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/projects/{project}/work-items/{workItem}/progress/{spaceId}',[WorkItemProgressController::class, 'updateRoom']);
         Route::post('projects/{project}/work-items/{workItem}/progress', [WorkItemProgressController::class, 'update']);
     });
-
     // ── Progress Update Requests (Approval Workflow) ────────────────────
 
     // Assistant submits progress update requests
@@ -176,7 +166,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/projects/{project}/invoices/{invoice}',  [MaterialController::class, 'showInvoice']
             );
 
-
             Route::get('/units',[MaterialController::class, 'getUnits']);
 
             Route::post(
@@ -214,8 +203,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         [EquipmentController::class, 'finishBooking']
     )->middleware('auth:sanctum');
 
-
-
     Route::get('equipment/search', [EquipmentController::class, 'search'])
         ->middleware(['auth:sanctum']);
 
@@ -229,8 +216,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::get( 'users/{userId}/statistics',[AuthController::class, 'statistics'])->middleware(['auth:sanctum','role:company_admin',]);
 
-
-
 Route::middleware(['auth:sanctum','role:project_owner'])->group(function () {
     Route::get('owner/projects',[OwnerProjectController::class, 'myProjects']);
     Route::get('owner/projects/{project}',[OwnerProjectController::class, 'show']);
@@ -239,9 +224,7 @@ Route::middleware(['auth:sanctum','role:project_owner'])->group(function () {
 
     Route::get('owner/account', [AuthController::class, 'account']
     );
-
 });
-
 
 Route::middleware('auth:sanctum')->post('fcm-token', [AuthController::class, 'Fcm']);
 
@@ -250,6 +233,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/assistant/account', [AuthController::class, 'profile']
     );
 }   );
-} );
 
 Route::post('/ai-inspect-job', [App\Http\Controllers\AiInspectionController::class, 'inspect']);
