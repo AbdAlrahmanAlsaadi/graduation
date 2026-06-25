@@ -90,10 +90,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
             ->only(['store', 'update', 'destroy']);
     });
 
-    Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
-        Route::post('/projects/{project}/work-items/{workItem}/progress/{spaceId}',[WorkItemProgressController::class, 'updateRoom']);
-        Route::post('projects/{project}/work-items/{workItem}/progress', [WorkItemProgressController::class, 'update']);
-    });
+    // Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
+    //     Route::post('/projects/{project}/work-items/{workItem}/progress/{spaceId}',[WorkItemProgressController::class, 'updateRoom']);
+    //     Route::post('projects/{project}/work-items/{workItem}/progress', [WorkItemProgressController::class, 'update']);
+    // });
     // ── Progress Update Requests (Approval Workflow) ────────────────────
 
     // Assistant submits progress update requests
