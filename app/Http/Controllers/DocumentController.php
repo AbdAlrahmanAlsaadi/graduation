@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDocumentRequest;
-use App\Http\Requests\StoreDocumentVersionRequest;
+use App\Http\Requests\Document\StoreDocumentRequest;
+use App\Http\Requests\Document\StoreDocumentVersionRequest;
 use App\Services\DocumentService;
 use App\Http\Responses\Response;
 use Throwable;

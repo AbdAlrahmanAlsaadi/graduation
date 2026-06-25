@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AdminResetUserPasswordRequest;
-use App\Http\Requests\ChangeUserStatusRequest;
-use App\Http\Requests\CompanyLoginRequest;
-use App\Http\Requests\CreateInternalUserRequest;
-use App\Http\Requests\FilterUsersByRoleRequest;
-use App\Http\Requests\InternalLoginRequest;
-use App\Http\Requests\SearchUserRequest;
-use App\Http\Requests\UserStatisticsRequest;
+use App\Http\Requests\Auth\AdminResetUserPasswordRequest;
+use App\Http\Requests\Auth\ChangeUserStatusRequest;
+use App\Http\Requests\Auth\CompanyLoginRequest;
+use App\Http\Requests\Auth\CreateInternalUserRequest;
+use App\Http\Requests\Auth\FilterUsersByRoleRequest;
+use App\Http\Requests\Auth\InternalLoginRequest;
+use App\Http\Requests\Auth\SearchUserRequest;
+use App\Http\Requests\Auth\UserStatisticsRequest;
 use App\Http\Resources\NotificationResource;
 use App\Http\Responses\Response;
 use App\Services\Authentication\AuthService;

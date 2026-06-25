@@ -6,7 +6,7 @@ use Throwable;
 use App\Models\Project;
 use App\Http\Responses\Response;
 use App\Services\OwnerProjectService;
-use App\Http\Requests\FilterProjectsRequest;
+use App\Http\Requests\Project\FilterProjectsRequest;
 
 class OwnerProjectController extends Controller
 {

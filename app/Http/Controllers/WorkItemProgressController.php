@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateWorkItemProgressRequest;
+use App\Http\Requests\WorkItem\UpdateWorkItemProgressRequest;
 use App\Services\WorkItemProgressService;
 use App\Http\Resources\WorkItemProgressResource;
 use App\Http\Resources\ProjectProgressResource;

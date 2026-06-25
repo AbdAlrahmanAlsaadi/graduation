@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreWorkItemMaterialRequest;
-use App\Http\Requests\SyncWorkItemMaterialsRequest;
-use App\Http\Requests\UpdateWorkItemMaterialRequest;
+use App\Http\Requests\Material\StoreWorkItemMaterialRequest;
+use App\Http\Requests\Material\SyncWorkItemMaterialsRequest;
+use App\Http\Requests\Material\UpdateWorkItemMaterialRequest;
 use App\Http\Responses\Response;
 use App\Models\Material;
 use App\Services\WorkItemMaterialService;

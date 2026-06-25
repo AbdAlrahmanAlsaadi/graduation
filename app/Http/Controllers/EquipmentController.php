@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CloseEquipmentMaintenanceRequest;
-use App\Http\Requests\FilterEquipmentByStatusRequest;
-use App\Http\Requests\FinishEquipmentBookingRequest;
-use App\Http\Requests\SearchEquipmentRequest;
-use App\Http\Requests\StoreEquipmentBookingRequest;
-use App\Http\Requests\StoreEquipmentRequest;
+use App\Http\Requests\Equipment\CloseEquipmentMaintenanceRequest;
+use App\Http\Requests\Equipment\FilterEquipmentByStatusRequest;
+use App\Http\Requests\Equipment\FinishEquipmentBookingRequest;
+use App\Http\Requests\Equipment\SearchEquipmentRequest;
+use App\Http\Requests\Equipment\StoreEquipmentBookingRequest;
+use App\Http\Requests\Equipment\StoreEquipmentRequest;
 use App\Http\Responses\Response;
 use App\Services\EquipmentService;
-use App\Http\Requests\StoreEquipmentMaintenanceRequest;
+use App\Http\Requests\Equipment\StoreEquipmentMaintenanceRequest;
 use Throwable;
 
 class EquipmentController extends Controller

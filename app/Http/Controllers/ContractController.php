@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreContractRequest;
+use App\Http\Requests\Misc\StoreContractRequest;
 use App\Http\Responses\Response;
 use App\Services\ContractService;
 use Barryvdh\Snappy\Facades\SnappyPdf as Pdf;

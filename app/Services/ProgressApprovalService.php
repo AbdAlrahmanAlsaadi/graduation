@@ -70,6 +70,9 @@ class ProgressApprovalService
         array    $photos,
         User     $requester
     ): ProgressUpdateRequest {
+        // Validate space and work item logic before saving the request
+        $this->progressService->validateSpaceForWorkItem($project, $item, $spaceId);
+
         $progressRequest = ProgressUpdateRequest::create([
             'project_id'   => $project->id,
             'work_item_id' => $item->id,

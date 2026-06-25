@@ -104,23 +104,7 @@ class WorkItemProgressService
             $this->storeProgressPhotos($project, $item, $photos);
         }
 
-        $space = Space::where('id', $spaceId)
-            ->where('project_id', $project->id)
-            ->first();
-
-        if (!$space) {
-            abort(404, "Space does not belong to this project.");
-        }
-
-        // تحقق أن الغرفة ينطبق عليها البند
-        $type = $this->logic['mapping'][$item->name] ?? null;
-        $method = $type ? 'filter' . ucfirst($type) : null;
-
-        if ($method && method_exists($this, $method)) {
-            if (!$this->{$method}($space)) {
-                abort(422, "This space does not apply to this work item." . " Method: {$method}");
-            }
-        }
+        $space = $this->validateSpaceForWorkItem($project, $item, $spaceId);
 
         // get old rooms_status
         $old = WorkItemDetail::where('work_item_id', $item->id)
@@ -146,6 +130,29 @@ class WorkItemProgressService
             'work_item' => $item->refresh()->load('progressPhotos'),
             'percent'   => $percent,
         ];
+    }
+
+    public function validateSpaceForWorkItem(Project $project, WorkItem $item, int $spaceId): Space
+    {
+        $space = Space::where('id', $spaceId)
+            ->where('project_id', $project->id)
+            ->first();
+
+        if (!$space) {
+            abort(404, "Space does not belong to this project.");
+        }
+
+        // تحقق أن الغرفة ينطبق عليها البند
+        $type = $this->logic['mapping'][$item->name] ?? null;
+        $method = $type ? 'filter' . ucfirst($type) : null;
+
+        if ($method && method_exists($this, $method)) {
+            if (!$this->{$method}($space)) {
+                abort(422, "This space does not apply to this work item." . " Method: {$method}");
+            }
+        }
+
+        return $space;
     }
 
     /**
