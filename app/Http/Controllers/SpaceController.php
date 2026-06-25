@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSpaceRequest;
-use App\Http\Requests\UpdateSpaceRequest;
+use App\Http\Requests\Project\StoreSpaceRequest;
+use App\Http\Requests\Project\UpdateSpaceRequest;
 use App\Http\Resources\SpaceResource;
 use App\Http\Responses\Response;
 use App\Models\Project;

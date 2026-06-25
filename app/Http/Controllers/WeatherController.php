@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GetProjectWeatherByDateRequest;
+use App\Http\Requests\Project\GetProjectWeatherByDateRequest;
 use App\Http\Responses\Response;
 use App\Services\WeatherService;
 use Illuminate\Http\Request;

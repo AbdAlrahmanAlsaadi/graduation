@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RejectProgressUpdateRequest;
-use App\Http\Requests\StoreProgressUpdateRequest;
-use App\Http\Requests\StoreRoomProgressUpdateRequest;
+use App\Http\Requests\WorkItem\RejectProgressUpdateRequest;
+use App\Http\Requests\WorkItem\StoreProgressUpdateRequest;
+use App\Http\Requests\WorkItem\StoreRoomProgressUpdateRequest;
 use App\Http\Resources\ProgressUpdateRequestResource;
 use App\Models\ProgressUpdateRequest;
 use App\Models\Project;

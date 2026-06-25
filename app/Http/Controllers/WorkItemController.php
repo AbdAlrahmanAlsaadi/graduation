@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ReorderWorkItemsRequest;
-use App\Http\Requests\WorkItemDetailsRequest;
-use App\Http\Requests\StoreWorkItemRequest;
-use App\Http\Requests\UpdateWorkItemRequest;
+use App\Http\Requests\WorkItem\ReorderWorkItemsRequest;
+use App\Http\Requests\WorkItem\WorkItemDetailsRequest;
+use App\Http\Requests\WorkItem\StoreWorkItemRequest;
+use App\Http\Requests\WorkItem\UpdateWorkItemRequest;
 use App\Http\Resources\WorkItemResource;
 use App\Http\Responses\Response;
 use App\Models\Project;

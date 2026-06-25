@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreWorkItemInvoiceRequest;
-use App\Http\Requests\StoreMaterialRequest;
-use App\Http\Requests\UpdateMaterialRequest;
+use App\Http\Requests\Material\StoreWorkItemInvoiceRequest;
+use App\Http\Requests\Material\StoreMaterialRequest;
+use App\Http\Requests\Material\UpdateMaterialRequest;
 use App\Http\Responses\Response;
 use App\Models\Material;
 use App\Services\MaterialService;

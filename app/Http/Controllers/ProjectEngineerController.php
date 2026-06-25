@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AssignEngineerRequest;
+use App\Http\Requests\Project\AssignEngineerRequest;
 use App\Http\Responses\Response;
 use App\Models\Project;
 use App\Services\ProjectEngineerService;

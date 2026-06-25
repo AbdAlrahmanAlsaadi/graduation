@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Throwable;
 use App\Http\Responses\Response;
 use App\Services\CommentService;
-use App\Http\Requests\StoreCommentRequest;
+use App\Http\Requests\Misc\StoreCommentRequest;
 
 class CommentController extends Controller
 {
