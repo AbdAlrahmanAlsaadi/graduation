@@ -18,7 +18,6 @@ class NotificationService
             return;
         }
 
-
         $notification = Notification::create([
             'user_id' => $user->id,
             'project_id' => $data['project_id'] ?? null,
@@ -29,18 +28,36 @@ class NotificationService
             'data' => $data['data'] ?? null,
         ]);
 
-        if (!$user->fcm_token) {
+        $token = trim((string) $user->fcm_token);
+
+        if (empty($token)) {
             return;
         }
 
-        $this->firebase->sendToToken(
-            $user->fcm_token,
-            $data['title'],
-            $data['body'],
-            array_merge($data['data'] ?? [], [
-                'notification_id' => $notification->id,
-                'type' => $data['type'],
-            ])
-        );
-    }
-}
+        try {
+            $this->firebase->sendToToken(
+                $token,
+                $data['title'],
+                $data['body'],
+                array_merge($data['data'] ?? [], [
+                    'notification_id' => $notification->id,
+                    'type' => $data['type'],
+                ])
+            );
+        } catch (\Throwable $e) {
+
+            logger()->warning('FCM failed', [
+                'user_id' => $user->id,
+                'token'   => $token,
+                'error'   => $e->getMessage(),
+            ]);
+
+            // 🚨 مهم: احذف التوكن إذا كان غير صالح
+            if (
+                str_contains($e->getMessage(), 'registration-token') ||
+                str_contains($e->getMessage(), 'invalid')
+            ) {
+                $user->update(['fcm_token' => null]);
+            }
+        }
+    }}
