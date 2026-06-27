@@ -146,9 +146,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::get('work-item-details/pending',  [WorkItemController::class, 'pendingUpdates'] );
 
-        Route::post('work-items/{workItem}/approve',[WorkItemController::class, 'approveWorkItem']);
-        Route::post('work-items/{workItem}/reject',[WorkItemController::class, 'rejectWorkItem']);
-
             Route::get('projects/{project}/work-items/list',[WorkItemController::class, 'workItems']
             );
             Route::get('/work-items/system',[WorkItemController::class, 'getSystemWorkItems'] );

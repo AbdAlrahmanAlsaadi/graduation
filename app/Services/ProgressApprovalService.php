@@ -133,14 +133,20 @@ class ProgressApprovalService
 
             // Apply the actual progress update
             if ($request->type === ProgressUpdateRequest::TYPE_ROOM) {
-                $photos = $this->pathsToUploadedFiles($finalPhotoPaths);
+                // Store photo records in photos_progress table
+                if (!empty($finalPhotoPaths)) {
+                    $this->storePhotoRecords(
+                        $request->project_id,
+                        $request->work_item_id,
+                        $finalPhotoPaths
+                    );
+                }
 
                 $this->progressService->updateRoomStatus(
                     $request->project,
                     $request->workItem,
                     $payload['space_id'],
                     (bool) $payload['completed'],
-                    $photos
                 );
             } else {
                 // For full progress updates, inject photos as file paths
@@ -221,7 +227,7 @@ class ProgressApprovalService
             }
 
             $fileName = Str::uuid()->toString() . '.' . $photo->getClientOriginalExtension();
-            $path = $photo->storeAs($baseDir, $fileName, 'local');
+            $path = $photo->storeAs($baseDir, $fileName, 'public');
             $paths[] = [
                 'path'          => $path,
                 'original_name' => $photo->getClientOriginalName(),
@@ -253,19 +259,16 @@ class ProgressApprovalService
             $tempPath = $tempPhoto['path'];
             $originalName = $tempPhoto['original_name'] ?? basename($tempPath);
 
-            if (!Storage::disk('local')->exists($tempPath)) {
+            if (!Storage::disk('public')->exists($tempPath)) {
                 continue;
             }
 
             $fileName = Str::uuid()->toString() . '.' . pathinfo($tempPath, PATHINFO_EXTENSION);
             $finalPath = $finalDir . '/' . $fileName;
 
-            // Read from local temp, write to public storage
-            $contents = Storage::disk('local')->get($tempPath);
-            Storage::disk('public')->put($finalPath, $contents);
+            // Move within public storage (temp → final)
+            Storage::disk('public')->move($tempPath, $finalPath);
 
-            // Remove temp file
-            Storage::disk('local')->delete($tempPath);
 
             $finalPaths[] = [
                 'path'          => $finalPath,
@@ -275,7 +278,7 @@ class ProgressApprovalService
 
         // Clean up the empty temp directory
         $tempDir = "tmp/progress-updates/{$requestId}";
-        Storage::disk('local')->deleteDirectory($tempDir);
+        Storage::disk('public')->deleteDirectory($tempDir);
 
         return $finalPaths;
     }
@@ -293,18 +296,6 @@ class ProgressApprovalService
                 'original_name' => $photoData['original_name'],
             ]);
         }
-    }
-
-    /**
-     * Convert stored file paths back to UploadedFile instances for updateRoomStatus.
-     * Used only for room-type updates where the service expects file objects.
-     */
-    private function pathsToUploadedFiles(array $finalPhotoPaths): array
-    {
-        // For room updates, photos were already stored. We create the records directly
-        // and return an empty array to avoid double-storing.
-        // The updateRoomStatus method will not receive photos — we handle them here.
-        return [];
     }
 
     /* =========================================================================
