@@ -44,5 +44,8 @@ return [
             'flash_image_2' => 'gemini-2.5-flash-image',
         ],
     ],
+    'openai' => [
+        'api_key' => env('OPENAI_API_KEY'),
+    ],
 
 ];
