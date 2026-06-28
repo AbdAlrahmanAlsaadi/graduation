@@ -11,19 +11,15 @@ class AiVisualizationService
 {
     public function generate(GenerateImageRequest $request): array
     {
+        set_time_limit(300); // زيادة الحد الأقصى للوقت إلى 5 دقائق
         // 1. استقبال صورة الغرفة الأساسية
         $room = $request->file('room_image');
-
-        // 2. استقبال مصفوفة الصور المرجعية المتعددة (مثل: بلاط، دهان، ديكور)
-        // تفترض الهيكلية أن الحقل في الـ Request يُرسل كمصفوفة باسم: reference_images[]
         $materials = $request->file('reference_images') ?? [];
 
-        // 3. بناء الـ Prompt برمجياً لشرح ترتيب الصور للذكاء الاصطناعي
         $prompt = "You are an expert interior designer.\n\n";
         $prompt .= "The first image (Image 1) is the original room requiring renovation.\n";
         $prompt .= "The subsequent images are the design and material references provided in sequential order:\n";
 
-        // ترقيم وشرح الصور المرجعية (صورة الغرفة هي 1، والمواد تبدأ من 2 فصاعداً)
         foreach ($materials as $index => $file) {
             $imageNumber = $index + 2;
             $prompt .= "- Image {$imageNumber} is a material/texture reference.\n";
@@ -39,7 +35,6 @@ class AiVisualizationService
         $prompt .= "- Keep the original perspective, lighting and shadows perfect.\n";
         $prompt .= "- Make the final blended result completely photorealistic.\n";
 
-        // 4. تجهيز الطلب وإرفاق صورة الغرفة الأساسية كأول ملف
         $httpRequest = Http::timeout(300)
             ->withToken(config('services.openai.api_key'))
             ->attach(
@@ -48,7 +43,6 @@ class AiVisualizationService
                 $room->getClientOriginalName()
             );
 
-        // 5. حلقة تكرارية لإرفاق كافة الصور المرجعية المرفوعة ديناميكياً داخل المصفوفة
         foreach ($materials as $file) {
             $httpRequest->attach(
                 'image[]',
@@ -57,7 +51,6 @@ class AiVisualizationService
             );
         }
 
-        // 6. إرسال الطلب النهائي إلى مسار الـ Edits
         $response = $httpRequest->post(
             'https://api.openai.com/v1/images/edits',
             [
@@ -75,7 +68,6 @@ class AiVisualizationService
         $data = $response->json();
         $base64 = $data['data'][0]['b64_json'];
 
-        // 7. تخزين الصورة الناتجة في الـ Storage المحلي
         $fileName = 'generated/' . Str::random(40) . '.png';
         Storage::disk('public')->put($fileName, base64_decode($base64));
 
