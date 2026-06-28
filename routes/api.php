@@ -233,3 +233,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::post('/ai-inspect-job', [App\Http\Controllers\AiInspectionController::class, 'inspect']);
 Route::post('ai-visualization', [App\Http\Controllers\AiVisualizationController::class, 'generate']);
+
+
+
+
+
+
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('projects/{project}/work-items/{workItem}/expenses', [App\Http\Controllers\WorkItemExpenseController::class, 'store']);
+    Route::get('projects/{project}/work-items/{workItem}/expenses', [App\Http\Controllers\WorkItemExpenseController::class, 'index']);
+});

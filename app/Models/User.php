@@ -99,4 +99,11 @@ class User extends Authenticatable
             'created_by'
         );
     }
+    public function workshopExpenses()
+    {
+        return $this->hasMany(
+            WorkshopExpense::class,
+            'paid_by'
+        );
+    }
 }

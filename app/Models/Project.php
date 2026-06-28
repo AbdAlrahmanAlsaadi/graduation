@@ -233,4 +233,11 @@ class Project extends Model
     {
         return $this->hasMany(ProgressUpdateRequest::class);
     }
+
+    public function workshopExpenses()
+    {
+        return $this->hasMany(
+            WorkshopExpense::class
+        );
+    }
 }
