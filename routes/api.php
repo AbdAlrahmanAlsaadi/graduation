@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AIConstructionController;
 use App\Http\Controllers\AIImageController;
+use App\Http\Controllers\AiVisualizationCommentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContractController;
@@ -262,3 +263,11 @@ Route::middleware(['auth:sanctum'])->group(function (){
     );
     Route::delete('ai-visualizations/{id}',[ProjectImageController::class, 'delete']);
 });
+
+Route::middleware(['auth:sanctum'])->group(
+    function () {
+      Route::post('ai-visualizations/{aiVisualization}/comments',[AiVisualizationCommentController::class, 'store']);
+
+        Route::get('ai-visualizations/{aiVisualization}/comments',[AiVisualizationCommentController::class, 'index'] );
+        Route::delete('ai-visualization-comments/{id}', [AiVisualizationCommentController::class, 'destroy']);
+    });

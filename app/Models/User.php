@@ -111,4 +111,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ProjectImage::class);
     }
+
+    public function aiVisualizationComments()
+    {
+        return $this->hasMany(AiVisualizationComment::class);
+    }
 }
