@@ -106,4 +106,9 @@ class User extends Authenticatable
             'paid_by'
         );
     }
+
+    public function images()
+    {
+        return $this->hasMany(ProjectImage::class);
+    }
 }

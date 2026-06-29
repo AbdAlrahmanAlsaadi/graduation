@@ -18,6 +18,7 @@ use App\Http\Controllers\WorkItemController;
 use App\Http\Controllers\WorkItemMaterialController;
 use App\Http\Controllers\WorkItemProgressController;
 use App\Http\Controllers\ProgressUpdateRequestController;
+use App\Http\Controllers\ProjectImageController;
 use App\Http\Controllers\WorkshopCostCalculationController;
 use App\Models\User;
 use App\Services\AgnesService;
@@ -59,9 +60,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::apiResource('projects.work-items', WorkItemController::class)->only(['index']);
     });
 
-    Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
 
-    });
 
     Route::middleware('role:company_admin')->group(function () {
         Route::post('/internal-users', [AuthController::class, 'createInternalUser'])
@@ -230,7 +229,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/assistant/account', [AuthController::class, 'profile']
     );
 }   );
-
 Route::post('/ai-inspect-job', [App\Http\Controllers\AiInspectionController::class, 'inspect']);
 Route::post('ai-visualization', [App\Http\Controllers\AiVisualizationController::class, 'generate']);
 
@@ -243,4 +241,24 @@ Route::post('ai-visualization', [App\Http\Controllers\AiVisualizationController:
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('projects/{project}/work-items/{workItem}/expenses', [App\Http\Controllers\WorkItemExpenseController::class, 'store']);
     Route::get('projects/{project}/work-items/{workItem}/expenses', [App\Http\Controllers\WorkItemExpenseController::class, 'index']);
+});
+
+
+
+
+
+
+
+Route::middleware(['auth:sanctum'])->group(function (){
+
+    Route::post('storeimage', [ProjectImageController::class, 'store']);
+
+    Route::delete('deleteimage/{projectImage}', [ProjectImageController::class, 'destroy']);
+
+    Route::get('/project-images/project/{project}', [ProjectImageController::class, 'index']);
+
+
+    Route::get( 'project-images/{projectid}/visualizations',[ProjectImageController::class, 'index2']
+    );
+    Route::delete('ai-visualizations/{id}',[ProjectImageController::class, 'delete']);
 });
