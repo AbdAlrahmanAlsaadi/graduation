@@ -86,16 +86,9 @@ class SpaceController extends Controller
         try {
             $spaces = Space::query()
                 ->where('project_id', $project->id)
-                ->get()
-                ->filter(fn($space) => $space->wall_finish_type === 'ceramic'
-                    || $space->ceiling_finish_type === 'ceramic')
-                ->values()
-                ->map(fn($space) => [
-                    'id' => $space->id,
-                    'type' => $space->type,
-                    'wall_finish_type' => $space->wall_finish_type,
-                    'ceiling_finish_type' => $space->ceiling_finish_type,
-                ]);
+                ->where('wall_finish_type', 'ceramic')
+                ->orWhere('ceiling_finish_type', 'ceramic')
+                ->get();
 
             return Response::success('Ceramic spaces fetched', $spaces);
         } catch (Throwable $e) {
@@ -111,15 +104,9 @@ class SpaceController extends Controller
         try {
             $spaces = Space::query()
                 ->where('project_id', $project->id)
-                ->get()
-                ->filter(fn($space) => $space->ceiling_finish_type === 'gypsum')
-                ->values()
-                ->map(fn($space) => [
-                    'id' => $space->id,
-                    'type' => $space->type,
-                    'wall_finish_type' => $space->wall_finish_type,
-                    'ceiling_finish_type' => $space->ceiling_finish_type,
-                ]);
+                ->where('wall_finish_type', 'gypsum')
+                ->orWhere('ceiling_finish_type', 'gypsum')
+                ->get();
 
             return Response::success('Gypsum spaces fetched', $spaces);
         } catch (Throwable $e) {

@@ -53,7 +53,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('projects/{project}/spaces/ceramic', [SpaceController::class, 'ceramicSpaces']);
         Route::get('projects/{project}/spaces/gypsum', [SpaceController::class, 'gypsumSpaces']);
         Route::get('projects/{project}/spaces/sanitary', [SpaceController::class, 'sanitarySpaces']);
-         Route::get('projects/{project}/progress', [WorkItemProgressController::class, 'projectProgress']);
+        Route::get('projects/{project}/progress', [WorkItemProgressController::class, 'projectProgress']);
+        Route::get('projects/{project}/work-items/{workItem}/spaces-progress', [WorkItemProgressController::class, 'getSpacesProgress']);
 
         //Route::get('spaces/{spaceId}', [SpaceController::class, 'show']);
         Route::apiResource('projects.work-items', WorkItemController::class)->only(['index']);

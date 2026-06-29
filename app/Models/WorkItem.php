@@ -170,9 +170,8 @@ class WorkItem extends Model
      */
     public function syncDetails(
         array $details,
-        bool $requiresApproval = false
     ): void {
-        DB::transaction(function () use ($details, $requiresApproval) {
+        DB::transaction(function () use ($details) {
 
             $keys = array_column($details, 'key');
 
@@ -192,25 +191,7 @@ class WorkItem extends Model
 
                     'key' => $d['key'],
 
-                    'value' => $requiresApproval
-                        ? ''
-                        : (string) $d['value'],
-
-                    'pending_value' => $requiresApproval
-                        ? (string) $d['value']
-                        : null,
-
-                    'approval_status' => $requiresApproval
-                        ? 'pending'
-                        : 'approved',
-
-                    'approved_by' => $requiresApproval
-                        ? null
-                        : auth()->id(),
-
-                    'approved_at' => $requiresApproval
-                        ? null
-                        : now(),
+                    'value' => $d['value'],
 
                     'unit' => $d['unit'] ?? null,
 

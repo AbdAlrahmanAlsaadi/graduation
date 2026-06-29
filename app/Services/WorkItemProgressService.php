@@ -306,37 +306,57 @@ class WorkItemProgressService
     }
 
 
-    // protected function computeRoomsStatus(Collection $details, Collection $spaces, callable $filter): float
-    // {
-    //     // 1) الغرف التي ينطبق عليها البند
-    //     $filteredSpaces = $spaces->filter($filter);
-    //     $validSpaceIds = $filteredSpaces->pluck('id')->toArray();
+    /**
+     * Returns the applicable spaces for a work item, split into finished and unfinished.
+     *
+     * @return array{finished: \Illuminate\Database\Eloquent\Collection, unfinished: \Illuminate\Database\Eloquent\Collection}
+     */
+    public function getFinishedSpaces($project, $workItem): array
+    {
+        // 1) Determine the filter method for this work item type
+        $type = $this->logic['mapping'][$workItem->name] ?? null;
+        $filterMethod = $type ? 'filter' . ucfirst($type) : null;
 
-    //     if (empty($validSpaceIds)) {
-    //         return 0;
-    //     }
+        // 2) Fetch all project spaces in a single query
+        $spaces = $project->spaces;
 
-    //     // 2) rooms_status
-    //     $statusJson = $details['rooms_status']->value ?? null;
-    //     $status = $statusJson ? json_decode($statusJson, true) : [];
+        // 3) Filter to only applicable spaces
+        if ($filterMethod && method_exists($this, $filterMethod)) {
+            $spaces = $spaces->filter(fn(Space $s) => $this->{$filterMethod}($s));
+        }
 
-    //     if (!is_array($status)) {
-    //         $status = [];
-    //     }
+        // 4) Fetch the rooms_status JSON (single query)
+        $detail = WorkItemDetail::where('work_item_id', $workItem->id)
+            ->where('key', 'rooms_status')
+            ->first();
 
-    //     // 3) احسب الغرف المنجزة فقط إذا كانت ضمن validSpaceIds
-    //     $done = 0;
-    //     foreach ($validSpaceIds as $id) {
-    //         if (isset($status[$id]) && $status[$id] === true) {
-    //             $done++;
-    //         }
-    //     }
+        $status = $detail ? json_decode($detail->value, true) : [];
+        if (!is_array($status)) {
+            $status = [];
+        }
 
-    //     // 4) total = عدد الغرف التي ينطبق عليها البند
-    //     $total = count($validSpaceIds);
+        // 5) Fetch all photos for this work item in a single query, grouped by space_id
+        $spaceIds = $spaces->pluck('id')->toArray();
+        $photosBySpace = ProgressPhoto::where('work_item_id', $workItem->id)
+            ->whereIn('space_id', $spaceIds)
+            ->get()
+            ->groupBy('space_id');
 
-    //     return ($done / $total) * 100;
-    // }
+        // 6) Attach photos to each space
+        $spaces->each(function (Space $s) use ($photosBySpace) {
+            $s->setAttribute('photos', $photosBySpace->get($s->id, collect()));
+        });
+
+        // 7) Partition into finished / unfinished
+        [$finished, $unfinished] = $spaces->partition(
+            fn(Space $s) => isset($status[$s->id]) && ($status[$s->id] === true || $status[$s->id] == 1)
+        );
+
+        return [
+            'finished'   => $finished->values(),
+            'unfinished' => $unfinished->values(),
+        ];
+    }
 
     /* =========================================================================
        STRATEGIES

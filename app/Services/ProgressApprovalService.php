@@ -138,7 +138,8 @@ class ProgressApprovalService
                     $this->storePhotoRecords(
                         $request->project_id,
                         $request->work_item_id,
-                        $finalPhotoPaths
+                        $finalPhotoPaths,
+                        $payload['space_id']
                     );
                 }
 
@@ -286,7 +287,7 @@ class ProgressApprovalService
     /**
      * Create ProgressPhoto records for approved photos.
      */
-    private function storePhotoRecords(int $projectId, int $workItemId, array $photoPaths): void
+    private function storePhotoRecords(int $projectId, int $workItemId, array $photoPaths, $spaceId = Null): void
     {
         foreach ($photoPaths as $photoData) {
             \App\Models\ProgressPhoto::create([
@@ -294,6 +295,7 @@ class ProgressApprovalService
                 'work_item_id'  => $workItemId,
                 'file_path'     => $photoData['path'],
                 'original_name' => $photoData['original_name'],
+                'space_id'      => $spaceId
             ]);
         }
     }
