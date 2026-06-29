@@ -21,6 +21,9 @@ class AiVisualization extends Model
     {
         return $this->belongsTo(ProjectImage::class);
     }
-
+    public function comments()
+    {
+        return $this->hasMany(AiVisualizationComment::class);
+    }
 
 }
