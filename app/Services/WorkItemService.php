@@ -100,60 +100,9 @@ class WorkItemService
         }
 
         $user = Auth::user();
-
-        $requiresApproval = $user->hasRole('assistant');
-
         $workItem->syncDetails(
             $details,
-            $requiresApproval
         );
-
-        /*
-    |--------------------------------------------------------------------------
-    | Assistant -> Manager Notification
-    |--------------------------------------------------------------------------
-    */
-        if ($requiresApproval) {
-
-            $manager = $project->projectManager;
-
-            if ($manager) {
-
-                app(NotificationService::class)->send(
-                    $manager,
-                    [
-                        'project_id' => $project->id,
-
-                        'project_work_item_id' => $workItem->id,
-
-                        'type' => 'work_item_progress_updated',
-
-                        'title' => 'طلب اعتماد نسبة إنجاز',
-
-                        'body' => "قام {$user->name} بتحديث نسبة الإنجاز للبند {$workItem->name}",
-
-                        'sender_id' => $user->id,
-
-                        'data' => [
-
-                            'action' => 'approval_required',
-
-                            'project_id' => $project->id,
-
-                            'project_name' => $project->name,
-
-                            'work_item_id' => $workItem->id,
-
-                            'work_item_name' => $workItem->name,
-
-                            'assistant_id' => $user->id,
-
-                            'assistant_name' => $user->name,
-                        ],
-                    ]
-                );
-            }
-        }
 
         return $workItem->fresh('details');
     }
