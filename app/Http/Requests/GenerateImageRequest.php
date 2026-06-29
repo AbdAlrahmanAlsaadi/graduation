@@ -15,28 +15,28 @@ class GenerateImageRequest extends FormRequest
     {
         return [
 
-            'room_image' => [
+            'project_image_id' => [
                 'required',
-                'image',
-                'mimes:jpg,jpeg,png,webp',
-                'max:10240'
+                'exists:project_images,id',
             ],
 
             'reference_images' => [
                 'required',
-                'array'
+                'array',
+                'min:1',
             ],
 
             'reference_images.*' => [
+                'required',
                 'image',
                 'mimes:jpg,jpeg,png,webp',
-                'max:10240'
+                'max:10240',
             ],
 
             'prompt' => [
                 'required',
                 'string',
-                'max:500'
+                'max:1000',
             ],
 
         ];
