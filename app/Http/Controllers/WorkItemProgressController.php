@@ -177,4 +177,17 @@ class WorkItemProgressController extends Controller
             return Response::error('Failed to fetch project progress. ' . $e->getMessage(), 500);
         }
     }
+
+    public function getSpacesProgress(Project $project, WorkItem $workItem) {
+        try {
+            $data = $this->service->getFinishedSpaces($project, $workItem);
+
+            return Response::success('Spaces progress fetched', [
+                'finished'   => $data['finished'],
+                'unfinished' => $data['unfinished'],
+            ]);
+        } catch (Throwable $e) {
+            return Response::error('Failed to fetch spaces progress. ' . $e->getMessage(), 500);
+        }
+    }
 }

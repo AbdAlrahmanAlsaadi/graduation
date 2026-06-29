@@ -28,6 +28,7 @@ class ProgressPhoto extends Model
         'work_item_id',
         'file_path',
         'original_name',
+        'space_id'
     ];
 
     public function project(): BelongsTo
@@ -38,5 +39,9 @@ class ProgressPhoto extends Model
     public function workItem(): BelongsTo
     {
         return $this->belongsTo(WorkItem::class);
+    }
+    public function space(): BelongsTo
+    {
+        return $this->belongsTo(Space::class , 'space_id');
     }
 }
