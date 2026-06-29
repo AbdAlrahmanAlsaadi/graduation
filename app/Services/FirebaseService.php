@@ -13,7 +13,7 @@ class FirebaseService
     public function __construct()
     {
         $this->messaging = (new Factory)
-            ->withServiceAccount(storage_path(env('FIREBASE_CREDENTIALS')))
+            ->withServiceAccount(storage_path('app\graduation-9d9e5-firebase-adminsdk-fbsvc-8b4d2fecf7.json'))
             ->createMessaging();
     }
 
@@ -41,7 +41,7 @@ class FirebaseService
         $this->messaging->send($message);
     }
 
-   
+
     private function formatData(array $data): array
     {
         return array_map(fn($value) => (string) $value, $data);
