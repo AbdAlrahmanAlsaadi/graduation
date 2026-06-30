@@ -79,7 +79,7 @@ class WorkItemProgressService
 
                 $photos = [];
             }
-            $this->storeProgressPhotos($project, $item, $photos);
+            $this->storeProgressPhotos($project, $item, $photos, null);
 
             unset($data['photos']);
         }
@@ -122,7 +122,7 @@ class WorkItemProgressService
         }
 
         if (!empty($photos)) {
-            $this->storeProgressPhotos($project, $item, $photos);
+            $this->storeProgressPhotos($project, $item, $photos, $spaceId);
         }
 
         $space = $this->validateSpaceForWorkItem($project, $item, $spaceId);
@@ -183,7 +183,7 @@ class WorkItemProgressService
     /**
      * @param array<int, \Illuminate\Http\UploadedFile> $photos
      */
-    private function storeProgressPhotos(Project $project, WorkItem $item, array $photos): void
+    private function storeProgressPhotos(Project $project, WorkItem $item, array $photos, int $spaceId = null): void
     {
         if (empty($photos)) {
             return;
@@ -201,6 +201,7 @@ class WorkItemProgressService
                 'work_item_id' => $item->id,
                 'file_path' => $storedPath,
                 'original_name' => $photo->getClientOriginalName(),
+                'space_id' => $spaceId,
             ]);
         }
     }

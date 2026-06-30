@@ -200,6 +200,10 @@ class WorkItemService
             return $workItem;
         }
 
+        if (app(WorkItemProgressService::class)->computeWorkItemPercent($workItem) < 100) {
+            throw new RuntimeException('Work item not completed.', 400);
+        }
+
         return DB::transaction(function () use ($workItem) {
             $workItem->status = WorkItem::STATUS_COMPLETED;
             if ($workItem->completed_at === null) {
