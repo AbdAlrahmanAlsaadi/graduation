@@ -54,6 +54,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function progressRequests()
+    {
+        return $this->hasMany(ProgressUpdateRequest::class, 'requested_by');
+    }
+
     public function ownedContracts()
     {
         return $this->hasMany(Contract::class, 'owner_id');

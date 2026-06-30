@@ -27,6 +27,11 @@ class ProgressApprovalService
         array    $data,
         User     $requester
     ): ProgressUpdateRequest {
+
+        if($item->status === 'completed'){
+            abort(400,'Work item already completed');
+        }
+
         // 1) Create the request without photos first (to get the ID)
         $progressRequest = ProgressUpdateRequest::create([
             'project_id'   => $project->id,
@@ -72,6 +77,22 @@ class ProgressApprovalService
     ): ProgressUpdateRequest {
         // Validate space and work item logic before saving the request
         $this->progressService->validateSpaceForWorkItem($project, $item, $spaceId);
+        
+        if($item->status === 'completed'){
+            abort(400,'Work item already completed');
+        }
+
+        // Prevent duplicate pending room update for the same space on this work item
+        $existingPending = ProgressUpdateRequest::where('work_item_id', $item->id)
+            ->where('project_id', $project->id)
+            ->where('type', ProgressUpdateRequest::TYPE_ROOM)
+            ->where('status', '!=', ProgressUpdateRequest::STATUS_REJECTED)
+            ->where('payload->space_id', $spaceId)
+            ->exists();
+
+        if ($existingPending) { 
+            abort(400, 'يوجد طلب تحديث فراغ معلق لهذا البند في نفس الفراغ');
+        }
 
         $progressRequest = ProgressUpdateRequest::create([
             'project_id'   => $project->id,

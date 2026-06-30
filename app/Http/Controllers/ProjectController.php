@@ -38,6 +38,20 @@ class ProjectController extends Controller
         }
     }
 
+    public function listEngineerProjects(): JsonResponse
+    {
+        try {
+            $projects = Auth::user()->assignedProjects;
+
+            return Response::success(
+                'Projects fetched.',
+                ProjectResource::collection($projects)
+            );
+        } catch (Throwable $throwable) {
+            return $this->handleException($throwable);
+        }
+    }
+
     public function store(StoreProjectRequest $request): JsonResponse
     {
         try {

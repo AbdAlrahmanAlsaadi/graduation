@@ -138,6 +138,12 @@ class ProjectService
             ])->status(400);
         }
 
+        if($project->workItems()->where('status', '!=', 'completed')->count() > 0){
+            throw ValidationException::withMessages([
+                'status' => 'All work items must be completed before completing the project.',
+            ])->status(400);
+        }
+
         return DB::transaction(function () use ($project) {
             $project->status = Project::STATUS_COMPLETED;
             if ($project->completed_at === null) {
