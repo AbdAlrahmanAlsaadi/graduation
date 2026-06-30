@@ -3174,6 +3174,111 @@
                   "body": "{\n    \"status\": 200,\n    \"message\": \"Account fetched successfully.\",\n    \"data\": {\n        \"name\": \"Sara Assistant\",\n        \"email\": \"sara.assistant@alfanar.com\",\n        \"role\": \"مساعد تنفيذي\",\n        \"assigned_projects_count\": 1,\n        \"account_status\": \"verified\",\n        \"avatar\": null\n    }\n}"
                 }
               ]
+            },
+            {
+              "name": "GetExpensive",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/projects/{{project}}/work-items/{{workItem}}/expenses?from=2026-06-01&to=2026-06-30",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{project}}",
+                    "work-items",
+                    "{{workItem}}",
+                    "expenses"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "2026-06-01"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2026-06-30"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{project}}/work-items/{{workItem}}/expenses?from=2026-06-01&to=2026-06-30",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{project}}",
+                        "work-items",
+                        "{{workItem}}",
+                        "expenses"
+                      ],
+                      "query": [
+                        {
+                          "key": "from",
+                          "value": "2026-06-01",
+                          "type": "text"
+                        },
+                        {
+                          "key": "to",
+                          "value": "2026-06-30",
+                          "type": "text"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.12"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sun, 28 Jun 2026 22:59:22 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Expenses fetched successfully.\",\n    \"data\": {\n        \"project\": {\n            \"id\": 1,\n            \"name\": \"Hermann-Kiehn Project\"\n        },\n        \"work_item\": {\n            \"id\": 1,\n            \"name\": \"ملابن الأبواب\"\n        },\n        \"from\": \"2026-06-01\",\n        \"to\": \"2026-06-30\",\n        \"total_amount\": 315,\n        \"expenses\": [\n            {\n                \"id\": 7,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:55:14.000000Z\"\n            },\n            {\n                \"id\": 6,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:55:12.000000Z\"\n            },\n            {\n                \"id\": 5,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:53:55.000000Z\"\n            },\n            {\n                \"id\": 4,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:52:09.000000Z\"\n            },\n            {\n                \"id\": 3,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:51:07.000000Z\"\n            },\n            {\n                \"id\": 2,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:50:53.000000Z\"\n            },\n            {\n                \"id\": 1,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:49:15.000000Z\"\n            }\n        ]\n    }\n}"
+                }
+              ]
             }
           ]
         },
