@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "e6f423e6-5ab0-4aab-8b0e-2cf3673fa8ff",
+    "_postman_id": "70e91d88-caa4-4b76-b81b-b22482a47f2b",
     "name": "APiGraduation",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "31996207",
-    "_collection_link": "https://go.postman.co/collection/48026584-e6f423e6-5ab0-4aab-8b0e-2cf3673fa8ff?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/48026584-70e91d88-caa4-4b76-b81b-b22482a47f2b?source=collection_link"
   },
   "item": [
     {
@@ -1145,16 +1145,16 @@
                       ]
                     },
                     "url": {
-                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/progress",
+                      "raw": "{{base_url}}/projects/{{project_id}}/work-items/{{workItemId}}}/progress-requests",
                       "host": [
                         "{{base_url}}"
                       ],
                       "path": [
                         "projects",
-                        "{{projectId}}",
+                        "{{project_id}}",
                         "work-items",
-                        "{{workItemId}}",
-                        "progress"
+                        "{{workItemId}}}",
+                        "progress-requests"
                       ]
                     }
                   },
@@ -1349,7 +1349,7 @@
                       "bearer": [
                         {
                           "key": "token",
-                          "value": "{{auth_token}}",
+                          "value": "6|zGc6lqnVnQum9WY9yQbNzYN8bHmDjB2DGukPTQ0391ce1ac5",
                           "type": "string"
                         }
                       ]
@@ -1374,100 +1374,30 @@
                           "key": "photos[]",
                           "type": "file",
                           "uuid": "932e2772-ab66-4e40-8c5e-3fefd7a2cc43",
-                          "src": "/C:/Users/NEW MSI/Pictures/photo_2024-10-24_15-07-08.jpg"
+                          "src": [
+                            "/C:/Users/NEW MSI/Pictures/photo_2024-10-24_15-07-08.jpg",
+                            "/C:/Users/NEW MSI/Pictures/photo_2024-10-24_15-07-08.jpg"
+                          ]
                         }
                       ]
                     },
                     "url": {
-                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/progress/3",
+                      "raw": "{{base_url}}/projects/{{project_id}}/work-items/{{workItemId}}/progress-requests/room/{{spaceId}}",
                       "host": [
                         "{{base_url}}"
                       ],
                       "path": [
                         "projects",
-                        "{{projectId}}",
+                        "{{project_id}}",
                         "work-items",
                         "{{workItemId}}",
-                        "progress",
-                        "3"
+                        "progress-requests",
+                        "room",
+                        "{{spaceId}}"
                       ]
                     }
                   },
                   "response": [
-                    {
-                      "name": "Mellaben",
-                      "originalRequest": {
-                        "method": "PUT",
-                        "header": [
-                          {
-                            "key": "Accept",
-                            "value": "application/json",
-                            "type": "text"
-                          }
-                        ],
-                        "body": {
-                          "mode": "raw",
-                          "raw": "{\r\n  \"completed_wood_doors\": 4,\r\n  \"completed_aluminum_doors\": 2,\r\n  \"completed_windows\": 6\r\n}",
-                          "options": {
-                            "raw": {
-                              "language": "json"
-                            }
-                          }
-                        },
-                        "url": {
-                          "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/progress",
-                          "host": [
-                            "{{base_url}}"
-                          ],
-                          "path": [
-                            "projects",
-                            "{{projectId}}",
-                            "work-items",
-                            "{{workItemId}}",
-                            "progress"
-                          ]
-                        }
-                      },
-                      "status": "OK",
-                      "code": 200,
-                      "_postman_previewlanguage": "Text",
-                      "header": [
-                        {
-                          "key": "Host",
-                          "value": "127.0.0.1:8000"
-                        },
-                        {
-                          "key": "Date",
-                          "value": "Sun, 24 May 2026 21:42:19 GMT"
-                        },
-                        {
-                          "key": "Date",
-                          "value": "Sun, 24 May 2026 21:42:19 GMT"
-                        },
-                        {
-                          "key": "Connection",
-                          "value": "close"
-                        },
-                        {
-                          "key": "X-Powered-By",
-                          "value": "PHP/8.2.11"
-                        },
-                        {
-                          "key": "Cache-Control",
-                          "value": "no-cache, private"
-                        },
-                        {
-                          "key": "Content-Type",
-                          "value": "application/json"
-                        },
-                        {
-                          "key": "Access-Control-Allow-Origin",
-                          "value": "*"
-                        }
-                      ],
-                      "cookie": [],
-                      "body": "{\n    \"status\": 200,\n    \"message\": \"Progress updated successfully\",\n    \"data\": {\n        \"work_item\": {\n            \"id\": 24,\n            \"name\": \"ملابن الأبواب\",\n            \"percent\": 100,\n            \"weight\": \"1.00\",\n            \"details\": [\n                {\n                    \"key\": \"total_wood_doors\",\n                    \"value\": \"4\",\n                    \"unit\": \"count\",\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"total_aluminum_doors\",\n                    \"value\": \"2\",\n                    \"unit\": \"count\",\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"total_windows\",\n                    \"value\": \"6\",\n                    \"unit\": \"count\",\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"completed_wood_doors\",\n                    \"value\": \"4\",\n                    \"unit\": null,\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"completed_aluminum_doors\",\n                    \"value\": \"2\",\n                    \"unit\": null,\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"completed_windows\",\n                    \"value\": \"6\",\n                    \"unit\": null,\n                    \"meta\": null\n                }\n            ]\n        },\n        \"project\": {\n            \"id\": 3,\n            \"name\": \"Green, Ward and Schuster Project\",\n            \"project_percent\": 9.09,\n            \"items\": [\n                {\n                    \"id\": 24,\n                    \"name\": \"ملابن الأبواب\",\n                    \"percent\": 100,\n                    \"weight\": \"1.00\",\n                    \"details\": [\n                        {\n                            \"key\": \"total_wood_doors\",\n                            \"value\": \"4\",\n                            \"unit\": \"count\",\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"total_aluminum_doors\",\n                            \"value\": \"2\",\n                            \"unit\": \"count\",\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"total_windows\",\n                            \"value\": \"6\",\n                            \"unit\": \"count\",\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"completed_wood_doors\",\n                            \"value\": \"4\",\n                            \"unit\": null,\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"completed_aluminum_doors\",\n                            \"value\": \"2\",\n                            \"unit\": null,\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"completed_windows\",\n                            \"value\": \"6\",\n                            \"unit\": null,\n                            \"meta\": null\n                        }\n                    ]\n                },\n                {\n                    \"id\": 25,\n                    \"name\": \"تمديدات كهرباء\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 26,\n                    \"name\": \"تمديدات صحية\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 27,\n                    \"name\": \"طينة / لياسة\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 28,\n                    \"name\": \"بلاط أرضيات\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 29,\n                    \"name\": \"سيراميك جدران / أسقف\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 30,\n                    \"name\": \"جبس بورد\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 31,\n                    \"name\": \"دهان\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 32,\n                    \"name\": \"أبواب ونجارة\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 33,\n                    \"name\": \"ألمنيوم وأبجورات\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 34,\n                    \"name\": \"تشطيبات نهائية\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                }\n            ]\n        }\n    }\n}"
-                    },
                     {
                       "name": "تحديث بلاط أرضيات",
                       "originalRequest": {
@@ -1706,6 +1636,92 @@
                       ],
                       "cookie": [],
                       "body": "{\n    \"status\": 500,\n    \"message\": \"Failed to update room progress. This space does not apply to this work item.\",\n    \"data\": []\n}"
+                    },
+                    {
+                      "name": "منع تكرار نفس طلب التحديث",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "key": "completed",
+                              "value": "1",
+                              "type": "text"
+                            },
+                            {
+                              "key": "photos[]",
+                              "type": "file",
+                              "uuid": "932e2772-ab66-4e40-8c5e-3fefd7a2cc43",
+                              "src": [
+                                "/C:/Users/NEW MSI/Pictures/photo_2024-10-24_15-07-08.jpg",
+                                "/C:/Users/NEW MSI/Pictures/photo_2024-10-24_15-07-08.jpg"
+                              ]
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{base_url}}/projects/{{project_id}}/work-items/{{workItemId}}/progress-requests/room/{{spaceId}}",
+                          "host": [
+                            "{{base_url}}"
+                          ],
+                          "path": [
+                            "projects",
+                            "{{project_id}}",
+                            "work-items",
+                            "{{workItemId}}",
+                            "progress-requests",
+                            "room",
+                            "{{spaceId}}"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Host",
+                          "value": "127.0.0.1:8000"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Tue, 30 Jun 2026 01:08:14 GMT"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Tue, 30 Jun 2026 01:08:14 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "close"
+                        },
+                        {
+                          "key": "X-Powered-By",
+                          "value": "PHP/8.2.11"
+                        },
+                        {
+                          "key": "Cache-Control",
+                          "value": "no-cache, private"
+                        },
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "key": "Access-Control-Allow-Origin",
+                          "value": "*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"status\": 500,\n    \"message\": \"Failed to submit room progress request. يوجد طلب تحديث فراغ معلق لهذا البند في نفس الفراغ\",\n    \"data\": []\n}"
                     }
                   ]
                 },
@@ -1815,6 +1831,331 @@
                       ],
                       "cookie": [],
                       "body": "{\n    \"status\": 200,\n    \"message\": \"Project progress fetched\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Cruickshank, Fritsch and Howell Project\",\n        \"project_percent\": 9.09,\n        \"items\": [\n            {\n                \"id\": 2,\n                \"name\": \"تمديدات كهرباء\",\n                \"percent\": 60,\n                \"weight\": \"1.00\",\n                \"details\": [\n                    {\n                        \"rooms_status\": \"{\\\"1\\\":true,\\\"2\\\":true,\\\"3\\\":true}\",\n                        \"unit\": null,\n                        \"meta\": null\n                    }\n                ]\n            },\n            {\n                \"id\": 3,\n                \"name\": \"تمديدات صحية\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 4,\n                \"name\": \"طينة / لياسة\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 5,\n                \"name\": \"بلاط أرضيات\",\n                \"percent\": 40,\n                \"weight\": \"1.00\",\n                \"details\": [\n                    {\n                        \"rooms_status\": \"{\\\"1\\\":false,\\\"3\\\":true,\\\"5\\\":true}\",\n                        \"unit\": null,\n                        \"meta\": null\n                    }\n                ]\n            },\n            {\n                \"id\": 6,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 7,\n                \"name\": \"جبس بورد\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 8,\n                \"name\": \"دهان\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 9,\n                \"name\": \"أبواب ونجارة\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 10,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 11,\n                \"name\": \"تشطيبات نهائية\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 12,\n                \"name\": \"Tile Installation\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": [\n                    {\n                        \"tile_length\": \"30\",\n                        \"unit\": \"cm\",\n                        \"meta\": null\n                    },\n                    {\n                        \"tile_width\": \"30\",\n                        \"unit\": \"cm\",\n                        \"meta\": null\n                    }\n                ]\n            }\n        ]\n    }\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Spaces Progress",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{auth_token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{project_id}}/work-items/{{workItemId}}/spaces-progress",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{project_id}}",
+                        "work-items",
+                        "{{workItemId}}",
+                        "spaces-progress"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "Spaces Progress",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{base_url}}/projects/{{project_id}}/work-items/{{workItemId}}/spaces-progress",
+                          "host": [
+                            "{{base_url}}"
+                          ],
+                          "path": [
+                            "projects",
+                            "{{project_id}}",
+                            "work-items",
+                            "{{workItemId}}",
+                            "spaces-progress"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Host",
+                          "value": "127.0.0.1:8000"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Mon, 29 Jun 2026 18:10:04 GMT"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Mon, 29 Jun 2026 18:10:04 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "close"
+                        },
+                        {
+                          "key": "X-Powered-By",
+                          "value": "PHP/8.2.11"
+                        },
+                        {
+                          "key": "Cache-Control",
+                          "value": "no-cache, private"
+                        },
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "key": "Access-Control-Allow-Origin",
+                          "value": "*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"status\": 200,\n    \"message\": \"Spaces progress fetched\",\n    \"data\": {\n        \"finished\": [\n            {\n                \"id\": 1,\n                \"project_id\": 1,\n                \"type\": \"shed\",\n                \"wall_area\": \"72.44\",\n                \"wall_finish_type\": \"custom\",\n                \"ceiling_finish_type\": \"ceramic\",\n                \"toilet_type\": \"none\",\n                \"ceiling_area\": \"36.40\",\n                \"is_shed_floor_tiled\": false,\n                \"created_at\": \"2026-06-29T16:38:25.000000Z\",\n                \"updated_at\": \"2026-06-29T16:38:25.000000Z\",\n                \"deleted_at\": null,\n                \"photos\": [\n                    {\n                        \"id\": 3,\n                        \"project_id\": 1,\n                        \"work_item_id\": 8,\n                        \"space_id\": 1,\n                        \"file_path\": \"progress-photos/1/8/c24a1f56-65b3-4a04-8afc-99117a0cab81.jpg\",\n                        \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                        \"created_at\": \"2026-06-29T18:05:16.000000Z\",\n                        \"updated_at\": \"2026-06-29T18:05:16.000000Z\"\n                    },\n                    {\n                        \"id\": 4,\n                        \"project_id\": 1,\n                        \"work_item_id\": 8,\n                        \"space_id\": 1,\n                        \"file_path\": \"progress-photos/1/8/82a6c656-7a54-4412-b744-a99ac4fe9e6a.jpg\",\n                        \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                        \"created_at\": \"2026-06-29T18:05:16.000000Z\",\n                        \"updated_at\": \"2026-06-29T18:05:16.000000Z\"\n                    }\n                ]\n            }\n        ],\n        \"unfinished\": [\n            {\n                \"id\": 2,\n                \"project_id\": 1,\n                \"type\": \"shed\",\n                \"wall_area\": \"125.57\",\n                \"wall_finish_type\": \"ceramic\",\n                \"ceiling_finish_type\": \"gypsum\",\n                \"toilet_type\": \"none\",\n                \"ceiling_area\": \"23.02\",\n                \"is_shed_floor_tiled\": true,\n                \"created_at\": \"2026-06-29T16:38:25.000000Z\",\n                \"updated_at\": \"2026-06-29T16:38:25.000000Z\",\n                \"deleted_at\": null,\n                \"photos\": []\n            }\n        ]\n    }\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Progress Update Requests",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "5|EfptDYZezWbD8q0CXZ53YHHQyn58XHjlZohttVCid3d92c0e",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/my-progress-requests",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "my-progress-requests"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "Progress Update Requests",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{base_url}}/my-progress-requests",
+                          "host": [
+                            "{{base_url}}"
+                          ],
+                          "path": [
+                            "my-progress-requests"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Host",
+                          "value": "127.0.0.1:8000"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Tue, 30 Jun 2026 00:51:05 GMT"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Tue, 30 Jun 2026 00:51:05 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "close"
+                        },
+                        {
+                          "key": "X-Powered-By",
+                          "value": "PHP/8.2.11"
+                        },
+                        {
+                          "key": "Cache-Control",
+                          "value": "no-cache, private"
+                        },
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "key": "Access-Control-Allow-Origin",
+                          "value": "*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"status\": 200,\n    \"message\": \"Progress update requests fetched\",\n    \"data\": [\n        {\n            \"id\": 3,\n            \"project_id\": 1,\n            \"work_item_id\": 8,\n            \"type\": \"room\",\n            \"status\": \"approved\",\n            \"payload\": {\n                \"space_id\": 1,\n                \"completed\": true\n            },\n            \"photos\": [\n                {\n                    \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                    \"url\": \"http://127.0.0.1:8000/storage/tmp/progress-updates/3/addd82f5-583d-4b02-9538-c93dfbed6875.jpg\"\n                },\n                {\n                    \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                    \"url\": \"http://127.0.0.1:8000/storage/tmp/progress-updates/3/c8db4ec2-2649-4734-aa35-1aedbc228b3c.jpg\"\n                }\n            ],\n            \"comment\": null,\n            \"reviewed_at\": \"2026-06-29T18:02:36.000000Z\",\n            \"created_at\": \"2026-06-29T18:02:24.000000Z\",\n            \"updated_at\": \"2026-06-29T18:02:36.000000Z\"\n        },\n        {\n            \"id\": 4,\n            \"project_id\": 1,\n            \"work_item_id\": 8,\n            \"type\": \"room\",\n            \"status\": \"approved\",\n            \"payload\": {\n                \"space_id\": 1,\n                \"completed\": true\n            },\n            \"photos\": [\n                {\n                    \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                    \"url\": \"http://127.0.0.1:8000/storage/tmp/progress-updates/4/1870e92d-6d2c-4307-902d-435929cfa266.jpg\"\n                },\n                {\n                    \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                    \"url\": \"http://127.0.0.1:8000/storage/tmp/progress-updates/4/7d8808ca-86a3-45b0-bf17-1e8701d97b12.jpg\"\n                }\n            ],\n            \"comment\": null,\n            \"reviewed_at\": \"2026-06-29T18:05:16.000000Z\",\n            \"created_at\": \"2026-06-29T18:04:53.000000Z\",\n            \"updated_at\": \"2026-06-29T18:05:16.000000Z\"\n        }\n    ]\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Show Progress Update Request",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{auth_token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/progress-requests/{{progressUpdateRequest}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "progress-requests",
+                        "{{progressUpdateRequest}}"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "Show ProgressUpdate Request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{base_url}}/progress-requests/{{progressUpdateRequest}}",
+                          "host": [
+                            "{{base_url}}"
+                          ],
+                          "path": [
+                            "progress-requests",
+                            "{{progressUpdateRequest}}"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Host",
+                          "value": "127.0.0.1:8000"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Mon, 29 Jun 2026 16:50:04 GMT"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Mon, 29 Jun 2026 16:50:04 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "close"
+                        },
+                        {
+                          "key": "X-Powered-By",
+                          "value": "PHP/8.2.11"
+                        },
+                        {
+                          "key": "Cache-Control",
+                          "value": "no-cache, private"
+                        },
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "key": "Access-Control-Allow-Origin",
+                          "value": "*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"status\": 200,\n    \"message\": \"Progress update request fetched\",\n    \"data\": {\n        \"id\": 2,\n        \"project_id\": 1,\n        \"work_item_id\": 8,\n        \"type\": \"room\",\n        \"status\": \"pending\",\n        \"payload\": {\n            \"space_id\": 1,\n            \"completed\": true\n        },\n        \"photos\": [\n            {\n                \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                \"url\": \"http://127.0.0.1:8000/storage/tmp/progress-updates/2/6b675ebe-7af1-4dc0-be7d-63ecee10f829.jpg\"\n            },\n            {\n                \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                \"url\": \"http://127.0.0.1:8000/storage/tmp/progress-updates/2/139069ed-bc7b-452b-9704-b5b5859fa420.jpg\"\n            }\n        ],\n        \"comment\": null,\n        \"requester\": {\n            \"id\": 3,\n            \"name\": \"Sara Assistant\"\n        },\n        \"reviewer\": null,\n        \"reviewed_at\": null,\n        \"created_at\": \"2026-06-29T16:43:44.000000Z\",\n        \"updated_at\": \"2026-06-29T16:43:45.000000Z\"\n    }\n}"
                     }
                   ]
                 }
@@ -2008,7 +2349,7 @@
               ]
             },
             {
-              "name": "Login Copy",
+              "name": "Assistant Login",
               "request": {
                 "method": "POST",
                 "header": [
@@ -2019,7 +2360,7 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{base_url}}/auth/internal/login?password=password&internal_id=owner.khaled@alfanar",
+                  "raw": "{{base_url}}/auth/internal/login?password=password&internal_id=asst.sara@alfanar",
                   "host": [
                     "{{base_url}}"
                   ],
@@ -2035,7 +2376,7 @@
                     },
                     {
                       "key": "internal_id",
-                      "value": "owner.khaled@alfanar"
+                      "value": "asst.sara@alfanar"
                     }
                   ]
                 }
@@ -2180,6 +2521,657 @@
                   ],
                   "cookie": [],
                   "body": "{\n    \"message\": \"The internal id field is required. (and 1 more error)\",\n    \"errors\": {\n        \"internal_id\": [\n            \"The internal id field is required.\"\n        ],\n        \"password\": [\n            \"The password field is required.\"\n        ]\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "AddExpenses",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "6|kVWGJcZNi9COEIXG9swSEtKzoTg1Ju7tGVxXlmZN2537c9ce",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "amount",
+                      "value": "45",
+                      "type": "text",
+                      "uuid": "44121975-0166-4fec-bac6-422445cfb75a"
+                    },
+                    {
+                      "key": "description",
+                      "value": "هدول حق الapi key",
+                      "type": "text",
+                      "uuid": "ff0885eb-41df-4c7f-8c68-62aafbf94486"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/projects/{{project}}/work-items/{{workItem}}/expenses",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "projects",
+                    "{{project}}",
+                    "work-items",
+                    "{{workItem}}",
+                    "expenses"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "amount",
+                          "value": "45",
+                          "type": "text",
+                          "uuid": "44121975-0166-4fec-bac6-422445cfb75a"
+                        },
+                        {
+                          "key": "description",
+                          "value": "هدول حق الapi key",
+                          "type": "text",
+                          "uuid": "ff0885eb-41df-4c7f-8c68-62aafbf94486"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{project}}/work-items/{{workItem}}/expenses",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{project}}",
+                        "work-items",
+                        "{{workItem}}",
+                        "expenses"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.12"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Sun, 28 Jun 2026 22:53:55 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Expense added successfully.\",\n    \"data\": {\n        \"id\": 5,\n        \"project\": {\n            \"id\": 1,\n            \"name\": \"Hermann-Kiehn Project\"\n        },\n        \"work_item\": {\n            \"id\": 1,\n            \"name\": \"ملابن الأبواب\"\n        },\n        \"created_by\": {\n            \"id\": 3,\n            \"name\": \"Sara Assistant\"\n        },\n        \"amount\": \"45.00\",\n        \"description\": \"هدول حق الapi key\",\n        \"created_at\": \"2026-06-28T22:53:55.000000Z\",\n        \"updated_at\": \"2026-06-28T22:53:55.000000Z\"\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "storeimage",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "1|YSkdgemjH9rQIK6G3GMqzNDtKbonFKvekrnWDbh50b232860",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "project_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "c8e9c263-3855-4740-9542-0da2a8a7f96f"
+                    },
+                    {
+                      "key": "name",
+                      "value": "صالون",
+                      "type": "text",
+                      "uuid": "fd91e896-b96f-4645-b838-5c56e8e23b1b"
+                    },
+                    {
+                      "key": "image",
+                      "type": "file",
+                      "uuid": "6830eac0-eb63-4396-b66b-7f061bd1c5fc",
+                      "src": "/C:/Users/dell/Downloads/ع العظم2.jpg"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/storeimage",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "storeimage"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "storeimage",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "project_id",
+                          "value": "1",
+                          "type": "text",
+                          "uuid": "c8e9c263-3855-4740-9542-0da2a8a7f96f"
+                        },
+                        {
+                          "key": "name",
+                          "value": "صالون",
+                          "type": "text",
+                          "uuid": "fd91e896-b96f-4645-b838-5c56e8e23b1b"
+                        },
+                        {
+                          "key": "image",
+                          "type": "file",
+                          "uuid": "6830eac0-eb63-4396-b66b-7f061bd1c5fc",
+                          "src": "/C:/Users/dell/Downloads/ع العظم2.jpg"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/storeimage",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "storeimage"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.12"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 29 Jun 2026 10:50:24 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": true,\n    \"message\": \"تم رفع الصورة بنجاح\",\n    \"data\": {\n        \"id\": 2,\n        \"project_id\": \"1\",\n        \"name\": \"صالون\",\n        \"image\": \"/storage/project-images/lZe7Z3g30bib9f8IfXQ5mVl6ygsG1CUDO6uawzc8.jpg\",\n        \"created_at\": \"2026-06-29T10:50:24.000000Z\"\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "DeleteImage",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "1|YSkdgemjH9rQIK6G3GMqzNDtKbonFKvekrnWDbh50b232860",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "project_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "c8e9c263-3855-4740-9542-0da2a8a7f96f"
+                    },
+                    {
+                      "key": "name",
+                      "value": "صالون",
+                      "type": "text",
+                      "uuid": "fd91e896-b96f-4645-b838-5c56e8e23b1b"
+                    },
+                    {
+                      "key": "image",
+                      "type": "file",
+                      "uuid": "6830eac0-eb63-4396-b66b-7f061bd1c5fc",
+                      "src": "/C:/Users/dell/Downloads/ع العظم2.jpg"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/deleteimage/{{projectImage}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "deleteimage",
+                    "{{projectImage}}"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "ImageNOtFound",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "project_id",
+                          "value": "1",
+                          "type": "text",
+                          "uuid": "c8e9c263-3855-4740-9542-0da2a8a7f96f"
+                        },
+                        {
+                          "key": "name",
+                          "value": "صالون",
+                          "type": "text",
+                          "uuid": "fd91e896-b96f-4645-b838-5c56e8e23b1b"
+                        },
+                        {
+                          "key": "image",
+                          "type": "file",
+                          "uuid": "6830eac0-eb63-4396-b66b-7f061bd1c5fc",
+                          "src": "/C:/Users/dell/Downloads/ع العظم2.jpg"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/deleteimage/{{projectImage}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "deleteimage",
+                        "{{projectImage}}"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.12"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 29 Jun 2026 10:53:54 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": false,\n    \"message\": \"الصورة غير موجودة.\"\n}"
+                },
+                {
+                  "name": "Success",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "project_id",
+                          "value": "1",
+                          "type": "text",
+                          "uuid": "c8e9c263-3855-4740-9542-0da2a8a7f96f"
+                        },
+                        {
+                          "key": "name",
+                          "value": "صالون",
+                          "type": "text",
+                          "uuid": "fd91e896-b96f-4645-b838-5c56e8e23b1b"
+                        },
+                        {
+                          "key": "image",
+                          "type": "file",
+                          "uuid": "6830eac0-eb63-4396-b66b-7f061bd1c5fc",
+                          "src": "/C:/Users/dell/Downloads/ع العظم2.jpg"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/deleteimage/{{projectImage}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "deleteimage",
+                        "{{projectImage}}"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.12"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 29 Jun 2026 10:54:16 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": true,\n    \"message\": \"تم حذف الصورة بنجاح.\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "GetImages",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "project_id",
+                          "value": "1",
+                          "type": "text",
+                          "uuid": "c8e9c263-3855-4740-9542-0da2a8a7f96f"
+                        },
+                        {
+                          "key": "name",
+                          "value": "صالون",
+                          "type": "text",
+                          "uuid": "fd91e896-b96f-4645-b838-5c56e8e23b1b"
+                        },
+                        {
+                          "key": "image",
+                          "type": "file",
+                          "uuid": "6830eac0-eb63-4396-b66b-7f061bd1c5fc",
+                          "src": "/C:/Users/dell/Downloads/ع العظم2.jpg"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/project-images/project/{{project}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "project-images",
+                        "project",
+                        "{{project}}"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.12"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 29 Jun 2026 10:58:51 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 2,\n            \"project_id\": 1,\n            \"name\": \"صالون\",\n            \"image\": \"/storage/project-images/lZe7Z3g30bib9f8IfXQ5mVl6ygsG1CUDO6uawzc8.jpg\",\n            \"created_at\": \"2026-06-29T10:50:24.000000Z\"\n        }\n    ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "AssistantProfile",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": [
+                {
+                  "name": "AssistantProfile",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/assistant/account",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "assistant",
+                        "account"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.12"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Fri, 12 Jun 2026 09:56:42 GMT"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Account fetched successfully.\",\n    \"data\": {\n        \"name\": \"Sara Assistant\",\n        \"email\": \"sara.assistant@alfanar.com\",\n        \"role\": \"مساعد تنفيذي\",\n        \"assigned_projects_count\": 1,\n        \"account_status\": \"verified\",\n        \"avatar\": null\n    }\n}"
                 }
               ]
             }
@@ -2865,7 +3857,7 @@
               },
               "status": "Unprocessable Content",
               "code": 422,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -2898,6 +3890,522 @@
               ],
               "cookie": [],
               "body": "{\n    \"message\": \"The fcm token field is required.\",\n    \"errors\": {\n        \"fcm_token\": [\n            \"The fcm token field is required.\"\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetAiVisualization",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "project_image_id",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "28e4dd67-1d10-4ac7-be48-0eb6562a5543"
+                    },
+                    {
+                      "key": "reference_images[]",
+                      "type": "file",
+                      "uuid": "b5609656-05e1-45b6-8df1-80f737e93640",
+                      "src": "/C:/Users/dell/Downloads/شباك.jpg"
+                    },
+                    {
+                      "key": "reference_images[]",
+                      "type": "file",
+                      "uuid": "1623c0f4-9a99-45dc-a9f2-3b72144a96ef",
+                      "src": "/C:/Users/dell/Downloads/بلاططط.jpg"
+                    },
+                    {
+                      "key": "prompt",
+                      "value": "اضف البلاط الى ارضية الغرفة واضف الشباك كمان بمكانه ولون الدهان مع الحفاظ على الصورة الاصلية ",
+                      "type": "text",
+                      "uuid": "f309820b-113e-41f7-9c1a-aeab900e938e"
+                    },
+                    {
+                      "key": "reference_images[]",
+                      "type": "file",
+                      "uuid": "2910d3fb-5b30-4711-ba98-01f2ed15f0aa",
+                      "src": "/C:/Users/dell/Downloads/دهان.jpg"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/project-images/{{projectid}}/visualizations",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "project-images",
+                    "{{projectid}}",
+                    "visualizations"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 29 Jun 2026 11:44:19 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 2,\n            \"generated_image\": \"/storage/generated/7rjBNdvCHTO49XiXQWJIFUZ2nqNZkE0kPzvCs3uA.png\",\n            \"created_at\": \"2026-06-29T11:30:34.000000Z\"\n        },\n        {\n            \"id\": 1,\n            \"generated_image\": \"/storage/generated/hQgN5AmGsh1DtDJIOCfm7f9Y8YKJdL1ew5UHCHOV.png\",\n            \"created_at\": \"2026-06-29T11:28:05.000000Z\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "AddIMageComment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|zsawI9EmTcf3zaehKbryYTadTrUquCN1fkVYZg64369ca407",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "comment",
+                  "value": "اكل خرا",
+                  "type": "text",
+                  "uuid": "399c70b8-2162-45b4-a254-859f31448af1"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/ai-visualizations/{{aiVisualization}}/comments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ai-visualizations",
+                "{{aiVisualization}}",
+                "comments"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "ImageNotFound",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "comment",
+                      "value": "اكل خرا",
+                      "type": "text",
+                      "uuid": "399c70b8-2162-45b4-a254-859f31448af1"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/ai-visualizations/{{aiVisualization}}/comments",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "ai-visualizations",
+                    "{{aiVisualization}}",
+                    "comments"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 29 Jun 2026 13:01:47 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"التصميم غير موجود.\"\n}"
+            },
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "comment",
+                      "value": "اكل خرا",
+                      "type": "text",
+                      "uuid": "399c70b8-2162-45b4-a254-859f31448af1"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/ai-visualizations/{{aiVisualization}}/comments",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "ai-visualizations",
+                    "{{aiVisualization}}",
+                    "comments"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 29 Jun 2026 13:03:07 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم إضافة التعليق بنجاح.\",\n    \"data\": {\n        \"ai_visualization_id\": 2,\n        \"user_id\": 3,\n        \"comment\": \"اكل خرا\",\n        \"updated_at\": \"2026-06-29T13:03:06.000000Z\",\n        \"created_at\": \"2026-06-29T13:03:06.000000Z\",\n        \"id\": 2\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetImageComment",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "comment",
+                      "value": "اكل خرا",
+                      "type": "text",
+                      "uuid": "399c70b8-2162-45b4-a254-859f31448af1"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/ai-visualizations/{{aiVisualization}}/comments",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "ai-visualizations",
+                    "{{aiVisualization}}",
+                    "comments"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 29 Jun 2026 13:05:42 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 2,\n            \"ai_visualization_id\": 2,\n            \"user_id\": 3,\n            \"comment\": \"اكل خرا\",\n            \"created_at\": \"2026-06-29T13:03:06.000000Z\",\n            \"updated_at\": \"2026-06-29T13:03:06.000000Z\",\n            \"user\": {\n                \"id\": 3,\n                \"name\": \"Sara Assistant\"\n            }\n        },\n        {\n            \"id\": 1,\n            \"ai_visualization_id\": 2,\n            \"user_id\": 3,\n            \"comment\": \"اكل خرا\",\n            \"created_at\": \"2026-06-29T13:02:59.000000Z\",\n            \"updated_at\": \"2026-06-29T13:02:59.000000Z\",\n            \"user\": {\n                \"id\": 3,\n                \"name\": \"Sara Assistant\"\n            }\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "DeleteImageComment",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "CommentNotFound",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "comment",
+                      "value": "اكل خرا",
+                      "type": "text",
+                      "uuid": "399c70b8-2162-45b4-a254-859f31448af1"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/ai-visualization-comments/{{id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "ai-visualization-comments",
+                    "{{id}}"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 29 Jun 2026 13:09:19 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"التعليق غير موجود.\"\n}"
+            },
+            {
+              "name": "Successs",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "comment",
+                      "value": "اكل خرا",
+                      "type": "text",
+                      "uuid": "399c70b8-2162-45b4-a254-859f31448af1"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/ai-visualization-comments/{{id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "ai-visualization-comments",
+                    "{{id}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 29 Jun 2026 13:09:42 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"تم حذف التعليق بنجاح.\"\n}"
             }
           ]
         }
@@ -5370,6 +6878,103 @@
               ]
             },
             {
+              "name": "List Projects For Engineer",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/engineer/projects",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "engineer",
+                    "projects"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "List Projects For Engineer",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/engineer/projects",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "engineer",
+                        "projects"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 29 Jun 2026 23:54:54 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 29 Jun 2026 23:54:54 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 200,\n    \"message\": \"Projects fetched.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Bosco-Lesch Project\",\n            \"location\": \"Herzogville\",\n            \"latitude\": \"79.91694\",\n            \"longitude\": \"94.559219\",\n            \"apartment_area\": \"5748.70\",\n            \"height\": \"7.26\",\n            \"status\": \"planned\",\n            \"project_manager_id\": 2,\n            \"assistant_engineer_id\": 3,\n            \"owner_id\": 4,\n            \"created_by\": 2,\n            \"updated_by\": 2,\n            \"started_at\": null,\n            \"completed_at\": null,\n            \"progress_percent\": 1.61,\n            \"created_at\": \"2026-06-29T16:38:25.000000Z\",\n            \"updated_at\": \"2026-06-29T16:38:25.000000Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Hilpert, Moore and Dickens Project\",\n            \"location\": \"Keanuton\",\n            \"latitude\": \"34.257403\",\n            \"longitude\": \"93.860734\",\n            \"apartment_area\": \"1228.52\",\n            \"height\": \"14.11\",\n            \"status\": \"planned\",\n            \"project_manager_id\": 2,\n            \"assistant_engineer_id\": 3,\n            \"owner_id\": 4,\n            \"created_by\": 2,\n            \"updated_by\": 2,\n            \"started_at\": null,\n            \"completed_at\": null,\n            \"progress_percent\": 0,\n            \"created_at\": \"2026-06-29T16:38:25.000000Z\",\n            \"updated_at\": \"2026-06-29T16:38:25.000000Z\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Haag, Mann and Funk Project\",\n            \"location\": \"East Carolyne\",\n            \"latitude\": \"-9.830115\",\n            \"longitude\": \"57.504776\",\n            \"apartment_area\": \"2287.25\",\n            \"height\": \"8.60\",\n            \"status\": \"planned\",\n            \"project_manager_id\": 2,\n            \"assistant_engineer_id\": 3,\n            \"owner_id\": 4,\n            \"created_by\": 2,\n            \"updated_by\": 2,\n            \"started_at\": null,\n            \"completed_at\": null,\n            \"progress_percent\": 0,\n            \"created_at\": \"2026-06-29T16:38:25.000000Z\",\n            \"updated_at\": \"2026-06-29T16:38:25.000000Z\"\n        }\n    ]\n}"
+                }
+              ]
+            },
+            {
               "name": "Create Project",
               "request": {
                 "auth": {
@@ -6166,6 +7771,69 @@
                   ],
                   "cookie": [],
                   "body": "{\n    \"status\": 400,\n    \"message\": \"Validation failed.\",\n    \"data\": {\n        \"errors\": {\n            \"status\": [\n                \"Project must be started before completing.\"\n            ]\n        }\n    }\n}"
+                },
+                {
+                  "name": "Complete workitems before",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/complete",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "complete"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 30 Jun 2026 00:54:09 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 30 Jun 2026 00:54:09 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 400,\n    \"message\": \"Validation failed.\",\n    \"data\": {\n        \"errors\": {\n            \"status\": [\n                \"All work items must be completed before completing the project.\"\n            ]\n        }\n    }\n}"
                 }
               ]
             }
@@ -7550,7 +9218,7 @@
                         }
                       ]
                     },
-                    "method": "PUT",
+                    "method": "POST",
                     "header": [
                       {
                         "key": "Accept",
@@ -7565,7 +9233,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n  \"wood_doors_count\": 5,\n  \"aluminum_doors_count\": 1,\n  \"windows_count\": 10\n}\n",
+                      "raw": "{\n  \"total_wood_doors\": 5,\n  \"total_aluminum_doors\": 1,\n  \"total_windows\": 10\n}\n",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -7590,7 +9258,7 @@
                     {
                       "name": "Update Mellaben",
                       "originalRequest": {
-                        "method": "PUT",
+                        "method": "POST",
                         "header": [
                           {
                             "key": "Accept",
@@ -7605,7 +9273,7 @@
                         ],
                         "body": {
                           "mode": "raw",
-                          "raw": "{\n  \"wood_doors_count\": 5,\n  \"aluminum_doors_count\": 1,\n  \"windows_count\": 10\n}\n",
+                          "raw": "{\n  \"total_wood_doors\": 5,\n  \"total_aluminum_doors\": 1,\n  \"total_windows\": 10\n}\n",
                           "options": {
                             "raw": {
                               "language": "json"
@@ -7628,7 +9296,7 @@
                       },
                       "status": "OK",
                       "code": 200,
-                      "_postman_previewlanguage": "Text",
+                      "_postman_previewlanguage": null,
                       "header": [
                         {
                           "key": "Host",
@@ -7636,11 +9304,11 @@
                         },
                         {
                           "key": "Date",
-                          "value": "Wed, 13 May 2026 13:22:27 GMT"
+                          "value": "Mon, 29 Jun 2026 19:18:21 GMT"
                         },
                         {
                           "key": "Date",
-                          "value": "Wed, 13 May 2026 13:22:26 GMT"
+                          "value": "Mon, 29 Jun 2026 19:18:21 GMT"
                         },
                         {
                           "key": "Connection",
@@ -7664,7 +9332,7 @@
                         }
                       ],
                       "cookie": [],
-                      "body": "{\n    \"status\": 200,\n    \"message\": \"Work item details updated.\",\n    \"data\": {\n        \"id\": 57,\n        \"project_id\": 6,\n        \"parent_id\": null,\n        \"name\": \"ملابن الأبواب\",\n        \"quality_level\": \"basic\",\n        \"duration_days\": 10,\n        \"sort_order\": 1,\n        \"status\": \"planned\",\n        \"is_default\": true,\n        \"is_active\": true,\n        \"is_custom\": false,\n        \"details\": [\n            {\n                \"key\": \"wood_doors_count\",\n                \"value\": \"5\",\n                \"unit\": \"count\"\n            },\n            {\n                \"key\": \"aluminum_doors_count\",\n                \"value\": \"1\",\n                \"unit\": \"count\"\n            },\n            {\n                \"key\": \"windows_count\",\n                \"value\": \"10\",\n                \"unit\": \"count\"\n            }\n        ],\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2026-05-13T13:21:09.000000Z\",\n        \"updated_at\": \"2026-05-13T13:21:09.000000Z\"\n    }\n}"
+                      "body": "{\n    \"status\": 200,\n    \"message\": \"Work item details updated.\",\n    \"data\": {\n        \"id\": 1,\n        \"project_id\": 1,\n        \"parent_id\": null,\n        \"name\": \"ملابن الأبواب\",\n        \"quality_level\": \"basic\",\n        \"duration_days\": 10,\n        \"sort_order\": 1,\n        \"status\": \"planned\",\n        \"is_default\": true,\n        \"is_active\": true,\n        \"is_custom\": false,\n        \"details\": [\n            {\n                \"total_wood_doors\": \"5\",\n                \"unit\": \"count\"\n            },\n            {\n                \"total_aluminum_doors\": \"1\",\n                \"unit\": \"count\"\n            },\n            {\n                \"total_windows\": \"10\",\n                \"unit\": \"count\"\n            }\n        ],\n        \"percent\": 0,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2026-06-29T16:38:26.000000Z\",\n        \"updated_at\": \"2026-06-29T16:38:26.000000Z\"\n    }\n}"
                     }
                   ]
                 },
@@ -7681,7 +9349,7 @@
                         }
                       ]
                     },
-                    "method": "PUT",
+                    "method": "POST",
                     "header": [
                       {
                         "key": "Accept",
@@ -7812,7 +9480,7 @@
                         }
                       ]
                     },
-                    "method": "PUT",
+                    "method": "POST",
                     "header": [
                       {
                         "key": "Accept",
@@ -9154,80 +10822,6 @@
               },
               "response": [
                 {
-                  "name": "Mellaben",
-                  "originalRequest": {
-                    "method": "PUT",
-                    "header": [
-                      {
-                        "key": "Accept",
-                        "value": "application/json",
-                        "type": "text"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\r\n  \"completed_wood_doors\": 4,\r\n  \"completed_aluminum_doors\": 2,\r\n  \"completed_windows\": 6\r\n}",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/progress",
-                      "host": [
-                        "{{base_url}}"
-                      ],
-                      "path": [
-                        "projects",
-                        "{{projectId}}",
-                        "work-items",
-                        "{{workItemId}}",
-                        "progress"
-                      ]
-                    }
-                  },
-                  "status": "OK",
-                  "code": 200,
-                  "_postman_previewlanguage": "Text",
-                  "header": [
-                    {
-                      "key": "Host",
-                      "value": "127.0.0.1:8000"
-                    },
-                    {
-                      "key": "Date",
-                      "value": "Sun, 24 May 2026 21:42:19 GMT"
-                    },
-                    {
-                      "key": "Date",
-                      "value": "Sun, 24 May 2026 21:42:19 GMT"
-                    },
-                    {
-                      "key": "Connection",
-                      "value": "close"
-                    },
-                    {
-                      "key": "X-Powered-By",
-                      "value": "PHP/8.2.11"
-                    },
-                    {
-                      "key": "Cache-Control",
-                      "value": "no-cache, private"
-                    },
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    },
-                    {
-                      "key": "Access-Control-Allow-Origin",
-                      "value": "*"
-                    }
-                  ],
-                  "cookie": [],
-                  "body": "{\n    \"status\": 200,\n    \"message\": \"Progress updated successfully\",\n    \"data\": {\n        \"work_item\": {\n            \"id\": 24,\n            \"name\": \"ملابن الأبواب\",\n            \"percent\": 100,\n            \"weight\": \"1.00\",\n            \"details\": [\n                {\n                    \"key\": \"total_wood_doors\",\n                    \"value\": \"4\",\n                    \"unit\": \"count\",\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"total_aluminum_doors\",\n                    \"value\": \"2\",\n                    \"unit\": \"count\",\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"total_windows\",\n                    \"value\": \"6\",\n                    \"unit\": \"count\",\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"completed_wood_doors\",\n                    \"value\": \"4\",\n                    \"unit\": null,\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"completed_aluminum_doors\",\n                    \"value\": \"2\",\n                    \"unit\": null,\n                    \"meta\": null\n                },\n                {\n                    \"key\": \"completed_windows\",\n                    \"value\": \"6\",\n                    \"unit\": null,\n                    \"meta\": null\n                }\n            ]\n        },\n        \"project\": {\n            \"id\": 3,\n            \"name\": \"Green, Ward and Schuster Project\",\n            \"project_percent\": 9.09,\n            \"items\": [\n                {\n                    \"id\": 24,\n                    \"name\": \"ملابن الأبواب\",\n                    \"percent\": 100,\n                    \"weight\": \"1.00\",\n                    \"details\": [\n                        {\n                            \"key\": \"total_wood_doors\",\n                            \"value\": \"4\",\n                            \"unit\": \"count\",\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"total_aluminum_doors\",\n                            \"value\": \"2\",\n                            \"unit\": \"count\",\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"total_windows\",\n                            \"value\": \"6\",\n                            \"unit\": \"count\",\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"completed_wood_doors\",\n                            \"value\": \"4\",\n                            \"unit\": null,\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"completed_aluminum_doors\",\n                            \"value\": \"2\",\n                            \"unit\": null,\n                            \"meta\": null\n                        },\n                        {\n                            \"key\": \"completed_windows\",\n                            \"value\": \"6\",\n                            \"unit\": null,\n                            \"meta\": null\n                        }\n                    ]\n                },\n                {\n                    \"id\": 25,\n                    \"name\": \"تمديدات كهرباء\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 26,\n                    \"name\": \"تمديدات صحية\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 27,\n                    \"name\": \"طينة / لياسة\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 28,\n                    \"name\": \"بلاط أرضيات\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 29,\n                    \"name\": \"سيراميك جدران / أسقف\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 30,\n                    \"name\": \"جبس بورد\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 31,\n                    \"name\": \"دهان\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 32,\n                    \"name\": \"أبواب ونجارة\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 33,\n                    \"name\": \"ألمنيوم وأبجورات\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                },\n                {\n                    \"id\": 34,\n                    \"name\": \"تشطيبات نهائية\",\n                    \"percent\": 0,\n                    \"weight\": \"1.00\",\n                    \"details\": []\n                }\n            ]\n        }\n    }\n}"
-                },
-                {
                   "name": "تحديث بلاط أرضيات",
                   "originalRequest": {
                     "method": "PUT",
@@ -9465,6 +11059,88 @@
                   ],
                   "cookie": [],
                   "body": "{\n    \"status\": 500,\n    \"message\": \"Failed to update room progress. This space does not apply to this work item.\",\n    \"data\": []\n}"
+                },
+                {
+                  "name": "Already Completed WorkItem",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "completed",
+                          "value": "1",
+                          "type": "text"
+                        },
+                        {
+                          "key": "photos[]",
+                          "type": "file",
+                          "uuid": "932e2772-ab66-4e40-8c5e-3fefd7a2cc43",
+                          "src": "/C:/Users/NEW MSI/Pictures/photo_2024-10-24_15-07-08.jpg"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/projects/{{projectId}}/work-items/{{workItemId}}/progress/3",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "projects",
+                        "{{projectId}}",
+                        "work-items",
+                        "{{workItemId}}",
+                        "progress",
+                        "3"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Host",
+                      "value": "127.0.0.1:8000"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 30 Jun 2026 00:36:57 GMT"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 30 Jun 2026 00:36:57 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "PHP/8.2.11"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, private"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"status\": 500,\n    \"message\": \"Failed to update room progress. Work item already completed\",\n    \"data\": []\n}"
                 }
               ]
             },
@@ -9576,76 +11252,6 @@
                   "body": "{\n    \"status\": 200,\n    \"message\": \"Project progress fetched\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Cruickshank, Fritsch and Howell Project\",\n        \"project_percent\": 9.09,\n        \"items\": [\n            {\n                \"id\": 2,\n                \"name\": \"تمديدات كهرباء\",\n                \"percent\": 60,\n                \"weight\": \"1.00\",\n                \"details\": [\n                    {\n                        \"rooms_status\": \"{\\\"1\\\":true,\\\"2\\\":true,\\\"3\\\":true}\",\n                        \"unit\": null,\n                        \"meta\": null\n                    }\n                ]\n            },\n            {\n                \"id\": 3,\n                \"name\": \"تمديدات صحية\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 4,\n                \"name\": \"طينة / لياسة\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 5,\n                \"name\": \"بلاط أرضيات\",\n                \"percent\": 40,\n                \"weight\": \"1.00\",\n                \"details\": [\n                    {\n                        \"rooms_status\": \"{\\\"1\\\":false,\\\"3\\\":true,\\\"5\\\":true}\",\n                        \"unit\": null,\n                        \"meta\": null\n                    }\n                ]\n            },\n            {\n                \"id\": 6,\n                \"name\": \"سيراميك جدران / أسقف\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 7,\n                \"name\": \"جبس بورد\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 8,\n                \"name\": \"دهان\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 9,\n                \"name\": \"أبواب ونجارة\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 10,\n                \"name\": \"ألمنيوم وأبجورات\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 11,\n                \"name\": \"تشطيبات نهائية\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": []\n            },\n            {\n                \"id\": 12,\n                \"name\": \"Tile Installation\",\n                \"percent\": 0,\n                \"weight\": \"1.00\",\n                \"details\": [\n                    {\n                        \"tile_length\": \"30\",\n                        \"unit\": \"cm\",\n                        \"meta\": null\n                    },\n                    {\n                        \"tile_width\": \"30\",\n                        \"unit\": \"cm\",\n                        \"meta\": null\n                    }\n                ]\n            }\n        ]\n    }\n}"
                 }
               ]
-            }
-          ]
-        },
-        {
-          "name": "AssistantProfile",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": ""
-            }
-          },
-          "response": [
-            {
-              "name": "AssistantProfile",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/assistant/account",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "assistant",
-                    "account"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "Text",
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.2.12"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Fri, 12 Jun 2026 09:56:42 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"status\": 200,\n    \"message\": \"Account fetched successfully.\",\n    \"data\": {\n        \"name\": \"Sara Assistant\",\n        \"email\": \"sara.assistant@alfanar.com\",\n        \"role\": \"مساعد تنفيذي\",\n        \"assigned_projects_count\": 1,\n        \"account_status\": \"verified\",\n        \"avatar\": null\n    }\n}"
             }
           ]
         }
@@ -10387,7 +11993,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -10530,7 +12136,7 @@
                   },
                   "status": "Conflict",
                   "code": 409,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -10649,7 +12255,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -10759,7 +12365,7 @@
                   },
                   "status": "OK",
                   "code": 200,
-                  "_postman_previewlanguage": null,
+                  "_postman_previewlanguage": "Text",
                   "header": [
                     {
                       "key": "Host",
@@ -11656,7 +13262,10 @@
           "name": "inoviceDetails",
           "request": {
             "method": "GET",
-            "header": []
+            "header": [],
+            "url": {
+              "raw": ""
+            }
           },
           "response": [
             {
@@ -11685,7 +13294,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -11819,7 +13428,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -11948,7 +13557,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -12089,7 +13698,7 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
+              "_postman_previewlanguage": "Text",
               "header": [
                 {
                   "key": "Host",
@@ -13261,7 +14870,7 @@
           "bearer": [
             {
               "key": "token",
-              "value": "2|TTSqAqrFFTwH6kcMymH8PRmumw0pAzEq0nVCKTlA45bcbe37",
+              "value": "2|7Pkg6rwYMSmZuyyLn67t7L2AKdwfp78lK0PjIRpvdff87509",
               "type": "string"
             }
           ]
@@ -13275,13 +14884,13 @@
           }
         ],
         "url": {
-          "raw": "{{base_url}}/work-items/1/approve",
+          "raw": "{{base_url}}/progress-requests/{{progressUpdateRequest}}/approve",
           "host": [
             "{{base_url}}"
           ],
           "path": [
-            "work-items",
-            "1",
+            "progress-requests",
+            "{{progressUpdateRequest}}",
             "approve"
           ]
         }
@@ -13373,46 +14982,11 @@
           ],
           "cookie": [],
           "body": "{\n    \"status\": 200,\n    \"message\": \"Work item update approved successfully.\",\n    \"data\": {\n        \"work_item\": {\n            \"id\": 1,\n            \"name\": \"ملابن الأبواب\"\n        },\n        \"approved_details\": [\n            {\n                \"id\": 9,\n                \"field\": \"total_wood_doors\",\n                \"value\": \"4\",\n                \"approved_at\": \"2026-06-13T14:52:55.000000Z\"\n            },\n            {\n                \"id\": 10,\n                \"field\": \"total_aluminum_doors\",\n                \"value\": \"2\",\n                \"approved_at\": \"2026-06-13T14:52:55.000000Z\"\n            },\n            {\n                \"id\": 11,\n                \"field\": \"total_windows\",\n                \"value\": \"6\",\n                \"approved_at\": \"2026-06-13T14:52:55.000000Z\"\n            }\n        ]\n    }\n}"
-        }
-      ]
-    },
-    {
-      "name": "PendingWorkItem",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "2|TTSqAqrFFTwH6kcMymH8PRmumw0pAzEq0nVCKTlA45bcbe37",
-              "type": "string"
-            }
-          ]
         },
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "url": {
-          "raw": "{{base_url}}/work-item-details/pending",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "work-item-details",
-            "pending"
-          ]
-        }
-      },
-      "response": [
         {
-          "name": "PendingWorkItem",
+          "name": "Space",
           "originalRequest": {
-            "method": "GET",
+            "method": "POST",
             "header": [
               {
                 "key": "Accept",
@@ -13421,13 +14995,14 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/work-item-details/pending",
+              "raw": "{{base_url}}/progress-requests/{{progressUpdateRequest}}/approve",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "work-item-details",
-                "pending"
+                "progress-requests",
+                "{{progressUpdateRequest}}",
+                "approve"
               ]
             }
           },
@@ -13440,20 +15015,24 @@
               "value": "127.0.0.1:8000"
             },
             {
+              "key": "Date",
+              "value": "Mon, 29 Jun 2026 16:51:57 GMT"
+            },
+            {
+              "key": "Date",
+              "value": "Mon, 29 Jun 2026 16:51:57 GMT"
+            },
+            {
               "key": "Connection",
               "value": "close"
             },
             {
               "key": "X-Powered-By",
-              "value": "PHP/8.2.12"
+              "value": "PHP/8.2.11"
             },
             {
               "key": "Cache-Control",
               "value": "no-cache, private"
-            },
-            {
-              "key": "Date",
-              "value": "Wed, 17 Jun 2026 19:38:36 GMT"
             },
             {
               "key": "Content-Type",
@@ -13465,7 +15044,70 @@
             }
           ],
           "cookie": [],
-          "body": "{\n    \"status\": 200,\n    \"message\": \"Pending updates fetched successfully.\",\n    \"data\": [\n        {\n            \"work_item_id\": 1,\n            \"work_item_name\": \"ملابن الأبواب\",\n            \"project\": {\n                \"id\": 1,\n                \"name\": \"Kihn LLC Project\"\n            },\n            \"requested_at\": \"2026-06-17T19:17:46.000000Z\",\n            \"photos\": [\n                {\n                    \"id\": 1,\n                    \"url\": \"http://127.0.0.1:8000/storage/progress-photos/1/1/6de3eae7-938f-41b8-a7d5-01f7cfa4a405.jpg\",\n                    \"original_name\": \"7446331.jpg\",\n                    \"created_at\": \"2026-06-17T19:21:25.000000Z\"\n                },\n                {\n                    \"id\": 2,\n                    \"url\": \"http://127.0.0.1:8000/storage/progress-photos/1/1/b645e897-0c22-4da4-a8ab-dea024c48bbd.jpg\",\n                    \"original_name\": \"7446331.jpg\",\n                    \"created_at\": \"2026-06-17T19:21:26.000000Z\"\n                }\n            ],\n            \"updates\": [\n                {\n                    \"detail_id\": 3,\n                    \"field\": \"total_doors\",\n                    \"current_value\": \"8\",\n                    \"requested_value\": \"8\",\n                    \"approval_status\": \"pending\"\n                },\n                {\n                    \"detail_id\": 4,\n                    \"field\": \"completed_doors\",\n                    \"current_value\": \"3\",\n                    \"requested_value\": \"3\",\n                    \"approval_status\": \"pending\"\n                },\n                {\n                    \"detail_id\": 5,\n                    \"field\": \"kitchen_cabinet_done\",\n                    \"current_value\": \"1\",\n                    \"requested_value\": \"1\",\n                    \"approval_status\": \"pending\"\n                }\n            ]\n        }\n    ]\n}"
+          "body": "{\n    \"status\": 200,\n    \"message\": \"Progress update request approved successfully\",\n    \"data\": {\n        \"id\": 2,\n        \"project_id\": 1,\n        \"work_item_id\": 8,\n        \"type\": \"room\",\n        \"status\": \"approved\",\n        \"payload\": {\n            \"space_id\": 1,\n            \"completed\": true\n        },\n        \"photos\": [\n            {\n                \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                \"url\": \"http://127.0.0.1:8000/storage/tmp/progress-updates/2/6b675ebe-7af1-4dc0-be7d-63ecee10f829.jpg\"\n            },\n            {\n                \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                \"url\": \"http://127.0.0.1:8000/storage/tmp/progress-updates/2/139069ed-bc7b-452b-9704-b5b5859fa420.jpg\"\n            }\n        ],\n        \"comment\": null,\n        \"requester\": {\n            \"id\": 3,\n            \"name\": \"Sara Assistant\"\n        },\n        \"reviewer\": {\n            \"id\": 2,\n            \"name\": \"Ahmad Project Manager\"\n        },\n        \"reviewed_at\": \"2026-06-29T16:51:55.000000Z\",\n        \"created_at\": \"2026-06-29T16:43:44.000000Z\",\n        \"updated_at\": \"2026-06-29T16:51:55.000000Z\"\n    }\n}"
+        },
+        {
+          "name": "Only pending can be approved",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/progress-requests/{{progressUpdateRequest}}/approve",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "progress-requests",
+                "{{progressUpdateRequest}}",
+                "approve"
+              ]
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 30 Jun 2026 01:50:30 GMT"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 30 Jun 2026 01:50:30 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.11"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 500,\n    \"message\": \"Failed to approve progress request. Only pending requests can be approved.\",\n    \"data\": []\n}"
         }
       ]
     },
@@ -13477,7 +15119,7 @@
           "bearer": [
             {
               "key": "token",
-              "value": "2|TTSqAqrFFTwH6kcMymH8PRmumw0pAzEq0nVCKTlA45bcbe37",
+              "value": "7|ZIfNUC0nkE94siT8TzG3hprDFFnSelEVES5zLHgm39e11d58",
               "type": "string"
             }
           ]
@@ -13502,13 +15144,13 @@
           ]
         },
         "url": {
-          "raw": "{{base_url}}/work-items/1/reject",
+          "raw": "{{base_url}}/progress-requests/{{progressUpdateRequest}}/reject",
           "host": [
             "{{base_url}}"
           ],
           "path": [
-            "work-items",
-            "1",
+            "progress-requests",
+            "{{progressUpdateRequest}}",
             "reject"
           ],
           "query": [
@@ -13566,7 +15208,7 @@
           },
           "status": "OK",
           "code": 200,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "Host",
@@ -13599,6 +15241,88 @@
           ],
           "cookie": [],
           "body": "{\n    \"status\": 200,\n    \"message\": \"Work item update rejected successfully.\",\n    \"data\": {\n        \"work_item\": {\n            \"id\": 1,\n            \"name\": \"ملابن الأبواب\"\n        },\n        \"rejected_details\": [\n            {\n                \"id\": 3,\n                \"field\": \"total_doors\"\n            },\n            {\n                \"id\": 4,\n                \"field\": \"completed_doors\"\n            },\n            {\n                \"id\": 5,\n                \"field\": \"kitchen_cabinet_done\"\n            }\n        ],\n        \"reason\": \"kiss\"\n    }\n}"
+        },
+        {
+          "name": "Only pending can be rejected",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "reason",
+                  "value": "kiss",
+                  "type": "text",
+                  "uuid": "d1cbbd91-db37-4798-acf5-e742ae387549"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/progress-requests/{{progressUpdateRequest}}/reject",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "progress-requests",
+                "{{progressUpdateRequest}}",
+                "reject"
+              ],
+              "query": [
+                {
+                  "key": "reason",
+                  "value": null,
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 30 Jun 2026 01:49:17 GMT"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 30 Jun 2026 01:49:17 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.11"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 500,\n    \"message\": \"Failed to reject progress request. Only pending requests can be rejected.\",\n    \"data\": []\n}"
         }
       ]
     },
@@ -13606,7 +15330,10 @@
       "name": "materials/units",
       "request": {
         "method": "GET",
-        "header": []
+        "header": [],
+        "url": {
+          "raw": ""
+        }
       },
       "response": [
         {
@@ -13632,7 +15359,7 @@
           },
           "status": "OK",
           "code": 200,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "Host",
@@ -13672,7 +15399,10 @@
       "name": "ListWorkItem",
       "request": {
         "method": "GET",
-        "header": []
+        "header": [],
+        "url": {
+          "raw": ""
+        }
       },
       "response": [
         {
@@ -13706,7 +15436,7 @@
           },
           "status": "OK",
           "code": 200,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "Host",
@@ -13805,23 +15535,6 @@
                 "type": "text"
               }
             ],
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "price_per_meter",
-                  "value": "22",
-                  "type": "text",
-                  "uuid": "c98c6a44-0812-46f2-987d-ebf81de9fc18"
-                },
-                {
-                  "key": "beams_count",
-                  "value": "22",
-                  "type": "text",
-                  "uuid": "bda5b890-37bb-4864-81ce-e0070d50a416"
-                }
-              ]
-            },
             "url": {
               "raw": "{{base_url}}/notifications",
               "host": [
@@ -13834,7 +15547,7 @@
           },
           "status": "OK",
           "code": 200,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "Host",
@@ -13874,7 +15587,10 @@
       "name": "work-itemsSystem",
       "request": {
         "method": "GET",
-        "header": []
+        "header": [],
+        "url": {
+          "raw": ""
+        }
       },
       "response": [
         {
@@ -13888,23 +15604,6 @@
                 "type": "text"
               }
             ],
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "price_per_meter",
-                  "value": "22",
-                  "type": "text",
-                  "uuid": "c98c6a44-0812-46f2-987d-ebf81de9fc18"
-                },
-                {
-                  "key": "beams_count",
-                  "value": "22",
-                  "type": "text",
-                  "uuid": "bda5b890-37bb-4864-81ce-e0070d50a416"
-                }
-              ]
-            },
             "url": {
               "raw": "{{base_url}}/work-items/system",
               "host": [
@@ -13918,7 +15617,7 @@
           },
           "status": "OK",
           "code": 200,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "Host",
@@ -13951,6 +15650,620 @@
           ],
           "cookie": [],
           "body": "{\n    \"status\": 200,\n    \"message\": \"Work items fetched successfully.\",\n    \"data\": [\n        {\n            \"name\": \"Tile Installation\"\n        },\n        {\n            \"name\": \"أبواب ونجارة\"\n        },\n        {\n            \"name\": \"ألمنيوم وأبجورات\"\n        },\n        {\n            \"name\": \"بلاط أرضيات\"\n        },\n        {\n            \"name\": \"تشطيبات نهائية\"\n        },\n        {\n            \"name\": \"تمديدات صحية بياض\"\n        },\n        {\n            \"name\": \"تمديدات صحية سواد\"\n        },\n        {\n            \"name\": \"تمديدات كهرباء بياض\"\n        },\n        {\n            \"name\": \"تمديدات كهرباء سواد\"\n        },\n        {\n            \"name\": \"جبس بورد\"\n        },\n        {\n            \"name\": \"دهان\"\n        },\n        {\n            \"name\": \"سيراميك جدران / أسقف\"\n        },\n        {\n            \"name\": \"طينة / لياسة\"\n        },\n        {\n            \"name\": \"ملابن الأبواب\"\n        }\n    ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "GetExpensive",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/projects/{{project}}/work-items/{{workItem}}/expenses?from=2026-06-01&to=2026-06-30",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "projects",
+                "{{project}}",
+                "work-items",
+                "{{workItem}}",
+                "expenses"
+              ],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "2026-06-01",
+                  "type": "text"
+                },
+                {
+                  "key": "to",
+                  "value": "2026-06-30",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 28 Jun 2026 22:59:22 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 200,\n    \"message\": \"Expenses fetched successfully.\",\n    \"data\": {\n        \"project\": {\n            \"id\": 1,\n            \"name\": \"Hermann-Kiehn Project\"\n        },\n        \"work_item\": {\n            \"id\": 1,\n            \"name\": \"ملابن الأبواب\"\n        },\n        \"from\": \"2026-06-01\",\n        \"to\": \"2026-06-30\",\n        \"total_amount\": 315,\n        \"expenses\": [\n            {\n                \"id\": 7,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:55:14.000000Z\"\n            },\n            {\n                \"id\": 6,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:55:12.000000Z\"\n            },\n            {\n                \"id\": 5,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:53:55.000000Z\"\n            },\n            {\n                \"id\": 4,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:52:09.000000Z\"\n            },\n            {\n                \"id\": 3,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:51:07.000000Z\"\n            },\n            {\n                \"id\": 2,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:50:53.000000Z\"\n            },\n            {\n                \"id\": 1,\n                \"amount\": \"45.00\",\n                \"description\": \"هدول حق الapi key\",\n                \"created_by\": {\n                    \"id\": 3,\n                    \"name\": \"Sara Assistant\"\n                },\n                \"created_at\": \"2026-06-28T22:49:15.000000Z\"\n            }\n        ]\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "ai-visualization",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "1|zsawI9EmTcf3zaehKbryYTadTrUquCN1fkVYZg64369ca407",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "project_image_id",
+              "value": "1",
+              "type": "text",
+              "uuid": "28e4dd67-1d10-4ac7-be48-0eb6562a5543"
+            },
+            {
+              "key": "reference_images[]",
+              "type": "file",
+              "uuid": "b5609656-05e1-45b6-8df1-80f737e93640",
+              "src": "/C:/Users/dell/Downloads/شباك.jpg"
+            },
+            {
+              "key": "reference_images[]",
+              "type": "file",
+              "uuid": "1623c0f4-9a99-45dc-a9f2-3b72144a96ef",
+              "src": "/C:/Users/dell/Downloads/بلاططط.jpg"
+            },
+            {
+              "key": "prompt",
+              "value": "اضف البلاط الى ارضية الغرفة واضف الشباك كمان بمكانه ولون الدهان مع الحفاظ على الصورة الاصلية ",
+              "type": "text",
+              "uuid": "f309820b-113e-41f7-9c1a-aeab900e938e"
+            },
+            {
+              "key": "reference_images[]",
+              "type": "file",
+              "uuid": "2910d3fb-5b30-4711-ba98-01f2ed15f0aa",
+              "src": "/C:/Users/dell/Downloads/دهان.jpg"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/ai-visualization",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "ai-visualization"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "ai-visualization",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "project_image_id",
+                  "value": "1",
+                  "type": "text",
+                  "uuid": "28e4dd67-1d10-4ac7-be48-0eb6562a5543"
+                },
+                {
+                  "key": "reference_images[]",
+                  "type": "file",
+                  "uuid": "b5609656-05e1-45b6-8df1-80f737e93640",
+                  "src": "/C:/Users/dell/Downloads/شباك.jpg"
+                },
+                {
+                  "key": "reference_images[]",
+                  "type": "file",
+                  "uuid": "1623c0f4-9a99-45dc-a9f2-3b72144a96ef",
+                  "src": "/C:/Users/dell/Downloads/بلاططط.jpg"
+                },
+                {
+                  "key": "prompt",
+                  "value": "اضف البلاط الى ارضية الغرفة واضف الشباك كمان بمكانه ولون الدهان مع الحفاظ على الصورة الاصلية ",
+                  "type": "text",
+                  "uuid": "f309820b-113e-41f7-9c1a-aeab900e938e"
+                },
+                {
+                  "key": "reference_images[]",
+                  "type": "file",
+                  "uuid": "2910d3fb-5b30-4711-ba98-01f2ed15f0aa",
+                  "src": "/C:/Users/dell/Downloads/دهان.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/ai-visualization",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ai-visualization"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Mon, 29 Jun 2026 11:30:34 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"message\": \"تم إنشاء الصورة التخيلية بنجاح 🎨\",\n    \"data\": {\n        \"id\": 2,\n        \"generated_image\": \"/storage/generated/7rjBNdvCHTO49XiXQWJIFUZ2nqNZkE0kPzvCs3uA.png\"\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "ai-visualizations",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "1|zsawI9EmTcf3zaehKbryYTadTrUquCN1fkVYZg64369ca407",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/ai-visualizations/{{id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "ai-visualizations",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "NotFound",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/ai-visualizations/{{id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ai-visualizations",
+                "{{id}}"
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Mon, 29 Jun 2026 11:54:56 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"message\": \"الصورة غير موجودة.\"\n}"
+        },
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/ai-visualizations/{{id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ai-visualizations",
+                "{{id}}"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.12"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Date",
+              "value": "Mon, 29 Jun 2026 11:55:23 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"message\": \"تم حذف التصميم بنجاح.\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "ProgressUpdate Requests",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/projects/{{project_id}}/work-items/{{workItemId}}}/progress-requests",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "projects",
+            "{{project_id}}",
+            "work-items",
+            "{{workItemId}}}",
+            "progress-requests"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "ProgressUpdate Requests",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/projects/{{project_id}}/work-items/{{workItemId}}}/progress-requests",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "projects",
+                "{{project_id}}",
+                "work-items",
+                "{{workItemId}}}",
+                "progress-requests"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Date",
+              "value": "Mon, 29 Jun 2026 16:48:52 GMT"
+            },
+            {
+              "key": "Date",
+              "value": "Mon, 29 Jun 2026 16:48:52 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.11"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 200,\n    \"message\": \"Progress update requests fetched\",\n    \"data\": [\n        {\n            \"id\": 2,\n            \"project_id\": 1,\n            \"work_item_id\": 8,\n            \"type\": \"room\",\n            \"status\": \"pending\",\n            \"payload\": {\n                \"space_id\": 1,\n                \"completed\": true\n            },\n            \"photos\": [\n                {\n                    \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                    \"url\": \"http://127.0.0.1:8000/storage/tmp/progress-updates/2/6b675ebe-7af1-4dc0-be7d-63ecee10f829.jpg\"\n                },\n                {\n                    \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                    \"url\": \"http://127.0.0.1:8000/storage/tmp/progress-updates/2/139069ed-bc7b-452b-9704-b5b5859fa420.jpg\"\n                }\n            ],\n            \"comment\": null,\n            \"requester\": {\n                \"id\": 3,\n                \"name\": \"Sara Assistant\"\n            },\n            \"reviewer\": null,\n            \"reviewed_at\": null,\n            \"created_at\": \"2026-06-29T16:43:44.000000Z\",\n            \"updated_at\": \"2026-06-29T16:43:45.000000Z\"\n        }\n    ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Show ProgressUpdate Request",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/progress-requests/{{progressUpdateRequest}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "progress-requests",
+            "{{progressUpdateRequest}}"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Show ProgressUpdate Request",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/progress-requests/{{progressUpdateRequest}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "progress-requests",
+                "{{progressUpdateRequest}}"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Host",
+              "value": "127.0.0.1:8000"
+            },
+            {
+              "key": "Date",
+              "value": "Mon, 29 Jun 2026 16:50:04 GMT"
+            },
+            {
+              "key": "Date",
+              "value": "Mon, 29 Jun 2026 16:50:04 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/8.2.11"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, private"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": 200,\n    \"message\": \"Progress update request fetched\",\n    \"data\": {\n        \"id\": 2,\n        \"project_id\": 1,\n        \"work_item_id\": 8,\n        \"type\": \"room\",\n        \"status\": \"pending\",\n        \"payload\": {\n            \"space_id\": 1,\n            \"completed\": true\n        },\n        \"photos\": [\n            {\n                \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                \"url\": \"http://127.0.0.1:8000/storage/tmp/progress-updates/2/6b675ebe-7af1-4dc0-be7d-63ecee10f829.jpg\"\n            },\n            {\n                \"original_name\": \"photo_2024-10-24_15-07-08.jpg\",\n                \"url\": \"http://127.0.0.1:8000/storage/tmp/progress-updates/2/139069ed-bc7b-452b-9704-b5b5859fa420.jpg\"\n            }\n        ],\n        \"comment\": null,\n        \"requester\": {\n            \"id\": 3,\n            \"name\": \"Sara Assistant\"\n        },\n        \"reviewer\": null,\n        \"reviewed_at\": null,\n        \"created_at\": \"2026-06-29T16:43:44.000000Z\",\n        \"updated_at\": \"2026-06-29T16:43:45.000000Z\"\n    }\n}"
         }
       ]
     }
