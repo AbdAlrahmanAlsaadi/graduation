@@ -107,6 +107,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
         Route::get('projects/{project}/work-items/{workItem}/progress-requests', [ProgressUpdateRequestController::class, 'index']);
         Route::get('progress-requests/{progressUpdateRequest}', [ProgressUpdateRequestController::class, 'show']);
+        Route::get('my-progress-requests', [ProgressUpdateRequestController::class, 'getUserProgressRequests']);
     });
 
     // Engineer approves or rejects
@@ -117,6 +118,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
         Route::apiResource('materials', MaterialController::class);
+        Route::get('engineer/projects', [ProjectController::class, 'listEngineerProjects']);
 
         Route::post('materials/{material}', [MaterialController::class, 'update']);
 

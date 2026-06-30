@@ -12,6 +12,7 @@ use App\Models\WorkItem;
 use App\Http\Responses\Response;
 use App\Services\ProgressApprovalService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class ProgressUpdateRequestController extends Controller
@@ -122,6 +123,22 @@ class ProgressUpdateRequestController extends Controller
         }
     }
 
+    public function getUserProgressRequests()
+    {
+        try {
+            $requests = Auth::user()->progressRequests;
+            return Response::success(
+                'Progress update requests fetched',
+                ProgressUpdateRequestResource::collection($requests)
+            );
+        } catch (Throwable $e) {
+            if ($e instanceof \Illuminate\Auth\Access\AuthorizationException) {
+                return Response::error('You are not authorized to perform this action.', 403);
+            }
+            return Response::error('Failed to fetch progress requests. ' . $e->getMessage(), 500);
+        }
+    }
+
     /* ============================================================
        SHOW — View a Single Request
        ============================================================ */
@@ -144,6 +161,10 @@ class ProgressUpdateRequestController extends Controller
             return Response::error('Failed to fetch progress request. ' . $e->getMessage(), 500);
         }
     }
+
+    // ========================= NEW INDEX ENDPOINT =========================
+
+    
 
     /* ============================================================
        APPROVE

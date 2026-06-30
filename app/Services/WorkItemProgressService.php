@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class WorkItemProgressService
 {
@@ -58,7 +59,15 @@ class WorkItemProgressService
        UPDATE PROGRESS (PARTIAL UPDATE)
        ========================================================================= */
     public function updateProgress(Project $project, WorkItem $item, array $data): array
-    {
+    {   
+        if($item->isPlanned()){
+            app(WorkItemService::class)->startWorkItem($project, $item);
+        }
+
+        if($item->isCompleted()){
+            abort(400,'Work item already completed');
+        }
+        
         if (array_key_exists('photos', $data)) {
 
             $photos = $data['photos'] ?? [];
@@ -84,6 +93,10 @@ class WorkItemProgressService
         }
 
         $percent = $this->computeWorkItemPercent($item);
+        
+        if($percent == 100 && !$item->isCompleted()) {
+            app(WorkItemService::class)->completeWorkItem($project, $item);
+        }
 
         return [
             'work_item' => $item->refresh()->load('progressPhotos'),
@@ -100,6 +113,14 @@ class WorkItemProgressService
      */
     public function updateRoomStatus(Project $project, WorkItem $item, int $spaceId, bool $completed, array $photos = []): array
     {
+        if($item->isPlanned()){
+            app(WorkItemService::class)->startWorkItem($project, $item);
+        }
+
+        if($item->isCompleted()){
+            abort(400,'Work item already completed');
+        }
+
         if (!empty($photos)) {
             $this->storeProgressPhotos($project, $item, $photos);
         }
@@ -125,6 +146,10 @@ class WorkItemProgressService
 
         // compute percent
         $percent = $this->computeWorkItemPercent($item);
+        
+        if($percent == 100 && !$item->isCompleted()) {
+            app(WorkItemService::class)->completeWorkItem($project, $item);
+        }
 
         return [
             'work_item' => $item->refresh()->load('progressPhotos'),
@@ -243,10 +268,16 @@ class WorkItemProgressService
         if ($totalWeight == 0) return 0;
 
         $sum = 0;
-
+        $completedItems = 0;
         foreach ($items as $item) {
             $percent = $this->computeWorkItemPercent($item);
+            if($percent == 100) $completedItems++;
             $sum += ($percent * $item->weight);
+        }
+
+        // if all work items are completed, complete the project
+        if($completedItems == $items->count()){
+            app(ProjectService::class)->completeProject($project);
         }
 
         return round($sum / $totalWeight, $this->logic['settings']['percent_precision']);
