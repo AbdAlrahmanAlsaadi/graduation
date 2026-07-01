@@ -1,0 +1,178 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\DurationExtensionRequest;
+use App\Models\Project;
+use App\Models\User;
+use App\Models\WorkItem;
+use Illuminate\Support\Facades\DB;
+
+class DurationExtensionService
+{
+    public function __construct(
+        protected NotificationService $notificationService,
+        protected WorkItemService $workItemService,
+    ) {}
+
+    /* =========================================================================
+       SUBMIT
+       ========================================================================= */
+
+    public function submitRequest(
+        Project  $project,
+        WorkItem $item,
+        User     $requester,
+        int      $requestedDays,
+        string   $reason
+    ): DurationExtensionRequest {
+
+        // Prevent duplicate pending requests for the same work item
+        $existing = DurationExtensionRequest::where('work_item_id', $item->id)
+            ->where('status', DurationExtensionRequest::STATUS_PENDING)
+            ->exists();
+
+        if ($existing) {
+            abort(400, 'A pending duration extension request already exists for this work item.');
+        }
+
+        $request = DurationExtensionRequest::create([
+            'project_id'             => $project->id,
+            'work_item_id'           => $item->id,
+            'requested_by'           => $requester->id,
+            'status'                 => DurationExtensionRequest::STATUS_PENDING,
+            'requested_duration_days' => $requestedDays,
+            'reason'                 => $reason,
+        ]);
+
+        // Notify the project engineer (project manager)
+        $this->notifyEngineer($project, $item, $request);
+
+        return $request->load('requester');
+    }
+
+    /* =========================================================================
+       APPROVE
+       ========================================================================= */
+
+    public function approve(
+        DurationExtensionRequest $request,
+        User                     $reviewer
+    ): DurationExtensionRequest {
+
+        if (!$request->isPending()) {
+            abort(422, 'Only pending requests can be approved.');
+        }
+
+        DB::transaction(function () use ($request, $reviewer) {
+            $request->update([
+                'status'      => DurationExtensionRequest::STATUS_APPROVED,
+                'reviewed_by' => $reviewer->id,
+                'reviewed_at' => now(),
+            ]);
+
+            // Update the work item duration via existing WorkItemService
+            $this->workItemService->updateWorkItem(
+                $request->project,
+                $request->workItem,
+                ['duration_days' => ($request->workItem->duration_days + $request->requested_duration_days)]
+            );
+        });
+
+        // Notify the assistant
+        $this->notifyRequester($request->fresh(), 'approved');
+
+        return $request->fresh()->load(['requester', 'reviewer']);
+    }
+
+    /* =========================================================================
+       REJECT
+       ========================================================================= */
+
+    public function reject(
+        DurationExtensionRequest $request,
+        User                     $reviewer,
+        ?string                  $comment = null
+    ): DurationExtensionRequest {
+
+        if (!$request->isPending()) {
+            abort(422, 'Only pending requests can be rejected.');
+        }
+
+        $request->update([
+            'status'      => DurationExtensionRequest::STATUS_REJECTED,
+            'reviewed_by' => $reviewer->id,
+            'reviewed_at' => now(),
+            'comment'     => $comment,
+        ]);
+
+        // Notify the assistant
+        $this->notifyRequester($request->fresh(), 'rejected');
+
+        return $request->fresh()->load(['requester', 'reviewer']);
+    }
+
+    /* =========================================================================
+       NOTIFICATION HELPERS
+       ========================================================================= */
+
+    private function notifyEngineer(Project $project, WorkItem $item, DurationExtensionRequest $request): void
+    {
+        $engineer = $project->projectManager;
+
+        if (!$engineer) {
+            return;
+        }
+
+        $this->notificationService->send($engineer, [
+            'type'                 => 'duration_extension_submitted',
+            'title'                => 'New Duration Extension Request',
+            'body'                 => "A duration extension was requested for \"{$item->name}\"",
+            'project_id'           => $project->id,
+            'project_work_item_id' => $item->id,
+            'data'                 => [
+                'request_id'   => $request->id,
+                'work_item_id' => $item->id,
+            ],
+        ]);
+    }
+
+    private function notifyRequester(DurationExtensionRequest $request, string $action): void
+    {
+        $requester = $request->requester;
+
+        if (!$requester) {
+            return;
+        }
+
+        $workItem = $request->workItem;
+
+        if ($action === 'approved') {
+            $this->notificationService->send($requester, [
+                'type'                 => 'duration_extension_approved',
+                'title'                => 'Duration Extension Approved',
+                'body'                 => "Your duration extension request for \"{$workItem->name}\" has been approved",
+                'project_id'           => $request->project_id,
+                'project_work_item_id' => $request->work_item_id,
+                'sender_id'            => $request->reviewed_by,
+                'data'                 => [
+                    'request_id'   => $request->id,
+                    'work_item_id' => $request->work_item_id,
+                ],
+            ]);
+        } else {
+            $this->notificationService->send($requester, [
+                'type'                 => 'duration_extension_rejected',
+                'title'                => 'Duration Extension Rejected',
+                'body'                 => "Your duration extension request for \"{$workItem->name}\" was rejected",
+                'project_id'           => $request->project_id,
+                'project_work_item_id' => $request->work_item_id,
+                'sender_id'            => $request->reviewed_by,
+                'data'                 => [
+                    'request_id'   => $request->id,
+                    'work_item_id' => $request->work_item_id,
+                ],
+            ]);
+        }
+    }
+}
