@@ -19,6 +19,7 @@ use App\Http\Controllers\WorkItemController;
 use App\Http\Controllers\WorkItemMaterialController;
 use App\Http\Controllers\WorkItemProgressController;
 use App\Http\Controllers\ProgressUpdateRequestController;
+use App\Http\Controllers\DurationExtensionController;
 use App\Http\Controllers\ProjectImageController;
 use App\Http\Controllers\WorkshopCostCalculationController;
 use App\Models\User;
@@ -114,6 +115,24 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager')->group(function () {
         Route::post('progress-requests/{progressUpdateRequest}/approve', [ProgressUpdateRequestController::class, 'approve']);
         Route::post('progress-requests/{progressUpdateRequest}/reject', [ProgressUpdateRequestController::class, 'reject']);
+    });
+
+    // ── Duration Extension Requests ────────────────────────────────────
+
+    // Assistant submits duration extension requests
+    Route::middleware('role:assistant')->group(function () {
+        Route::post('projects/{project}/work-items/{workItem}/duration-extensions', [DurationExtensionController::class, 'store']);
+    });
+
+    // View duration extension requests (all project roles)
+    Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
+        Route::get('projects/{project}/work-items/{workItem}/duration-extensions', [DurationExtensionController::class, 'index']);
+    });
+
+    // Engineer approves or rejects duration extension
+    Route::middleware('role:company_admin|project_manager')->group(function () {
+        Route::post('duration-extensions/{durationExtensionRequest}/approve', [DurationExtensionController::class, 'approve']);
+        Route::post('duration-extensions/{durationExtensionRequest}/reject', [DurationExtensionController::class, 'reject']);
     });
 
     Route::middleware('role:company_admin|project_manager|assistant')->group(function () {

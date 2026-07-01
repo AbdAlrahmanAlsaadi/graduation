@@ -259,6 +259,11 @@ class WorkItem extends Model
         return $this->hasMany(ProgressUpdateRequest::class);
     }
 
+    public function durationExtensionRequests(): HasMany
+    {
+        return $this->hasMany(DurationExtensionRequest::class);
+    }
+
     public function workshopExpenses()
     {
         return $this->hasMany(

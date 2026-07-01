@@ -40,8 +40,8 @@ return new class extends Migration
                 ->default('planned')
                 ->comment('planned|ongoing|completed');
             $table->decimal('weight', 8, 2)->default(1)->comment('aggregation weight');
-            $table->time('started_at')->nullable();
-            $table->time('completed_at')->nullable();
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('completed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
