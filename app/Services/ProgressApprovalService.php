@@ -308,7 +308,7 @@ class ProgressApprovalService
     /**
      * Create ProgressPhoto records for approved photos.
      */
-    private function storePhotoRecords(int $projectId, int $workItemId, array $photoPaths, $spaceId = Null): void
+    private function storePhotoRecords(int $projectId, int $workItemId, array $photoPaths, $spaceId = null): void
     {
         foreach ($photoPaths as $photoData) {
             \App\Models\ProgressPhoto::create([

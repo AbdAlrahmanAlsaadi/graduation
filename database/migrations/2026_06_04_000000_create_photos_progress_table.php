@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->foreignId('work_item_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('space_id')->constrained()->cascadeOnDelete()->nullable()->default(null);
+            $table->foreignId('space_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('file_path');
             $table->string('original_name')->nullable();
             $table->timestamps();
