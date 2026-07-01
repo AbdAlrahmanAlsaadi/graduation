@@ -72,7 +72,7 @@ class AiVisualizationService
         $response = $httpRequest->post(
             'https://api.openai.com/v1/images/edits',
             [
-                'model' => 'gpt-image-1',
+                'model' => 'gpt-image-2',
                 'prompt' => $prompt,
                 'size' => '1024x1024',
                 'quality' => 'medium',
