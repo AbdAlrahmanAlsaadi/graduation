@@ -48,6 +48,7 @@ Route::middleware(['auth:sanctum'])->group(
         Route::get('projects/{projectId}/weather/by-date',[WeatherController::class, 'getByDate']
         );
         Route::get('projects/{id}/documents',[DocumentController::class, 'getProjectDocuments']);
+        Route::get('/projects/{project}/contracts',[DocumentController::class, 'getProjectContracts']);
     });
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager|assistant|project_owner')->group(function () {

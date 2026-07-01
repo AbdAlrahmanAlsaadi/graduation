@@ -16,9 +16,12 @@ return new class extends Migration
             $table->foreignId('project_id')
                 ->constrained('projects')
                 ->cascadeOnDelete();
+            $table->enum('type', [
+                'document',
+                'contract',
+            ]);
 
             $table->string('title');
-            $table->string('category');
 
             $table->timestamps();
         });

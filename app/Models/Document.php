@@ -10,6 +10,8 @@ class Document extends Model
         'project_id',
         'title',
         'category',
+        'type',
+
     ];
 
     public function project()

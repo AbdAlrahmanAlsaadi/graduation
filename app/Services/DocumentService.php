@@ -40,9 +40,8 @@ class DocumentService
             $document = Document::query()->create([
                 'project_id' => $request->project_id,
                 'title' => $request->title,
-                'category' => $request->category,
+                'type' => $request->type,
             ]);
-
             $version = DocumentVersion::query()->create([
                 'document_id' => $document->getKey(),
                 'version_no' => 1,
@@ -188,66 +187,52 @@ class DocumentService
             'file_name' => basename($version->file_path),
         ];
     }
-    public function getProjectDocuments($projectId): array
+    public function getProjectDocuments($projectId, string $type): array
     {
-        $project = Project::query()
-
-            ->with([
-                'documents.versions' => function ($query) {
-                    $query->latest();
-                },
-            ])
-
-            ->find($projectId);
+        $project = Project::query()->find($projectId);
 
         if (! $project) {
-            throw new \Exception(
-                'Project not found.',
-                404
-            );
+            throw new \Exception('Project not found.', 404);
         }
 
-        $documents = $project->documents
+        $documents = Document::query()
+            ->with([
+                'versions' => fn($query) => $query->latest(),
+            ])
+            ->where('project_id', $projectId)
+            ->where('type', $type)
+            ->get()
             ->map(function ($document) {
 
                 $latestVersion = $document->versions->first();
 
                 return [
-
                     'id' => $document->id,
-
                     'title' => $document->title,
-
-                    'category' => $document->category,
+                    'type' => $document->type,
 
                     'versions_count' => $document->versions->count(),
 
-                    'latest_version' => $latestVersion
-                        ? [
-                            'version_no' => $latestVersion->version_no,
-
-                            'file_url' => asset(
-                                'storage/' . $latestVersion->file_path
-                            ),
-
-                            'created_at' => $latestVersion->created_at,
-                        ]
-                        : null,
+                    'latest_version' => $latestVersion ? [
+                        'version_no' => $latestVersion->version_no,
+                        'file_url' => asset('storage/' . $latestVersion->file_path),
+                        'created_at' => $latestVersion->created_at,
+                    ] : null,
                 ];
             });
 
         return [
-
-            'message' => 'Project documents fetched successfully.',
-
+            'message' => ucfirst($type) . 's fetched successfully.',
             'project' => [
                 'id' => $project->id,
                 'name' => $project->name,
             ],
-
             'documents' => $documents,
-
             'status' => 200,
         ];
     }
-}
+    public function getProjectContracts($projectId): array
+    {
+        return $this->getProjectDocuments($projectId, 'contract');
+    }
+    }

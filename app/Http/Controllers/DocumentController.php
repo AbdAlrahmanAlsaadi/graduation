@@ -87,14 +87,43 @@ class DocumentController extends Controller
         }
     }
 
-
-
     public function getProjectDocuments($projectId)
     {
         try {
 
-            $data = $this->documentService
-                ->getProjectDocuments($projectId);
+            $type = request()->get('type'); // 👈 هون إنت بتحدد النوع
+
+            if (!in_array($type, ['document', 'contract'])) {
+                return Response::error('Invalid type', 422);
+            }
+
+            $data = $this->documentService->getProjectDocuments(
+                $projectId,
+                $type
+            );
+
+            return Response::success(
+                $data['message'],
+                [
+                    'project' => $data['project'],
+                    'documents' => $data['documents'],
+                ],
+                (int) $data['status']
+            );
+        } catch (Throwable $throwable) {
+
+            $code = is_int($throwable->getCode()) && $throwable->getCode() > 0
+                ? $throwable->getCode()
+                : 500;
+
+            return Response::error($throwable->getMessage(), $code);
+        }
+    }
+    public function getProjectContracts($projectId)
+    {
+        try {
+
+            $data = $this->documentService->getProjectContracts($projectId);
 
             return Response::success(
                 $data['message'],
@@ -117,4 +146,6 @@ class DocumentController extends Controller
             );
         }
     }
-}
+
+
+    }
