@@ -22,7 +22,7 @@ class WorkItemDetailsRequest extends FormRequest
      */
     public function rules(): array
     {
-            $workItem = $this->route('workItem');
+        $workItem = $this->route('workItem');
 
         $template = config("work_item_templates.{$workItem->name}");
 
@@ -37,5 +37,27 @@ class WorkItemDetailsRequest extends FormRequest
         }
 
         return $rules;
+    }
+
+    /**
+     * Reject any keys not defined in the template.
+     */
+    public function withValidator($validator): void
+    {
+        $validator->after(function ($validator) {
+            $workItem = $this->route('workItem');
+            $template = config("work_item_templates.{$workItem->name}");
+
+            if (!$template) {
+                return;
+            }
+
+            $allowedKeys = array_keys($template);
+            $extraKeys = array_diff(array_keys($this->all()), $allowedKeys);
+
+            foreach ($extraKeys as $key) {
+                $validator->errors()->add($key, "The field '{$key}' is not allowed for this work item.");
+            }
+        });
     }
 }

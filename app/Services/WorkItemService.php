@@ -84,18 +84,19 @@ class WorkItemService
         $details = [];
 
         foreach ($template as $key => $meta) {
+            $isRequired = isset($meta['rule']) && str_starts_with($meta['rule'], 'required');
 
-            if (! array_key_exists($key, $data)) {
-                abort(
-                    422,
-                    "Missing required field: {$key}"
-                );
+            if (!array_key_exists($key, $data)) {
+                if ($isRequired) {
+                    abort(422, "Missing required field: {$key}");
+                }
+                continue; // skip optional fields not provided
             }
 
             $details[] = [
-                'key' => $key,
+                'key'   => $key,
                 'value' => $data[$key],
-                'unit' => $meta['unit'] ?? null,
+                'unit'  => $meta['unit'] ?? null,
             ];
         }
 

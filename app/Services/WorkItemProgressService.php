@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class WorkItemProgressService
 {
@@ -84,13 +85,51 @@ class WorkItemProgressService
             unset($data['photos']);
         }
 
-        foreach ($data as $key => $value) {
-            // numeric progress
-            WorkItemDetail::updateOrCreate(
-                ['work_item_id' => $item->id, 'key' => $key],
-                ['value' => $value]
-            );
-        }
+        $template = $this->templates[$item->name] ?? [];
+
+        DB::transaction(function () use ($data, $item, $template) {
+            foreach ($data as $key => $value) {
+                // Only allow keys defined in the template
+                if (!empty($template) && !array_key_exists($key, $template)) {
+                    continue;
+                }
+
+                $meta = $template[$key] ?? [];
+                $isAdditive = $meta['additive'] ?? false;
+
+                if ($isAdditive && is_numeric($value)) {
+                    // Additive: add new value to existing
+                    $existing = WorkItemDetail::where('work_item_id', $item->id)
+                        ->where('key', $key)
+                        ->first();
+
+                    $oldValue = $existing ? (float) $existing->value : 0;
+                    $newValue = $oldValue + (float) $value;
+
+                    // Abort if exceeding total
+                    $totalKey = str_replace('completed_', 'total_', $key);
+                    if ($totalKey !== $key) {
+                        $totalDetail = WorkItemDetail::where('work_item_id', $item->id)
+                            ->where('key', $totalKey)
+                            ->first();
+                        if ($totalDetail && $newValue > (float) $totalDetail->value) {
+                            abort(422, "Value for '{$key}' would exceed its total ({$newValue} > {$totalDetail->value}).");
+                        }
+                    }
+
+                    WorkItemDetail::updateOrCreate(
+                        ['work_item_id' => $item->id, 'key' => $key],
+                        ['value' => $newValue]
+                    );
+                } else {
+                    // Replace: standard behavior
+                    WorkItemDetail::updateOrCreate(
+                        ['work_item_id' => $item->id, 'key' => $key],
+                        ['value' => $value]
+                    );
+                }
+            }
+        });
 
         $percent = $this->computeWorkItemPercent($item);
         
