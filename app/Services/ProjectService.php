@@ -27,6 +27,19 @@ class ProjectService
         'تشطيبات نهائية',
     ];
 
+    public function index() {
+        $user = Auth::user();
+        if($user->hasRole('company_admin'))
+            $projects = Project::query()->latest()->get();
+        else if($user->hasRole('project_manager')) 
+            $projects = Project::query()->where('project_manager_id', $user->id)->latest()->get();
+        else if($user->hasRole('assistant')) 
+            $projects = Project::query()->where('assistant_engineer_id', $user->id)->latest()->get();
+        else 
+            $projects = Project::query()->where('owner_id', $user->id)->latest()->get();
+        return $projects;
+    }
+
     public function createProjectWithDefaults(array $data): Project
     {
         return DB::transaction(function () use ($data) {

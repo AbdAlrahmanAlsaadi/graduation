@@ -27,8 +27,7 @@ class ProjectController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $projects = Project::query()->latest()->get();
-
+            $projects = $this->projectService->index();
             return Response::success(
                 'Projects fetched.',
                 ProjectResource::collection($projects)
