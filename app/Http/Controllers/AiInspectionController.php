@@ -9,34 +9,69 @@ use Illuminate\Support\Facades\Log;
 
 class AiInspectionController extends Controller
 {
+
     public function inspect(Request $request)
     {
         $request->validate([
-            'construction_image' => 'required|image|mimes:jpeg,png,jpg|max:20480',
+            'progress_update_request_id' => 'required|exists:progress_update_requests,id',
             'inspection_type' => 'required|in:tiles,paint,cement_plaster,ceiling,electrical,plumbing,general',
         ]);
 
         try {
 
-            $imageFile = $request->file('construction_image');
-            $imageBase64 = base64_encode(
-                file_get_contents($imageFile->getRealPath())
+            $progressRequest = ProgressUpdateRequest::findOrFail(
+                $request->progress_update_request_id
             );
 
-            $prompt = $this->buildPrompt(
-                $request->inspection_type
-            );
+            // payload القادم من قاعدة البيانات
+            $requestPayload = is_array($progressRequest->payload)
+                ? $progressRequest->payload
+                : json_decode($progressRequest->payload, true);
 
-            $payload = [
+            if (!$requestPayload) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'بيانات طلب التحديث غير صالحة.',
+                ], 422);
+            }
+
+            $photos = $requestPayload['_temp_photos'] ?? [];
+
+            if (empty($photos) || !isset($photos[0]['path'])) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'لا توجد صورة مرتبطة بطلب التحديث.',
+                ], 422);
+            }
+
+            $imagePath = $photos[0]['path'];
+
+            if (!Storage::disk('public')->exists($imagePath)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'الصورة غير موجودة على الخادم.',
+                ], 404);
+            }
+
+            $fullPath = Storage::disk('public')->path($imagePath);
+
+            $imageBase64 = base64_encode(file_get_contents($fullPath));
+
+            $mimeType = mime_content_type($fullPath);
+
+            $prompt = $this->buildPrompt($request->inspection_type);
+
+            // Payload الخاص بـ Gemini
+            $geminiPayload = [
                 'contents' => [
                     [
                         'parts' => [
                             [
-                                'text' => $prompt
+                                'text' => $prompt,
                             ],
                             [
                                 'inline_data' => [
-                                    'mime_type' => $imageFile->getClientMimeType(),
+                                    'mime_type' => $mimeType,
                                     'data' => $imageBase64,
                                 ],
                             ],
@@ -47,11 +82,9 @@ class AiInspectionController extends Controller
 
             $apiKey = env('GEMINI_API_KEY');
 
-            $url =
-                "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={$apiKey}";
+            $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={$apiKey}";
 
-            $response = Http::timeout(60)
-                ->post($url, $payload);
+            $response = Http::timeout(60)->post($url, $geminiPayload);
 
             if (!$response->successful()) {
 
@@ -68,12 +101,9 @@ class AiInspectionController extends Controller
 
             $data = $response->json();
 
-            $rawText =
-                $data['candidates'][0]['content']['parts'][0]['text']
-                ?? null;
+            $rawText = $data['candidates'][0]['content']['parts'][0]['text'] ?? null;
 
             if (!$rawText) {
-
                 return response()->json([
                     'success' => false,
                     'message' => 'لم يتم استلام تقرير من الذكاء الاصطناعي.',
@@ -101,6 +131,7 @@ class AiInspectionController extends Controller
                 'success' => true,
                 'message' => 'تم إصدار التقرير بنجاح.',
                 'inspection_type' => $request->inspection_type,
+                'progress_update_request_id' => $progressRequest->id,
                 'report' => $report,
             ]);
         } catch (Exception $e) {
@@ -114,6 +145,7 @@ class AiInspectionController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         }
+    
     }
     private function buildPrompt(string $type): string
     {

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AIConstructionController;
 use App\Http\Controllers\AIImageController;
+use App\Http\Controllers\AIProjectAnalysisController;
 use App\Http\Controllers\AiVisualizationCommentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
@@ -258,9 +259,7 @@ Route::post('ai-visualization', [App\Http\Controllers\AiVisualizationController:
 
 
 
-
-
-
+Route::get('/projects/{id}/ai/analyze', [AIProjectAnalysisController::class, 'analyze']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('projects/{project}/work-items/{workItem}/expenses', [App\Http\Controllers\WorkItemExpenseController::class, 'store']);
