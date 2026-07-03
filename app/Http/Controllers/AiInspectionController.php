@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProgressUpdateRequest;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class AiInspectionController extends Controller
 {
@@ -145,7 +147,7 @@ class AiInspectionController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         }
-    
+
     }
     private function buildPrompt(string $type): string
     {
