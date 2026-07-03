@@ -147,7 +147,6 @@ class AiInspectionController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         }
-
     }
     private function buildPrompt(string $type): string
     {
@@ -304,4 +303,113 @@ rejected:
 - unverified_items
 ',
         };
-    }}
+    }
+
+    public function inspect2(Request $request)
+    {
+        $request->validate([
+            'construction_image' => 'required|image|mimes:jpeg,png,jpg|max:20480',
+            'inspection_type' => 'required|in:tiles,paint,cement_plaster,ceiling,electrical,plumbing,general',
+        ]);
+
+        try {
+
+            $imageFile = $request->file('construction_image');
+            $imageBase64 = base64_encode(
+                file_get_contents($imageFile->getRealPath())
+            );
+
+            $prompt = $this->buildPrompt(
+                $request->inspection_type
+            );
+
+            $payload = [
+                'contents' => [
+                    [
+                        'parts' => [
+                            [
+                                'text' => $prompt
+                            ],
+                            [
+                                'inline_data' => [
+                                    'mime_type' => $imageFile->getClientMimeType(),
+                                    'data' => $imageBase64,
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ];
+
+            $apiKey = env('GEMINI_API_KEY');
+
+            $url =
+                "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={$apiKey}";
+
+            $response = Http::timeout(60)
+                ->post($url, $payload);
+
+            if (!$response->successful()) {
+
+                Log::error('Gemini API Error', [
+                    'status' => $response->status(),
+                    'body' => $response->body(),
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'فشل الاتصال بخدمة التحليل.',
+                ], 500);
+            }
+
+            $data = $response->json();
+
+            $rawText =
+                $data['candidates'][0]['content']['parts'][0]['text']
+                ?? null;
+
+            if (!$rawText) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'لم يتم استلام تقرير من الذكاء الاصطناعي.',
+                ], 500);
+            }
+
+            $rawText = preg_replace('/```json|```/', '', $rawText);
+
+            $report = json_decode(trim($rawText), true);
+
+            if (!$report) {
+
+                Log::error('Invalid JSON From Gemini', [
+                    'response' => $rawText,
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'تم استلام رد غير صالح من الذكاء الاصطناعي.',
+                    'raw_response' => $rawText,
+                ], 500);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'تم إصدار التقرير بنجاح.',
+                'inspection_type' => $request->inspection_type,
+                'report' => $report,
+            ]);
+        } catch (Exception $e) {
+
+            Log::error('AI Inspection Exception', [
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+
+    }
+}

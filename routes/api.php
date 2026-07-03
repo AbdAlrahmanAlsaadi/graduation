@@ -254,7 +254,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/assistant/account', [AuthController::class, 'profile']
     );
 }   );
-Route::post('/ai-inspect-job', [App\Http\Controllers\AiInspectionController::class, 'inspect']);
+
+
+
+Route::post('/ai-inspect-job', [App\Http\Controllers\AiInspectionController::class, 'inspect2']);
+Route::post('/ai-inspect-job2', [App\Http\Controllers\AiInspectionController::class, 'inspect']);
+
 Route::post('ai-visualization', [App\Http\Controllers\AiVisualizationController::class, 'generate']);
 
 
