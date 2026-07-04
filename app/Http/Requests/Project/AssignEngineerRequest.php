@@ -19,7 +19,16 @@ class AssignEngineerRequest extends FormRequest
             'role' => [
                 'required',
                 'string',
-                Rule::in(['project_manager', 'assistant', 'project_owner', 'other']),
+                Rule::in(['project_manager', 'assistant']),
+                function ($attribute, $value, $fail) {
+                    $userId = $this->input('user_id');
+                    if ($userId) {
+                        $user = \App\Models\User::find($userId);
+                        if ($user && ! $user->hasRole($value)) {
+                            $fail('The selected role must match the user\'s actual role.');
+                        }
+                    }
+                },
             ],
             'assigned_at' => ['nullable', 'date'],
         ];

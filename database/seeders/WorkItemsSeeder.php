@@ -10,6 +10,27 @@ use Illuminate\Database\Seeder;
 
 class WorkItemsSeeder extends Seeder
 {
+    /**
+     * Seed totals for numeric work items.
+     *
+     * Maps each numeric work-item name to its total-field keys and
+     * sample seed values so that progress tracking has something to
+     * work against right away.
+     */
+    private const NUMERIC_TOTALS = [
+        'ملابن الأبواب' => [
+            'total_wood_doors'    => ['value' => '4', 'unit' => 'count'],
+            'total_aluminum_doors'=> ['value' => '2', 'unit' => 'count'],
+            'total_windows'       => ['value' => '6', 'unit' => 'count'],
+        ],
+        'أبواب ونجارة' => [
+            'total_doors' => ['value' => '6', 'unit' => 'count'],
+        ],
+        'ألمنيوم وأبجورات' => [
+            'total_aluminum' => ['value' => '8', 'unit' => 'count'],
+        ],
+    ];
+
     public function run(): void
     {
         if (! Project::query()->exists() || WorkItem::query()->exists()) {
@@ -23,44 +44,39 @@ class WorkItemsSeeder extends Seeder
 
             foreach (ProjectService::DEFAULT_WORK_ITEMS as $index => $name) {
                 $items[] = [
-                    'project_id' => $project->id,
-                    'name' => $name,
+                    'project_id'    => $project->id,
+                    'name'          => $name,
                     'quality_level' => WorkItem::QUALITY_LEVEL_BASIC,
-                    'sort_order' => $index + 1,
-                    'is_default' => true,
-                    'is_active' => true,
-                    'is_custom' => false,
-                    'created_at' => $now,
-                    'updated_at' => $now,
+                    'sort_order'    => $index + 1,
+                    'is_default'    => true,
+                    'is_active'     => true,
+                    'is_custom'     => false,
+                    'created_at'    => $now,
+                    'updated_at'    => $now,
                 ];
             }
 
             WorkItem::query()->insert($items);
 
-            if (! WorkItemDetail::query()->exists()) {
-                $sample = $project->workItems()->create([
-                    'name' => 'Tile Installation',
-                    'quality_level' => WorkItem::QUALITY_LEVEL_GOOD,
-                    'duration_days' => 4,
-                    'sort_order' => count($items) + 1,
-                    'is_default' => false,
-                    'is_active' => true,
-                    'is_custom' => true,
-                ]);
+            // ── Seed totals for numeric work items ──────────────────
+            $project->workItems()
+                ->whereIn('name', array_keys(self::NUMERIC_TOTALS))
+                ->each(function (WorkItem $workItem) {
+                    $totals = self::NUMERIC_TOTALS[$workItem->name] ?? [];
 
-                $sample->details()->createMany([
-                    [
-                        'key' => 'tile_length',
-                        'value' => '30',
-                        'unit' => 'cm',
-                    ],
-                    [
-                        'key' => 'tile_width',
-                        'value' => '30',
-                        'unit' => 'cm',
-                    ],
-                ]);
-            }
+                    $details = [];
+                    foreach ($totals as $key => $meta) {
+                        $details[] = [
+                            'key'   => $key,
+                            'value' => $meta['value'],
+                            'unit'  => $meta['unit'],
+                        ];
+                    }
+
+                    if ($details) {
+                        $workItem->details()->createMany($details);
+                    }
+                });
         });
     }
 }
