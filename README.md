@@ -77,7 +77,7 @@ This project provides a robust RESTful API to manage the complete lifecycle of c
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/AbdAlrahmanAlsaadi/graduation.git
    cd graduation
    ```
 
