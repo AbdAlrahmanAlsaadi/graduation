@@ -268,7 +268,7 @@ Route::post('ai-visualization', [App\Http\Controllers\AiVisualizationController:
 
 
 
-Route::get('/projects/{id}/ai/analyze', [AIProjectAnalysisController::class, 'analyze']);
+Route::get('analyze', [AIProjectAnalysisController::class, 'chat']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('projects/{project}/work-items/{workItem}/expenses', [App\Http\Controllers\WorkItemExpenseController::class, 'store']);
