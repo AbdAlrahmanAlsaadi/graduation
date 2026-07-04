@@ -240,8 +240,16 @@ class Project extends Model
             WorkshopExpense::class
         );
     }
+
+    
+    
     public function images()
     {
         return $this->hasMany(ProjectImage::class);
+    }
+
+    public function durationExtensionRequests(): HasMany
+    {
+        return $this->hasMany(DurationExtensionRequest::class);
     }
 }

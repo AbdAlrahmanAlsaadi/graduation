@@ -123,6 +123,28 @@ class ProgressUpdateRequestController extends Controller
         }
     }
 
+    public function indexForProject(Request $request, Project $project)
+    {
+        try {
+            $this->authorize('viewAny', [ProgressUpdateRequest::class, $project]);
+
+            $requests = $project->progressUpdateRequests()
+                ->with(['requester', 'reviewer'])
+                ->latest()
+                ->paginate($request->input('per_page', 15));
+
+            return Response::success(
+                'Progress update requests fetched',
+                ProgressUpdateRequestResource::collection($requests)
+            );
+        } catch (Throwable $e) {
+            if ($e instanceof \Illuminate\Auth\Access\AuthorizationException) {
+                return Response::error('You are not authorized to perform this action.', 403);
+            }
+            return Response::error('Failed to fetch progress requests. ' . $e->getMessage(), 500);
+        }
+    }
+
     public function getUserProgressRequests()
     {
         try {

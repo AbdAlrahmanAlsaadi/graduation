@@ -59,20 +59,15 @@ class DurationExtensionController extends Controller
        INDEX — List Requests for a Work Item
        ============================================================ */
 
-    public function index(Request $request, Project $project, WorkItem $workItem)
+    public function index(Request $request, Project $project, WorkItem $workItem = null)
     {
         try {
-            if ($workItem->project_id !== $project->id) {
+            if ($workItem && $workItem->project_id !== $project->id) {
                 return Response::error('Work item does not belong to this project.', 404);
             }
 
             $this->authorize('viewAny', [DurationExtensionRequest::class, $project]);
-
-            $requests = $workItem->durationExtensionRequests()
-                ->with(['requester', 'reviewer'])
-                ->latest()
-                ->paginate($request->input('per_page', 15));
-
+            $requests = $this->service->index($request, $project, $workItem);
             return Response::success(
                 'Duration extension requests fetched',
                 DurationExtensionResource::collection($requests)

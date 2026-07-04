@@ -21,17 +21,18 @@ class ProjectsSeeder extends Seeder
             ->count(5)
             ->create();
 
-        $project = $projects->first();
-        if ($project) {
-            $projectManager = User::role('project_manager')->first();
-            $assistant = User::role('assistant')->first();
-
-            if ($projectManager) {
-                $project->assignEngineer($projectManager, 'project_manager', now());
-            }
-
-            if ($assistant) {
-                $project->assignEngineer($assistant, 'assistant', now());
+        foreach($projects as $project){
+            if ($project) {
+                $projectManager = User::role('project_manager')->first();
+                $assistant = User::role('assistant')->first();
+            
+                if ($projectManager) {
+                    $project->assignEngineer($projectManager, 'project_manager', now());
+                }
+            
+                if ($assistant) {
+                    $project->assignEngineer($assistant, 'assistant', now());
+                }
             }
         }
 

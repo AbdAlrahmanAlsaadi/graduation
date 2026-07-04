@@ -6,6 +6,7 @@ use App\Models\DurationExtensionRequest;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\WorkItem;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DurationExtensionService
@@ -14,6 +15,20 @@ class DurationExtensionService
         protected NotificationService $notificationService,
         protected WorkItemService $workItemService,
     ) {}
+
+    public function index(Request $request, Project $project, WorkItem $workItem = null) {
+        if($workItem)
+            $requests = $workItem->durationExtensionRequests()
+                ->with(['requester', 'reviewer'])
+                ->latest()
+                ->paginate($request->input('per_page', 15));
+        else $requests = $project->durationExtensionRequests()
+                ->with(['requester', 'reviewer'])
+                ->latest()
+                ->paginate($request->input('per_page', 15));
+
+        return $requests;
+    }
 
     /* =========================================================================
        SUBMIT

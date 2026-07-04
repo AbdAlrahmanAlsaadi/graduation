@@ -27,6 +27,15 @@ class ProjectEngineerService
                 ]
             );
 
+            if($role == 'project_manager')
+                $project->update([
+                    'project_manager_id' => $assignment->user_id,
+                ]);
+            else $project->update([
+                'assistant_engineer_id' => $assignment->user_id,
+            ]);
+            $project->save();
+
             return $assignment->load('user');
         });
     }
@@ -41,6 +50,17 @@ class ProjectEngineerService
             if (! $assignment) {
                 return false;
             }
+
+            if($assignment->role == 'project_manager'){
+                $project->update([
+                    'project_manager_id' => null
+                ]);
+            } else if($assignment->role == 'assistant') {
+                $project->update([
+                    'assistant_engineer_id' => null
+                ]);
+            }
+            $project->save();
 
             $assignment->delete();
 

@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Services\ProjectEngineerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
+use App\Http\Resources\ProjectEngineerResource;
 use Throwable;
 
 class ProjectEngineerController extends Controller
@@ -21,7 +22,7 @@ class ProjectEngineerController extends Controller
         try {
             $assignments = $this->projectEngineerService->list($project);
 
-            return Response::success('Engineers fetched.', $assignments);
+            return Response::success('Engineers fetched.', ProjectEngineerResource::collection($assignments));
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
         }
