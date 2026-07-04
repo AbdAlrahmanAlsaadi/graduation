@@ -36,6 +36,7 @@ class ProjectResource extends JsonResource
             'progress_percent' => $service->computeProjectPercent($this->resource),
             'created_at' => $this->created_at?->toISOString(),
             'updated_at' => $this->updated_at?->toISOString(),
+            'owner' => $this->owner ? new UserResource($this->owner) : null,
         ];
     }
 }
