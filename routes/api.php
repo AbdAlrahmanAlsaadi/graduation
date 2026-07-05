@@ -132,7 +132,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
         Route::get('projects/{project}/work-items/{workItem}/duration-extensions', [DurationExtensionController::class, 'index']);
         Route::get('projects/{project}/duration-extensions', [DurationExtensionController::class, 'index']);
-   
+
     });
 
     // Engineer approves or rejects duration extension
@@ -267,8 +267,14 @@ Route::post('/ai-inspect-job2', [App\Http\Controllers\AiInspectionController::cl
 Route::post('ai-visualization', [App\Http\Controllers\AiVisualizationController::class, 'generate']);
 
 
-
-Route::get('analyze', [AIProjectAnalysisController::class, 'chat']);
+Route::prefix('ai')->group(function () {
+    Route::post('chat', [AIProjectAnalysisController::class, 'chat']);
+    Route::get('/conversations', [AIProjectAnalysisController::class, 'index']);
+    Route::get('/conversations/{id}', [AIProjectAnalysisController::class, 'show']);
+    Route::delete('/conversations/{id}', [AIProjectAnalysisController::class, 'destroy']);
+    Route::post('new', [AIProjectAnalysisController::class, 'newConversation']);
+    Route::delete('clear', [AIProjectAnalysisController::class, 'clearMemory']);
+});
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('projects/{project}/work-items/{workItem}/expenses', [App\Http\Controllers\WorkItemExpenseController::class, 'store']);
