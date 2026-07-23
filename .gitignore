@@ -21,3 +21,6 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+presentation/index.html
+presentation/script.js
+presentation/styles.css

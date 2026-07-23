@@ -24,7 +24,7 @@ class ProjectService
         'دهان',
         'أبواب ونجارة',
         'ألمنيوم وأبجورات',
-        'تشطيبات نهائية',
+        'ديكورات',
     ];
 
     public function index() {
