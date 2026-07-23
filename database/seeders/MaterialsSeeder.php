@@ -8,28 +8,75 @@ use Illuminate\Database\Seeder;
 class MaterialsSeeder extends Seeder
 {
     private const MATERIALS = [
-        ['name' => 'Cement',            'unit' => 'Bag'],
-        ['name' => 'Sand',              'unit' => 'Cubic Meter'],
-        ['name' => 'Water',             'unit' => 'Barrel'],
-        ['name' => 'Wall Ceramic',      'unit' => 'm²'],
-        ['name' => 'Ceiling Ceramic',   'unit' => 'm²'],
-        ['name' => 'Ceramic Adhesive',  'unit' => 'Bag'],
-        ['name' => 'Ceramic Spacers',   'unit' => 'Box'],
-        ['name' => 'Floor Tiles',       'unit' => 'm²'],
-        ['name' => 'Paint',             'unit' => 'Bucket'],
-        ['name' => 'Putty',             'unit' => 'Bag'],
-        ['name' => 'Roller',            'unit' => 'Piece'],
-        ['name' => 'Brush',             'unit' => 'Piece'],
-        ['name' => 'Sandpaper',         'unit' => 'Sheet'],
-        ['name' => 'Electrical Tape',   'unit' => 'Meter'],
-        ['name' => 'Electrical Boxes',  'unit' => 'Piece'],
-        ['name' => 'Wires',             'unit' => 'Meter'],
-        ['name' => 'Power Outlets',     'unit' => 'Piece'],
-        ['name' => 'Switches',          'unit' => 'Piece'],
-        ['name' => 'Lighting Fixture',  'unit' => 'Piece'],
-        ['name' => 'Faucet',            'unit' => 'Piece'],
-        ['name' => 'Boiler',            'unit' => 'Piece'],
-        ['name' => 'Gypsum Board',      'unit' => 'Board'],
+        // Cement, sand, water
+        ['name' => 'إسمنت أسود', 'unit' => 'كيس'],
+        ['name' => 'إسمنت أبيض', 'unit' => 'كيس'],
+        ['name' => 'رمل', 'unit' => 'متر مكعب'],
+        ['name' => 'مياه', 'unit' => 'برميل'],
+
+        // Electrical materials
+        ['name' => 'أنبوب تمديد كهربائي (تيب)', 'unit' => 'متر'],
+        ['name' => 'علبة كهرباء', 'unit' => 'قطعة'],
+        ['name' => 'سلك كهرباء', 'unit' => 'متر'],
+        ['name' => 'علبة قواطع', 'unit' => 'قطعة'],
+        ['name' => 'بريز كهرباء', 'unit' => 'قطعة'],
+        ['name' => 'مفتاح كهرباء', 'unit' => 'قطعة'],
+        ['name' => 'لمبة', 'unit' => 'قطعة'],
+        ['name' => 'سوكة لمبة', 'unit' => 'قطعة'],
+        ['name' => 'عدسية', 'unit' => 'قطعة'],
+        ['name' => 'سبوت إنارة', 'unit' => 'قطعة'],
+        ['name' => 'قاطع كهربائي', 'unit' => 'قطعة'],
+        ['name' => 'جرس باب', 'unit' => 'قطعة'],
+
+        // Plumbing / sanitary
+        ['name' => 'أنبوب مياه تغذية', 'unit' => 'متر'],
+        ['name' => 'أنبوب صرف صحي', 'unit' => 'متر'],
+        ['name' => 'وصلات وأكواع صحية', 'unit' => 'قطعة'],
+        ['name' => 'محبس مياه', 'unit' => 'قطعة'],
+        ['name' => 'بلوعة', 'unit' => 'قطعة'],
+        ['name' => 'مغسلة', 'unit' => 'قطعة'],
+        ['name' => 'خرطوم تصريف مغسلة', 'unit' => 'قطعة'],
+        ['name' => 'مجلى مع تركيب', 'unit' => 'قطعة'],
+        ['name' => 'حوض مجلى', 'unit' => 'قطعة'],
+        ['name' => 'طقم دوش', 'unit' => 'طقم'],
+        ['name' => 'شطاف مع خرطوم', 'unit' => 'طقم'],
+        ['name' => 'مرحاض إفرنجي', 'unit' => 'قطعة'],
+        ['name' => 'مرحاض عربي', 'unit' => 'قطعة'],
+        ['name' => 'حنفية عادية', 'unit' => 'قطعة'],
+        ['name' => 'خلاط مياه', 'unit' => 'قطعة'],
+        ['name' => 'حنفية مغسلة', 'unit' => 'قطعة'],
+        ['name' => 'سخان مياه', 'unit' => 'قطعة'],
+        ['name' => 'سيفون مغسلة', 'unit' => 'قطعة'],
+        ['name' => 'شريط تفلون', 'unit' => 'لفة'],
+        ['name' => 'سيليكون صحي', 'unit' => 'عبوة'],
+
+        // Stove / openings
+        ['name' => 'فتحة صوبيا', 'unit' => 'قطعة'],
+
+        // Ceramics
+        ['name' => 'سيراميك أرضيات', 'unit' => 'متر مربع'],
+        ['name' => 'سيراميك جدران وأسقف', 'unit' => 'متر مربع'],
+        ['name' => 'لاصق سيراميك', 'unit' => 'كيس'],
+        ['name' => 'فواصل سيراميك', 'unit' => 'علبة'],
+
+        // Gypsum board
+        ['name' => 'لوح جبس بورد', 'unit' => 'لوح'],
+        ['name' => 'قائم معدني للجبس', 'unit' => 'متر'],
+        ['name' => 'مسار معدني للجبس', 'unit' => 'متر'],
+        ['name' => 'علاقة جبس بورد', 'unit' => 'قطعة'],
+        ['name' => 'شريط فواصل جبس', 'unit' => 'لفة'],
+        ['name' => 'معجونة فواصل جبس', 'unit' => 'عبوة'],
+
+        // Paint and accessories
+        ['name' => 'دهان', 'unit' => 'سطل'],
+        ['name' => 'معجونة دهان', 'unit' => 'كيس'],
+        ['name' => 'رول دهان', 'unit' => 'قطعة'],
+        ['name' => 'عصاية رول دهان', 'unit' => 'قطعة'],
+        ['name' => 'فرشاية دهان', 'unit' => 'قطعة'],
+        ['name' => 'ورق زجاج', 'unit' => 'ورقة'],
+        ['name' => 'شريط حماية دهان', 'unit' => 'لفة'],
+        ['name' => 'نايلون حماية', 'unit' => 'لفة'],
+        ['name' => 'تنر دهان', 'unit' => 'لتر'],
     ];
 
     public function run(): void

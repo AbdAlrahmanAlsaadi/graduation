@@ -231,8 +231,8 @@ return [
         ],
     ],
 
-    // 13) تشطيبات نهائية (Final Finishes)
-    'تشطيبات نهائية' => [
+    // 13) ديكورات (Final Finishes)
+    'ديكورات' => [
         'final_items_total' => [
             'unit'          => 'count',
             'rule'          => 'required|integer|min:0',
