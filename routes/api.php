@@ -23,6 +23,7 @@ use App\Http\Controllers\ProgressUpdateRequestController;
 use App\Http\Controllers\DurationExtensionController;
 use App\Http\Controllers\ProjectImageController;
 use App\Http\Controllers\WorkshopCostCalculationController;
+use App\Http\Controllers\ProjectMaterialEstimationController;
 use App\Models\User;
 use App\Services\AgnesService;
 use App\Services\NotificationService;
@@ -206,6 +207,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
                     Route::post(
                 'projects/{projectId}/tile',
                         [WorkshopCostCalculationController::class, 'tile']
+                    );
+
+                    Route::get(
+                        'projects/{project}/estimate-materials',
+                        [ProjectMaterialEstimationController::class, 'estimate']
                     );
                 });
 
