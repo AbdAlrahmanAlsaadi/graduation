@@ -3,20 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Http\Responses\Response;
-use App\Services\ProjectMaterialEstimationService;
+use App\Services\ProjectWorkshopEstimationService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Throwable;
 
-class ProjectMaterialEstimationController extends Controller
+class ProjectWorkshopEstimationController extends Controller
 {
     public function __construct(
-        private ProjectMaterialEstimationService $estimationService
+        private ProjectWorkshopEstimationService $estimationService
     ) {}
 
-    public function estimate(int $projectId): JsonResponse
+    public function estimate(Request $request, int $projectId): JsonResponse
     {
         try {
-            $result = $this->estimationService->estimateProjectMaterials($projectId);
+            $beamsCount = (int) $request->query('beams_count', 0);
+            $skirtingFactor = (float) $request->query('skirting_factor', 0.1);
+
+            $result = $this->estimationService->estimateProjectWorkshops(
+                $projectId,
+                $beamsCount,
+                $skirtingFactor
+            );
 
             return Response::success(
                 $result['message'],
