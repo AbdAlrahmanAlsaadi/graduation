@@ -24,6 +24,7 @@ use App\Http\Controllers\DurationExtensionController;
 use App\Http\Controllers\ProjectImageController;
 use App\Http\Controllers\WorkshopCostCalculationController;
 use App\Http\Controllers\ProjectMaterialEstimationController;
+use App\Http\Controllers\ProjectWorkshopEstimationController;
 use App\Models\User;
 use App\Services\AgnesService;
 use App\Services\NotificationService;
@@ -212,6 +213,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
                     Route::get(
                         'projects/{project}/estimate-materials',
                         [ProjectMaterialEstimationController::class, 'estimate']
+                    );
+
+                    Route::get(
+                        'projects/{project}/estimate-workshops',
+                        [ProjectWorkshopEstimationController::class, 'estimate']
                     );
                 });
 
