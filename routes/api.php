@@ -22,6 +22,7 @@ use App\Http\Controllers\WorkItemProgressController;
 use App\Http\Controllers\ProgressUpdateRequestController;
 use App\Http\Controllers\DurationExtensionController;
 use App\Http\Controllers\ProjectImageController;
+use App\Http\Controllers\ProjectReviewController;
 use App\Http\Controllers\WorkshopCostCalculationController;
 use App\Http\Controllers\ProjectMaterialEstimationController;
 use App\Http\Controllers\ProjectWorkshopEstimationController;
@@ -320,3 +321,14 @@ Route::middleware(['auth:sanctum'])->group(
         Route::get('ai-visualizations/{aiVisualization}/comments',[AiVisualizationCommentController::class, 'index'] );
         Route::delete('ai-visualization-comments/{id}', [AiVisualizationCommentController::class, 'destroy']);
     });
+
+
+
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::post(
+        'projects/{project}/review', [ProjectReviewController::class, 'store']);
+    Route::get(
+        '/project-reviews',[ProjectReviewController::class, 'statistics']);
+});
