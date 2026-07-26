@@ -241,8 +241,8 @@ class Project extends Model
         );
     }
 
-    
-    
+
+
     public function images()
     {
         return $this->hasMany(ProjectImage::class);
@@ -251,5 +251,10 @@ class Project extends Model
     public function durationExtensionRequests(): HasMany
     {
         return $this->hasMany(DurationExtensionRequest::class);
+    }
+
+    public function review()
+    {
+        return $this->hasOne(ProjectReview::class);
     }
 }

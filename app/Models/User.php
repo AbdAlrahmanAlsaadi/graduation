@@ -123,5 +123,8 @@ class User extends Authenticatable
     }
 
 
-
+    public function projectReviews()
+    {
+        return $this->hasMany(ProjectReview::class, 'owner_id');
+    }
 }
