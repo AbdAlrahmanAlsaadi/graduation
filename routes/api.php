@@ -26,6 +26,7 @@ use App\Http\Controllers\ProjectReviewController;
 use App\Http\Controllers\WorkshopCostCalculationController;
 use App\Http\Controllers\ProjectMaterialEstimationController;
 use App\Http\Controllers\ProjectWorkshopEstimationController;
+use App\Http\Controllers\ProjectCostEstimationController;
 use App\Models\User;
 use App\Services\AgnesService;
 use App\Services\NotificationService;
@@ -219,6 +220,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
                     Route::get(
                         'projects/{project}/estimate-workshops',
                         [ProjectWorkshopEstimationController::class, 'estimate']
+                    );
+
+                    Route::get(
+                        'projects/{project}/estimate-total-cost',
+                        [ProjectCostEstimationController::class, 'estimateTotal']
+                    );
+
+                    Route::get(
+                        'projects/{project}/compare-cost',
+                        [ProjectCostEstimationController::class, 'compareCost']
                     );
                 });
 
