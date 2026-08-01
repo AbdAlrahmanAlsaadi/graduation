@@ -218,4 +218,17 @@ class ProjectController extends Controller
             return Response::error($throwable->getMessage(), $code);
         }
     }
+    public function getOngoingProjects(): JsonResponse
+    {
+        $result = $this->projectService->getOngoingProjects();
+
+        return response()->json([
+            'success' => true,
+            'message' => $result['message'],
+            'data'    => $result['data'],
+        ]);
+    }
+
+
+
 }

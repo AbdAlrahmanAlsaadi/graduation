@@ -331,4 +331,9 @@ Route::middleware('auth:sanctum')->group(function () {
         'projects/{project}/review', [ProjectReviewController::class, 'store']);
     Route::get(
         '/project-reviews',[ProjectReviewController::class, 'statistics']);
+         Route::get('/ongoing-projects', [ProjectController::class, 'getOngoingProjects']);
 });
+
+
+
+

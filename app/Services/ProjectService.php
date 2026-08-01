@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Project;
 use App\Models\WorkItem;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -31,11 +32,11 @@ class ProjectService
         $user = Auth::user();
         if($user->hasRole('company_admin'))
             $projects = Project::query()->latest()->get();
-        else if($user->hasRole('project_manager')) 
+        else if($user->hasRole('project_manager'))
             $projects = Project::query()->where('project_manager_id', $user->id)->latest()->get();
-        else if($user->hasRole('assistant')) 
+        else if($user->hasRole('assistant'))
             $projects = Project::query()->where('assistant_engineer_id', $user->id)->latest()->get();
-        else 
+        else
             $projects = Project::query()->where('owner_id', $user->id)->latest()->get();
         return $projects;
     }
@@ -276,4 +277,75 @@ class ProjectService
 
             'status' => 200,
         ];
-    }}
+    }
+    
+    public function getOngoingProjects(): array
+    {
+        // جلب المشاريع مع جميع العلاقات المطلوبة
+        $projects = Project::with([
+            'workItems',
+            'invoices',
+            'laborCosts',
+            'workshopExpenses'
+        ])
+            ->where('status', Project::STATUS_ONGOING)
+            ->get();
+
+        // إذا لم يوجد مشاريع
+        if ($projects->isEmpty()) {
+            return [
+                'data'    => [],
+                'message' => 'لا يوجد أي مشروع قيد التنفيذ حالياً.',
+            ];
+        }
+
+        // تجهيز البيانات
+        $data = $projects->map(function ($project) {
+            // 1. نسبة الإنجاز من بنود العمل
+            $workItems = $project->workItems;
+            $total = $workItems->count();
+            $completed = $workItems->where('status', WorkItem::STATUS_COMPLETED)->count();
+            $completionPercentage = $total > 0 ? round(($completed / $total) * 100, 2) : 0;
+
+            // 2. الأيام المتبقية (بدون تاريخ انتهاء ← 0)
+            $remainingDays = 0;
+
+            // 3. التكلفة الحالية: فواتير + عمالة + ورش
+            $invoicesTotal = (float) $project->invoices->sum('total_amount');
+            $laborCostsTotal = (float) $project->laborCosts->sum('cost'); // افترضنا العمود cost
+            $workshopExpensesTotal = (float) $project->workshopExpenses->sum('amount'); // افترضنا العمود amount
+            $currentCost = $invoicesTotal + $laborCostsTotal + $workshopExpensesTotal;
+
+            // 4. القيمة المقدرة (لا توجد ميزانية ← 0)
+            $estimatedValue = 0.0;
+
+            // 5. تحديد الحالة (دائماً طبيعي لأن لا توجد ميزانية ولا تاريخ)
+            $status = 'طبيعي';
+
+            return [
+                'project_name'          => $project->name,
+                'completion_percentage' => $completionPercentage,
+                'remaining_days'        => $remainingDays,
+                'current_cost'          => number_format($currentCost, 2),
+                'estimated_value'       => number_format($estimatedValue, 2),
+                'status'                => $status,
+            ];
+        });
+
+        return [
+            'data'    => $data,
+            'message' => 'تم جلب البيانات بنجاح',
+        ];
+    }
+
+    private function determineStatus(float $currentCost, float $estimatedValue, int $remainingDays, float $completionPercentage): string
+    {
+        if ($currentCost > $estimatedValue && $estimatedValue > 0) {
+            return 'تجاوز الميزانية';
+        }
+        if ($remainingDays < 0 && $completionPercentage < 100) {
+            return 'متأخر';
+        }
+        return 'طبيعي';
+    }
+}
