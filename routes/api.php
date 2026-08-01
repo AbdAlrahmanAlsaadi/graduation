@@ -27,6 +27,7 @@ use App\Http\Controllers\WorkshopCostCalculationController;
 use App\Http\Controllers\ProjectMaterialEstimationController;
 use App\Http\Controllers\ProjectWorkshopEstimationController;
 use App\Http\Controllers\ProjectCostEstimationController;
+use App\Http\Controllers\ReturnInvoiceController;
 use App\Models\User;
 use App\Services\AgnesService;
 use App\Services\NotificationService;
@@ -348,3 +349,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
+
+Route::middleware('auth:sanctum')->group(function () {
+
+
+
+
+        Route::get('/projects/{projectId}/return-invoices', [ReturnInvoiceController::class, 'index']);
+        Route::post('/projects/{projectId}/return-invoices', [ReturnInvoiceController::class, 'store']);
+        Route::delete('/{id}', [ReturnInvoiceController::class, 'destroy']);
+    });

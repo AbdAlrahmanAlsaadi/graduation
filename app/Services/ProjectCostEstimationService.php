@@ -5,14 +5,23 @@ namespace App\Services;
 use App\Models\Project;
 use App\Models\WorkItemInvoice;
 use App\Models\WorkshopExpense;
+use App\Services\ReturnInvoiceService; // ✅ استيراد خدمة المرتجعات
 use Illuminate\Support\Facades\Auth;
 
 class ProjectCostEstimationService
 {
+    /**
+     * @var ReturnInvoiceService
+     */
+    private ReturnInvoiceService $returnInvoiceService;
+
     public function __construct(
         private ProjectMaterialEstimationService $materialEstimationService,
-        private ProjectWorkshopEstimationService $workshopEstimationService
-    ) {}
+        private ProjectWorkshopEstimationService $workshopEstimationService,
+        ReturnInvoiceService $returnInvoiceService // ✅ حقن الخدمة الجديدة
+    ) {
+        $this->returnInvoiceService = $returnInvoiceService;
+    }
 
     private function validateProjectAccess(Project $project): void
     {
@@ -105,7 +114,7 @@ class ProjectCostEstimationService
             ->where('project_id', $projectId)
             ->sum('amount');
 
-        $returnsDeduction = 0.0; // Reserved for returns module deduction
+        $returnsDeduction = $this->returnInvoiceService->getTotalReturnsDeduction($projectId);
 
         $netActualCost = round(($actualMaterialsCost + $actualWorkshopsCost) - $returnsDeduction, 2);
 
