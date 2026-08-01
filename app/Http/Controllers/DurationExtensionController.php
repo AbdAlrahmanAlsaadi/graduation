@@ -81,6 +81,26 @@ class DurationExtensionController extends Controller
     }
 
     /* ============================================================
+       INDEX — List All Requests
+       ============================================================ */
+
+    public function all(Request $request)
+    {
+        try {
+            $requests = $this->service->getAllRequests($request, auth()->user());
+            return Response::success(
+                'Duration extension requests fetched',
+                DurationExtensionResource::collection($requests)
+            );
+        } catch (Throwable $e) {
+            if ($e instanceof \Illuminate\Auth\Access\AuthorizationException) {
+                return Response::error('You are not authorized to perform this action.', 403);
+            }
+            return Response::error('Failed to fetch duration extension requests. ' . $e->getMessage(), 500);
+        }
+    }
+
+    /* ============================================================
        APPROVE
        ============================================================ */
 

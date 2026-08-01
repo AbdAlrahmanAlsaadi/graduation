@@ -31,8 +31,11 @@ class ProjectEngineerService
                 $project->update([
                     'project_manager_id' => $assignment->user_id,
                 ]);
-            else $project->update([
+            else if($role == 'assistant') $project->update([
                 'assistant_engineer_id' => $assignment->user_id,
+            ]);
+            else $project->update([
+                'owner_id' => $assignment->user_id,
             ]);
             $project->save();
 
@@ -58,6 +61,10 @@ class ProjectEngineerService
             } else if($assignment->role == 'assistant') {
                 $project->update([
                     'assistant_engineer_id' => null
+                ]);
+            } else {
+                $project->update([
+                    'owner_id' => null
                 ]);
             }
             $project->save();

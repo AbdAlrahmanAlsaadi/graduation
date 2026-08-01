@@ -40,7 +40,7 @@ class ProjectEngineerController extends Controller
                 $data['assigned_at'] ?? now()
             );
 
-            return Response::success('Engineer assigned.', $assignment, 201);
+            return Response::success('User assigned.', $assignment, 201);
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
         }

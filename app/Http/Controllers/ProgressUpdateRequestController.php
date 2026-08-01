@@ -186,7 +186,22 @@ class ProgressUpdateRequestController extends Controller
 
     // ========================= NEW INDEX ENDPOINT =========================
 
-    
+    public function all(Request $request)
+    {
+        try {
+            $requests = $this->service->getAllRequests($request, Auth::user());
+
+            return Response::success(
+                'Progress update requests fetched',
+                ProgressUpdateRequestResource::collection($requests)
+            );
+        } catch (Throwable $e) {
+            if ($e instanceof \Illuminate\Auth\Access\AuthorizationException) {
+                return Response::error('You are not authorized to perform this action.', 403);
+            }
+            return Response::error('Failed to fetch progress requests. ' . $e->getMessage(), 500);
+        }
+    }
 
     /* ============================================================
        APPROVE
