@@ -18,6 +18,49 @@ class ProgressApprovalService
     ) {}
 
     /* =========================================================================
+       INDEX: All Progress Updates with Scoping & Filtering
+       ========================================================================= */
+
+    public function getAllRequests(\Illuminate\Http\Request $request, User $user)
+    {
+        $query = ProgressUpdateRequest::query();
+
+        if (!$user->hasRole('company_admin')) {
+            $assignedProjectIds = Project::where('project_manager_id', $user->id)
+                ->orWhere('assistant_engineer_id', $user->id)
+                ->orWhereHas('projectEngineers', function ($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                })
+                ->pluck('id');
+
+            $query->where(function ($q) use ($assignedProjectIds, $user) {
+                $q->whereIn('project_id', $assignedProjectIds)
+                  ->orWhere('requested_by', $user->id);
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        if ($request->filled('type')) {
+            $query->where('type', $request->input('type'));
+        }
+
+        if ($request->filled('project_id')) {
+            $query->where('project_id', $request->input('project_id'));
+        }
+
+        if ($request->filled('work_item_id')) {
+            $query->where('work_item_id', $request->input('work_item_id'));
+        }
+
+        return $query->with(['requester', 'reviewer', 'project', 'workItem'])
+            ->latest()
+            ->paginate($request->input('per_page', 15));
+    }
+
+    /* =========================================================================
        SUBMIT: Full Progress Update
        ========================================================================= */
 

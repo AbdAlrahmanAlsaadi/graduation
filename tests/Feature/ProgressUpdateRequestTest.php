@@ -81,17 +81,26 @@ class ProgressUpdateRequestTest extends TestCase
         $project   = $this->createProjectFor($engineer, $assistant);
         $workItem  = $this->createWorkItem($project);
 
+        $space = \App\Models\Space::create([
+            'project_id'         => $project->id,
+            'type'               => 'room',
+            'wall_area'          => 40.00,
+            'wall_finish_type'   => 'paint',
+            'ceiling_finish_type'=> 'gypsum',
+            'ceiling_area'       => 20.00,
+        ]);
+
         Sanctum::actingAs($assistant, ['*'], 'sanctum');
 
         $response = $this->postJson(
-            "/api/projects/{$project->id}/work-items/{$workItem->id}/progress-requests/room/1",
+            "/api/projects/{$project->id}/work-items/{$workItem->id}/progress-requests/room/{$space->id}",
             ['completed' => true]
         );
 
         $response->assertStatus(201)
             ->assertJsonPath('data.status', 'pending')
             ->assertJsonPath('data.type', 'room')
-            ->assertJsonPath('data.payload.space_id', 1)
+            ->assertJsonPath('data.payload.space_id', $space->id)
             ->assertJsonPath('data.payload.completed', true);
     }
 
@@ -458,6 +467,31 @@ class ProgressUpdateRequestTest extends TestCase
         $progressRequest->refresh();
         $this->assertSame('pending', $progressRequest->status);
         $this->assertNull($progressRequest->reviewed_by);
+    }
+
+    public function test_user_can_fetch_all_progress_requests(): void
+    {
+        $engineer  = $this->createUserWithRole('project_manager');
+        $assistant = $this->createUserWithRole('assistant');
+        $project   = $this->createProjectFor($engineer, $assistant);
+        $workItem  = $this->createWorkItem($project);
+
+        ProgressUpdateRequest::create([
+            'project_id'   => $project->id,
+            'work_item_id' => $workItem->id,
+            'requested_by' => $assistant->id,
+            'status'       => 'pending',
+            'type'         => 'progress',
+            'payload'      => ['completed_doors' => 2],
+        ]);
+
+        Sanctum::actingAs($engineer, ['*'], 'sanctum');
+
+        $response = $this->getJson('/api/progress-requests');
+
+        $response->assertStatus(200)
+            ->assertJsonPath('status', 200)
+            ->assertJsonCount(1, 'data');
     }
 
     /* ================================================================

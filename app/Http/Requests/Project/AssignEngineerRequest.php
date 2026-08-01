@@ -19,7 +19,7 @@ class AssignEngineerRequest extends FormRequest
             'role' => [
                 'required',
                 'string',
-                Rule::in(['project_manager', 'assistant']),
+                Rule::in(['project_manager', 'assistant', 'project_owner']),
                 function ($attribute, $value, $fail) {
                     $userId = $this->input('user_id');
                     if ($userId) {

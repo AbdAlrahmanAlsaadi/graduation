@@ -113,10 +113,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // View progress update requests (all project roles)
     Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
         Route::get('projects/{project}/work-items/{workItem}/progress-requests', [ProgressUpdateRequestController::class, 'index']);
+        Route::get('progress-requests', [ProgressUpdateRequestController::class, 'all']);
         Route::get('progress-requests/{progressUpdateRequest}', [ProgressUpdateRequestController::class, 'show']);
         Route::get('my-progress-requests', [ProgressUpdateRequestController::class, 'getUserProgressRequests']);
         Route::get('projects/{project}/progress-requests', [ProgressUpdateRequestController::class, 'indexForProject']);
-
     });
 
     // Engineer approves or rejects
@@ -136,7 +136,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager|assistant')->group(function () {
         Route::get('projects/{project}/work-items/{workItem}/duration-extensions', [DurationExtensionController::class, 'index']);
         Route::get('projects/{project}/duration-extensions', [DurationExtensionController::class, 'index']);
-
+        Route::get('duration-extensions', [DurationExtensionController::class, 'all']);
     });
 
     // Engineer approves or rejects duration extension
