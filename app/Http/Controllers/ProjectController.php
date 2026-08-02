@@ -229,6 +229,16 @@ class ProjectController extends Controller
         ]);
     }
 
+    public function getDeliveryRate(): JsonResponse
+    {
+        $result = $this->projectService->calculateOnTimeDeliveryRate();
+
+        return response()->json([
+            'success' => true,
+            'message' => $result['message'],
+            'data' => $result['data'],
+        ], $result['status']);
+    }
 
 
 }

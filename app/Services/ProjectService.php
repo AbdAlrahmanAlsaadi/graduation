@@ -393,4 +393,73 @@ class ProjectService
 
         return 'طبيعي';
     }
+
+    public function calculateOnTimeDeliveryRate(): array
+    {
+        // 1. جلب جميع المشاريع المكتملة مع بنود العمل
+        $projects = Project::with('workItems')
+            ->where('status', Project::STATUS_COMPLETED)
+            ->get();
+
+        if ($projects->isEmpty()) {
+            return [
+                'status' => 200,
+                'message' => 'لا توجد مشاريع مكتملة.',
+                'data' => [
+                    'total_completed_projects' => 0,
+                    'on_time_projects' => 0,
+                    'delayed_projects' => 0,
+                    'on_time_rate' => 0,
+                    'projects' => [],
+                ],
+            ];
+        }
+
+        $onTime = 0;
+        $delayed = 0;
+        $projectDetails = [];
+
+        foreach ($projects as $project) {
+            // حساب تاريخ الانتهاء المتوقع
+            $totalDuration = $project->workItems->sum('duration_days');
+            $startedAt = Carbon::parse($project->started_at);
+            $expectedEndDate = $startedAt->copy()->addDays($totalDuration);
+
+            // تاريخ الانتهاء الفعلي
+            $completedAt = Carbon::parse($project->completed_at);
+
+            // تحديد الحالة
+            $isOnTime = $completedAt->lte($expectedEndDate);
+
+            if ($isOnTime) {
+                $onTime++;
+            } else {
+                $delayed++;
+            }
+
+            $projectDetails[] = [
+                'id' => $project->id,
+                'name' => $project->name,
+                'started_at' => $project->started_at,
+                'completed_at' => $project->completed_at,
+                'expected_end_date' => $expectedEndDate->toDateTimeString(),
+                'status' => $isOnTime ? 'في الموعد' : 'متأخر',
+            ];
+        }
+
+        $totalCompleted = $projects->count();
+        $onTimeRate = $totalCompleted > 0 ? round(($onTime / $totalCompleted) * 100, 2) : 0;
+
+        return [
+            'status' => 200,
+            'message' => 'تم حساب نسبة التسليم في الموعد بنجاح.',
+            'data' => [
+                'total_completed_projects' => $totalCompleted,
+                'on_time_projects' => $onTime,
+                'delayed_projects' => $delayed,
+                'on_time_rate' => $onTimeRate,
+                'projects' => $projectDetails,
+            ],
+        ];
+    }
 }

@@ -59,6 +59,8 @@ Route::middleware(['auth:sanctum'])->group(
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager|assistant|project_owner')->group(function () {
         Route::apiResource('projects', ProjectController::class)->only(['index', 'show']);
+
+
         Route::get('projects/{project}/spaces', [SpaceController::class, 'index']);
         Route::get('projects/{project}/spaces/ceramic', [SpaceController::class, 'ceramicSpaces']);
         Route::get('projects/{project}/spaces/gypsum', [SpaceController::class, 'gypsumSpaces']);
@@ -344,6 +346,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get(
         '/project-reviews',[ProjectReviewController::class, 'statistics']);
          Route::get('/ongoing-projects', [ProjectController::class, 'getOngoingProjects']);
+       Route::get('/delivery-rate', [ProjectController::class, 'getDeliveryRate']);
 });
 
 
