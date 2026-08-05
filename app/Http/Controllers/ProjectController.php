@@ -27,7 +27,8 @@ class ProjectController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $projects = $this->projectService->index();
+            $projects = Project::with(['projectManager', 'assistantEngineer', 'owner'])->get();
+
             return Response::success(
                 'Projects fetched.',
                 ProjectResource::collection($projects)
@@ -84,13 +85,15 @@ class ProjectController extends Controller
             return $this->handleException($throwable);
         }
     }
-
     public function show(Project $project): JsonResponse
     {
         try {
             $project->load([
                 'spaces',
-                'workItems' => fn ($query) => $query->orderBy('sort_order'),
+                'workItems' => fn($query) => $query->orderBy('sort_order'),
+                'projectManager',    // ✅ أضف هذا
+                'assistantEngineer', // ✅ أضف هذا
+                'owner'              // ✅ أضف هذا
             ]);
 
             return Response::success(
