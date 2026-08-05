@@ -27,31 +27,29 @@ class ReturnInvoiceController extends Controller
             return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
         }
     }
-
-    // إنشاء فاتورة جديدة
     public function store(Request $request, int $projectId): JsonResponse
     {
         try {
+            // ✅ التحقق من البيانات المبسطة (مثل فاتورة الإنشاء)
             $validated = $request->validate([
                 'work_item_id' => 'nullable|exists:work_items,id',
-                'invoice_number' => 'required|string|max:50|unique:return_invoices',
-                'invoice_date' => 'required|date',
                 'supplier_name' => 'required|string|max:255',
-                'return_type' => ['required', Rule::in(['material', 'equipment', 'subcontractor', 'other'])],
-                'description' => 'nullable|string',
-                
-                'attachment_path' => 'nullable|string|max:500',
-                'items' => 'nullable|array',
-                'items.*.material_id' => 'nullable|exists:materials,id',
-                'items.*.material_name_snapshot' => 'required|string',
+                'notes' => 'nullable|string', // ستستخدم كـ description
+                'items' => 'required|array|min:1',
+                'items.*.material_id' => 'required|exists:materials,id',
                 'items.*.quantity' => 'required|numeric|min:0.01',
-                'items.*.unit' => 'required|string',
                 'items.*.unit_price' => 'required|numeric|min:0',
-                'items.*.total_price' => 'required|numeric|min:0',
-                'items.*.reason' => 'nullable|string',
+                'items.*.notes' => 'nullable|string', // ملاحظة لكل بند (ستستخدم كـ reason)
             ]);
 
+            // إضافة البيانات التلقائية
             $validated['project_id'] = $projectId;
+            $validated['invoice_number'] = 'RET-' . now()->format('YmdHis') . '-' . rand(100, 999);
+            $validated['invoice_date'] = now()->toDateString();
+            $validated['return_type'] = 'material';
+            $validated['description'] = $validated['notes'] ?? 'مرتجع مواد';
+            $validated['attachment_path'] = null;
+            unset($validated['notes']); // لا نحتاجها بعد الآن
 
             $result = $this->returnInvoiceService->createReturnInvoice($validated);
             return response()->json($result, $result['status']);
