@@ -173,7 +173,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('projects/{project}/engineers', [ProjectEngineerController::class, 'store']);
         Route::delete('projects/{project}/engineers/{assignment}', [ProjectEngineerController::class, 'destroy']);
 
-        Route::get('work-items/{workItemName}/materials', [WorkItemMaterialController::class, 'index']);
+        Route::get('work-items/{workItemName}/materials', [WorkItemMaterialController::class, 'index'])->where('workItemName', '.*');
         Route::post('work-items/materials/attach', [WorkItemMaterialController::class, 'store']);
         //Route::post('work-items/{workItemName}/materials/{material}', [WorkItemMaterialController::class, 'update']);
         Route::delete('work-items/{workItemName}/materials/{material}', [WorkItemMaterialController::class, 'destroy']);

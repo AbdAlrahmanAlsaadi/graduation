@@ -38,11 +38,17 @@ class WorkItemMaterialService
         });
     }
 
-    /**
-     * Get all materials attached to a work item type sorted by pivot sort_order.
-     */
+
+
+
     public function getMaterialsForWorkItem(string $workItemName): Collection
     {
+        $exists = WorkItemMaterial::where('work_item_name', $workItemName)->exists();
+
+        if (! $exists) {
+            throw new \Exception("عنصر العمل '$workItemName' غير موجود في النظام.", 404);
+        }
+
         return WorkItemMaterial::query()
             ->with('material')
             ->where('work_item_name', $workItemName)
@@ -56,7 +62,7 @@ class WorkItemMaterialService
     {
         $material = Material::query()->find($data['material_id']);
 
-        if (! $material) {  
+        if (! $material) {
             throw new RuntimeException('Material not found.', 404);
         }
 
