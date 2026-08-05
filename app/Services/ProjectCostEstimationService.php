@@ -97,6 +97,18 @@ class ProjectCostEstimationService
         int $beamsCount = 0,
         float $skirtingFactor = 0.1
     ): array {
+        if ($projectId === 1) {
+            return [
+                'status' => 200,
+                'message' => 'هذا المشروع لا يمكن مقارنة تكاليفه (المشروع الأول).',
+                'data' => [
+                    'project' => null,
+                    'actual_cost' => null,
+                    'estimated_cost' => null,
+                    'comparison' => null,
+                ],
+            ];
+        }
         $project = Project::query()->find($projectId);
 
         if (! $project) {
