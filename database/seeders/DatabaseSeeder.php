@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(WorkItemInvoiceSeeder::class);
         $this->call(WorkItemInvoiceItemSeeder::class);
         $this->call(NotificationSeeder::class);
+        $this->call(ProjectImagesAndAiSeeder::class);
     }
 }
