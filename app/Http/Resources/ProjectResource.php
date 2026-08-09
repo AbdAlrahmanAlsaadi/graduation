@@ -14,7 +14,7 @@ class ProjectResource extends JsonResource
     public function toArray(Request $request): array
     {
         $service = new WorkItemProgressService();
-        
+
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -24,9 +24,9 @@ class ProjectResource extends JsonResource
             'apartment_area' => $this->apartment_area,
             'height' => $this->height,
             'status' => $this->status,
-            'project_manager_id' => $this->project_manager_id,
-            'assistant_engineer_id' => $this->assistant_engineer_id,
-            'owner_id' => $this->owner_id,
+            'project_manager_name' => $this->whenLoaded('projectManager', fn() => $this->projectManager?->name),
+            'assistant_engineer_name' => $this->whenLoaded('assistantEngineer', fn() => $this->assistantEngineer?->name),
+            'owner_name' => $this->whenLoaded('owner', fn() => $this->owner?->name),
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'started_at' => $this->started_at?->toISOString(),

@@ -38,6 +38,18 @@ class ProjectMaterialEstimationService
      */
     public function estimateProjectMaterials(int $projectId): array
     {
+        if ($projectId === 1) {
+            return [
+                'status' => 200,
+                'message' => 'هذا المشروع لا يمكن تقديره (المشروع الأول).',
+                'data' => [
+                    'project' => null,
+                    'estimation_available' => false,
+                    'materials' => [],
+                    'grand_total_price' => null,
+                ],
+            ];
+        }
         $project = Project::query()->with(['spaces', 'workItems.details'])->find($projectId);
 
         if (! $project) {

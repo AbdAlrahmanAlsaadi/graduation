@@ -257,4 +257,8 @@ class Project extends Model
     {
         return $this->hasOne(ProjectReview::class);
     }
+    public function returnInvoices(): HasMany
+    {
+        return $this->hasMany(ReturnInvoice::class);
+    }
 }

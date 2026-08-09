@@ -27,6 +27,7 @@ use App\Http\Controllers\WorkshopCostCalculationController;
 use App\Http\Controllers\ProjectMaterialEstimationController;
 use App\Http\Controllers\ProjectWorkshopEstimationController;
 use App\Http\Controllers\ProjectCostEstimationController;
+use App\Http\Controllers\ReturnInvoiceController;
 use App\Models\User;
 use App\Services\AgnesService;
 use App\Services\Notification\NotificationService;
@@ -58,6 +59,8 @@ Route::middleware(['auth:sanctum'])->group(
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager|assistant|project_owner')->group(function () {
         Route::apiResource('projects', ProjectController::class)->only(['index', 'show']);
+
+
         Route::get('projects/{project}/spaces', [SpaceController::class, 'index']);
         Route::get('projects/{project}/spaces/ceramic', [SpaceController::class, 'ceramicSpaces']);
         Route::get('projects/{project}/spaces/gypsum', [SpaceController::class, 'gypsumSpaces']);
@@ -170,7 +173,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('projects/{project}/engineers', [ProjectEngineerController::class, 'store']);
         Route::delete('projects/{project}/engineers/{assignment}', [ProjectEngineerController::class, 'destroy']);
 
-        Route::get('work-items/{workItemName}/materials', [WorkItemMaterialController::class, 'index']);
+        Route::get('work-items/{workItemName}/materials', [WorkItemMaterialController::class, 'index'])->where('workItemName', '.*');
         Route::post('work-items/materials/attach', [WorkItemMaterialController::class, 'store']);
         //Route::post('work-items/{workItemName}/materials/{material}', [WorkItemMaterialController::class, 'update']);
         Route::delete('work-items/{workItemName}/materials/{material}', [WorkItemMaterialController::class, 'destroy']);
@@ -342,4 +345,20 @@ Route::middleware('auth:sanctum')->group(function () {
         'projects/{project}/review', [ProjectReviewController::class, 'store']);
     Route::get(
         '/project-reviews',[ProjectReviewController::class, 'statistics']);
+         Route::get('/ongoing-projects', [ProjectController::class, 'getOngoingProjects']);
+       Route::get('/delivery-rate', [ProjectController::class, 'getDeliveryRate']);
 });
+
+
+
+
+
+Route::middleware('auth:sanctum')->group(function () {
+
+
+
+
+        Route::get('/projects/{projectId}/return-invoices', [ReturnInvoiceController::class, 'index']);
+        Route::post('/projects/{projectId}/return-invoices', [ReturnInvoiceController::class, 'store']);
+        Route::delete('/{id}', [ReturnInvoiceController::class, 'destroy']);
+    });

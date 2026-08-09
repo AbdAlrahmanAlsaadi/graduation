@@ -4,13 +4,22 @@ namespace App\Services\Project;
 
 use App\Models\Project;
 use App\Models\WorkItem;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use RuntimeException;
+use App\Services\ProjectCostEstimationService; // استيراد خدمة التقدير
 
 class ProjectService
 {
+    protected ProjectCostEstimationService $estimationService;
+
+    // حقن EstimationService في المُنشئ
+    public function __construct(ProjectCostEstimationService $estimationService)
+    {
+        $this->estimationService = $estimationService;
+    }
     public const DEFAULT_WORK_ITEMS = [
         'ملابن الأبواب',
         'تمديدات صحية سواد',
@@ -31,11 +40,11 @@ class ProjectService
         $user = Auth::user();
         if($user->hasRole('company_admin'))
             $projects = Project::query()->latest()->get();
-        else if($user->hasRole('project_manager')) 
+        else if($user->hasRole('project_manager'))
             $projects = Project::query()->where('project_manager_id', $user->id)->latest()->get();
-        else if($user->hasRole('assistant')) 
+        else if($user->hasRole('assistant'))
             $projects = Project::query()->where('assistant_engineer_id', $user->id)->latest()->get();
-        else 
+        else
             $projects = Project::query()->where('owner_id', $user->id)->latest()->get();
         return $projects;
     }
@@ -276,4 +285,181 @@ class ProjectService
 
             'status' => 200,
         ];
-    }}
+    }
+
+    public function getOngoingProjects(): array
+    {
+        // جلب المشاريع مع العلاقات
+        $projects = Project::with([
+            'workItems',
+            'invoices',
+            'laborCosts',
+            'workshopExpenses'
+        ])
+            ->where('status', Project::STATUS_ONGOING)
+            ->get();
+
+        if ($projects->isEmpty()) {
+            return [
+                'data'    => [],
+                'message' => 'لا يوجد أي مشروع قيد التنفيذ حالياً.',
+            ];
+        }
+        // داخل دالة getOngoingProjects() في ProjectService
+
+        // ... بعد جلب البيانات ...
+
+        $data = $projects->map(function ($project) {
+            // 1. نسبة الإنجاز
+            $workItems = $project->workItems;
+            $total = $workItems->count();
+            $completed = $workItems->where('status', WorkItem::STATUS_COMPLETED)->count();
+            $completionPercentage = $total > 0 ? round(($completed / $total) * 100, 2) : 0;
+
+            // 2. ✅ حساب الأيام المتبقية (باستخدام started_at + مجموع duration_days)
+            $remainingDays = 0;
+            if ($project->started_at) {
+                // مجموع أيام العمل من جميع البنود
+                $totalDuration = $project->workItems->sum('duration_days');
+                if ($totalDuration > 0) {
+                    $expectedEndDate = Carbon::parse($project->started_at)->addDays($totalDuration);
+                    $remainingDays = (int) Carbon::now()->diffInDays($expectedEndDate, false);
+                    // لو كانت القيمة سالبة، هذا يعني أن الموعد انتهى والمشروع متأخر.
+                }
+            }
+
+            // 3. التكلفة الحالية
+            $invoicesTotal = (float) $project->invoices->sum('total_amount');
+            $laborCostsTotal = (float) $project->laborCosts->sum('cost');
+            $workshopExpensesTotal = (float) $project->workshopExpenses->sum('amount');
+            $currentCost = $invoicesTotal + $laborCostsTotal + $workshopExpensesTotal;
+
+            // 4. التكلفة التقديرية (من EstimationService)
+            $estimatedValue = $this->getEstimatedValue($project->id);
+
+            // 5. تحديد الحالة (طبيعي / متأخر / تجاوز الميزانية)
+            $status = $this->determineStatus($currentCost, $estimatedValue, $remainingDays, $completionPercentage);
+
+            return [
+                'project_name'          => $project->name,
+                'completion_percentage' => $completionPercentage,
+                'remaining_days'        => $remainingDays, // الآن تظهر القيمة الحقيقية (قد تكون سالبة إذا متأخر)
+                'current_cost'          => number_format($currentCost, 2),
+                'estimated_value'       => number_format($estimatedValue, 2),
+                'status'                => $status,
+            ];
+        });
+        return [
+            'data'    => $data,
+            'message' => 'تم جلب البيانات بنجاح',
+        ];
+    }
+
+    /**
+     * جلب التكلفة التقديرية للمشروع من EstimationService.
+     */
+    private function getEstimatedValue(int $projectId): float
+    {
+        try {
+            // استدعاء خدمة التقدير بقيم افتراضية (يمكن تعديلها حسب الحاجة)
+            $result = $this->estimationService->estimateTotalProjectCost(
+                $projectId,
+                0,      // beams_count
+                0.1     // skirting_factor
+            );
+
+            // استخراج grand_total_estimated_cost من النتيجة
+            return (float) ($result['data']['grand_total_estimated_cost'] ?? 0.0);
+        } catch (\Exception $e) {
+            // في حال فشل التقدير، نعيد 0
+            return 0.0;
+        }
+    }
+
+    /**
+     * تحديد حالة المشروع.
+     */
+    private function determineStatus(float $currentCost, float $estimatedValue, int $remainingDays, float $completionPercentage): string
+    {
+        // إذا كانت التكلفة الحالية > التكلفة التقديرية (والتقديرية > 0)
+        if ($estimatedValue > 0 && $currentCost > $estimatedValue) {
+            return 'تجاوز الميزانية';
+        }
+
+        // إذا انتهى الموعد ولم تكتمل الأعمال
+        if ($remainingDays < 0 && $completionPercentage < 100) {
+            return 'متأخر';
+        }
+
+        return 'طبيعي';
+    }
+
+    public function calculateOnTimeDeliveryRate(): array
+    {
+        // 1. جلب جميع المشاريع المكتملة مع بنود العمل
+        $projects = Project::with('workItems')
+            ->where('status', Project::STATUS_COMPLETED)
+            ->get();
+
+        if ($projects->isEmpty()) {
+            return [
+                'status' => 200,
+                'message' => 'لا توجد مشاريع مكتملة.',
+                'data' => [
+                    'total_completed_projects' => 0,
+                    'on_time_projects' => 0,
+                    'delayed_projects' => 0,
+                    'on_time_rate' => 0,
+                    'projects' => [],
+                ],
+            ];
+        }
+
+        $onTime = 0;
+        $delayed = 0;
+        $projectDetails = [];
+
+        foreach ($projects as $project) {
+            // حساب تاريخ الانتهاء المتوقع
+            $totalDuration = $project->workItems->sum('duration_days');
+            $startedAt = Carbon::parse($project->started_at);
+            $expectedEndDate = $startedAt->copy()->addDays($totalDuration);
+
+            // تاريخ الانتهاء الفعلي
+            $completedAt = Carbon::parse($project->completed_at);
+
+            // تحديد الحالة
+            $isOnTime = $completedAt->lte($expectedEndDate);
+
+            if ($isOnTime) {
+                $onTime++;
+            } else {
+                $delayed++;
+            }
+
+            $projectDetails[] = [
+                'id' => $project->id,
+                'name' => $project->name,
+                'started_at' => $project->started_at,
+                'completed_at' => $project->completed_at,
+                'expected_end_date' => $expectedEndDate->toDateTimeString(),
+                'status' => $isOnTime ? 'في الموعد' : 'متأخر',
+            ];
+        }
+
+        $totalCompleted = $projects->count();
+        $onTimeRate = $totalCompleted > 0 ? round(($onTime / $totalCompleted) * 100, 2) : 0;
+
+        return [
+            'status' => 200,
+            'message' => 'تم حساب نسبة التسليم في الموعد بنجاح.',
+            'data' => [
+                'total_completed_projects' => $totalCompleted,
+                'on_time_projects' => $onTime,
+                'delayed_projects' => $delayed,
+                'on_time_rate' => $onTimeRate,
+                'projects' => $projectDetails,
+            ],
+        ];
+    }
+}
