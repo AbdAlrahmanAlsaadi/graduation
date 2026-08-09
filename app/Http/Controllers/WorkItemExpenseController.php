@@ -7,7 +7,7 @@ use App\Http\Requests\StoreWorkshopExpenseRequest;
 use App\Http\Responses\Response;
 use App\Models\Project;
 use App\Models\WorkItem;
-use App\Services\WorkItemExpenseService;
+use App\Services\WorkItem\WorkItemExpenseService;
 use Throwable;
 
 class WorkItemExpenseController extends Controller

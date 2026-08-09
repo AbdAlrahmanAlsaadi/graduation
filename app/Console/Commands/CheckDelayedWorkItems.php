@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\DurationExtensionRequest;
 use App\Models\WorkItem;
-use App\Services\NotificationService;
+use App\Services\Notification\NotificationService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;

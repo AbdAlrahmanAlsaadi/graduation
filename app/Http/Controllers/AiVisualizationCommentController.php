@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAiVisualizationCommentRequest;
 use App\Models\AiVisualization;
 use App\Models\AiVisualizationComment;
-use App\Services\AiVisualizationCommentService;
+use App\Services\AI\AiVisualizationCommentService;
 
 class AiVisualizationCommentController extends Controller
 {

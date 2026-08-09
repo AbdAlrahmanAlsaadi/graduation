@@ -16,9 +16,9 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $this->createPermissions();
         $this->createRoles();
-        if (! app()->isProduction()) {
-            $this->createSampleUsers();
-        }
+        // if (! app()->isProduction()) {
+             $this->createSampleUsers();
+        // }
     }
 
     private function createPermissions(): void

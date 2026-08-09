@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Project\AssignEngineerRequest;
 use App\Http\Responses\Response;
 use App\Models\Project;
-use App\Services\ProjectEngineerService;
+use App\Services\Project\ProjectEngineerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use App\Http\Resources\ProjectEngineerResource;

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Conversation;
 use App\Models\Message;
-use App\Services\DatabaseAIService;
+use App\Services\AI\DatabaseAIService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Exception;

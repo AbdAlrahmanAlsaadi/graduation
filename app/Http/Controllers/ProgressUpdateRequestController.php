@@ -10,7 +10,7 @@ use App\Models\ProgressUpdateRequest;
 use App\Models\Project;
 use App\Models\WorkItem;
 use App\Http\Responses\Response;
-use App\Services\ProgressApprovalService;
+use App\Services\WorkItem\ProgressApprovalService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Throwable;

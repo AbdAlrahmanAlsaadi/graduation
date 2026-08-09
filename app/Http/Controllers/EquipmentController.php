@@ -9,7 +9,7 @@ use App\Http\Requests\Equipment\SearchEquipmentRequest;
 use App\Http\Requests\Equipment\StoreEquipmentBookingRequest;
 use App\Http\Requests\Equipment\StoreEquipmentRequest;
 use App\Http\Responses\Response;
-use App\Services\EquipmentService;
+use App\Services\Equipment\EquipmentService;
 use App\Http\Requests\Equipment\StoreEquipmentMaintenanceRequest;
 use Throwable;
 

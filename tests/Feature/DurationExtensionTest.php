@@ -6,7 +6,7 @@ use App\Models\DurationExtensionRequest;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\WorkItem;
-use App\Services\NotificationService;
+use App\Services\Notification\NotificationService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Spatie\Permission\Models\Role;

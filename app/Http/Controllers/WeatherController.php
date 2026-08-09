@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Project\GetProjectWeatherByDateRequest;
 use App\Http\Responses\Response;
-use App\Services\WeatherService;
+use App\Services\Weather\WeatherService;
 use Illuminate\Http\Request;
 use Throwable;
 

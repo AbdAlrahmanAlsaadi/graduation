@@ -7,7 +7,7 @@ use App\Http\Requests\Material\StoreMaterialRequest;
 use App\Http\Requests\Material\UpdateMaterialRequest;
 use App\Http\Responses\Response;
 use App\Models\Material;
-use App\Services\MaterialService;
+use App\Services\Material\MaterialService;
 use App\Http\Resources\MaterialResource;
 use App\Http\Resources\WorkItemDetailResource;
 use App\Http\Resources\WorkItemInvoiceDetailsResource;

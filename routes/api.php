@@ -29,7 +29,7 @@ use App\Http\Controllers\ProjectWorkshopEstimationController;
 use App\Http\Controllers\ProjectCostEstimationController;
 use App\Models\User;
 use App\Services\AgnesService;
-use App\Services\NotificationService;
+use App\Services\Notification\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;

@@ -6,7 +6,7 @@ use App\Http\Requests\ProjectReviewStatisticsRequest;
 use App\Http\Requests\StoreProjectReviewRequest;
 use App\Http\Responses\Response;
 use App\Models\Project;
-use App\Services\ProjectReviewService;
+use App\Services\Project\ProjectReviewService;
 use Throwable;
 
 class ProjectReviewController extends Controller

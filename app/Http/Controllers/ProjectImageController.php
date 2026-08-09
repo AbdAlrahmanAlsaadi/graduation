@@ -6,7 +6,7 @@ use App\Http\Requests\StoreProjectImageRequest;
 use App\Http\Resources\ProjectImageResource;
 use App\Models\Project;
 use App\Models\ProjectImage;
-use App\Services\ProjectImageService;
+use App\Services\Project\ProjectImageService;
 use App\Http\Resources\AiVisualizationResource;
 use App\Models\AiVisualization;
 
