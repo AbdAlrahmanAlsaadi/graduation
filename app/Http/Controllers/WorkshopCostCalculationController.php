@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Calculation\CalculatePaintCostRequest;
 use App\Http\Requests\Calculation\CalculatePlasterCostRequest;
 use App\Http\Requests\Calculation\CalculateTileCostRequest;
-use App\Services\WorkshopCostCalculationService;
+use App\Services\Workshop\WorkshopCostCalculationService;
 
 class WorkshopCostCalculationController extends Controller
 {

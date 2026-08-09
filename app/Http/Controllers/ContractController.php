@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Misc\StoreContractRequest;
 use App\Http\Responses\Response;
-use App\Services\ContractService;
+use App\Services\Document\ContractService;
 use Barryvdh\Snappy\Facades\SnappyPdf as Pdf;
 use Throwable;
 

@@ -7,7 +7,7 @@ use App\Http\Requests\Material\SyncWorkItemMaterialsRequest;
 use App\Http\Requests\Material\UpdateWorkItemMaterialRequest;
 use App\Http\Responses\Response;
 use App\Models\Material;
-use App\Services\WorkItemMaterialService;
+use App\Services\WorkItem\WorkItemMaterialService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use Throwable;

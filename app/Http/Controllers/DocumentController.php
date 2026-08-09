@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Document\StoreDocumentRequest;
 use App\Http\Requests\Document\StoreDocumentVersionRequest;
-use App\Services\DocumentService;
+use App\Services\Document\DocumentService;
 use App\Http\Responses\Response;
 use Throwable;
 

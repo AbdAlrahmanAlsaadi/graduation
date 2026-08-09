@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Responses\Response;
-use App\Services\ProjectWorkshopEstimationService;
+use App\Services\Project\ProjectWorkshopEstimationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Throwable;

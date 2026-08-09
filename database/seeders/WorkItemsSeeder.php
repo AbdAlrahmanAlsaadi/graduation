@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Project;
 use App\Models\WorkItemDetail;
 use App\Models\WorkItem;
-use App\Services\ProjectService;
+use App\Services\Project\ProjectService;
 use Illuminate\Database\Seeder;
 
 class WorkItemsSeeder extends Seeder

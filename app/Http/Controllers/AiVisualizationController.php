@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GenerateImageRequest;
-use App\Services\AiVisualizationService;
+use App\Services\AI\AiVisualizationService;
 
 class AiVisualizationController extends Controller
 {

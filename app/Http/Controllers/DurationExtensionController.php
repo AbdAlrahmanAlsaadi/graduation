@@ -9,7 +9,7 @@ use App\Models\DurationExtensionRequest;
 use App\Models\Project;
 use App\Models\WorkItem;
 use App\Http\Responses\Response;
-use App\Services\DurationExtensionService;
+use App\Services\WorkItem\DurationExtensionService;
 use Illuminate\Http\Request;
 use Throwable;
 
