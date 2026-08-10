@@ -35,7 +35,7 @@ return [
         ],
     ],
     'gemini' => [
-        'api_key' => env('GEMINI_API_KEY'),
+        'api_key' => config('gemini.api_key'),
         'model' => env('GEMINI_MODEL', 'gemini-3.5-flash'), // تغيير النموذج الافتراضي
         'models' => [
             'flash' => 'gemini-3.5-flash',

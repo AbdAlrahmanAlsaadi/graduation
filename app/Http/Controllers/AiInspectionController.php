@@ -82,7 +82,7 @@ class AiInspectionController extends Controller
                 ],
             ];
 
-            $apiKey = env('GEMINI_API_KEY');
+            $apiKey = config('gemini.api_key');
 
             $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={$apiKey}";
 
@@ -341,7 +341,7 @@ rejected:
                 ],
             ];
 
-            $apiKey = env('GEMINI_API_KEY');
+            $apiKey = config('gemini.api_key');
 
             $url =
                 "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={$apiKey}";

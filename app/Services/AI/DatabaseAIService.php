@@ -14,7 +14,7 @@ class DatabaseAIService
 
     public function __construct()
     {
-        $this->apiKey = env('GEMINI_API_KEY');
+        $this->apiKey = config('gemini.api_key');
         $this->url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={$this->apiKey}";
     }
 
