@@ -13,7 +13,7 @@ class FirebaseService
     public function __construct()
     {
         $this->messaging = (new Factory)
-            ->withServiceAccount(storage_path('app\graduation-9d9e5-firebase-adminsdk-fbsvc-8b4d2fecf7.json'))
+            ->withServiceAccount(config('firebase.projects.app.credentials'))
             ->createMessaging();
     }
 
