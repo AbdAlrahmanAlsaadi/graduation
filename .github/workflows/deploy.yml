@@ -1,0 +1,145 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mutqin-backend-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Prepare SSH
+        env:
+          SSH_PRIVATE_KEY_B64: ${{ secrets.SERVER_SSH_KEY_B64 }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SERVER_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          printf '%s' "$SSH_PRIVATE_KEY_B64" | base64 --decode > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+          ssh-keygen -y -f ~/.ssh/id_ed25519 > /dev/null
+
+          echo "SSH key ready."
+
+      - name: Deploy Backend
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          ssh \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            -i ~/.ssh/id_ed25519 \
+            -p "$SERVER_PORT" \
+            "$SERVER_USER@$SERVER_HOST" << 'REMOTE'
+
+          set -Eeuo pipefail
+
+          cd /var/www/mutqin/backend
+
+          echo "=================================="
+          echo "Checking repository..."
+          echo "=================================="
+
+          git config core.fileMode false
+
+          if [ ! -f .env ]; then
+              echo "ERROR: Production .env is missing."
+              exit 1
+          fi
+
+          if ! git diff --quiet || ! git diff --cached --quiet; then
+              echo "ERROR: Local tracked changes exist on server."
+              git status --short
+              exit 1
+          fi
+
+          echo "=================================="
+          echo "Pulling latest backend..."
+          echo "=================================="
+
+          git fetch origin main
+          git checkout main
+          git pull --ff-only origin main
+
+          echo "=================================="
+          echo "Installing Composer dependencies..."
+          echo "=================================="
+
+          composer install \
+            --no-dev \
+            --prefer-dist \
+            --no-interaction \
+            --optimize-autoloader
+
+          echo "=================================="
+          echo "Clearing Laravel caches..."
+          echo "=================================="
+
+          php artisan optimize:clear
+
+          echo "=================================="
+          echo "Running migrations..."
+          echo "=================================="
+
+          php artisan migrate --force
+
+          echo "=================================="
+          echo "Optimizing Laravel..."
+          echo "=================================="
+
+          php artisan optimize
+
+          echo "=================================="
+          echo "Restarting queue workers..."
+          echo "=================================="
+
+          php artisan queue:restart || true
+
+          echo "=================================="
+          echo "Checking Laravel..."
+          echo "=================================="
+
+          php artisan about
+
+          echo "=================================="
+          echo "Health check..."
+          echo "=================================="
+
+          HTTP_CODE=$(curl \
+            -sS \
+            -o /tmp/mutqin-api-health.txt \
+            -w '%{http_code}' \
+            -H 'Accept: application/json' \
+            http://127.0.0.1/api/projects)
+
+          echo "API response: HTTP $HTTP_CODE"
+
+          if [ "$HTTP_CODE" != "401" ]; then
+              echo "ERROR: Backend health check failed."
+              cat /tmp/mutqin-api-health.txt
+              exit 1
+          fi
+
+          echo "=================================="
+          echo "BACKEND DEPLOYED SUCCESSFULLY"
+          echo "=================================="
+
+          REMOTE
