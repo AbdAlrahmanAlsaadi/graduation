@@ -57,7 +57,7 @@ Route::middleware(['auth:sanctum'])->group(
     });
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('role:company_admin|project_manager|assistant|project_owner')->group(function () {
-        //Route::apiResource('projects', ProjectController::class)->only(['index', 'show']);
+        Route::apiResource('projects', ProjectController::class)->only(['index', 'show']);
 
 
         Route::get('projects/{project}/spaces', [SpaceController::class, 'index']);
