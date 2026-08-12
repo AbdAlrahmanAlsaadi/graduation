@@ -48,19 +48,26 @@ class ProjectImageController extends Controller
 
 
 
-    public function index2($projectid)
-    {
-        $visualizations = AiVisualization::where('project_image_id', $projectid)->latest()->get();
+   public function index2($projectid)
+{
+    $projectImageIds = ProjectImage::query()
+        ->where('project_id', $projectid)
+        ->pluck('id');
 
-        return response()->json([
-            'success' => true,
-            'data' => AiVisualizationResource::collection($visualizations),
-        ]);
-    }
+    $visualizations = AiVisualization::query()
+        ->whereIn('project_image_id', $projectImageIds)
+        ->latest()
+        ->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => AiVisualizationResource::collection($visualizations),
+    ]);
+}
 
     public function delete($id)
     {
         return $this->service->delete($id);
-    
+
     }
 }
