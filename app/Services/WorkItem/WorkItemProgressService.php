@@ -260,7 +260,7 @@ class WorkItemProgressService
         if (!method_exists($this, $method)) return 0;
         $details = $item->details()->get()->keyBy('key');
         $spaces  = Space::where('project_id', $item->project_id)->get();
-        if($item->id == 2) dd($spaces);
+        // if($item->id == 2) dd($spaces);
         $ref = new \ReflectionMethod($this, $method);
         $paramCount = $ref->getNumberOfParameters();
 
