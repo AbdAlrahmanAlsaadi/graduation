@@ -510,8 +510,7 @@ class WorkItemProgressService
         return $this->computeRoomsStatus($details, $spaces, fn($s) =>
             $s->type === 'kitchen' ||
             $s->type === 'bathroom' ||
-            $s->type === 'toilet'
-        );
+            $s->type === 'toilet', 'تمديدات صحية');
     }
 
     protected function computeDoors(Collection $details): float
@@ -649,7 +648,9 @@ class WorkItemProgressService
                 if (!empty($space->wall_area)) $area += (float) $space->wall_area;
                 if (!empty($space->ceiling_area)) $area += (float) $space->ceiling_area;
                 break;
-
+            case 'تمديدات صحية':
+                if (!empty($space->wall_area)) $area += (float) $space->wall_area;
+                break;
             default:
                 return null;
         }
