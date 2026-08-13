@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services\AI;
 
 use Illuminate\Support\Facades\Http;
@@ -380,7 +379,8 @@ class DatabaseAIService
                 'contents' => $contents,
                 'generationConfig' => [
                     'temperature' => 0.2,
-                    'maxOutputTokens' => 8192,                ],
+                    'maxOutputTokens' => 8192,
+                ],
             ];
 
             // ============================================================
@@ -408,15 +408,14 @@ class DatabaseAIService
             // ============================================================
             $startedAt = microtime(true);
 
-            $response = Http::timeout(120)
-                ->connectTimeout(20)
+            $response = Http::timeout(180)
+                ->connectTimeout(60)
                 ->retry(
                     3,
                     1500,
                     function ($exception, $request) {
                         if ($exception instanceof \Illuminate\Http\Client\RequestException) {
-                            $status = optional($exception->response())->status();
-
+                        $status = $exception->response ? $exception->response->status() : null;
                             return in_array($status, [
                                 408,
                                 425,
