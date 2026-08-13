@@ -316,15 +316,26 @@ class ProjectService
             $completed = $workItems->where('status', WorkItem::STATUS_COMPLETED)->count();
             $completionPercentage = $total > 0 ? round(($completed / $total) * 100, 2) : 0;
 
-            // 2. ✅ حساب الأيام المتبقية (باستخدام started_at + مجموع duration_days)
+            // 2. حساب الأيام المتبقية من بداية المشروع
+            //    وبالاعتماد على البنود المفعلة فقط
             $remainingDays = 0;
+
             if ($project->started_at) {
-                // مجموع أيام العمل من جميع البنود
-                $totalDuration = $project->workItems->sum('duration_days');
+
+                $activeWorkItems = $project->workItems
+                    ->where('is_active', true);
+
+                $totalDuration = $activeWorkItems->sum(function ($workItem) {
+                    return (int) ($workItem->duration_days ?? 0);
+                });
+
                 if ($totalDuration > 0) {
-                    $expectedEndDate = Carbon::parse($project->started_at)->addDays($totalDuration);
-                    $remainingDays = (int) Carbon::now()->diffInDays($expectedEndDate, false);
-                    // لو كانت القيمة سالبة، هذا يعني أن الموعد انتهى والمشروع متأخر.
+
+                    $expectedEndDate = Carbon::parse($project->started_at)
+                        ->addDays($totalDuration);
+
+                    $remainingDays = (int) Carbon::now()
+                        ->diffInDays($expectedEndDate, false);
                 }
             }
 
@@ -341,12 +352,13 @@ class ProjectService
             $status = $this->determineStatus($currentCost, $estimatedValue, $remainingDays, $completionPercentage);
 
             return [
+                'project_id'            => $project->id,
                 'project_name'          => $project->name,
                 'completion_percentage' => $completionPercentage,
-                'remaining_days'        => $remainingDays, // الآن تظهر القيمة الحقيقية (قد تكون سالبة إذا متأخر)
-                'current_cost'          => number_format($currentCost, 2),
-                'estimated_value'       => number_format($estimatedValue, 2),
-                'status'                => $status,
+                'remaining_days'       => $remainingDays,
+                'current_cost'         => number_format($currentCost, 2),
+                'estimated_value'      => number_format($estimatedValue, 2),
+                'status'               => $status,
             ];
         });
         return [
