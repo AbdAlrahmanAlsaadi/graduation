@@ -28,8 +28,8 @@ return [
         'ملابن الأبواب'        => 'mellaben',
         'تمديدات كهرباء بياض' => 'rooms',
         'تمديدات كهرباء سواد' => 'rooms',
-        'تمديدات صحية بياض' => 'sanitary',
-        'تمديدات صحية سواد' => 'sanitary',
+        'تمديدات صحية بياض' => 'rooms',
+        'تمديدات صحية سواد' => 'rooms',
         'طينة / لياسة'         => 'rooms',
         'بلاط أرضيات'          => 'tile',
         'سيراميك جدران / أسقف' => 'ceramic',
@@ -72,16 +72,6 @@ return [
             'keys' => [
                 'rooms_total',
                 'rooms_completed',
-            ],
-        ],
-
-        // 3) تمديدات صحية: kitchen / bathroom / toilet
-        'sanitary' => [
-            'strategy' => 'sanitary',
-            'keys' => [
-                'kitchen_done',
-                'bathroom_done',
-                'toilet_done',
             ],
         ],
 

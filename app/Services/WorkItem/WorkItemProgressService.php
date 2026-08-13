@@ -259,7 +259,6 @@ class WorkItemProgressService
         $method = 'compute' . ucfirst($type);
         if (!method_exists($this, $method)) return 0;
         $details = $item->details()->get()->keyBy('key');
-        
         $spaces  = Space::where('project_id', $item->project_id)->get();
         if($item->id == 2) dd($spaces);
         $ref = new \ReflectionMethod($this, $method);
@@ -508,33 +507,11 @@ class WorkItemProgressService
 
     protected function computeSanitary(Collection $details, Collection $spaces): float
     {
-        $targets = [
-            Space::TYPE_KITCHEN => 'kitchen_done',
-            Space::TYPE_BATHROOM => 'bathroom_done',
-            Space::TYPE_TOILET => 'toilet_done',
-        ];
-
-        $typesInProject = $spaces->pluck('type')->unique()->toArray();
-
-        $total = 0;
-        $done = 0;
-
-        foreach ($targets as $type => $key) {
-            if (!in_array($type, $typesInProject, true)) {
-                continue;
-            }
-
-            $total++;
-            if (($details[$key]->value ?? false) == true) {
-                $done++;
-            }
-        }
-
-        if ($total === 0) {
-            return 0;
-        }
-
-        return ($done / $total) * 100;
+        return $this->computeRoomsStatus($details, $spaces, fn($s) =>
+            $s->type === 'kitchen' ||
+            $s->type === 'bathroom' ||
+            $s->type === 'toilet'
+        );
     }
 
     protected function computeDoors(Collection $details): float

@@ -83,52 +83,23 @@ return [
         ],
     ],
 
-    // 4) تمديدات صحية بياض (Sanitary - White)
     'تمديدات صحية بياض' => [
-        'kitchen_done' => [
-            'unit'          => 'bool',
-            'rule'          => 'required|boolean',
-            'progress_rule' => 'sometimes|boolean',
-            'label'         => 'المطبخ منجز',
-            'additive'      => false,
-        ],
-        'bathroom_done' => [
-            'unit'          => 'bool',
-            'rule'          => 'required|boolean',
-            'progress_rule' => 'sometimes|boolean',
-            'label'         => 'الحمام منجز',
-            'additive'      => false,
-        ],
-        'toilet_done' => [
-            'unit'          => 'bool',
-            'rule'          => 'required|boolean',
-            'progress_rule' => 'sometimes|boolean',
-            'label'         => 'التواليت منجز',
+        'rooms_status' => [
+            'unit'          => 'json',
+            'rule'          => 'sometimes|json',
+            'progress_rule' => 'sometimes|json',
+            'label'         => 'حالة الغرف',
             'additive'      => false,
         ],
     ],
 
-    // 5) تمديدات صحية سواد (Sanitary - Black)
+    // 3) تمديدات كهرباء سواد (Electricity - Black)
     'تمديدات صحية سواد' => [
-        'kitchen_done' => [
-            'unit'          => 'bool',
-            'rule'          => 'required|boolean',
-            'progress_rule' => 'sometimes|boolean',
-            'label'         => 'المطبخ منجز',
-            'additive'      => false,
-        ],
-        'bathroom_done' => [
-            'unit'          => 'bool',
-            'rule'          => 'required|boolean',
-            'progress_rule' => 'sometimes|boolean',
-            'label'         => 'الحمام منجز',
-            'additive'      => false,
-        ],
-        'toilet_done' => [
-            'unit'          => 'bool',
-            'rule'          => 'required|boolean',
-            'progress_rule' => 'sometimes|boolean',
-            'label'         => 'التواليت منجز',
+        'rooms_status' => [
+            'unit'          => 'json',
+            'rule'          => 'sometimes|json',
+            'progress_rule' => 'sometimes|json',
+            'label'         => 'حالة الغرف',
             'additive'      => false,
         ],
     ],
