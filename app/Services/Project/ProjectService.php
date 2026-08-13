@@ -38,18 +38,26 @@ class ProjectService
         'ديكورات',
     ];
 
-    public function index() {
+    public function index()
+    {
         $user = Auth::user();
-        $projects = Project::query()->with(['projectManager', 'assistantEngineer', 'owner']);
-        if($user->hasRole('company_admin'))
-            $projects = $projects->latest()->get();
-        else if($user->hasRole('project_manager'))
-            $projects = $projects->where('project_manager_id', $user->id)->latest()->get();
-        else if($user->hasRole('assistant'))
-            $projects = $projects->where('assistant_engineer_id', $user->id)->latest()->get();
-        else
-            $projects = $projects->where('owner_id', $user->id)->latest()->get();
-        return $projects;
+
+        $projects = Project::query()
+            ->with(['projectManager', 'assistantEngineer', 'owner']);
+
+        if ($user->hasRole('company_admin')) {
+            // اللي بعده
+        } elseif ($user->hasRole('project_manager')) {
+            $projects->where('project_manager_id', $user->id);
+
+        } elseif ($user->hasRole('assistant')) {
+            $projects->where('assistant_engineer_id', $user->id);
+
+        } else {
+            $projects->where('owner_id', $user->id);
+        }
+
+        return $projects->latest()->get();
     }
 
     public function createProjectWithDefaults(array $data): Project
