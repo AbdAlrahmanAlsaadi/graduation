@@ -4,10 +4,12 @@ namespace App\Services\Project;
 
 use App\Models\Project;
 use App\Models\WorkItem;
+use App\Models\WorkItemDetail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+
 use RuntimeException;
 use App\Services\Project\ProjectCostEstimationService; // استيراد خدمة التقدير
 
@@ -60,10 +62,24 @@ class ProjectService
             $data['status'] = Project::STATUS_PLANNED;
             $project = Project::query()->create($data);
             $now = now();
-            $workItems = [];
+            $detailsMap = [
+                'ملابن الأبواب' => [
+                    'total_wood_doors'     => $request->total_wood_doors,
+                    'total_aluminum_doors' => $request->total_aluminum_doors,
+                    'total_windows'        => $request->total_windows,
+                ],
+            
+                'أبواب ونجارة' => [
+                    'total_doors' => $request->total_doors,
+                ],
+            
+                'ألمنيوم وأبجورات' => [
+                    'total_aluminum' => $request->total_aluminum,
+                ],
+            ];
 
             foreach (self::DEFAULT_WORK_ITEMS as $index => $name) {
-                $workItems[] = [
+                $workItem = WorkItem::create([
                     'project_id' => $project->id,
                     'name' => $name,
                     'sort_order' => $index + 1,
@@ -73,10 +89,22 @@ class ProjectService
                     'is_custom' => false,
                     'created_at' => $now,
                     'updated_at' => $now,
-                ];
-            }
+                ]);
 
-            WorkItem::query()->insert($workItems);
+                // إذا هذا البند إله تفاصيل، أنشئهم
+                if (isset($detailsMap[$name])) {
+                
+                    foreach ($detailsMap[$name] as $key => $value) {
+                    
+                        WorkItemDetail::create([
+                            'work_item_id' => $workItem->id,
+                            'key'          => $key,
+                            'value'        => $value,
+                            'unit'         => 'count'
+                        ]);
+                    }
+                }
+            }
 
             $project->load([
                 'workItems' => fn ($query) => $query->orderBy('sort_order'),
