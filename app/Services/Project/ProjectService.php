@@ -43,11 +43,11 @@ class ProjectService
         if($user->hasRole('company_admin'))
             $projects = Project::query()->latest()->get();
         else if($user->hasRole('project_manager'))
-            $projects = Project::query()->where('project_manager_id', $user->id)->latest()->get();
+            $projects = Project::query()->with('projectManager')->where('project_manager_id', $user->id)->latest()->get();
         else if($user->hasRole('assistant'))
-            $projects = Project::query()->where('assistant_engineer_id', $user->id)->latest()->get();
+            $projects = Project::query()->with('assistantEngineer')->where('assistant_engineer_id', $user->id)->latest()->get();
         else
-            $projects = Project::query()->where('owner_id', $user->id)->latest()->get();
+            $projects = Project::query()->with('owner')->where('owner_id', $user->id)->latest()->get();
         return $projects;
     }
 

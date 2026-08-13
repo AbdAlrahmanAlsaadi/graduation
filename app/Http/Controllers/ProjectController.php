@@ -27,7 +27,7 @@ class ProjectController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $projects = Project::with(['projectManager', 'assistantEngineer', 'owner'])->get();
+            $projects = $this->projectService->index();
 
             return Response::success(
                 'Projects fetched.',
