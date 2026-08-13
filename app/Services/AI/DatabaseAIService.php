@@ -380,8 +380,7 @@ class DatabaseAIService
                 'contents' => $contents,
                 'generationConfig' => [
                     'temperature' => 0.2,
-                    'maxOutputTokens' => 2048,
-                ],
+                    'maxOutputTokens' => 8192,                ],
             ];
 
             // ============================================================
@@ -494,7 +493,16 @@ class DatabaseAIService
             // ============================================================
             $data = $response->json();
 
-            $rawText = $data['candidates'][0]['content']['parts'][0]['text'] ?? null;
+            $candidate = $data['candidates'][0] ?? [];
+
+            $rawText = $candidate['content']['parts'][0]['text'] ?? null;
+
+            $finishReason = $candidate['finishReason'] ?? null;
+
+            Log::info('Gemini Finish Reason', [
+                'finish_reason' => $finishReason,
+                'has_text' => !empty($rawText),
+            ]);
 
             if (!$rawText) {
                 Log::error('Gemini Empty Response', [
