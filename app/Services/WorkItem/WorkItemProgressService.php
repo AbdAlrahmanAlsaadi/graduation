@@ -258,9 +258,8 @@ class WorkItemProgressService
 
         $method = 'compute' . ucfirst($type);
         if (!method_exists($this, $method)) return 0;
-        if($item->id == 2)
-            dd($method);
         $details = $item->details()->get()->keyBy('key');
+        if($item->id == 2) dd($details);
         $spaces  = Space::where('project_id', $item->project_id)->get();
 
         $ref = new \ReflectionMethod($this, $method);
