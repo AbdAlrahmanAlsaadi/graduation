@@ -258,7 +258,7 @@ class WorkItemProgressService
 
         $method = 'compute' . ucfirst($type);
         if (!method_exists($this, $method)) return 0;
-
+        dd($method);
         $details = $item->details()->get()->keyBy('key');
         $spaces  = Space::where('project_id', $item->project_id)->get();
 
