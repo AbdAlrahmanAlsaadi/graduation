@@ -119,6 +119,11 @@ class Project extends Model
                 'integer',
                 'exists:users,id',
             ],
+            'total_wood_doors' => [$required, 'numeric', 'max:255'],
+            'total_aluminum_doors' => [$required, 'numeric', 'max:255'],
+            'total_windows' => [$required, 'numeric', 'max:255'],
+            'total_doors' => [$required, 'numeric', 'max:255'],
+            'total_aluminum' => [$required, 'numeric', 'max:255'],
         ];
     }
 
