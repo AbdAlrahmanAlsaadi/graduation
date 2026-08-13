@@ -64,17 +64,17 @@ class ProjectService
             $now = now();
             $detailsMap = [
                 'ملابن الأبواب' => [
-                    'total_wood_doors'     => $request->total_wood_doors,
-                    'total_aluminum_doors' => $request->total_aluminum_doors,
-                    'total_windows'        => $request->total_windows,
+                    'total_wood_doors'     => $data->total_wood_doors,
+                    'total_aluminum_doors' => $data->total_aluminum_doors,
+                    'total_windows'        => $data->total_windows,
                 ],
             
                 'أبواب ونجارة' => [
-                    'total_doors' => $request->total_doors,
+                    'total_doors' => $data->total_doors,
                 ],
             
                 'ألمنيوم وأبجورات' => [
-                    'total_aluminum' => $request->total_aluminum,
+                    'total_aluminum' => $data->total_aluminum,
                 ],
             ];
 
