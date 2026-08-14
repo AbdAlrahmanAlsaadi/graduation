@@ -365,6 +365,7 @@ class WorkItemProgressService
             return ($doneArea / $totalArea) * 100;
         }
 
+        dd($hasAreaData, $totalArea, $doneArea, 'from compute function');
         // fallback to count-based percent
         $doneCount = 0;
         foreach ($validSpaceIds as $id) {
