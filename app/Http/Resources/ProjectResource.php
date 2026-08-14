@@ -33,7 +33,7 @@ class ProjectResource extends JsonResource
             'completed_at' => $this->completed_at?->toISOString(),
             'spaces' => SpaceResource::collection($this->whenLoaded('spaces')),
             'work_items' => WorkItemResource::collection($this->whenLoaded('workItems')),
-            'progress_percent' => $service->computeProjectPercent($this->resource),
+            // 'progress_percent' => $service->computeProjectPercent($this->resource),
             'created_at' => $this->created_at?->toISOString(),
             'updated_at' => $this->updated_at?->toISOString(),
             'owner' => $this->owner ? new UserResource($this->owner) : null,
