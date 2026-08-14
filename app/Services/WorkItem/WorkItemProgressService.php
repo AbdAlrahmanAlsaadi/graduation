@@ -360,7 +360,6 @@ class WorkItemProgressService
                 }
             }
         }
-        dd($hasAreaData, $totalArea, $doneArea, 'from compute function');
         if ($hasAreaData && $totalArea > 0) {
             return ($doneArea / $totalArea) * 100;
         }
