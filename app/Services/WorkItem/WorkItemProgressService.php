@@ -364,7 +364,7 @@ class WorkItemProgressService
             return ($doneArea / $totalArea) * 100;
         }
 
-        dd($hasAreaData, $totalArea, $doneArea, 'from compute function');
+        dd($hasAreaData, $totalArea, $doneArea, 'from compute function', $workItemName);
         // fallback to count-based percent
         $doneCount = 0;
         foreach ($validSpaceIds as $id) {
@@ -612,7 +612,7 @@ class WorkItemProgressService
                 break;
             
             case 'طينة / لياسة': // plaster — use wall_area as proxy
-                dd('from case function');
+                dd('from case function', $workItemName, $space->wall_area, $space->ceiling_area);
                 $area += (float) $space->wall_area;
                 $area += (float) $space->ceiling_area;
                 break;
