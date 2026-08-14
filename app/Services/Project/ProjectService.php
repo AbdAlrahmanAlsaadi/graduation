@@ -200,7 +200,7 @@ class ProjectService
         }
         $workItemsCompleted = $project->workItems()
         ->where('status', 'completed')
-        ->where('active', true)
+        ->where('is_active', true)
         ->count();
 
         if ($workItemsCompleted) {
