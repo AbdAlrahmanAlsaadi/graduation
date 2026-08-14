@@ -341,6 +341,39 @@ class WorkItemProgressService
         $statusJson = $roomsStatusDetail ? $roomsStatusDetail->value : null;
         $status = $statusJson ? json_decode($statusJson, true) : [];
         if (!is_array($status)) $status = [];
+        if ($workItemName === 'طينة / لياسة') {
+
+    dd([
+        'work_item' => $workItemName,
+
+        'all_spaces' => $spaces->map(function ($s) {
+            return [
+                'id'                  => $s->id,
+                'type'                => $s->type,
+                'wall_finish_type'    => $s->wall_finish_type,
+                'ceiling_finish_type' => $s->ceiling_finish_type,
+                'wall_area'           => $s->wall_area,
+                'ceiling_area'        => $s->ceiling_area,
+            ];
+        })->values(),
+
+        'filtered_spaces' => $filteredSpaces->map(function ($s) {
+            return [
+                'id'                  => $s->id,
+                'wall_finish_type'    => $s->wall_finish_type,
+                'ceiling_finish_type' => $s->ceiling_finish_type,
+                'wall_area'           => $s->wall_area,
+                'ceiling_area'        => $s->ceiling_area,
+            ];
+        })->values(),
+
+        'valid_space_ids' => $validSpaceIds,
+
+        'rooms_status_raw' => $statusJson,
+
+        'rooms_status' => $status,
+    ]);
+}
 
         $totalArea = 0.0;
         $doneArea  = 0.0;
@@ -496,6 +529,16 @@ class WorkItemProgressService
         );
     }
 
+    protected function computePlaster(Collection $details, Collection $spaces, ?string $itemName = null): float
+    {
+        return $this->computeRoomsStatus(
+            $details,
+            $spaces,
+            fn($s) => true,
+            'طينة / لياسة'
+        );
+    }
+
     protected function computePaint(Collection $details, Collection $spaces, ?string $itemName = null): float
     {
         return $this->computeRoomsStatus($details, $spaces, fn($s) =>
@@ -553,6 +596,11 @@ class WorkItemProgressService
         if ($total == 0) return 0;
 
         return ($done / $total) * 100;
+    }
+
+    protected function filterPlaster(Space $space): bool
+    {
+        return $space->wall_finish_type === 'paint' || $space->ceiling_finish_type === 'paint';
     }
 
     protected function filterGypsum(Space $space): bool
