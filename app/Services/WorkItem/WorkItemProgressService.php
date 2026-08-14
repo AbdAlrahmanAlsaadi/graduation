@@ -610,6 +610,15 @@ class WorkItemProgressService
                     $area += (float) $space->ceiling_area;
                 }
                 break;
+            
+            case 'طينة / لياسة': // plaster — use wall_area as proxy
+                if (!empty($space->wall_area)) {
+                    $area += (float) $space->wall_area;
+                }
+                if (!empty($space->ceiling_area)) {
+                    $area += (float) $space->ceiling_area;
+                }
+                break;
 
             case 'بلاط أرضيات': // floor tiles — use ceiling_area as floor proxy if floor_area absent
                 if (isset($space->floor_area) && $space->floor_area > 0) {
