@@ -198,8 +198,12 @@ class ProjectService
                 'status' => 'Project must be started before completing.',
             ])->status(400);
         }
+        $workItemsCompleted = $project->workItems()
+        ->where('status', 'completed')
+        ->where('active', true)
+        ->count();
 
-        if($project->workItems()->where('status', '!=', 'completed')->count() > 0){
+        if ($workItemsCompleted) {
             throw ValidationException::withMessages([
                 'status' => 'All work items must be completed before completing the project.',
             ])->status(400);
