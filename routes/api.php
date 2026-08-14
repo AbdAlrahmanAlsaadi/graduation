@@ -262,6 +262,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('project/search', [ProjectController::class, 'search'])
         ->middleware(['auth:sanctum']);
+
+    Route::get(
+        '/assistant/projects/search',
+        [ProjectController::class, 'searchAssistantProjects'])->middleware(['auth:sanctum']);
+
 });
 
 

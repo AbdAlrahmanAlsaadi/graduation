@@ -12,6 +12,7 @@ use App\Models\Project;
 use App\Services\Project\ProjectService;
 use App\Services\Project\ProjectSummaryService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -242,6 +243,17 @@ class ProjectController extends Controller
             'data' => $result['data'],
         ], $result['status']);
     }
+    public function searchAssistantProjects(Request $request): JsonResponse
+    {
+        try {
+            $data = $this->projectService->searchAssistantProjects($request);
 
-
-}
+            return Response::success(
+                $data['message'],
+                $data['data'],
+                $data['status']
+            );
+        } catch (Throwable $throwable) {
+            return $this->handleException($throwable);
+        }
+    }}

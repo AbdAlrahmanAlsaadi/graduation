@@ -2,6 +2,8 @@
 
 namespace App\Services\Project;
 
+use App\Http\Resources\AssistantProjectSearchResource;
+use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use App\Models\WorkItem;
 use App\Models\WorkItemDetail;
@@ -68,11 +70,11 @@ class ProjectService
                     'total_aluminum_doors' => $data['total_aluminum_doors'],
                     'total_windows'        => $data['total_windows'],
                 ],
-            
+
                 'أبواب ونجارة' => [
                     'total_doors' => $data['total_doors'],
                 ],
-            
+
                 'ألمنيوم وأبجورات' => [
                     'total_aluminum' => $data['total_aluminum'],
                 ],
@@ -93,9 +95,9 @@ class ProjectService
 
                 // إذا هذا البند إله تفاصيل، أنشئهم
                 if (isset($detailsMap[$name])) {
-                
+
                     foreach ($detailsMap[$name] as $key => $value) {
-                    
+
                         WorkItemDetail::create([
                             'work_item_id' => $workItem->id,
                             'key'          => $key,
@@ -502,4 +504,49 @@ class ProjectService
             ],
         ];
     }
-}
+    public function searchAssistantProjects($request): array
+    {
+        $assistantId = auth()->id();
+
+        // إذا ما في search، رجع قائمة فارغة
+        if (! $request->filled('search') || trim($request->search) === '') {
+            return [
+                'message' => 'Assistant projects fetched successfully.',
+                'data' => [
+                    'projects' => [],
+                ],
+                'status' => 200,
+            ];
+        }
+
+        $search = trim($request->search);
+
+        $query = Project::query()
+            ->where('assistant_engineer_id', $assistantId)
+            ->with([
+                'projectManager:id,name',
+                'assistantEngineer:id,name',
+                'owner:id,name',
+                'workItems' => function ($query) {
+                    $query->where('is_active', true)
+                        ->orderBy('sort_order');
+                },
+            ]);
+
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+                ->orWhere('location', 'like', "%{$search}%");
+        });
+
+        $projects = $query
+            ->latest()
+            ->get();
+
+        return [
+            'message' => 'Assistant projects fetched successfully.',
+            'data' => [
+                'projects' => AssistantProjectSearchResource::collection($projects),
+            ],
+            'status' => 200,
+        ];
+    }}
