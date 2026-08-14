@@ -360,7 +360,7 @@ class WorkItemProgressService
                 }
             }
         }
-
+        dd($hasAreaData, $totalArea, $doneArea, 'from compute function');
         if ($hasAreaData && $totalArea > 0) {
             return ($doneArea / $totalArea) * 100;
         }
@@ -612,6 +612,7 @@ class WorkItemProgressService
                 break;
             
             case 'طينة / لياسة': // plaster — use wall_area as proxy
+                dd('from case function');
                 $area += (float) $space->wall_area;
                 $area += (float) $space->ceiling_area;
                 break;
