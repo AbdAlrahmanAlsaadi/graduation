@@ -341,39 +341,6 @@ class WorkItemProgressService
         $statusJson = $roomsStatusDetail ? $roomsStatusDetail->value : null;
         $status = $statusJson ? json_decode($statusJson, true) : [];
         if (!is_array($status)) $status = [];
-        if ($workItemName === 'طينة / لياسة') {
-
-    dd([
-        'work_item' => $workItemName,
-
-        'all_spaces' => $spaces->map(function ($s) {
-            return [
-                'id'                  => $s->id,
-                'type'                => $s->type,
-                'wall_finish_type'    => $s->wall_finish_type,
-                'ceiling_finish_type' => $s->ceiling_finish_type,
-                'wall_area'           => $s->wall_area,
-                'ceiling_area'        => $s->ceiling_area,
-            ];
-        })->values(),
-
-        'filtered_spaces' => $filteredSpaces->map(function ($s) {
-            return [
-                'id'                  => $s->id,
-                'wall_finish_type'    => $s->wall_finish_type,
-                'ceiling_finish_type' => $s->ceiling_finish_type,
-                'wall_area'           => $s->wall_area,
-                'ceiling_area'        => $s->ceiling_area,
-            ];
-        })->values(),
-
-        'valid_space_ids' => $validSpaceIds,
-
-        'rooms_status_raw' => $statusJson,
-
-        'rooms_status' => $status,
-    ]);
-}
 
         $totalArea = 0.0;
         $doneArea  = 0.0;
@@ -397,7 +364,6 @@ class WorkItemProgressService
             return ($doneArea / $totalArea) * 100;
         }
 
-        dd($hasAreaData, $totalArea, $doneArea, 'from compute function', $workItemName);
         // fallback to count-based percent
         $doneCount = 0;
         foreach ($validSpaceIds as $id) {
@@ -534,7 +500,9 @@ class WorkItemProgressService
         return $this->computeRoomsStatus(
             $details,
             $spaces,
-            fn($s) => true,
+            fn($s) =>
+                $s->wall_finish_type !== 'ceramic'
+                || $s->ceiling_finish_type !== 'ceramic',
             'طينة / لياسة'
         );
     }
@@ -600,7 +568,7 @@ class WorkItemProgressService
 
     protected function filterPlaster(Space $space): bool
     {
-        return $space->wall_finish_type === 'paint' || $space->ceiling_finish_type === 'paint';
+        return $space->wall_finish_type !== 'ceramic' || $space->ceiling_finish_type !== 'ceramic';
     }
 
     protected function filterGypsum(Space $space): bool
@@ -658,12 +626,16 @@ class WorkItemProgressService
                     $area += (float) $space->ceiling_area;
                 }
                 break;
-            
-            case 'طينة / لياسة': // plaster — use wall_area as proxy
-                dd('from case function', $workItemName, $space->wall_area, $space->ceiling_area);
+            case 'طينة / لياسة':
+            // الحيط يدخل بالحسبة فقط إذا لم يكن سيراميك
+            if (($space->wall_finish_type ?? null) !== 'ceramic' && !empty($space->wall_area)) {
                 $area += (float) $space->wall_area;
+            }
+            // السقف يدخل بالحسبة فقط إذا لم يكن سيراميك
+            if (($space->ceiling_finish_type ?? null) !== 'ceramic' && !empty($space->ceiling_area)) {
                 $area += (float) $space->ceiling_area;
-                break;
+            }
+            break;
 
             case 'بلاط أرضيات': // floor tiles — use ceiling_area as floor proxy if floor_area absent
                 if (isset($space->floor_area) && $space->floor_area > 0) {
