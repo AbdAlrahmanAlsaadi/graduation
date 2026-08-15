@@ -473,7 +473,7 @@ class WorkItemProgressService
 
     protected function computeTile(Collection $details, Collection $spaces, ?string $itemName = null): float
     {
-        return $this->computeRoomsStatus($details, $spaces, fn($s) => true,
+        return $this->computeRoomsStatus($details, $spaces, fn($s) => in_array($s->type, ['room', 'salon', 'kitchen']),
         $itemName ?? 'بلاط أرضيات');
     }
 
