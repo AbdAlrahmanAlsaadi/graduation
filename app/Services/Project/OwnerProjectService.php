@@ -8,6 +8,8 @@ use App\Models\Project;
 
 class OwnerProjectService
 {
+    use App\Services\WorkItem\WorkItemProgressService;
+
     public function myProjects(?string $status = 'all'): array
     {
         $query = Project::query()
@@ -27,26 +29,31 @@ class OwnerProjectService
             );
         }
 
-        return [
+        $progressService = new WorkItemProgressService();
 
+        return [
             'message' => 'Projects fetched successfully.',
 
-            'projects' => $projects->map(function ($project) {
+            'projects' => $projects->map(function ($project) use ($progressService) {
 
                 return [
-
                     'id' => $project->id,
                     'name' => $project->name,
                     'location' => $project->location,
-                    'progress_percent' => $this->calculateProjectProgress($project),
+
+                    'progress_percent' =>
+                    $progressService->computeProjectPercent($project),
+
                     'status' => $project->status,
+
+                    'started_at' =>
+                    $project->started_at?->toISOString(),
                 ];
             }),
 
             'status' => 200,
         ];
     }
-
     private function calculateProjectProgress(Project $project): float
     {
         $items = $project->workItems;
