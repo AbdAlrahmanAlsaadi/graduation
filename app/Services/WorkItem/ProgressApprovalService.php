@@ -122,7 +122,7 @@ class ProgressApprovalService
     ): ProgressUpdateRequest {
         // Validate space and work item logic before saving the request
         $this->progressService->validateSpaceForWorkItem($project, $item, $spaceId);
-        
+
         if($item->status === 'completed'){
             abort(400,'Work item already completed');
         }
@@ -135,7 +135,7 @@ class ProgressApprovalService
             ->where('payload->space_id', $spaceId)
             ->exists();
 
-        if ($existingPending) { 
+        if ($existingPending) {
             abort(400, 'يوجد طلب تحديث فراغ معلق لهذا البند في نفس الفراغ');
         }
 
@@ -408,30 +408,30 @@ class ProgressApprovalService
         if ($action === 'approved') {
             $this->notificationService->send($requester, [
                 'type'                 => 'progress_update_approved',
-                'title'                => 'Progress Update Approved',
-                'body'                 => "Your progress update for \"{$workItem->name}\" has been approved",
+                'title'                => 'تمت الموافقة على تحديث الإنجاز',
+                'body'                 => "تمت الموافقة على تحديث الإنجاز للبند \"{$workItem->name}\".",
                 'project_id'           => $request->project_id,
                 'project_work_item_id' => $request->work_item_id,
-                'sender_id'            => $request->reviewed_by,
+                'sender_id'             => $request->reviewed_by,
                 'data'                 => [
                     'request_id' => $request->id,
                 ],
             ]);
         } else {
-            $reason = $request->comment ? " Reason: {$request->comment}" : '';
+            $reason = $request->comment
+                ? " السبب: {$request->comment}"
+                : '';
 
             $this->notificationService->send($requester, [
                 'type'                 => 'progress_update_rejected',
-                'title'                => 'Progress Update Rejected',
-                'body'                 => "Your progress update for \"{$workItem->name}\" was rejected.{$reason}",
+                'title'                => 'تم رفض تحديث الإنجاز',
+                'body'                 => "تم رفض تحديث الإنجاز للبند \"{$workItem->name}\".{$reason}",
                 'project_id'           => $request->project_id,
                 'project_work_item_id' => $request->work_item_id,
-                'sender_id'            => $request->reviewed_by,
+                'sender_id'             => $request->reviewed_by,
                 'data'                 => [
                     'request_id' => $request->id,
                     'comment'    => $request->comment,
                 ],
             ]);
-        }
-    }
-}
+        }}}
