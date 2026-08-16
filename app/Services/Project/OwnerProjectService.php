@@ -45,9 +45,7 @@ class OwnerProjectService
 
                     'status' => $project->status,
 
-                    'started_at' =>
-                    $project->started_at?->toISOString(),
-                ];
+                      'started_at' => $project->started_at?->format('Y-m-d'),                ];
             }),
 
             'status' => 200,
@@ -75,53 +73,29 @@ class OwnerProjectService
         return round($total / $items->count(), 2);
     }
 
+
     public function show(Project $project): array
     {
         if ($project->owner_id !== auth()->id()) {
             throw new \Exception('Unauthorized.', 403);
         }
 
-        $items = $project->workItems;
+        $project->load('workItems');
 
-        $progress = 0;
+        $progressService = new WorkItemProgressService();
 
-        if ($items->count() > 0) {
-
-            $sum = 0;
-
-            foreach ($items as $item) {
-
-                $sum += match ($item->status) {
-                    'completed' => 100,
-                    'ongoing' => 50,
-                    default => 0,
-                };
-            }
-
-            $progress = round(
-                $sum / $items->count(),
-                2
-            );
-        }
+        $progress = $progressService->computeProjectPercent($project);
 
         return [
-
             'message' => 'Project details fetched successfully.',
 
             'data' => [
-
                 'id' => $project->id,
-
                 'name' => $project->name,
-
                 'location' => $project->location,
-
                 'apartment_area' => $project->apartment_area,
-
                 'height' => $project->height,
-
                 'progress_percent' => $progress,
-
                 'status' => $project->status,
             ],
 
