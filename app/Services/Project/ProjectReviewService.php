@@ -70,9 +70,9 @@ class ProjectReviewService
 
                     'type' => 'project_review',
 
-                    'title' => 'New Project Review',
+                    'title' => 'تقييم جديد للمشروع',
 
-                    'body' => "{$user->name} rated the project {$project->name} with {$review->rating}/5.",
+                    'body' => "قام {$user->name} بتقييم المشروع {$project->name} بتقييم {$review->rating}/5.",
 
                     'data' => [
                         'review_id' => $review->id,
