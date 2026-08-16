@@ -2,13 +2,12 @@
 
 namespace App\Services\Project;
 
-use App\Services\WorkItem\WorkItemProgressService;
 
 use App\Models\Project;
+    use App\Services\WorkItem\WorkItemProgressService;
 
 class OwnerProjectService
 {
-    use App\Services\WorkItem\WorkItemProgressService;
 
     public function myProjects(?string $status = 'all'): array
     {
