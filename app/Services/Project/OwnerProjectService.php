@@ -46,10 +46,9 @@ class OwnerProjectService
                     'status' => $project->status,
 
                     'started_at' => $project->started_at?->format('Y-m-d'),
+                    'completed_at' => $project->status === 'completed' ?
+                    $project->completed_at?->format('Y-m-d') : null,
 
-                    'completed_at' => $project->status === 'completed'
-                        ? $project->completed_at?->format('Y-m-d')
-                        : 'المشروع لم ينتهِ بعد.',
                                         ];
             }),
 
