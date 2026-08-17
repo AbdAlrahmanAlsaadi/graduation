@@ -25,19 +25,58 @@ class ProjectService
         $this->estimationService = $estimationService;
     }
     public const DEFAULT_WORK_ITEMS = [
-        'ملابن الأبواب',
-        'تمديدات صحية سواد',
-        'تمديدات كهرباء سواد',
-        'طينة / لياسة',
-        'سيراميك جدران / أسقف',
-        'جبس بورد',
-        'بلاط أرضيات',
-        'ألمنيوم وأبجورات',
-        'أبواب ونجارة',
-        'دهان',
-        'تمديدات كهرباء بياض',
-        'تمديدات صحية بياض',
-        'ديكورات',
+        [
+            'name' => 'تمديدات كهرباء سواد',
+            'default_duration' => 2,
+        ],
+        [
+            'name' => 'تمديدات صحية سواد',
+            'default_duration' => 3,
+        ],
+        [
+            'name' => 'طينة / لياسة',
+            'default_duration' => 20,
+        ],
+        [
+            'name' => 'ملابن الأبواب',
+            'default_duration' => 3,
+        ],
+        [
+            'name' => 'سيراميك جدران / أسقف',
+            'default_duration' => 4,
+        ],
+        [
+            'name' => 'جبس بورد',
+            'default_duration' => 4,
+        ],
+        [
+            'name' => 'بلاط أرضيات',
+            'default_duration' => 7,
+        ],
+        [
+            'name' => 'ألمنيوم وأبجورات',
+            'default_duration' => 7,
+        ],
+        [
+            'name' => 'أبواب ونجارة',
+            'default_duration' => 7,
+        ],
+        [
+            'name' => 'دهان',
+            'default_duration' => 40,
+        ],
+        [
+            'name' => 'تمديدات كهرباء بياض',
+            'default_duration' => 3,
+        ],
+        [
+            'name' => 'تمديدات صحية بياض',
+            'default_duration' => 2,
+        ],
+        [
+            'name' => 'ديكورات',
+            'default_duration' => 2,
+        ],
     ];
 
     public function index()
@@ -89,12 +128,13 @@ class ProjectService
                 ],
             ];
 
-            foreach (self::DEFAULT_WORK_ITEMS as $index => $name) {
+            foreach (self::DEFAULT_WORK_ITEMS as $index => $item) {
                 $workItem = WorkItem::create([
                     'project_id' => $project->id,
-                    'name' => $name,
-                    'sort_order' => $index + 1,
+                    'name' => $item['name'],
+                    'sort_order' => $item['sort_order'],
                     'quality_level' => WorkItem::QUALITY_LEVEL_BASIC,
+                    'duration_days' => $item['default_duration'],
                     'is_default' => true,
                     'is_active' => true,
                     'is_custom' => false,
@@ -103,9 +143,9 @@ class ProjectService
                 ]);
 
                 // إذا هذا البند إله تفاصيل، أنشئهم
-                if (isset($detailsMap[$name])) {
+                if (isset($detailsMap[$item['name']])) {
 
-                    foreach ($detailsMap[$name] as $key => $value) {
+                    foreach ($detailsMap[$item['name']] as $key => $value) {
 
                         WorkItemDetail::create([
                             'work_item_id' => $workItem->id,

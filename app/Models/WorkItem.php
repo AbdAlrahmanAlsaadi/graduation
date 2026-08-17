@@ -84,6 +84,74 @@ class WorkItem extends Model
         ];
     }
 
+    public const DEFAULT_WORK_ITEMS = [
+    [
+        'name' => 'تمديدات كهرباء سواد',
+        'default_duration' => 2,
+        'sort_order' => 1,
+    ],
+    [
+        'name' => 'تمديدات صحية سواد',
+        'default_duration' => 3,
+        'sort_order' => 2,
+    ],
+    [
+        'name' => 'طينة / لياسة',
+        'default_duration' => 20,
+        'sort_order' => 3,
+    ],
+    [
+        'name' => 'ملابن الأبواب',
+        'default_duration' => 3,
+        'sort_order' => 3,
+    ],
+    [
+        'name' => 'سيراميك جدران / أسقف',
+        'default_duration' => 4,
+        'sort_order' => 4,
+    ],
+    [
+        'name' => 'جبس بورد',
+        'default_duration' => 4,
+        'sort_order' => 5,
+    ],
+    [
+        'name' => 'بلاط أرضيات',
+        'default_duration' => 7,
+        'sort_order' => 6,
+    ],
+    [
+        'name' => 'ألمنيوم وأبجورات',
+        'default_duration' => 7,
+        'sort_order' => 7,
+    ],
+    [
+        'name' => 'أبواب ونجارة',
+        'default_duration' => 7,
+        'sort_order' => 7,
+    ],
+    [
+        'name' => 'دهان',
+        'default_duration' => 40,
+        'sort_order' => 7,
+    ],
+    [
+        'name' => 'تمديدات كهرباء بياض',
+        'default_duration' => 3,
+        'sort_order' => 8,
+    ],
+    [
+        'name' => 'تمديدات صحية بياض',
+        'default_duration' => 2,
+        'sort_order' => 8,
+    ],
+    [
+        'name' => 'ديكورات',
+        'default_duration' => 2,
+        'sort_order' => 8,
+    ],
+];
+    
         // في ملف WorkItem.php
     public const DEPENDENCIES = [
         // [السابق, اللاحق]
