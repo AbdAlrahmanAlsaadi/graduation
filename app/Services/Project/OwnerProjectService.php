@@ -199,19 +199,7 @@ class OwnerProjectService
             ->where('is_active', true)
             ->whereHas('progressPhotos')
             ->with([
-                'progressPhotos' => function ($query) {
-                    $query->select([
-                        'id',
-                        'project_id',
-                        'work_item_id',
-                        'file_path',
-                        'original_name',
-                        'space_id',
-                        'created_at',
-                    ])->with([
-                        'space:id,name',
-                    ]);
-                },
+                'progressPhotos:id,project_id,work_item_id,file_path,original_name,created_at',
             ])
             ->orderBy('sort_order')
             ->get();

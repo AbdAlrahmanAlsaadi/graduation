@@ -18,12 +18,6 @@ class WorkItemProgressPhotoResource extends JsonResource
                     'id' => $photo->id,
                     'file_path' => $photo->file_path,
                     'original_name' => $photo->original_name,
-
-                    'space' => $photo->space ? [
-                        'id' => $photo->space->id,
-                        'name' => $photo->space->name,
-                    ] : null,
-
                     'created_at' => $photo->created_at?->toISOString(),
                 ];
             }),
