@@ -47,12 +47,12 @@ class CheckDelayedWorkItems extends Command
 
             try {
                 $notificationService->send($assistant, [
-                    'type'                 => 'work_item_delayed',
-                    'title'                => 'Work Item Delayed',
-                    'body'                 => "Work item \"{$item->name}\" in project \"{$project->name}\" is delayed. Please submit a duration extension request.",
-                    'project_id'           => $project->id,
-                    'project_work_item_id' => $item->id,
-                    'data'                 => [
+                    'type'                  => 'work_item_delayed',
+                    'title'                 => 'تأخر بند العمل',
+                    'body'                  => "بند العمل \"{$item->name}\" في المشروع \"{$project->name}\" متأخر. يرجى تقديم طلب لتمديد مدة التنفيذ.",
+                    'project_id'            => $project->id,
+                    'project_work_item_id'  => $item->id,
+                    'data'                  => [
                         'work_item_id' => $item->id,
                         'project_id'   => $project->id,
                     ],
