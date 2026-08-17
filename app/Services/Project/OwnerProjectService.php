@@ -180,45 +180,48 @@ class OwnerProjectService
         ];
     }
 
-    public function projectProgressPhotos(int $projectId): array
-    {
-        $project = Project::query()
-            ->where('id', $projectId)
-            ->where('owner_id', auth()->id())
-            ->first();
+    public function workItemProgressPhotos(
+    int $projectId,
+    int $workItemId
+): array {
+    $workItem = WorkItem::query()
+        ->where('id', $workItemId)
+        ->where('project_id', $projectId)
+        ->with([
+            'progressPhotos:id,project_id,work_item_id,file_path,original_name,created_at',
+        ])
+        ->first();
 
-        if (! $project) {
-            throw new \Exception(
-                'Project not found.',
-                404
-            );
-        }
-
-        $workItems = WorkItem::query()
-            ->where('project_id', $project->id)
-            ->where('is_active', true)
-            ->whereHas('progressPhotos')
-            ->with([
-                'progressPhotos:id,project_id,work_item_id,file_path,original_name,created_at',
-            ])
-            ->orderBy('sort_order')
-            ->get();
-
-        return [
-            'message' => 'Project progress photos fetched successfully.',
-
-            'data' => [
-                'project' => [
-                    'id' => $project->id,
-                    'name' => $project->name,
-                ],
-
-                'work_items' => WorkItemProgressPhotoResource::collection(
-                    $workItems
-                ),
-            ],
-
-            'status' => 200,
-        ];
+    if (! $workItem) {
+        throw new \Exception(
+            'Work item not found in this project.',
+            404
+        );
     }
-}
+
+    if ($workItem->progressPhotos->isEmpty()) {
+        throw new \Exception(
+            'No progress photos found for this work item.',
+            404
+        );
+    }
+
+    return [
+        'message' => 'Work item progress photos fetched successfully.',
+        'data' => [
+            'work_item' => [
+                'id' => $workItem->id,
+                'name' => $workItem->name,
+            ],
+            'photos' => $workItem->progressPhotos->map(function ($photo) {
+                return [
+                    'id' => $photo->id,
+                    'file_path' => $photo->file_path,
+                    'original_name' => $photo->original_name,
+                    'created_at' => $photo->created_at?->toISOString(),
+                ];
+            }),
+        ],
+        'status' => 200,
+    ];
+}}

@@ -102,12 +102,20 @@ class OwnerProjectController extends Controller
         }
     }
 
-    public function progressPhotos(int $projectId)
-    {
+    public function progressPhotos(
+        int $projectId,
+        int $workItemId
+    ) {
         try {
-            $result = $this->service->projectProgressPhotos($projectId);
+            $result = $this->service->workItemProgressPhotos(
+                    $projectId,
+                    $workItemId
+                );
 
-            return response()->json($result, $result['status']);
+            return response()->json(
+                $result,
+                $result['status']
+            );
         } catch (Throwable $throwable) {
             return response()->json([
                 'status' => $throwable->getCode() ?: 500,
@@ -115,6 +123,7 @@ class OwnerProjectController extends Controller
                 'data' => [],
             ], $throwable->getCode() ?: 500);
         }
+
 
     }
 }

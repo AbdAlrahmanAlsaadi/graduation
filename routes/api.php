@@ -277,9 +277,10 @@ Route::middleware(['auth:sanctum','role:project_owner'])->group(function () {
     Route::get('owner/projects/{project}',[OwnerProjectController::class, 'show']);
     Route::get('owner/projects/{project}/spaces',[OwnerProjectController::class, 'spaces']);
     Route::get('owner/projects/{project}/work-items',[OwnerProjectController::class, 'workItems']);
-    Route::get(
-        '/owner/projects/{projectId}/progress-photos',
-        [OwnerProjectController::class, 'progressPhotos']
+        Route::get(
+            '/owner/projects/{projectId}/work-items/{workItemId}/progress-photos',
+            [OwnerProjectController::class, 'progressPhotos']
+       
     );
     Route::get('owner/account', [AuthController::class, 'account']
     );
