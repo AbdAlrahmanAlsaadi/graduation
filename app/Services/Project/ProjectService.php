@@ -128,7 +128,7 @@ class ProjectService
                 ],
             ];
 
-            foreach (self::DEFAULT_WORK_ITEMS as $index => $item) {
+            foreach (WorkItem::DEFAULT_WORK_ITEMS as $index => $item) {
                 $workItem = WorkItem::create([
                     'project_id' => $project->id,
                     'name' => $item['name'],
