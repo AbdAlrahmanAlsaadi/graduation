@@ -2,9 +2,10 @@
 
 namespace App\Services\Project;
 
-
+use App\Http\Resources\WorkItemProgressPhotoResource;
 use App\Models\Project;
-    use App\Services\WorkItem\WorkItemProgressService;
+use App\Models\WorkItem;
+use App\Services\WorkItem\WorkItemProgressService;
 
 class OwnerProjectService
 {
@@ -174,6 +175,60 @@ class OwnerProjectService
                             ->computeWorkItemPercent($item),
                     ];
                 }),
+
+            'status' => 200,
+        ];
+    }
+
+    public function projectProgressPhotos(int $projectId): array
+    {
+        $project = Project::query()
+            ->where('id', $projectId)
+            ->where('owner_id', auth()->id())
+            ->first();
+
+        if (! $project) {
+            throw new \Exception(
+                'Project not found.',
+                404
+            );
+        }
+
+        $workItems = WorkItem::query()
+            ->where('project_id', $project->id)
+            ->where('is_active', true)
+            ->whereHas('progressPhotos')
+            ->with([
+                'progressPhotos' => function ($query) {
+                    $query->select([
+                        'id',
+                        'project_id',
+                        'work_item_id',
+                        'file_path',
+                        'original_name',
+                        'space_id',
+                        'created_at',
+                    ])->with([
+                        'space:id,name',
+                    ]);
+                },
+            ])
+            ->orderBy('sort_order')
+            ->get();
+
+        return [
+            'message' => 'Project progress photos fetched successfully.',
+
+            'data' => [
+                'project' => [
+                    'id' => $project->id,
+                    'name' => $project->name,
+                ],
+
+                'work_items' => WorkItemProgressPhotoResource::collection(
+                    $workItems
+                ),
+            ],
 
             'status' => 200,
         ];

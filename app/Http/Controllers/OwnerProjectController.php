@@ -101,4 +101,20 @@ class OwnerProjectController extends Controller
             );
         }
     }
+
+    public function progressPhotos(int $projectId)
+    {
+        try {
+            $result = $this->service->projectProgressPhotos($projectId);
+
+            return response()->json($result, $result['status']);
+        } catch (Throwable $throwable) {
+            return response()->json([
+                'status' => $throwable->getCode() ?: 500,
+                'message' => $throwable->getMessage(),
+                'data' => [],
+            ], $throwable->getCode() ?: 500);
+        }
+
+    }
 }
