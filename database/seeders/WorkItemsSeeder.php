@@ -42,12 +42,13 @@ class WorkItemsSeeder extends Seeder
         Project::query()->each(function (Project $project) use ($now) {
             $items = [];
 
-            foreach (ProjectService::DEFAULT_WORK_ITEMS as $index => $name) {
+            foreach (WorkItem::DEFAULT_WORK_ITEMS as $index => $item) {
                 $items[] = [
                     'project_id'    => $project->id,
-                    'name'          => $name,
+                    'name'          => $item['name'],
                     'quality_level' => WorkItem::QUALITY_LEVEL_BASIC,
-                    'sort_order'    => $index + 1,
+                    'sort_order'    => $item['sort_order'],
+                    'duration_days' => $item['default_duration'],
                     'is_default'    => true,
                     'is_active'     => true,
                     'is_custom'     => false,

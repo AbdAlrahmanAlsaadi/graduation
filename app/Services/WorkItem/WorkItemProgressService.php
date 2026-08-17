@@ -627,15 +627,15 @@ class WorkItemProgressService
                 }
                 break;
             case 'طينة / لياسة':
-            // الحيط يدخل بالحسبة فقط إذا لم يكن سيراميك
-            if (($space->wall_finish_type ?? null) !== 'ceramic' && !empty($space->wall_area)) {
-                $area += (float) $space->wall_area;
-            }
-            // السقف يدخل بالحسبة فقط إذا لم يكن سيراميك
-            if (($space->ceiling_finish_type ?? null) !== 'ceramic' && !empty($space->ceiling_area)) {
-                $area += (float) $space->ceiling_area;
-            }
-            break;
+                // الحيط يدخل بالحسبة فقط إذا لم يكن سيراميك
+                if (($space->wall_finish_type ?? null) !== 'ceramic' && !empty($space->wall_area)) {
+                    $area += (float) $space->wall_area;
+                }
+                // السقف يدخل بالحسبة فقط إذا لم يكن سيراميك
+                if (($space->ceiling_finish_type ?? null) !== 'ceramic' && !empty($space->ceiling_area)) {
+                    $area += (float) $space->ceiling_area;
+                }
+                break;
 
             case 'بلاط أرضيات': // floor tiles — use ceiling_area as floor proxy if floor_area absent
                 if (isset($space->floor_area) && $space->floor_area > 0) {
