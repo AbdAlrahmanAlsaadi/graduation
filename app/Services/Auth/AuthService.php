@@ -209,7 +209,7 @@ class AuthService
             $baseName = 'user';
         }
 
-        $baseInternalId = $prefix . '.' . $baseName . '@alfanar';
+        $baseInternalId = $prefix . '.' . $baseName . '@mutqin';
         $internalId = $baseInternalId;
         $counter = 2;
 
