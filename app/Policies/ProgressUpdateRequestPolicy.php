@@ -75,15 +75,19 @@ class ProgressUpdateRequestPolicy
 
         return $this->isAssignedToProject($user, $project);
     }
-
     private function isAssignedToProject(User $user, Project $project): bool
     {
-        // Direct assignment columns
-        if ($project->project_manager_id === $user->id) {
+        // Company admin can access all projects
+        if ($user->hasRole('company_admin')) {
             return true;
         }
 
-        if ($project->assistant_engineer_id === $user->id) {
+        // Direct assignment
+        if ((int) $project->project_manager_id === (int) $user->id) {
+            return true;
+        }
+
+        if ((int) $project->assistant_engineer_id === (int) $user->id) {
             return true;
         }
 
@@ -91,5 +95,4 @@ class ProgressUpdateRequestPolicy
         return $project->projectEngineers()
             ->where('user_id', $user->id)
             ->exists();
-    }
-}
+    }}
