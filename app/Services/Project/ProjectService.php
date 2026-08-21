@@ -213,6 +213,23 @@ class ProjectService
             return $project;
         }
 
+        $noSpaces = empty($project->spaces);
+        foreach(config('work_item_logic.mapping') as $key => $value) {
+            if($value == 'mellaben' || $value == 'doors' || $value == 'aluminum') {
+                $noSpaces = false;
+                break;
+            }
+        }
+
+        if($noSpaces) {
+            throw new RuntimeException('Project has no spaces.', 400);
+        }
+
+        $noWorkItems = empty($project->workItems);
+        if($noWorkItems) {
+            throw new RuntimeException('Project has no work items.', 400);
+        }
+
         return DB::transaction(function () use ($project) {
             if ($project->started_at === null) {
                 $project->started_at = now();
