@@ -213,21 +213,20 @@ class ProjectService
             return $project;
         }
 
-        $noSpaces = empty($project->spaces);
-        foreach(config('work_item_logic.mapping') as $key => $value) {
-            if($value == 'mellaben' || $value == 'doors' || $value == 'aluminum') {
-                $noSpaces = false;
-                break;
-            }
+        $workItems = $project->activeWorkItems;
+
+        if ($workItems->isEmpty()) {
+            throw new RuntimeException('Project has no active work items.', 400);
         }
 
-        if($noSpaces) {
+        $standaloneItemNames = ['ملابن الأبواب', 'أبواب ونجارة', 'ألمنيوم وأبجورات'];
+        
+        $hasStandaloneItems = $workItems->contains(function ($item) use ($standaloneItemNames) {
+            return in_array($item->name, $standaloneItemNames, true);
+        });
+
+        if ($project->spaces->isEmpty() && !$hasStandaloneItems) {
             throw new RuntimeException('Project has no spaces.', 400);
-        }
-
-        $noWorkItems = empty($project->workItems);
-        if($noWorkItems) {
-            throw new RuntimeException('Project has no work items.', 400);
         }
 
         return DB::transaction(function () use ($project) {

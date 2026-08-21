@@ -137,6 +137,11 @@ class Project extends Model
         return $this->hasMany(WorkItem::class);
     }
 
+    public function activeWorkItems(): HasMany
+    {
+        return $this->workItems()->where('is_active', true);
+    }
+
     public function projectEngineers(): HasMany
     {
         return $this->hasMany(ProjectEngineer::class);
