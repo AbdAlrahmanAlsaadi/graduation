@@ -116,13 +116,11 @@ return [
             ],
         ],
 
-        // 8) ديكورات: عناصر + فلاغ منجز بالكامل
         'finals' => [
             'strategy' => 'finals',
             'keys' => [
-                'final_items_total',
-                'final_items_completed',
-                'all_finished',
+                'rooms_total',
+                'rooms_completed',
             ],
         ],
     ],

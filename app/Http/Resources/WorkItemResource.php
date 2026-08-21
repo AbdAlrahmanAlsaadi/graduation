@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Services\WorkItem\WorkItemProgressService;
+use Carbon\Carbon;
 
 class WorkItemResource extends JsonResource
 {
@@ -33,8 +34,21 @@ class WorkItemResource extends JsonResource
             'completed_at' => $this->completed_at?->toISOString(),
             'created_at' => $this->created_at?->toISOString(),
             'updated_at' => $this->updated_at?->toISOString(),
+            'is_overdue' => $this->isOverdue(),
         ];
     }
-}
+    
+    protected function isOverdue(): bool
+    {
+        if (!$this->started_at) {
+            return false;
+        }
 
-//computeWorkItemPercent
+        $expectedEndDate = Carbon::parse($this->started_at)
+            ->addDays($this->duration_days);
+
+        $remainingDays = (int) Carbon::now()
+            ->diffInDays($expectedEndDate, false);
+        return $remainingDays < 0;
+    }
+}

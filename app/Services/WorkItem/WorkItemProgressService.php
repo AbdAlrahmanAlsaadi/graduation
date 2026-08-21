@@ -552,18 +552,11 @@ class WorkItemProgressService
         return ($done / $total) * 100;
     }
 
-    protected function computeFinals(Collection $details): float
+    protected function computeFinals(Collection $details, Collection $spaces): float
     {
-        if (($details['all_finished']->value ?? false) == true) {
-            return 100;
-        }
-
-        $total = (int) ($details['final_items_total']->value ?? 0);
-        $done  = (int) ($details['final_items_completed']->value ?? 0);
-
-        if ($total == 0) return 0;
-
-        return ($done / $total) * 100;
+        return $this->computeRoomsStatus($details, $spaces, fn($s) => true, 
+        'ديكورات'
+        );
     }
 
     protected function filterPlaster(Space $space): bool
@@ -611,6 +604,11 @@ class WorkItemProgressService
             Space::TYPE_BATHROOM,
             Space::TYPE_TOILET,
         ], true);
+    }
+
+    protected function filterFinals(Space $space): bool
+    {
+        return true; 
     }
 
     private function getSpaceAreaForWorkItem(Space $space, string $workItemName): ?float
@@ -676,6 +674,10 @@ class WorkItemProgressService
                 break;
             case 'تمديدات صحية':
                 if (!empty($space->wall_area)) $area += (float) $space->wall_area;
+                break;
+            case 'ديكورات':
+                if (!empty($space->wall_area)) $area += (float) $space->wall_area;
+                if (!empty($space->ceiling_area)) $area += (float) $space->ceiling_area;
                 break;
             default:
                 return null;

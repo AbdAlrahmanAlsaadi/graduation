@@ -120,6 +120,7 @@ class WorkItemService
 
         $existingOrders = $workItems->pluck('sort_order', 'id')->all();
         $idToName = $workItems->pluck('name', 'id')->all();
+        $activeStatuses = $workItems->pluck('is_active', 'id')->all();
 
         // دمج التغييرات المطلوبة مع الحالي
         $finalOrders = $existingOrders;
@@ -135,6 +136,10 @@ class WorkItemService
             $dependentId = array_search($dependentName, $idToName);
 
             if ($prerequisiteId === false || $dependentId === false) {
+                continue;
+            }
+
+            if (empty($activeStatuses[$prerequisiteId]) || empty($activeStatuses[$dependentId])) {
                 continue;
             }
 

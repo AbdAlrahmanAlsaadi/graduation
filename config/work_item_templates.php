@@ -204,25 +204,11 @@ return [
 
     // 13) ديكورات (Final Finishes)
     'ديكورات' => [
-        'final_items_total' => [
-            'unit'          => 'count',
-            'rule'          => 'required|integer|min:0',
-            'progress_rule' => 'sometimes|integer|min:0',
-            'label'         => 'إجمالي بنود التشطيب',
-            'additive'      => false,
-        ],
-        'final_items_completed' => [
-            'unit'          => 'count',
-            'rule'          => 'sometimes|integer|min:0',
-            'progress_rule' => 'sometimes|integer|min:0',
-            'label'         => 'بنود التشطيب المنجزة',
-            'additive'      => true,
-        ],
-        'all_finished' => [
-            'unit'          => 'bool',
-            'rule'          => 'sometimes|boolean',
-            'progress_rule' => 'sometimes|boolean',
-            'label'         => 'منجز بالكامل',
+        'rooms_status' => [
+            'unit'          => 'json',
+            'rule'          => 'sometimes|json',
+            'progress_rule' => 'sometimes|json',
+            'label'         => 'حالة الغرف',
             'additive'      => false,
         ],
     ],
