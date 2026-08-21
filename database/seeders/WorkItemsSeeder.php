@@ -19,15 +19,15 @@ class WorkItemsSeeder extends Seeder
      */
     private const NUMERIC_TOTALS = [
         'ملابن الأبواب' => [
-            'total_wood_doors'    => ['value' => '4', 'unit' => 'count'],
-            'total_aluminum_doors'=> ['value' => '2', 'unit' => 'count'],
-            'total_windows'       => ['value' => '6', 'unit' => 'count'],
+            'total_wood_doors'    => ['value' => '2', 'unit' => 'count'],
+            'total_aluminum_doors'=> ['value' => '1', 'unit' => 'count'],
+            'total_windows'       => ['value' => '3', 'unit' => 'count'],
         ],
         'أبواب ونجارة' => [
-            'total_doors' => ['value' => '6', 'unit' => 'count'],
+            'total_doors' => ['value' => '3', 'unit' => 'count'],
         ],
         'ألمنيوم وأبجورات' => [
-            'total_aluminum' => ['value' => '8', 'unit' => 'count'],
+            'total_aluminum' => ['value' => '2', 'unit' => 'count'],
         ],
     ];
 
