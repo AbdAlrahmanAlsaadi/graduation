@@ -226,7 +226,7 @@ class ProjectService
         });
 
         if ($project->spaces->isEmpty() && !$hasStandaloneItems) {
-            throw new RuntimeException('Project has no spaces.', 400);
+            throw new RuntimeException('لا يوجد فراغات لهذا المشروع أو بنود مستقلة، يرجى إضافة فراغات أولاً.', 400);
         }
 
         return DB::transaction(function () use ($project) {
