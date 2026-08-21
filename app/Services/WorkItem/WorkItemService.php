@@ -12,10 +12,15 @@ use App\Models\WorkItemDetail;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Services\WorkItem\WorkItemProgressService;
 use RuntimeException;
 
 class WorkItemService
 {
+    public function __construct(
+        protected WorkItemProgressService $progressService
+    ) {}
+
     public function createCustomWorkItem(Project $project, array $data): WorkItem
     {
         return DB::transaction(function () use ($project, $data) {
@@ -208,8 +213,23 @@ class WorkItemService
             return $workItem;
         }
 
-        if (app(WorkItemProgressService::class)->computeWorkItemPercent($workItem) < 100) {
-            throw new RuntimeException('Work item not completed.', 400);
+        $type = config("work_item_logic.mapping.{$workItem->name}");
+        $filterMethod = $type ? 'filter' . ucfirst($type) : null;
+
+        $applicableSpaces = $project->spaces->filter(function ($space) use ($filterMethod) {
+            if ($filterMethod && method_exists($this->progressService, $filterMethod)) {
+                return $this->progressService->{$filterMethod}($space);
+            }
+            return true;
+        });
+
+        $countSpaces = $applicableSpaces->count();
+        $percent = $this->progressService->computeWorkItemPercent($workItem);
+
+        $canComplete = ($percent == 100 || $countSpaces === 0);
+
+        if (!$canComplete) {
+            throw new \RuntimeException('Work item cannot be completed until progress reaches 100%.', 400);
         }
 
         return DB::transaction(function () use ($workItem) {
@@ -222,12 +242,6 @@ class WorkItemService
             return $workItem->fresh();
         });
     }
-
-
-
-
-
-
 
     public function pendingDetails(): array
     {
