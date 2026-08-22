@@ -14,13 +14,9 @@ class MaterialResource extends JsonResource
             'name' => $this->name,
             'unit' => $this->unit,
 
-            'work_item_name' => $this->when(
-                $this->relationLoaded('workItems'),
-                fn() => $this->workItems
-                    ->pluck('name')
-                    ->unique()
-                    ->values()
-            ),
+            'work_item_name' => $this->whenLoaded('workItems', function () {
+                return $this->workItems->pluck('name')->toArray();
+            }),1
         ];
     }
 }
