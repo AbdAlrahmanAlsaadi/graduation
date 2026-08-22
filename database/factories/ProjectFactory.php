@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Project;
 use App\Models\User;
-use Faker\Factory as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,23 +20,22 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
-        $faker = $this->faker ?? Faker::create();
         $projectManager = $this->getOrCreateUserWithRole('project_manager');
         $assistantEngineer = $this->getOrCreateUserWithRole('assistant');
-        $owner = $faker->boolean(70)
+        $owner = fake()->boolean(70)
             ? $this->getOrCreateUserWithRole('project_owner')
             : null;
 
         return [
-            'name' => $faker->company() . ' Project',
+            'name' => fake()->company() . ' Project',
             'project_manager_id' => $projectManager->id,
             'assistant_engineer_id' => $assistantEngineer->id,
             'owner_id' => $owner?->id,
-            'location' => $faker->city(),
-            'latitude' => (string) $faker->latitude(),
-            'longitude' => (string) $faker->longitude(),
-            'apartment_area' => $faker->randomFloat(2, 500, 10000),
-            'height' => $faker->randomFloat(2, 2.5, 15),
+            'location' => fake()->city(),
+            'latitude' => (string) fake()->latitude(),
+            'longitude' => (string) fake()->longitude(),
+            'apartment_area' => fake()->randomFloat(2, 500, 10000),
+            'height' => fake()->randomFloat(2, 2.5, 15),
             'status' => Project::STATUS_PLANNED,
             'created_by' => $projectManager->id,
             'updated_by' => $projectManager->id,
