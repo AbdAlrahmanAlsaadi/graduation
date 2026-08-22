@@ -22,7 +22,7 @@ class ProjectFactory extends Factory
     {
         $projectManager = $this->getOrCreateUserWithRole('project_manager');
         $assistantEngineer = $this->getOrCreateUserWithRole('assistant');
-        $owner = $this->faker->boolean(70)
+        $owner = true
             ? $this->getOrCreateUserWithRole('project_owner')
             : null;
 
