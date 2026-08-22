@@ -70,7 +70,7 @@ class WorkItemProgressService
         if($item->isCompleted()){
             abort(400,'Work item already completed');
         }
-        
+
         if (array_key_exists('photos', $data)) {
 
             $photos = $data['photos'] ?? [];
@@ -134,7 +134,7 @@ class WorkItemProgressService
         });
 
         $percent = $this->computeWorkItemPercent($item);
-        
+
         if($percent == 100 && !$item->isCompleted()) {
             app(WorkItemService::class)->completeWorkItem($project, $item);
         }
@@ -187,7 +187,7 @@ class WorkItemProgressService
 
         // compute percent
         $percent = $this->computeWorkItemPercent($item);
-        
+
         if($percent == 100 && !$item->isCompleted()) {
             app(WorkItemService::class)->completeWorkItem($project, $item);
         }
@@ -554,50 +554,50 @@ class WorkItemProgressService
 
     protected function computeFinals(Collection $details, Collection $spaces): float
     {
-        return $this->computeRoomsStatus($details, $spaces, fn($s) => true, 
+        return $this->computeRoomsStatus($details, $spaces, fn($s) => true,
         'ديكورات'
         );
     }
 
-    protected function filterPlaster(Space $space): bool
+    public function filterPlaster(Space $space): bool
     {
         return $space->wall_finish_type !== 'ceramic' || $space->ceiling_finish_type !== 'ceramic';
     }
 
-    protected function filterGypsum(Space $space): bool
+    public function filterGypsum(Space $space): bool
     {
         return $space->ceiling_finish_type === 'gypsum'
             || $space->wall_finish_type === 'gypsum';
     }
 
-    protected function filterPaint(Space $space): bool
+    public function filterPaint(Space $space): bool
     {
         return $space->wall_finish_type === 'paint'
             || $space->ceiling_finish_type === 'paint';
     }
 
-    protected function filterCeramic(Space $space): bool
+    public function filterCeramic(Space $space): bool
     {
         return $space->wall_finish_type === 'ceramic'
             || $space->ceiling_finish_type === 'ceramic';
     }
 
-    protected function filterTile(Space $space): bool
+    public function filterTile(Space $space): bool
     {
         return in_array($space->type, ['room', 'salon', 'kitchen']);
     }
 
-    protected function filterRooms(Space $space): bool
+    public function filterRooms(Space $space): bool
     {
         return $space->wall_finish_type !== 'ceramic' || ($space->ceiling_finish_type === 'paint' || $space->wall_finish_type === 'paint' || $space->ceiling_finish_type === 'gypsum' || $space->wall_finish_type === 'gypsum');
     }
 
-    protected function filterElectricity(Space $space): bool
+    public function filterElectricity(Space $space): bool
     {
         return true; // كل الفراغات
     }
 
-    protected function filterSanitary(Space $space): bool
+    public function filterSanitary(Space $space): bool
     {
         return in_array($space->type, [
             Space::TYPE_KITCHEN,
@@ -608,7 +608,7 @@ class WorkItemProgressService
 
     public function filterFinals(Space $space): bool
     {
-        return true; 
+        return true;
     }
 
     private function getSpaceAreaForWorkItem(Space $space, string $workItemName): ?float
