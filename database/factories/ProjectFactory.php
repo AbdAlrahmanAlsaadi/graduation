@@ -22,20 +22,20 @@ class ProjectFactory extends Factory
     {
         $projectManager = $this->getOrCreateUserWithRole('project_manager');
         $assistantEngineer = $this->getOrCreateUserWithRole('assistant');
-        $owner = fake()->boolean(70)
+        $owner = $this->faker->boolean(70)
             ? $this->getOrCreateUserWithRole('project_owner')
             : null;
 
         return [
-            'name' => fake()->company() . ' Project',
+            'name' => $this->faker->company() . ' Project',
             'project_manager_id' => $projectManager->id,
             'assistant_engineer_id' => $assistantEngineer->id,
             'owner_id' => $owner?->id,
-            'location' => fake()->city(),
-            'latitude' => (string) fake()->latitude(),
-            'longitude' => (string) fake()->longitude(),
-            'apartment_area' => fake()->randomFloat(2, 500, 10000),
-            'height' => fake()->randomFloat(2, 2.5, 15),
+            'location' => $this->faker->city(),
+            'latitude' => (string) $this->faker->latitude(),
+            'longitude' => (string) $this->faker->longitude(),
+            'apartment_area' => $this->faker->randomFloat(2, 500, 10000),
+            'height' => $this->faker->randomFloat(2, 2.5, 15),
             'status' => Project::STATUS_PLANNED,
             'created_by' => $projectManager->id,
             'updated_by' => $projectManager->id,
