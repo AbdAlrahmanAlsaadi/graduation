@@ -386,9 +386,9 @@ class ProgressApprovalService
         $typeLabel = $type === 'room' ? 'room status update' : 'progress update';
 
         $this->notificationService->send($engineer, [
-            'type'                 => 'progress_update_submitted',
-            'title'                => 'New Progress Update Request',
-            'body'                 => "{$requester->name} submitted a {$typeLabel} for \"{$item->name}\"",
+            'type'                 => 'طلب تحديث الإنجاز',
+            'title'                => 'طلب تحديث الإنجاز',
+            'body'                 => "{$requester->name} قدم طلب تحديث للإنجاز لـ \"{$item->name}\"",
             'project_id'           => $project->id,
             'project_work_item_id' => $item->id,
             'sender_id'            => $requester->id,
