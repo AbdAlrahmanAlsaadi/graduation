@@ -9,5 +9,5 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('work-items:check-delayed')
-    ->dailyAt('08:00')
+    ->everyMinute()
     ->withoutOverlapping();

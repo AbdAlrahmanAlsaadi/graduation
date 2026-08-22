@@ -54,6 +54,7 @@ class WorkItemsSeeder extends Seeder
                     'is_custom'     => false,
                     'created_at'    => $now,
                     'updated_at'    => $now,
+                    'started_at'    => $item['name'] == 'ملابن الأبواب' ? $now->subDays(100) : null,
                 ];
             }
 
