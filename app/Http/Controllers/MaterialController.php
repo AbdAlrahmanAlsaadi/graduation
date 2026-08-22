@@ -39,7 +39,7 @@ class MaterialController extends Controller
     {
         try {
             $material = $this->materialService->create($request->validated());
-
+            $material->load('workItems');
             return Response::success('Material created.', MaterialResource::make($material), 201);
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
@@ -51,7 +51,6 @@ class MaterialController extends Controller
         try {
             $material = $this->materialService->findById((int) $material->id);
 
-
             return Response::success('Material fetched.', MaterialResource::make($material));
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
@@ -62,7 +61,7 @@ class MaterialController extends Controller
     {
         try {
             $updated = $this->materialService->update((int) $material->id, $request->validated());
-
+            $updated->load('workItems');
             return Response::success('Material updated.', MaterialResource::make($updated));
         } catch (Throwable $throwable) {
             return $this->handleException($throwable);
