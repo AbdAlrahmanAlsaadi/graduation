@@ -49,7 +49,7 @@ class DatabaseAIService
                 SELECT id, project_id, name, status, duration_days, weight,
                        created_at, updated_at
                 FROM work_items
-                WHERE deleted_at IS NULL
+                WHERE is_active = 1
             ");
 
             $stats['spaces'] = DB::select("
