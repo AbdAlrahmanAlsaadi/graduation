@@ -606,7 +606,7 @@ class WorkItemProgressService
         ], true);
     }
 
-    protected function filterFinals(Space $space): bool
+    public function filterFinals(Space $space): bool
     {
         return true; 
     }
