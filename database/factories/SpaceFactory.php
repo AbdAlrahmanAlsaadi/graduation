@@ -36,7 +36,7 @@ class SpaceFactory extends Factory
         return [
             'project_id' => Project::factory(),
             'type' => $type,
-            'wall_area' => fake()->randomFloat(2, 8, 220),
+            'wall_area' => fake()->randomFloat(2, 3, 100),
             'wall_finish_type' => fake()->randomElement(Space::FINISH_TYPES),
             'ceiling_finish_type' => $ceilingFinishType,
             'toilet_type' => $toiletType,

@@ -13,29 +13,43 @@ class ProjectsSeeder extends Seeder
      */
     public function run(): void
     {
+        // 1) جلب المستخدمين لكل دور
+        $projectManagers = User::role('project_manager')->get();
+        $assistants      = User::role('assistant')->get();
+        $owners          = User::role('project_owner')->get();
+
+        if ($projectManagers->isEmpty() || $assistants->isEmpty() || $owners->isEmpty()) {
+            $this->command->warn('يرجى التأكد من تشغيل RolesAndPermissionsSeeder أولاً لتوليد المستخدمين.');
+            return;
+        }
+
+        // 2) إنشاء المشاريع
         $projects = Project::factory()
-            ->state(fn () => [
-                'latitude' => (string) fake()->latitude(),
-                'longitude' => (string) fake()->longitude(),
-            ])
             ->count(5)
             ->create();
 
-        foreach($projects as $project){
-            if ($project) {
-                $projectManager = User::role('project_manager')->first();
-                $assistant = User::role('assistant')->first();
-            
-                if ($projectManager) {
-                    $project->assignEngineer($projectManager, 'project_manager', now());
-                }
-            
-                if ($assistant) {
-                    $project->assignEngineer($assistant, 'assistant', now());
-                }
-            }
+        // 3) توزيع المستخدمين على المشاريع
+        foreach ($projects as $index => $project) {
+            // توزيع دوري (Round-Robin) لضمان تغطية جميع المستخدمين
+            $pm        = $projectManagers[$index % $projectManagers->count()];
+            $assistant = $assistants[$index % $assistants->count()];
+            $owner     = $owners[$index % $owners->count()];
+
+            // تحديث الحقول الأساسية في جدول projects
+            $project->update([
+                'project_manager_id'    => $pm->id,
+                'assistant_engineer_id' => $assistant->id,
+                'owner_id'              => $owner->id,
+                'created_by'            => $pm->id,
+                'updated_by'            => $pm->id,
+            ]);
+
+            // إسناد المهندسين عبر دالة assignEngineer (Pivot / Activity)
+            $project->assignEngineer($pm, 'project_manager', now());
+            $project->assignEngineer($assistant, 'assistant', now());
         }
 
+        // 4) استدعاء السيدرز التابعة
         if ($projects->isNotEmpty()) {
             $this->call([
                 SpacesSeeder::class,

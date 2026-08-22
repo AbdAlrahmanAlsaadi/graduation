@@ -389,9 +389,10 @@ class RolesAndPermissionsSeeder extends Seeder
 
     private function createSampleUsers(): void
     {
+        $defaultPassword = Hash::make('password');
         // Company Admin
         $companyAdminUser = User::firstOrCreate(
-            ['email' => 'admin@alfanar.com'],
+            ['email' => 'admin@mutqin.com'],
             [
                 'name' => 'Company Admin',
                 'internal_id' => null,
@@ -405,10 +406,10 @@ class RolesAndPermissionsSeeder extends Seeder
         $companyAdminUser->save();
         // Project Manager
         $projectManagerUser = User::firstOrCreate(
-            ['internal_id' => 'pm.ahmad@alfanar'],
+            ['internal_id' => 'pm.ahmad@mutqin'],
             [
                 'name' => 'Ahmad Project Manager',
-                'email' => 'ahmad.pm@alfanar.com',
+                'email' => 'ahmad.pm@mutqin.com',
                 'password' => Hash::make('password'),
                 'email_verified_at' => now(),
                 'status' => 'active',
@@ -416,13 +417,37 @@ class RolesAndPermissionsSeeder extends Seeder
         );
         $projectManagerUser->assignRole('project_manager');
         $projectManagerUser->save();
-        // Assistant
+        // Additional 5 Project Managers
+        $additionalPMs = [
+            ['name' => 'Omar Al-Ali', 'internal_id' => 'pm.omar@mutqin', 'email' => 'omar.pm@mutqin.com'],
+            ['name' => 'Tarek Mansour', 'internal_id' => 'pm.tarek@mutqin', 'email' => 'tarek.pm@mutqin.com'],
+            ['name' => 'Youssef Nader', 'internal_id' => 'pm.youssef@mutqin', 'email' => 'youssef.pm@mutqin.com'],
+            ['name' => 'Rami Al-Khatib', 'internal_id' => 'pm.rami@mutqin', 'email' => 'rami.pm@mutqin.com'],
+            ['name' => 'Zaid Hamdan', 'internal_id' => 'pm.zaid@mutqin', 'email' => 'zaid.pm@mutqin.com'],
+        ];
+
+        foreach ($additionalPMs as $pm) {
+            $user = User::firstOrCreate(
+                ['internal_id' => $pm['internal_id']],
+                [
+                    'name' => $pm['name'],
+                    'email' => $pm['email'],
+                    'password' => $defaultPassword,
+                    'email_verified_at' => now(),
+                    'status' => 'active',
+                ]
+            );
+            $user->assignRole('project_manager');
+            $user->save();
+        }
+
+        // Assistant (Original)
         $assistantUser = User::firstOrCreate(
-            ['internal_id' => 'asst.sara@alfanar'],
+            ['internal_id' => 'asst.sara@mutqin'],
             [
                 'name' => 'Sara Assistant',
-                'email' => 'sara.assistant@alfanar.com',
-                'password' => Hash::make('password'),
+                'email' => 'sara.assistant@mutqin.com',
+                'password' => $defaultPassword,
                 'email_verified_at' => now(),
                 'status' => 'active',
                 'fcm_token' => 'asdf1342'
@@ -430,13 +455,39 @@ class RolesAndPermissionsSeeder extends Seeder
         );
         $assistantUser->assignRole('assistant');
         $assistantUser->save();
-        // Project Owner
+
+        // Additional 5 Assistants
+        $additionalAssistants = [
+            ['name' => 'Nour Al-Huda', 'internal_id' => 'asst.nour@mutqin', 'email' => 'nour.assistant@mutqin.com'],
+            ['name' => 'Maya Hasan', 'internal_id' => 'asst.maya@mutqin', 'email' => 'maya.assistant@mutqin.com'],
+            ['name' => 'Hiba Al-Masri', 'internal_id' => 'asst.hiba@mutqin', 'email' => 'hiba.assistant@mutqin.com'],
+            ['name' => 'Fadi Othman', 'internal_id' => 'asst.fadi@mutqin', 'email' => 'fadi.assistant@mutqin.com'],
+            ['name' => 'Laila Salem', 'internal_id' => 'asst.laila@mutqin', 'email' => 'laila.assistant@mutqin.com'],
+        ];
+
+        foreach ($additionalAssistants as $asst) {
+            $user = User::firstOrCreate(
+                ['internal_id' => $asst['internal_id']],
+                [
+                    'name' => $asst['name'],
+                    'email' => $asst['email'],
+                    'password' => $defaultPassword,
+                    'email_verified_at' => now(),
+                    'status' => 'active',
+                    'fcm_token' => 'asdf1342',
+                ]
+            );
+            $user->assignRole('assistant');
+            $user->save();
+        }
+
+        // Project Owner (Original)
         $projectOwnerUser = User::firstOrCreate(
-            ['internal_id' => 'owner.khaled@alfanar'],
+            ['internal_id' => 'owner.khaled@mutqin'],
             [
                 'name' => 'Khaled Project Owner',
-                'email' => 'khaled.owner@alfanar.com',
-                'password' => Hash::make('password'),
+                'email' => 'khaled.owner@mutqin.com',
+                'password' => $defaultPassword,
                 'email_verified_at' => now(),
                 'status' => 'active',
                 'fcm_token' => 'asdf1342'
@@ -444,11 +495,36 @@ class RolesAndPermissionsSeeder extends Seeder
         );
         $projectOwnerUser->assignRole('project_owner');
         $projectOwnerUser->save();
+
+        // Additional 5 Project Owners
+        $additionalOwners = [
+            ['name' => 'Bilal Al-Sayed', 'internal_id' => 'owner.bilal@mutqin', 'email' => 'bilal.owner@mutqin.com'],
+            ['name' => 'Samer Al-Ahmad', 'internal_id' => 'owner.samer@mutqin', 'email' => 'samer.owner@mutqin.com'],
+            ['name' => 'Hasan Kassam', 'internal_id' => 'owner.hasan@mutqin', 'email' => 'hasan.owner@mutqin.com'],
+            ['name' => 'Majd Al-Rifai', 'internal_id' => 'owner.majd@mutqin', 'email' => 'majd.owner@mutqin.com'],
+            ['name' => 'Wael Al-Bitar', 'internal_id' => 'owner.wael@mutqin', 'email' => 'wael.owner@mutqin.com'],
+        ];
+
+        foreach ($additionalOwners as $owner) {
+            $user = User::firstOrCreate(
+                ['internal_id' => $owner['internal_id']],
+                [
+                    'name' => $owner['name'],
+                    'email' => $owner['email'],
+                    'password' => $defaultPassword,
+                    'email_verified_at' => now(),
+                    'status' => 'active',
+                    'fcm_token' => 'asdf1342',
+                ]
+            );
+            $user->assignRole('project_owner');
+            $user->save();
+        }
         $this->command->info('Sample users created.');
         $this->command->info('Credentials:');
-        $this->command->info('Company Admin: admin@alfanar.com / password');
-        $this->command->info('Project Manager: pm.ahmad@alfanar / password');
-        $this->command->info('Assistant: asst.sara@alfanar / password');
-        $this->command->info('Project Owner: owner.khaled@alfanar / password');
+        $this->command->info('Company Admin: admin@mutqin.com / password');
+        $this->command->info('Project Manager: pm.ahmad@mutqin / password');
+        $this->command->info('Assistant: asst.sara@mutqin / password');
+        $this->command->info('Project Owner: owner.khaled@mutqin / password');
     }
 }
